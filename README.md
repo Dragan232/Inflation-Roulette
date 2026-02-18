@@ -11,20 +11,13 @@ The game features a dynamic animation and sound system that is supported for ani
 
 A vast number of in-game options are available to customize your preferable playing experience.
 
-## Partially Finished & Planned Features
+## Planned Features
 Although the game as a whole is still a work in progress, it is fully playable with limited modding support.
 These following features are either implemented, but are not used in-game, or partially finished:
-- Local multiplayer support
-- Custom characters
-- Mobile support (HTML, Android)
-- Selectable characters
 
-Planned features are as follows:
-- Character selection menu
-- Gallery
-- Game modes
 - Selectable stages
 - Character & stage editor
+
 ## [Wiki](https://github.com/Sufferneer/Inflation-Roulette/wiki)
 We have a dedicated wiki for the documentation and guides for the inner workings for _Inflation Roulette: Reloaded_.
 ## Credits

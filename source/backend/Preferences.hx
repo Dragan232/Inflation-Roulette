@@ -24,6 +24,8 @@ class SaveVariables {
 	public var enableLetterbox:Bool = true;
 	public var showMusicToast:Bool = false;
 	public var useClassicMusic:Bool = false;
+	public var useBuiltInCursor:Bool = true;
+	public var hideCursor:Bool = false;
 	public var musicVolume:Float = 0.25;
 	public var gameSoundVolume:Float = 1;
 	public var uiSoundVolume:Float = 0.5;
@@ -98,6 +100,9 @@ class Preferences {
 		#end
 
 		FlxG.fullscreen = data.enableFullscreen;
+
+		FlxG.mouse.useSystemCursor = !data.useBuiltInCursor;
+		FlxG.mouse.visible = !data.hideCursor;
 
 		if (data.framerate > FlxG.drawFramerate) {
 			FlxG.updateFramerate = data.framerate;

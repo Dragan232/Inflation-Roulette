@@ -10,10 +10,10 @@ class WarningState extends SuffState {
 	final warningText:String = 'This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing \'Accept\', you acknowledge these warnings and fully bear any negative consequences caused by this game.';
 	var typingRate:Float = 0;
 	var typingTick:Float = 0;
-	
+
 	override function create() {
 		super.create();
-		
+
 		warningTitle = new FlxText(0, 0, 0, '- WARNING -');
 		warningTitle.setFormat(Paths.font('default'), 80, 0xFFFF0000);
 		warningTitle.screenCenter();
@@ -28,7 +28,7 @@ class WarningState extends SuffState {
 		add(warningDesc);
 
 		acceptButton = new SuffButton(0, 0, 'Accept', null, null, 220, 100);
-		acceptButton.btnBGOutlineColor = 0xFFFFFFFF;
+		acceptButton.btnOutlineColor = 0xFFFFFFFF;
 		acceptButton.btnTextColorDisabled = 0xFF000000;
 		acceptButton.btnBGColor = 0xFF000000;
 		acceptButton.btnBGColorHovered = 0xFF000000;
@@ -41,7 +41,7 @@ class WarningState extends SuffState {
 			FlxG.save.data.acknowledgedTermsOfService = true;
 			FlxG.save.flush();
 			new FlxTimer().start(1, function(_) {
-				FlxG.camera.fade(0xFF000000, 2, function () {
+				FlxG.camera.fade(0xFF000000, 2, function() {
 					SuffState.switchState(new InitStartupState());
 				});
 			});

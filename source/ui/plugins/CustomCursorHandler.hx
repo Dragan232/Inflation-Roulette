@@ -20,10 +20,11 @@ class CustomCursorHandler extends FlxBasic {
 	}
 
 	override function update(elapsed:Float) {
-		if (instance == null && enabled)
+		if (!(instance != null && FlxG.mouse.visible))
 			return;
-		Utils.cursorChange('default', FlxG.mouse.pressed);
-		if (Preferences.data.playCursorSounds && FlxG.mouse.visible) {
+		if (Preferences.data.useBuiltInCursor)
+			Utils.changeCursorImage('default', FlxG.mouse.pressed);
+		if (Preferences.data.playCursorSounds) {
 			if (FlxG.mouse.justPressed) {
 				SuffState.playUISound(Paths.sound('ui/cursorClick'), 0.75, FlxG.random.float(2.5, 5));
 			} else if (FlxG.mouse.justReleased) {

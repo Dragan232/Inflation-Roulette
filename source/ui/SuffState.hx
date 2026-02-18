@@ -81,7 +81,7 @@ class SuffState extends FlxUIState {
 		super.update(elapsed);
 	}
 
-	public static function switchState(nextState:FlxState = null, style:SuffTransitionStyle = DEFAULT) {
+	public static function switchState(nextState:FlxState = null, style:SuffTransitionStyle = DEFAULT, showLoadingText:Bool = false) {
 		Main.mainClassState = Type.getClass(nextState);
 		if (nextState == null)
 			nextState = FlxG.state;
@@ -91,6 +91,7 @@ class SuffState extends FlxUIState {
 		}
 
 		SuffTransition.style = style;
+		SuffTransition.showLoadingText = showLoadingText;
 
 		if (FlxTransitionableState.skipNextTransIn)
 			FlxG.switchState(nextState);

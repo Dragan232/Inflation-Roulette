@@ -6,6 +6,7 @@ import ui.objects.SuffTransitionBlock;
 class SuffTransition extends SuffSubState {
 	public static var finishCallback:Void->Void;
 	public static var style:SuffTransitionStyle = DEFAULT;
+	public static var showLoadingText:Bool = false;
 
 	private var leTween:FlxTween = null;
 
@@ -119,19 +120,19 @@ class SuffTransition extends SuffSubState {
 		add(loadingTxt);
 		loadingTxt.visible = false;
 
-		runTransition(isTransIn, style);
+		runTransition(isTransIn, style, showLoadingText);
 
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
 	}
 
-	function runTransition(transIn:Bool, style:SuffTransitionStyle = DEFAULT) {
+	function runTransition(transIn:Bool, style:SuffTransitionStyle = DEFAULT, showLoadingText:Bool = false) {
 		switch (style) {
 			case DEFAULT:
 				if (!transIn) {
 					trans.y = -trans.height;
 					FlxTween.tween(trans, {y: -widthHeightGCF}, duration, {
 						onComplete: function(twn:FlxTween) {
-							startLoading();
+							startLoading(showLoadingText);
 						},
 						ease: FlxEase.quadIn
 					});
@@ -151,7 +152,7 @@ class SuffTransition extends SuffSubState {
 				if (!transIn) {
 					FlxTween.num(0, 1, usedDuration, {
 						onComplete: function(_) {
-							startLoading();
+							startLoading(showLoadingText);
 						}
 					}, function(value:Float) {
 						transitionProgess = value;
@@ -216,7 +217,8 @@ class SuffTransition extends SuffSubState {
 	}
 
 	function endLoading() {
-		FlxG.mouse.visible = true;
+		if (!Preferences.data.hideCursor)
+			FlxG.mouse.visible = true;
 		loadingTxt.visible = false;
 	}
 

@@ -78,20 +78,14 @@ class OptionsSubState extends SuffSubState {
 	function generateOptions() {
 		optionsGroup.clear();
 
-		// GENERAL SETTINGS
-		createSubheading('General');
+		createHeading('Gameplay');
 
-		createSliderOption('Framerate', 'How many screen refreshes and game updates should the game do in one second.', function(value:Float) {
-			Preferences.data.framerate = Math.round(value);
-		}, 30, 180, 10, function(value:Float) {
-			return '' + Math.round(value);
-		}, Preferences.data.framerate);
+		createBooleanOption('Eliminee Skip', "Players who are defeated will be skipped right over instead of playing an animation when it's their turn.",
+			function(value:Bool) {
+				Preferences.data.ignoreEliminatedPlayers = value;
+			}, Preferences.data.ignoreEliminatedPlayers);
 
-		#if !html5
-		createBooleanOption('Unfocus Pausing', 'Automatically pauses the game when out of focus.', function(value:Bool) {
-			Preferences.data.pauseOnUnfocus = value;
-		}, Preferences.data.pauseOnUnfocus);
-		#end
+		createHeading('Preferences');
 
 		createBooleanOption('Popping',
 			"Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead." +
@@ -100,24 +94,22 @@ class OptionsSubState extends SuffSubState {
 				Preferences.data.allowPopping = value;
 			}, Preferences.data.allowPopping);
 
-		createBooleanOption('Eliminee Skip', "Players who are defeated will be skipped right over instead of playing an animation when it's their turn.",
-			function(value:Bool) {
-				Preferences.data.ignoreEliminatedPlayers = value;
-			}, Preferences.data.ignoreEliminatedPlayers);
+		createBooleanOption('Borborygmi', "Players play belly gurgle sounds on idle when inflated.", function(value:Bool) {
+			Preferences.data.allowBellyGurgles = value;
+		}, Preferences.data.allowBellyGurgles);
+
+		createBooleanOption('Creaking', "Players play balloon overstretching sounds on idle when inflated.", function(value:Bool) {
+			Preferences.data.allowBellyCreaks = value;
+		}, Preferences.data.allowBellyCreaks);
 
 		// GRAPHICS SETTINGS
-		createSubheading('Graphics & Visuals');
+		createHeading('Visuals & UI');
 
 		#if desktop
 		createBooleanOption('Fullscreen', 'Self-explanatory, but are you that deprived?', function(value:Bool) {
 			Preferences.data.enableFullscreen = value;
 		}, Preferences.data.enableFullscreen);
 		#end
-
-		createBooleanOption('Photosensitive Mode',
-			'Dampen screen flashes and other flashing effects.\nStrongly recommended for people with photosensitive epilepsy.', function(value:Bool) {
-				Preferences.data.enablePhotosensitiveMode = value;
-		}, Preferences.data.enablePhotosensitiveMode);
 
 		createBooleanOption('Force Alising',
 			'Removes antialiasing from all sprites even when enabled. Improves performance, but may make some graphics look jagged.', function(value:Bool) {
@@ -128,11 +120,11 @@ class OptionsSubState extends SuffSubState {
 			Preferences.data.alwaysPlayMainMenuAnims = value;
 		}, Preferences.data.alwaysPlayMainMenuAnims);
 
-		createSliderOption('Camera Intensity', 'How strong screen shaking and other disorienting effects should be.', function(value:Float) {
-			Preferences.data.cameraEffectIntensity = value;
-		}, 0, 1, 0.05, function(value:Float) {
-			return Math.round(value * 100) + '%';
-		}, Preferences.data.cameraEffectIntensity);
+		createBooleanOption('Music Toast',
+			'A notification containing the current background music name and its author will be shown whenever a music track is played.',
+			function(value:Bool) {
+				Preferences.data.showMusicToast = value;
+			}, Preferences.data.showMusicToast);
 
 		createBooleanOption('Letterboxing', 'Show black bars on top and bottom sides of the screen during player animations and cutscenes.',
 			function(value:Bool) {
@@ -140,7 +132,7 @@ class OptionsSubState extends SuffSubState {
 			}, Preferences.data.enableLetterbox);
 
 		// AUDIO SETTINGS
-		createSubheading('Audio & Music');
+		createHeading('Audio & Music');
 
 		createBooleanOption('Classic Music', "The game uses music in the original game instead of new music.", function(value:Bool) {
 			Preferences.data.useClassicMusic = value;
@@ -149,12 +141,6 @@ class OptionsSubState extends SuffSubState {
 			}
 			touchedMusicOption = !touchedMusicOption;
 		}, Preferences.data.useClassicMusic);
-
-		createBooleanOption('Music Toast',
-			'A notification containing the current background music name and its author will be shown whenever a music track is played.',
-			function(value:Bool) {
-				Preferences.data.showMusicToast = value;
-			}, Preferences.data.showMusicToast);
 
 		createSliderOption('Music Volume', 'The volume percentage of background music.', function(value:Float) {
 			Preferences.data.musicVolume = value;
@@ -178,20 +164,51 @@ class OptionsSubState extends SuffSubState {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.uiSoundVolume);
 
+		createHeading('Accessibility');
+
+		createBooleanOption('Photosensitive Mode',
+			'Dampen screen flashes and other flashing effects.\nStrongly recommended for people with photosensitive epilepsy.', function(value:Bool) {
+				Preferences.data.enablePhotosensitiveMode = value;
+		}, Preferences.data.enablePhotosensitiveMode);
+
+		createSliderOption('Camera Intensity', 'How strong screen shaking and other disorienting effects should be.', function(value:Float) {
+			Preferences.data.cameraEffectIntensity = value;
+		}, 0, 1, 0.05, function(value:Float) {
+			return Math.round(value * 100) + '%';
+		}, Preferences.data.cameraEffectIntensity);
+
+		createHeading('Cursor');
+
+		createBooleanOption('Built-In Cursor', 'Uses the custom in-game cursor instead of the default system mouse cursor.', function(value:Bool) {
+			Preferences.data.useBuiltInCursor = value;
+			FlxG.mouse.useSystemCursor = !value;
+		}, Preferences.data.useBuiltInCursor);
+
+		#if html5
+		createBooleanOption('Hide Cursor', 'Hides the mouse cursor entirely.\nCursor can be shown again by pressing [G] at any time.', function(value:Bool) {
+			Preferences.data.hideCursor = value;
+			FlxG.mouse.visible = !value;
+		}, Preferences.data.hideCursor);
+		#end
+
 		createBooleanOption('Cursor Sounds', 'Plays a click sound whenever the mouse cursor clicks something.', function(value:Bool) {
 			Preferences.data.playCursorSounds = value;
 		}, Preferences.data.playCursorSounds);
 
-		createBooleanOption('Borborygmi', "Players play belly gurgle sounds on idle when inflated.", function(value:Bool) {
-			Preferences.data.allowBellyGurgles = value;
-		}, Preferences.data.allowBellyGurgles);
-
-		createBooleanOption('Creaking', "Players play balloon overstretching sounds on idle when inflated.", function(value:Bool) {
-			Preferences.data.allowBellyCreaks = value;
-		}, Preferences.data.allowBellyCreaks);
-
 		// TECHNICAL SETTINGS
-		createSubheading('Technical');
+		createHeading('Technical');
+
+		createSliderOption('Framerate', 'How many screen refreshes and game updates should the game do in one second.', function(value:Float) {
+			Preferences.data.framerate = Math.round(value);
+		}, 30, 180, 10, function(value:Float) {
+			return '' + Math.round(value);
+		}, Preferences.data.framerate);
+
+		#if !html5
+		createBooleanOption('Unfocus Pausing', 'Automatically pauses the game when out of focus.', function(value:Bool) {
+			Preferences.data.pauseOnUnfocus = value;
+		}, Preferences.data.pauseOnUnfocus);
+		#end
 
 		#if (openfl && !html5)
 		createBooleanOption('VRAM Caching',
@@ -206,7 +223,7 @@ class OptionsSubState extends SuffSubState {
 		}, Preferences.data.enableDebugKeybinds);
 
 		// DEBUG TEXT SETTINGS
-		createSubheading('Debug Text');
+		createHeading('Debug Text');
 
 		createBooleanOption('Debug Text', 'Displays debug information on the top-left corner of the screen.', function(value:Bool) {
 			Preferences.data.showDebugText = value;
@@ -237,7 +254,7 @@ class OptionsSubState extends SuffSubState {
 		}
 	}
 
-	function createSubheading(name:String) {
+	function createHeading(name:String) {
 		if (optionsGroup.members.length > 0)
 			optionsY += 32;
 		var text:FlxText = new FlxText(32, optionsY, 0, name);

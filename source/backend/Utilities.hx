@@ -73,8 +73,8 @@ class Utilities {
 	 * @param tag The cursor used.
 	 * @param pressed Whether to use the pressed version of the cursor.
 	 */
-	public static function cursorChange(tag:String, pressed:Bool = false):Void {
-		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gui/cursor/${tag}' + (pressed ? '_pressed' : '')));
+	public static function changeCursorImage(tag:String, pressed:Bool = false):Void {
+		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gui/cursor/${tag}' + (pressed ? 'Held' : '')));
 		FlxG.mouse.load(spr.pixels, 1, -7, -6);
 	}
 
@@ -167,7 +167,7 @@ class Utilities {
 		Lib.application.window.x = Std.int(point.x - (Lib.application.window.width / 2));
 		Lib.application.window.y = Std.int(point.y - (Lib.application.window.height / 2));
 	}
-	
+
 	/**
 	 * Gets the center coordinates of your screen relative to the top-left of your monitor, and returns it as a FlxPoint.
 	 */
@@ -188,6 +188,7 @@ class Utilities {
 	// Fetched from thx.core library. Thanks fponticelli!
 	static var SPLIT_LINES = ~/\r\n|\n\r|\n|\r/g;
 	static var WSG = ~/[ \t\r\n]+/g;
+
 	static function wrapLine(s:String, columns:Int, indent:String, newline:String) {
 		var parts = [], pos = 0, len = s.length, ilen = indent.length;
 		columns -= ilen;

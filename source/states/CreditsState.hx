@@ -17,6 +17,7 @@ class CreditsState extends SuffState {
 		['Snowyboi', 'snowyboi', 'LOGO'],
 		['Sound Source', '', 'HEADING'],
 		['PixelCarnagee\n(OpenNSFW Sound Pack)', 'opennsfw', 'default'],
+		['Runey', '', 'default'],
 		['Linux Port', '', 'HEADING'],
 		['changedinflation.de', '', 'default'],
 		['Crash Handler', '', 'HEADING'],

@@ -8,9 +8,9 @@ class GitHubButton extends SuffIconButton {
 
 		this.btnBGColor = 0xFF000000;
 		this.btnBGColorHovered = 0xFF202020;
-		this.btnBGOutlineColor = 0xFFC0C0C0;
+		this.btnOutlineColor = 0xFFC0C0C0;
 
-		this.onClick = function () {
+		this.onClick = function() {
 			Utils.browserLoad('https://github.com/Sufferneer/Inflation-Roulette/' + directory);
 		};
 	}

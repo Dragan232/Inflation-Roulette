@@ -26,17 +26,22 @@ class SuffButton extends FlxSpriteGroup {
 
 	public var btnBGColor(default, set):FlxColor = 0xFF0F4894;
 	public var btnBGColorHovered:FlxColor = 0xFF4F9BFF;
-	public var btnBGColorClicked:FlxColor = 0xFF4F9BFF;
+	public var btnBGColorClicked:FlxColor = 0xFF006EFF;
 	public var btnBGColorDisabled:FlxColor = 0xFF3F5B7F;
-	public var btnBGOutlineColor(default, set):FlxColor = 0xFF008FB5;
 	public var btnBGAlpha(default, set):Float = 1;
+
+	public var btnOutlineColor(default, set):FlxColor = 0xFF008FB5;
+	public var btnOutlineColorHovered:FlxColor = 0xFF008FB5;
+	public var btnOutlineColorClicked:FlxColor = 0xFFFFFFFF;
+	public var btnOutlineColorDisabled:FlxColor = 0xFF008FB5;
+	public var btnOutlineAlpha(default, set):Float = 1;
 
 	public var clickSound:String = 'ui/buttonClick';
 	public var releaseSound:String = 'ui/buttonRelease';
 	public var hoverSound:String = 'ui/buttonHover';
 
 	public var btnBG:FlxUI9SliceSprite;
-	public var btnBGOutline:FlxUI9SliceSprite;
+	public var btnOutline:FlxUI9SliceSprite;
 	public var btnText:FlxText;
 	public var btnIcon:FlxSprite = null;
 
@@ -45,7 +50,11 @@ class SuffButton extends FlxSpriteGroup {
 
 	public var tooltipText:String = '';
 
+	var btnBGScaleTween:FlxTween;
+	var btnOutlineScaleTween:FlxTween;
 	var btnBGColorTween:FlxTween;
+	var btnOutlineColorTween:FlxTween;
+	var btnTextColorTween:FlxTween;
 	var btnScaleTweens:Array<FlxTween> = [];
 
 	static final iconPadding:Int = 0;
@@ -79,13 +88,13 @@ class SuffButton extends FlxSpriteGroup {
 		btnBG.visible = visibleBG;
 		add(btnBG);
 
-		btnBGOutline = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('gui/boxes/boxOutline'), btnBGRect, nineSlice, 0x11);
-		btnBGOutline.setGraphicSize(Std.int(leWidth), Std.int(leHeight));
-		btnBGOutline.updateHitbox();
-		btnBGOutline.color = btnBGOutlineColor;
-		btnBGOutline.alpha = btnBGAlpha;
-		btnBGOutline.visible = visibleBG;
-		add(btnBGOutline);
+		btnOutline = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('gui/boxes/boxOutline'), btnBGRect, nineSlice, 0x11);
+		btnOutline.setGraphicSize(Std.int(leWidth), Std.int(leHeight));
+		btnOutline.updateHitbox();
+		btnOutline.color = btnOutlineColor;
+		btnOutline.alpha = btnOutlineAlpha;
+		btnOutline.visible = visibleBG;
+		add(btnOutline);
 
 		if (text != null) {
 			btnText = new FlxText(0, 0, 0, text);
@@ -127,6 +136,7 @@ class SuffButton extends FlxSpriteGroup {
 	private function set_disabled(value:Bool):Bool {
 		disabled = value;
 		btnBG.color = !value ? btnBGColor : btnBGColorDisabled;
+		btnOutline.color = !value ? btnOutlineColor : btnOutlineColorDisabled;
 		if (btnText != null)
 			btnText.color = !value ? btnTextColor : btnTextColorDisabled;
 		return value;
@@ -181,47 +191,49 @@ class SuffButton extends FlxSpriteGroup {
 		return btnBGColor;
 	}
 
-	private function set_btnBGOutlineColor(value:FlxColor):FlxColor {
-		btnBGOutlineColor = value;
-		btnBGOutline.color = btnBGOutlineColor;
-		return btnBGOutlineColor;
+	private function set_btnOutlineAlpha(value:Float):Float {
+		btnOutlineAlpha = value;
+		btnOutline.alpha = btnOutlineAlpha;
+		return btnOutlineAlpha;
+	}
+
+	private function set_btnOutlineColor(value:FlxColor):FlxColor {
+		btnOutlineColor = value;
+		btnOutline.color = btnOutlineColor;
+		return btnOutlineColor;
 	}
 
 	override function update(elapsed:Float) {
 		if (FlxG.mouse.overlaps(btnBG, this.camera) && visible) {
 			if (!hovered) {
 				hoverButton();
-				if (onHover != null)
+				if (!disabled && onHover != null)
 					onHover();
 				hovered = true;
 			}
 			if (hovered) {
 				if (Tooltip.text == '')
 					Tooltip.text = tooltipText;
-				if (FlxG.mouse.pressed) {
+				if (!disabled && FlxG.mouse.pressed) {
 					if (!clicked)
 						clickButton();
 					clicked = true;
 				}
 			}
 			if (FlxG.mouse.justReleased && clicked) {
-				if (!disabled) {
-					if (onClick != null)
-						onClick();
-					if (releaseSound != '')
-						SuffState.playUISound(Paths.sound(releaseSound));
-					idleButton();
-					if (tooltipText != '')
-						Tooltip.text = '';
-					clicked = false;
-				}
+				if (Tooltip.text != '')
+					Tooltip.text = '';
+				if (!disabled && onClick != null)
+					onClick();
+				if (releaseSound != '')
+					SuffState.playUISound(Paths.sound(releaseSound));
+				idleButton();
+				clicked = false;
 			}
 		} else {
 			if (hovered) {
 				clicked = false;
 				idleButton();
-				if (tooltipText != '')
-					Tooltip.text = '';
 				if (onIdle != null)
 					onIdle();
 				hovered = false;
@@ -233,10 +245,14 @@ class SuffButton extends FlxSpriteGroup {
 	function hoverButton() {
 		if (disabled)
 			return;
-		scaleIn();
-		tweenColor(!disabled ? btnBGColorHovered : btnBGColorDisabled);
-		if (btnText != null && !disabled)
-			btnText.color = btnTextColorHovered;
+		if (btnBGScaleTween != null)
+			btnBGScaleTween.cancel();
+		btnBGScaleTween = FlxTween.tween(btnBG.scale, {x: bgScale * 1.1, y: bgScale * 1.1}, 0.15);
+		if (btnOutlineScaleTween != null)
+			btnOutlineScaleTween.cancel();
+		btnOutlineScaleTween = FlxTween.tween(btnOutline.scale, {x: bgScale * 1.1, y: bgScale * 1.1}, 0.15);
+		tweenColor(!disabled ? btnBGColorHovered : btnBGColorDisabled, !disabled ? btnOutlineColorHovered : btnOutlineColorDisabled,
+			!disabled ? btnTextColorHovered : btnTextColorDisabled);
 		if (btnIcon != null && !disabled)
 			switchIconImage(btnIconImageHovered);
 		if (hoverSound != '')
@@ -254,9 +270,8 @@ class SuffButton extends FlxSpriteGroup {
 	function clickButton() {
 		if (disabled)
 			return;
-		tweenColor(!disabled ? btnBGColorClicked : btnBGColorDisabled);
-		if (btnText != null && !disabled)
-			btnText.color = btnTextColorClicked;
+		tweenColor(!disabled ? btnBGColorClicked : btnBGColorDisabled, !disabled ? btnOutlineColorClicked : btnOutlineColorDisabled,
+			!disabled ? btnTextColorClicked : btnTextColorDisabled);
 		if (btnIcon != null && !disabled)
 			btnIcon.color = btnTextColorClicked;
 		if (clickSound != '')
@@ -264,41 +279,36 @@ class SuffButton extends FlxSpriteGroup {
 	}
 
 	function idleButton() {
-		if (disabled)
-			return;
-		scaleOut();
-		tweenColor(!disabled ? btnBGColor : btnBGColorDisabled);
+		tweenColor(!disabled ? btnBGColor : btnBGColorDisabled, !disabled ? btnOutlineColor : btnOutlineColorDisabled,
+			!disabled ? btnTextColor : btnTextColorDisabled);
+		if (btnBGScaleTween != null)
+			btnBGScaleTween.cancel();
+		btnBGScaleTween = FlxTween.tween(btnBG.scale, {x: bgScale, y: bgScale}, 0.15);
+		if (btnOutlineScaleTween != null)
+			btnOutlineScaleTween.cancel();
+		btnOutlineScaleTween = FlxTween.tween(btnOutline.scale, {x: bgScale, y: bgScale}, 0.15);
 		if (btnText != null && !disabled)
 			btnText.color = btnTextColor;
 		if (btnIcon != null && !disabled)
 			switchIconImage(btnIconImage);
+		if (tooltipText != '')
+			Tooltip.text = '';
 	}
 
-	function scaleIn() {
-		for (tween in btnScaleTweens) {
-			if (tween != null)
-				tween.cancel();
-		}
-		var tween1 = FlxTween.tween(btnBG, {'scale.x': bgScale + 0.2, 'scale.y': bgScale + 0.2}, 0.1);
-		var tween2 = FlxTween.tween(btnBGOutline, {'scale.x': bgScale + 0.2, 'scale.y': bgScale + 0.2}, 0.1);
-		btnScaleTweens.push(tween1);
-		btnScaleTweens.push(tween2);
-	}
-
-	function scaleOut() {
-		for (tween in btnScaleTweens) {
-			if (tween != null)
-				tween.cancel();
-		}
-		var tween1 = FlxTween.tween(btnBG, {'scale.x': bgScale, 'scale.y': bgScale}, 0.1);
-		var tween2 = FlxTween.tween(btnBGOutline, {'scale.x': bgScale, 'scale.y': bgScale}, 0.1);
-		btnScaleTweens.push(tween1);
-		btnScaleTweens.push(tween2);
-	}
-
-	function tweenColor(finalColor:FlxColor) {
+	function tweenColor(finalBGColor:FlxColor, finalOutlineColor:FlxColor, finalTextColor:FlxColor) {
 		if (btnBGColorTween != null)
 			btnBGColorTween.cancel();
-		btnBGColorTween = FlxTween.color(btnBG, 0.1, btnBG.color, finalColor);
+		if (btnOutlineColorTween != null)
+			btnOutlineColorTween.cancel();
+		if (btnTextColorTween != null)
+			btnTextColorTween.cancel();
+		if (btnBG.color != finalBGColor)
+			btnBGColorTween = FlxTween.color(btnBG, 0.1, btnBG.color, finalBGColor);
+		if (btnOutline.color != finalOutlineColor)
+			btnOutlineColorTween = FlxTween.color(btnOutline, 0.1, btnOutline.color, finalOutlineColor);
+		/*
+		if (btnText != null && btnText.color != finalTextColor)
+			btnTextColorTween = FlxTween.color(btnText, 0.1, btnText.color, finalTextColor);
+		*/
 	}
 }

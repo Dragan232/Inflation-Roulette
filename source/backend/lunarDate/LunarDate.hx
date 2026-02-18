@@ -1,23 +1,20 @@
 package backend.lunarDate;
 
-/**
- * This script is copied from https://github.com/R32/lunar
- */
 class LunarDate {
 	public var time(default, null):Date; // Gregorian calendar time
 	public var info(default, null):Info;
 	public var year(default, null):Int; // Lunar year
 	public var month(default, null):Int; // Lunar month [1 ~ 12]
-	public var day(default, null):Int; // Lunar day
+	public var date(default, null):Int; // Lunar day
 	public var leap(default, null):Bool; // Whether the current date is in a "leap month"
 
 	private function new(ly:Int, lm:Int, ld:Int, le:Bool, ds:Int, t:Date, i:Info) {
-		this.year = ly;
-		this.month = lm;
-		this.day = ld;
-		this.leap = le;
-		this.time = t;
-		this.info = i;
+		year = ly;
+		month = lm;
+		date = ld;
+		leap = le;
+		time = t;
+		info = i;
 	}
 
 	public static inline function getYearIndex(y:Int):Int {
@@ -36,7 +33,7 @@ class LunarDate {
 		var leStem = LunarDateConstants.STEMS[offsetYear % 10];
 		var leBranch = LunarDateConstants.BRANCHES[offsetYear % 12];
 
-		var day = this.day;
+		var day = this.date + 1;
 		var leDate = '';
 		if (day < 11) {
 			leDate = LunarDateConstants.ONE_PREFIX + LunarDateConstants.NUMBERS[day];
@@ -58,12 +55,12 @@ class LunarDate {
 	}
 
 	public static function make(time:Date) {
-		var h = Std.int(time.getTime() / LunarDateConstants.HOUR_TO_MICROSECONDS);
+		var h = Std.int((time.getTime() - 1000 * 60 * 60 * 24) / LunarDateConstants.HOUR_TO_MICROSECONDS);
 		var tyear = time.getFullYear();
 		var start = getCacheByYear(tyear);
 		var diff = Std.int((h - start) / 24); // HOURS to DAYS
 		if (diff < 0) {
-			--tyear;
+			tyear--;
 			start = getCacheByYear(tyear);
 			diff = Std.int((h - start) / 24);
 		}
@@ -87,7 +84,7 @@ class LunarDate {
 					diff -= t;
 					tleap = false;
 				} else {
-					--tmonth;
+					tmonth--;
 					tleap = true;
 					break;
 				}

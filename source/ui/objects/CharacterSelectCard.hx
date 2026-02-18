@@ -57,9 +57,9 @@ class CharacterSelectCard extends SuffButton {
 		super.update(elapsed);
 
 		outline.visible = this.hovered;
-		
+
 		btnBG.visible = false;
-		btnBGOutline.visible = false;
+		btnOutline.visible = false;
 
 		if (holdAnim) {
 			charSprite.animation.play(charSprite.animation.curAnim.name, true, false, charSprite.animation.curAnim.frames.length - 1);

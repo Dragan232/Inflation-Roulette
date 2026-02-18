@@ -13,6 +13,7 @@ import states.AddonsMenuState;
 #end
 import states.CreditsState;
 import states.InitStartupState;
+import states.utilities.UtilitiesMenuState;
 import substates.OptionsSubState;
 import substates.GamemodeSelectSubState;
 import ui.objects.GameLogo;
@@ -27,23 +28,22 @@ class MainMenuState extends SuffState {
 	var logo:GameLogo;
 	var splashText:FlxText;
 
-	static final buttonSpacing:Int = 10;
-
 	var buttonGroup:FlxTypedContainer<SuffButton> = new FlxTypedContainer<SuffButton>();
 	var topInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
 	var bottomInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
-	var playButton:SuffButton;
-	var optionsButton:SuffButton;
-	var galleryButton:SuffButton;
+	
+	final menuItemPadding:FlxPoint = new FlxPoint(10, 10);
+	final menuItemSize:FlxPoint = new FlxPoint(500, 440);
+
 	var creditsButton:SuffButton;
 
-	static final menuItems:Array<String> = [
-		'Play',
-		'Options',
+	static final menuItems:Array<Array<String>> = [
+		['Play', 'Options'],
+		['Achievements'],
 		#if _ALLOW_ADDONS
-		'Addons',
+		['Addons', 'Utilities'],
 		#end
-		'Donate'
+		['Gallery', 'Donate']
 	];
 
 	var currentEasterEggInput:String = '';
@@ -52,7 +52,6 @@ class MainMenuState extends SuffState {
 		// Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		FlxG.mouse.visible = true;
 		FlxG.fixedTimestep = false;
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.keys.preventDefaultKeys = [TAB];
@@ -69,7 +68,7 @@ class MainMenuState extends SuffState {
 		add(grid);
 
 		overlay = new FlxBackdrop(Paths.image('gui/transitions/horizontal'), Y);
-		overlay.x = -overlay.width / 2 - 60;
+		overlay.x = -overlay.width / 2 - 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF105060;
 		overlay.alpha = 0.75;
@@ -136,18 +135,22 @@ class MainMenuState extends SuffState {
 
 		add(buttonGroup);
 
-		for (i in 0...menuItems.length) {
-			var button = new SuffButton(0, 0, menuItems[i], null, null, 300, 100);
-			if (menuItems[i] == 'Donate') {
-				button.disabled = true;
-				button.tooltipText = 'Currently, donations are disabled due to developer circumstances.\nIf you want to support this game, please consider sharing it with others!';
+		for (jIndex => j in menuItems) {
+			for (iIndex => item in j) {
+				var curMenuItemSize:FlxPoint = new FlxPoint((menuItemSize.x - menuItemPadding.x * (j.length - 1)) / j.length,
+					(menuItemSize.y - menuItemPadding.y * (menuItems.length - 1)) / menuItems.length);
+				var button = new SuffButton(0, 0, item, null, null, curMenuItemSize.x, curMenuItemSize.y);
+				if (item == 'Donate') {
+					button.disabled = true;
+					button.tooltipText = 'Currently, donations are disabled due to developer circumstances.\nIf you want to support this game, please consider sharing it with others!';
+				}
+				button.x = ((FlxG.width / 2 - 40) - menuItemSize.x) / 2 + (curMenuItemSize.x + menuItemPadding.x) * iIndex;
+				button.y = ((FlxG.height - (FlxG.height - creditsButton.y)) - menuItemSize.y) / 2 + (curMenuItemSize.y + menuItemPadding.y) * jIndex;
+				button.onClick = function() {
+					menuButtonFunctions(item);
+				};
+				buttonGroup.add(button);
 			}
-			button.x = (FlxG.width / 2 - button.width) / 2;
-			button.y = (FlxG.height - (100 + buttonSpacing) * menuItems.length) / 2 + (100 + buttonSpacing) * i;
-			button.onClick = function() {
-				menuButtonFunctions(menuItems[i]);
-			};
-			buttonGroup.add(button);
 		}
 
 		if (!initialized || Preferences.data.alwaysPlayMainMenuAnims)
@@ -162,62 +165,69 @@ class MainMenuState extends SuffState {
 
 	function runFirstStartupTweens() {
 		finishedAnimation = false;
+		var logoX = logo.x;
+		var logoY = logo.y;
 		logo.x = (FlxG.width - logo.width) / 2;
 		logo.y = -logo.height;
-		FlxTween.tween(logo, {y: (FlxG.height - logo.height) / 2}, 1, {
+		FlxTween.tween(logo, {y: logoY}, 1, {
 			ease: FlxEase.quintOut,
 			startDelay: 0.5
 		});
-		FlxTween.tween(logo, {x: FlxG.width / 2 + (FlxG.width / 2 - logo.width) / 2}, 1, {
+		FlxTween.tween(logo, {x: logoX}, 1, {
 			ease: FlxEase.quintInOut,
 			startDelay: 1.5
 		});
 
+		var overlayPos = overlay.x;
 		overlay.x = -overlay.width;
-		FlxTween.tween(overlay, {x: -overlay.width / 2 - 60}, 1, {
+		FlxTween.tween(overlay, {x: overlayPos}, 1, {
 			ease: FlxEase.cubeOut,
 			startDelay: 1.75
 		});
 
 		for (num => button in buttonGroup.members) {
+			var originalX:Float = button.x;
 			button.x = button.width * -1;
 
-			FlxTween.tween(button, {x: (FlxG.width / 2 - button.width) / 2}, 0.75, {
+			FlxTween.tween(button, {x: originalX}, 0.75, {
 				ease: FlxEase.cubeOut,
 				startDelay: 2 + num * 0.1
 			});
 		}
 
 		for (num => text in topInfoTextGroup.members) {
+			var originalX:Float = text.x;
 			text.x = FlxG.width;
-			FlxTween.tween(text, {x: FlxG.width - text.width}, 1, {
+			FlxTween.tween(text, {x: originalX}, 1, {
 				ease: FlxEase.cubeOut,
 				startDelay: 2 + num * 0.2
 			});
 		}
 
 		for (num => text in bottomInfoTextGroup.members) {
+			var originalX:Float = text.x;
 			text.x = FlxG.width;
-			FlxTween.tween(text, {x: FlxG.width - text.width}, 1, {
+			FlxTween.tween(text, {x: originalX}, 1, {
 				ease: FlxEase.cubeOut,
 				startDelay: 2 + num * 0.2
 			});
 		}
 
+		var originalCreditsButtonX:Float = creditsButton.x;
 		creditsButton.x = -creditsButton.width;
-		FlxTween.tween(creditsButton, {x: 10}, 1, {
+		FlxTween.tween(creditsButton, {x: originalCreditsButtonX}, 1, {
 			ease: FlxEase.cubeOut,
 			startDelay: 2.5
 		});
 
+		var original_splashTextY:Float = splashText.y;
 		splashText.y = FlxG.height * 1.25;
-		new FlxTimer().start(2.0, function(_) { // logo position will be fetched after timer ends
-			FlxTween.tween(splashText, {y: logo.y + logo.height + 10}, 0.75, {
-				ease: FlxEase.cubeOut,
-				onComplete: function(_) {
-					finishedAnimation = true;
-				}
-			});
+		FlxTween.tween(splashText, {y: original_splashTextY}, 0.75, {
+			startDelay: 2.0,
+			ease: FlxEase.cubeOut,
+			onComplete: function(_) {
+				finishedAnimation = true;
+			}
 		});
 	}
 
@@ -258,19 +268,21 @@ class MainMenuState extends SuffState {
 	}
 
 	function menuButtonFunctions(menu:String) {
-		switch (menu.toUpperCase()) {
-			case 'PLAY':
+		switch (menu.toLowerCase()) {
+			case 'play':
 				openSubState(new GamemodeSelectSubState());
-			case 'OPTIONS':
+			case 'options':
 				OptionsSubState.notInGame = true;
 				openSubState(new OptionsSubState());
 			#if _ALLOW_ADDONS
-			case 'ADDONS':
+			case 'addons':
 				SuffState.switchState(new AddonsMenuState());
+			case 'utilities':
+				SuffState.switchState(new UtilitiesMenuState());
 			#end
-			case 'CREDITS':
+			case 'credits':
 				SuffState.switchState(new CreditsState());
-			case 'DONATE':
+			case 'donate':
 				Utils.browserLoad('https://ko-fi.com/nicklysuffer');
 		}
 	}

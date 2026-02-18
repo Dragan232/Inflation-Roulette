@@ -60,7 +60,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.bg.updateHitbox();
 
 		instance.bgOutline.loadGraphic(Utils.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF));
-		instance.visible = FlxG.mouse.visible && (text.length > 0);
+		instance.visible = (FlxG.mouse.visible || Preferences.data.hideCursor) && (text.length > 0);
 		return value;
 	}
 
@@ -73,8 +73,12 @@ class Tooltip extends FlxSpriteGroup {
 		instance.x = FlxMath.bound(leMousePos.x + position.x, 0, FlxG.width - instance.bg.width);
 		instance.y = FlxMath.bound(leMousePos.y + position.y, 0, FlxG.height - instance.bg.height);
 
-		super.update(elapsed);
+		if (Preferences.data.hideCursor && FlxG.keys.justPressed.G) {
+			Preferences.data.hideCursor = false;
+			Preferences.savePrefs();
+			Preferences.loadPrefs();
+		}
 
-		instance.visible = FlxG.mouse.visible && (text.length > 0);
+		super.update(elapsed);
 	}
 }

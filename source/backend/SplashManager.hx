@@ -5,6 +5,8 @@ import backend.types.SplashCollectionData;
 import backend.types.SplashGroupData;
 import tjson.TJSON as Json;
 
+import lunar.Lunar;
+
 class SplashManager {
 	public static var activeSplashes:Array<String> = [];
 	public static var activeColors:Array<FlxColor> = [];
@@ -26,6 +28,7 @@ class SplashManager {
 		var lunarCurrentTime = LunarDate.now();
 		trace(gregorianCurrentTime);
 		trace(lunarCurrentTime);
+		trace(Lunar.now());
 
 		for (splash in collection.shared) {
 			activeSplashes.push(splash);
@@ -47,7 +50,7 @@ class SplashManager {
 					potentiallyLunar = true;
 					currentYear = lunarCurrentTime.year;
 					currentMonth = StringTools.lpad(lunarCurrentTime.month + '', '0', 2);
-					currentDay = StringTools.lpad(lunarCurrentTime.day + '', '0', 2);
+					currentDay = StringTools.lpad(lunarCurrentTime.date + '', '0', 2);
 				}
 				var currentTime:Date = Date.fromString('$currentYear-$currentMonth-$currentDay');
 
