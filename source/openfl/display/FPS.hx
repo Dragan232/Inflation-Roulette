@@ -81,7 +81,7 @@ class FPS extends TextField {
 			updateText();
 
 			textColor = 0xFFFFFFFF;
-			if (currentFPS <= Preferences.data.framerate * 0.8) {
+			if (currentFPS <= Preferences.data.maxFramerate * 0.8) {
 				textColor = 0xFFFF0000;
 			}
 		}

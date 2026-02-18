@@ -232,7 +232,7 @@ class PlayState extends SuffState {
 		uiBGBottom.alpha = 0.25;
 		uiBGGroup.add(uiBGBottom);
 
-		skillsText = new FlxText(0, 0, 0, 'SKILLS');
+		skillsText = new FlxText(0, 0, 0, Language.getPhrase('stats.skills').toUpperCase());
 		skillsText.setFormat(Paths.font('default'), 32, FlxColor.WHITE);
 		skillsText.x = uiBGTop.width - skillsText.width;
 		uiBGGroup.add(skillsText);
@@ -246,7 +246,7 @@ class PlayState extends SuffState {
 		uiBGGroup.add(pressureIcon);
 
 		pressureText = new FlxText(pressureIcon.width + 4, 0, 0, '');
-		pressureText.setFormat(Paths.font('default'), 16, pressureBarColors[0]);
+		pressureText.setFormat(Paths.font('default'), 32, pressureBarColors[0]);
 		uiBGGroup.add(pressureText);
 
 		pressureIcon.color = pressureText.color;
@@ -261,7 +261,7 @@ class PlayState extends SuffState {
 		uiBGGroup.add(confidenceIcon);
 
 		confidenceText = new FlxText(confidenceIcon.width + 4, 0, 0, '');
-		confidenceText.setFormat(Paths.font('default'), 16, confidenceBarColors[0]);
+		confidenceText.setFormat(Paths.font('default'), 32, confidenceBarColors[0]);
 		uiBGGroup.add(confidenceText);
 
 		confidenceIcon.color = confidenceText.color;
@@ -574,7 +574,7 @@ class PlayState extends SuffState {
 		toggleCameraFocusButton(false);
 		// trace(getPlayer(playerIndex).animSoundPaths[soundName]);
 		if (getPlayer(playerIndex).animSoundPaths[soundName] == null || getPlayer(playerIndex).animSoundPaths[soundName].length <= 0) {
-			if (Paths.fileExists(Paths.appendSoundExt('sounds/characters/GLOBAL/' + soundName), SOUND)) {
+			if (Paths.fileExists(Paths.getSoundPath('characters/GLOBAL/' + soundName), SOUND)) {
 				SuffState.playSound(Paths.sound('characters/GLOBAL/' + soundName));
 			}
 		}

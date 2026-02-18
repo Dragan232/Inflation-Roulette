@@ -1,0 +1,149 @@
+game.title = 膨脹輪盤：重裝版
+game.titleShort = 膨脹輪盤
+game.abbreviation = 膨脹輪盤
+
+game.version.numeral.format = 版本編號 %1
+game.version.numeralModded.format = 模組版本編號 %1
+game.version.name.minor.format = 次版 %1
+game.version.name.hotfix.format = 修訂 %1
+
+game.version.name.major.0 = 公開測試
+game.version.name.major.1 = 初始版本
+
+game.build.format = %1 版本
+
+mainMenu.play = 遊玩
+mainMenu.achievements = 成就
+mainMenu.options = 設定
+mainMenu.language = 語言
+mainMenu.addons = 附加包
+mainMenu.utilities = 製作工具
+mainMenu.gallery = 畫廊
+mainMenu.donate = 捐款
+
+mainMenu.donate.tooltip = 您的捐贈有助支持這遊戲的發展！
+mainMenu.donate.tooltip.disabled = 目前由於開發者的情勢，捐贈功能已關閉。\n如果您想支持這款遊戲，請與他人分享！
+mainMenu.utilities.tooltip.disabled = 製作工具將在下次更新中發布。
+mainMenu.gallery.tooltip.disabled = 畫廊將在下次更新中發布。
+mainMenu.achievements.tooltip.disabled = 成就將在下次更新中發布。
+
+warningMenu.title = 警告
+warningMenu.content = 本遊戲僅限18歲以上之成年玩家。\n本遊戲為戀物向作品，主要包含獸人膨脹內容，部分玩家可能感到不適。由第三方製作的模組未經審核，可能包含令部分玩家不適的內容。強烈建議勿於未成年人常駐之社群平台錄製或直播本遊戲。\n本遊戲包含閃爍畫面與畫面晃動效果，能引發部分玩家光敏性癲癇症狀，可透過設定選單減緩此類特效。\n點擊「接受」即表示您已知悉上述警告，並願自行承擔遊戲所引發之任何負面影響。
+warningMenu.accept = 接受
+
+optionsMenu.heading.gameplay = 遊戲
+optionsMenu.heading.preferences = 偏好
+optionsMenu.heading.visuals = 視效
+optionsMenu.heading.audio = 音訊
+optionsMenu.heading.accessibility = 輔助
+optionsMenu.heading.cursor = 遊標
+optionsMenu.heading.technical = 技術
+optionsMenu.heading.debugText = 調試文字
+
+option.ignoreEliminatedPlayers.name = 跳過淘汰者
+option.ignoreEliminatedPlayers.description = 被擊敗的玩家在輪到他們行動時不會播放動畫。
+option.allowPopping.name = 爆裂
+option.allowPopping.description = 玩家被擊敗之後會非致命性地爆裂。\n如果被關閉，玩家會被過度膨脹。\n將在下一場遊戲中生效。
+option.allowBellyGurgles.name = 腹鳴
+option.allowBellyGurgles.description = 玩家在充氣狀態下發出腹部蠕動聲。
+option.allowBellyCreaks.name = 嘎吱
+option.allowBellyCreaks.description = 玩家在充氣狀態下發出氣球嘎吱的聲音。
+option.enableFullscreen.name = 全螢幕
+option.enableFullscreen.description = 無需贅述，但你真的那麼匱乏嗎？
+option.enableForceAliasing.name = 強迫鋸齒
+option.enableForceAliasing.description = 即使角色啟用了抗鋸齒功能，也會停用它所有圖案的抗鋸齒效果。可提高效能，但能會導致某些圖形出現鋸齒狀邊緣。
+option.alwaysPlayMainMenuAnims.name = 生動主選單
+option.alwaysPlayMainMenuAnims.description = 常在主選單中播放啟動動畫。
+option.showMusicToast.name = 音樂提示通知
+option.showMusicToast.description = 播放背景音樂時，會顯示音樂名稱​​及其作者的通知。
+option.enableLetterbox.name = 黑邊
+option.enableLetterbox.description = 在玩家動畫和過場動畫期間，在螢幕頂部和底部兩側顯示黑邊。
+option.useClassicMusic.name = 經典音樂
+option.useClassicMusic.description = 遊戲使用了原版遊戲的音樂，而不是新創作的音樂。
+option.musicVolume.name = 音樂音量
+option.musicVolume.description = 背景音樂的音量百分比。
+option.gameSoundVolume.name = 遊戲音量
+option.gameSoundVolume.description = 遊戲音效的音量百分比。
+option.uiSoundVolume.name = 介面聲音音量
+option.uiSoundVolume.description = 使用者介面音效的音量百分比。
+option.enablePhotosensitiveMode.name = 光敏模式
+option.enablePhotosensitiveMode.description = 抑制螢幕閃爍和其他閃爍效果。\n強烈建議給光敏性癲癇患者。
+option.cameraEffectIntensity.name = 相機強度
+option.cameraEffectIntensity.description = 螢幕震動和其他令人迷失方向的效果應該有多強。
+option.useBuiltInCursor.name = 內建遊標
+option.useBuiltInCursor.description = 使用自訂遊戲內滑鼠遊標，而不是預設系統滑鼠遊標。
+option.hideCursor.name = 隱藏遊標
+option.hideCursor.description = 隱藏滑鼠遊標。 \n隨時按 G 鍵即可再次顯示遊標。
+option.playCursorSounds.name = 遊標聲音
+option.playCursorSounds.description = 滑鼠遊標點擊任何地方時都會發出咔噠聲。
+option.maxFramerate.name = 最高 FPS
+option.maxFramerate.description = 遊戲在一秒鐘內應該進行多少次螢幕刷新和遊戲更新。
+option.pauseOnUnfocus.name = 取消聚焦暫停
+option.pauseOnUnfocus.description = 當遊戲視窗失去焦點時，自動暫停遊戲。
+option.cacheOnGPU.name = 顯存快取
+option.cacheOnGPU.description = 允許使用 GPU 透過 VRAM 儲存材質，從而降低 RAM 使用量。\n可能無法在低階顯示卡上正常運作。
+option.enableDebugKeybinds.name = 調試快捷鍵
+option.enableDebugKeybinds.description = 在電腦上啟用調試快捷鍵。（如果你用的是手機，too bad lmao）
+option.showDebugText.name = 調試文字
+option.showDebugText.description = 在螢幕左上角顯示調試資訊。
+option.showFramerateOnDebugText.name = FPS
+option.showFramerateOnDebugText.description = 在調試文字中顯示目前的 FPS。
+option.showMemoryUsageOnDebugText.name = 記憶體使用率
+option.showMemoryUsageOnDebugText.description = 在調試文字中顯示目前使用的記憶體量。
+option.showCurrentStateOnDebugText.name = 目前選單
+option.showCurrentStateOnDebugText.description = 在調試文字中顯示目前正在瀏覽的選單。
+
+addonsMenu.authors = 作者名單：
+addonsMenu.noAddonsDetected.title = 未偵測到任何附加包
+addonsMenu.noAddonsDetected.content = 在附加包資料夾中未偵測到任何附加包。請檢查你是否已在附加包資料夾的 metadata 資料夾中新增了 metadata.json 檔案。 \n如果你認為這是一個錯誤，請將此問題報告到我們的 GitHub 程式碼庫。
+
+languageMenu.title = 選擇語言
+languageMenu.description = 譯文可能並非 100% 準確，可能包含誤譯或未翻譯的文字。如果你想協助改進翻譯，歡迎為我們的 GitHub 程式碼庫貢獻。
+languageMenu.contributors = 協作者
+
+gamemodeSelect.title = 選擇遊戲模式
+gamemode.quickPlay.name = 快速
+gamemode.quickPlay.description = 隨機角色。\n直奔遊玩；毫無障礙。
+gamemode.reloaded.name = 重裝
+gamemode.reloaded.description = 全新的膨脹輪盤玩法。\n遊戲平衡性符合預期。
+gamemode.inequality.name = 不均
+gamemode.inequality.description = 每次射出實彈，玩家都會被隨機賦予技能。\n「所有玩家生來平等，但有些玩家比其他玩家更平等。」
+gamemode.classic.name = 經典
+gamemode.classic.description = 真正隨機，無盡偷襲。 \n遊戲的原始玩法。
+gamemode.chargeshot.name = 蓄力
+gamemode.chargeshot.description = 每次空彈都會增加傷害力。\n風險與回報並存。
+
+characterSelect.title = 擇爾之軀
+characterSelect.default.description = 持卡查看訊息
+characterSelect.cpuControlled = CPU
+
+character.goober.name = 古巴
+character.goober.description = 生活在城市地區，有感知能力且佔據主導地位的物種。擅長修理槍械。
+character.random.name = ？？？
+character.random.description = 不知選誰？讓遊戲決定吧！
+
+gameOn.text = 遊戲開始
+
+skill.reload.name = 重新裝彈
+skill.reload.description = 重新裝填彈膛，重置被實彈擊中的機率。
+skill.sabotage.name = 偷襲
+skill.sabotage.description = 下一位玩家將有一定幾率被實彈擊中。
+skill.pressurize.name = 加壓
+skill.pressurize.description = 現場實彈的壓力將是平時的兩倍。
+skill.polarize.name = 偏振
+skill.polarize.description = 反轉目前子彈的狀態。
+skill.deflate.name = 減壓
+skill.deflate.description = 壓力降低1巴。
+
+pauseMenu.title = 遊戲暫停
+pauseMenu.resume = 繼續
+pauseMenu.restart = 重玩
+pauseMenu.options = 設定
+pauseMenu.exit = 退出
+
+stats.pressure = 壓力
+stats.confidence = 自信
+stats.skill = 技能
+stats.skills = 技能
+stats.modifier = 修制
+stats.modifiers = 修制

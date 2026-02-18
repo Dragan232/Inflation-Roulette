@@ -15,7 +15,7 @@ class InitStartupState extends SuffState {
 		new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 			#if _ALLOW_EASTER_EGGS
 			var startupState = '';
-			if (FlxG.save.data != null && FlxG.save.data.easterEggStartup != null)
+			if (FlxG.save.data != null && FlxG.save.data.acknowledgedTermsOfService != null && FlxG.save.data.termsOfService != null)
 				startupState = FlxG.save.data.easterEggStartup;
 			else {
 				FlxG.save.data.easterEggStartup = '';

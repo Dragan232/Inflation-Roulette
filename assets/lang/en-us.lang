@@ -1,0 +1,149 @@
+game.title = Inflation Roulette: Reloaded
+game.titleShort = Inflation Roulette
+game.abbreviation = IRR
+
+game.version.numeral.format = Version %1
+game.version.numeralModded.format = Modded Version %1
+game.version.name.minor.format = Pitstop %1
+game.version.name.hotfix.format = Amendment %1
+
+game.version.name.major.0 = Public Beta
+game.version.name.major.1 = Initial Release
+
+game.build.format = %1 Build
+
+mainMenu.play = Play
+mainMenu.achievements = Achievements
+mainMenu.options = Options
+mainMenu.language = Language
+mainMenu.addons = Add-Ons
+mainMenu.utilities = Utilities
+mainMenu.gallery = Gallery
+mainMenu.donate = Donate
+
+mainMenu.donate.tooltip = Your generous donations help support the development of this game!
+mainMenu.donate.tooltip.disabled = Currently, donations are disabled due to developer circumstances.\nIf you want to support this game, please consider sharing it with others!
+mainMenu.utilities.tooltip.disabled = Modding Utilities will be released in the next update.
+mainMenu.gallery.tooltip.disabled = Gallery will be released in the next update.
+mainMenu.achievements.tooltip.disabled = Achievements will be released in the next update.
+
+warningMenu.title = WARNING
+warningMenu.content = This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing 'Accept', you acknowledge these warnings and fully bear any negative consequences caused by this game.
+warningMenu.accept = Accept
+
+optionsMenu.heading.gameplay = Gameplay
+optionsMenu.heading.preferences = Preferences
+optionsMenu.heading.visuals = Visuals
+optionsMenu.heading.audio = Audio
+optionsMenu.heading.accessibility = Accessibility
+optionsMenu.heading.cursor = Cursor
+optionsMenu.heading.technical = Technical
+optionsMenu.heading.debugText = Debug Text
+
+option.ignoreEliminatedPlayers.name = Eliminee Skip
+option.ignoreEliminatedPlayers.description = Players who are defeated will not play an animation when it's their turn.
+option.allowPopping.name = Popping
+option.allowPopping.description = Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead.\nTakes effect in the next game.
+option.allowBellyGurgles.name = Borborygmi
+option.allowBellyGurgles.description = Players play belly gurgle sounds on idle when inflated.
+option.allowBellyCreaks.name = Creaking
+option.allowBellyCreaks.description = Players play balloon overstretching sounds on idle when inflated.
+option.enableFullscreen.name = Fullscreen
+option.enableFullscreen.description = Self-explanatory, but are you that deprived?
+option.enableForceAliasing.name = Forced Alising
+option.enableForceAliasing.description = Disables antialiasing from all sprites even when enabled. Improves performance, but may make some graphics look jagged.
+option.alwaysPlayMainMenuAnims.name = Entertaining Main Menu
+option.alwaysPlayMainMenuAnims.description = Always play startup animations in the Main Menu.
+option.showMusicToast.name = Music Toast
+option.showMusicToast.description = A notification containing the current background music name and its author will be shown whenever a music track is played.
+option.enableLetterbox.name = Letterboxing
+option.enableLetterbox.description = Show black bars on top and bottom sides of the screen during player animations and cutscenes.
+option.useClassicMusic.name = Classic Music
+option.useClassicMusic.description = The game uses music in the original game instead of new music.
+option.musicVolume.name = Music Volume
+option.musicVolume.description = The volume percentage of background music.
+option.gameSoundVolume.name = Game Sound Volume
+option.gameSoundVolume.description = The volume percentage of game sound effects.
+option.uiSoundVolume.name = UI Sound Volume
+option.uiSoundVolume.description = The volume percentage of UI sound effects.
+option.enablePhotosensitiveMode.name = Photosensitive Mode
+option.enablePhotosensitiveMode.description = Dampen screen flashes and other flashing effects.\nStrongly recommended for people with photosensitive epilepsy.
+option.cameraEffectIntensity.name = Camera Intensity
+option.cameraEffectIntensity.description = How strong screen shaking and other disorienting effects should be.
+option.useBuiltInCursor.name = Built-In Cursor
+option.useBuiltInCursor.description = Uses the custom in-game cursor instead of the default system mouse cursor.
+option.hideCursor.name = Hide Cursor
+option.hideCursor.description = Hides the mouse cursor entirely.\nCursor can be shown again by pressing [G] at any time.
+option.playCursorSounds.name = Cursor Sounds
+option.playCursorSounds.description = Plays a click sound whenever the mouse cursor clicks something.
+option.maxFramerate.name = Maximum Framerate
+option.maxFramerate.description = How many screen refreshes and game updates should the game do in one second.
+option.pauseOnUnfocus.name = Unfocus Pausing
+option.pauseOnUnfocus.description = Automatically pauses the game when out of focus.
+option.cacheOnGPU.name = VRAM Caching
+option.cacheOnGPU.description = Allows the GPU to be used for storing textures using VRAM for lower RAM usage.\nMay not work correctly with lower-end graphics cards.
+option.enableDebugKeybinds.name = Debug Keybinds
+option.enableDebugKeybinds.description = Enable debug keybinds on PC. (If you're on mobile, too bad lmao)
+option.showDebugText.name = Debug Text
+option.showDebugText.description = Displays debug information on the top-left corner of the screen.
+option.showFramerateOnDebugText.name = Framerate
+option.showFramerateOnDebugText.description = Displays the current framerate on the Debug Text.
+option.showMemoryUsageOnDebugText.name = Memory Usage
+option.showMemoryUsageOnDebugText.description = Displays the current amount of memory used on the Debug Text.
+option.showCurrentStateOnDebugText.name = Current State
+option.showCurrentStateOnDebugText.description = Displays the current menu being navigated on the Debug Text.
+
+addonsMenu.authors = Authors:
+addonsMenu.noAddonsDetected.title = No Add-Ons Detected
+addonsMenu.noAddonsDetected.content = No addons are detected within the addons folder. Please check whether you have included a metadata.json in the metadata folder in the addons.\nIf you think this is a mistake, please report your issue to our GitHub repository.
+
+languageMenu.title = SELECT LANGUAGE
+languageMenu.description = Note: Translations may not be 100% accurate, and may contain mistranslations or untranslated text. If you want to help improve the translations, please consider contributing to our GitHub repository.
+languageMenu.contributors = Contributors
+
+gamemodeSelect.title = SELECT GAMEMODE
+gamemode.quickPlay.name = Quickplay
+gamemode.quickPlay.description = Random characters.\nStraight ahead; no fuzz.
+gamemode.reloaded.name = Reloaded
+gamemode.reloaded.description = A brand new way to play Inflation Roulette.\nBalanced as the developer intended.
+gamemode.inequality.name = Inequality
+gamemode.inequality.description = Players are given random skills on each live shot.\nAll players are equal, but some players are more equal than others.
+gamemode.classic.name = Classic
+gamemode.classic.description = True randomness and sabotage endlessly.\nThe original way of playing the game.
+gamemode.chargeshot.name = Chargeshot
+gamemode.chargeshot.description = Damage increases with each blank shot.\nRisky and rewarding gameplay.
+
+characterSelect.title = CHOOSE YOUR VESSELS
+characterSelect.default.description = Hold Cards To See Info
+characterSelect.cpuControlled = CPU
+
+character.goober.name = Goober
+character.goober.description = A sentient and dominant species found in urban areas. Proficient at tinkering with guns.
+character.random.name = ???
+character.random.description = Not sure who to choose? Let the game decide.
+
+gameOn.text = GAME ON!
+
+skill.reload.name = Reload
+skill.reload.description = Reload the cylinder to reset your chance of being shot with a live round.
+skill.sabotage.name = Sabotage
+skill.sabotage.description = The next player will have a guaranteed chance of being shot with a live round.
+skill.pressurize.name = Pressurize
+skill.pressurize.description = The live round will deal 2x the Pressure.
+skill.polarize.name = Polarize
+skill.polarize.description = Invert the state of the current round.
+skill.deflate.name = Deflate
+skill.deflate.description = Deplete one bar of Pressure.
+
+pauseMenu.title = GAME PAUSED
+pauseMenu.resume = Resume
+pauseMenu.restart = Restart
+pauseMenu.options = Options
+pauseMenu.exit = Exit
+
+stats.pressure = Pressure
+stats.confidence = Confidence
+stats.skill = Skill
+stats.skills = Skills
+stats.modifier = Modifier
+stats.modifiers = Modifiers

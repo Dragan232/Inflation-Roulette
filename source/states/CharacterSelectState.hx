@@ -91,7 +91,7 @@ class CharacterSelectState extends SuffState {
 		grid.velocity.set(160, 160);
 		add(grid);
 
-		selectCharacterTxt = new FlxText(0, 0, 0, 'CHOOSE YOUR VESSELS');
+		selectCharacterTxt = new FlxText(0, 0, 0, Language.getPhrase('characterSelect.title'));
 		selectCharacterTxt.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
 		selectCharacterTxt.borderSize = 4;
 		selectCharacterTxt.screenCenter();
@@ -153,9 +153,9 @@ class CharacterSelectState extends SuffState {
 
 		add(playerSettingGroup);
 		for (i in 0...CharacterManager.selectedCharacterList.length) {
-			addBooleanOption(i, 'Player', function(val:Bool) {
-				CharacterManager.playerControlled[i] = val;
-			}, CharacterManager.playerControlled[i]);
+			addBooleanOption(i, Language.getPhrase('characterSelect.cpuControlled'), function(val:Bool) {
+				CharacterManager.playerControlled[i] = !val;
+			}, !CharacterManager.playerControlled[i]);
 
 			/*
 				addSliderOption(i, 'Skill Level', function(val:Float) {
@@ -173,8 +173,8 @@ class CharacterSelectState extends SuffState {
 		for (i in 0...characterList.length) {
 			var leChar:CharacterData = {
 				id: 'random',
-				name: '???',
-				description: 'Not sure who to choose? Let the game decide.',
+				// name: '???',
+				// description: 'Not sure who to choose? Let the game decide.',
 				skills: [],
 				modifiers: [],
 				maxPressure: 0,

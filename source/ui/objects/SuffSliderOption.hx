@@ -21,7 +21,7 @@ class SuffSliderOption extends FlxSpriteGroup {
 	var parentActualX:Float = 0;
 
 	public function new(x:Float, y:Float, callback:Float->Void, rangeMin:Null<Float> = null, rangeMax:Null<Float> = null, step:Float = 0.05,
-			displayFunction:Float->String = null, defaultValue:Float = 0, name:String = '') {
+			displayFunction:Float->String = null, defaultValue:Float = 0) {
 		super(x, y);
 		onChangeCallback = callback;
 		this.displayFunction = function(value:Float):String {
@@ -30,7 +30,6 @@ class SuffSliderOption extends FlxSpriteGroup {
 		if (displayFunction != null)
 			this.displayFunction = displayFunction;
 		this.currentValue = defaultValue;
-		this.name = name;
 		this.step = step;
 		if (rangeMin != null)
 			this.range[0] = rangeMin;

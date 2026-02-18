@@ -7,14 +7,16 @@ class WarningState extends SuffState {
 	var warningDesc:FlxText;
 	var acceptButton:SuffButton;
 
-	final warningText:String = 'This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing \'Accept\', you acknowledge these warnings and fully bear any negative consequences caused by this game.';
+	var warningText:String = 'This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing \'Accept\', you acknowledge these warnings and fully bear any negative consequences caused by this game.';
 	var typingRate:Float = 0;
 	var typingTick:Float = 0;
 
 	override function create() {
 		super.create();
 
-		warningTitle = new FlxText(0, 0, 0, '- WARNING -');
+		warningText = Language.getPhrase('warningMenu.content');
+
+		warningTitle = new FlxText(0, 0, 0, Language.getPhrase('warningMenu.title'));
 		warningTitle.setFormat(Paths.font('default'), 80, 0xFFFF0000);
 		warningTitle.screenCenter();
 		warningTitle.alpha = 0;
@@ -27,18 +29,20 @@ class WarningState extends SuffState {
 		warningDesc.visible = false;
 		add(warningDesc);
 
-		acceptButton = new SuffButton(0, 0, 'Accept', null, null, 220, 100);
-		acceptButton.btnOutlineColor = 0xFFFFFFFF;
+		acceptButton = new SuffButton(0, 0, Language.getPhrase('warningMenu.accept'), null, null, 220, 100);
+		acceptButton.btnOutlineColor = acceptButton.btnOutlineColorHovered = acceptButton.btnOutlineColorClicked = acceptButton.btnOutlineColorDisabled = 0xFFFFFFFF;
 		acceptButton.btnTextColorDisabled = 0xFF000000;
 		acceptButton.btnBGColor = 0xFF000000;
 		acceptButton.btnBGColorHovered = 0xFF000000;
 		acceptButton.btnBGColorDisabled = 0xFFFFFFFF;
+		acceptButton.btnBGColorClicked = 0xFFFFFFFF;
 		acceptButton.clickSound = 'confetti';
 		acceptButton.screenCenter();
 		acceptButton.onClick = function() {
 			acceptButton.disabled = true;
 			SuffState.playUISound(Paths.music('win'), Preferences.data.musicVolume);
 			FlxG.save.data.acknowledgedTermsOfService = true;
+			FlxG.save.data.termsOfService = warningText;
 			FlxG.save.flush();
 			new FlxTimer().start(1, function(_) {
 				FlxG.camera.fade(0xFF000000, 2, function() {
@@ -60,6 +64,7 @@ class WarningState extends SuffState {
 					onComplete: function(_) {
 						warningDesc.text = '';
 						warningDesc.visible = true;
+						allowTyping = true;
 						typingRate = 55;
 					}
 				});
@@ -67,13 +72,25 @@ class WarningState extends SuffState {
 		});
 	}
 
+	var allowTyping:Bool = false;
+
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		typingTick += typingRate * elapsed;
+		if (allowTyping) {
+			typingTick += typingRate * elapsed;
+			warningDesc.text = warningText.substring(0, Math.round(typingTick));
+			if (FlxG.mouse.pressed) {
+				typingRate = 110;
+			} else {
+				typingRate = 55;
+			}
+		}
 		if (typingTick > warningText.length) {
+			allowTyping = false;
 			typingRate = 0;
 			typingTick = warningText.length;
+			warningDesc.text = warningText;
 			FlxG.mouse.visible = true;
 			FlxTween.tween(acceptButton, {
 				y: warningDesc.y + warningDesc.height + 10
@@ -82,6 +99,5 @@ class WarningState extends SuffState {
 				startDelay: 1
 			});
 		}
-		warningDesc.text = warningText.substring(0, Math.round(typingTick));
 	}
 }

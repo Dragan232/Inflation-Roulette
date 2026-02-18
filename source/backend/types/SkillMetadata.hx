@@ -1,7 +1,7 @@
 package backend.types;
 
 typedef SkillMetadata = {
-	name:String,
-	description:String,
+	// name:String,
+	// description:String,
 	?defaultCost:Int
 }

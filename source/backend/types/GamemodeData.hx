@@ -1,8 +1,8 @@
 package backend.types;
 
 typedef GamemodeData = {
-	name:String,
-	description:String,
+	// name:String,
+	// description:String,
 	?color:String,
 
 	?cylinderSize:Int,

@@ -40,7 +40,8 @@ class SuffState extends FlxUIState {
 		}
 		if (!forceRestart && currentMusicName == usedTag)
 			return;
-		if (!Paths.fileExists(Paths.appendSoundExt('music/' + usedTag), SOUND)) {
+		//trace(Paths.getMusicPath(usedTag));
+		if (!Paths.fileExists(Paths.getMusicPath(usedTag), SOUND)) {
 			if (!forceModernIfNoClassic) {
 				trace('Music [$usedTag] cannot be found. Skipping');
 				return;

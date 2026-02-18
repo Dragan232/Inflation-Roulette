@@ -26,7 +26,7 @@ class Tooltip extends FlxSpriteGroup {
 
 		scrollFactor.set();
 
-		tooltipText = new FlxText(padding.x, padding.y, 0, '');
+		tooltipText = new FlxText(padding.x, padding.y, 480, '');
 		tooltipText.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
 
 		bg = new FlxSprite().makeGraphic(1, 1, 0xFF000000);
@@ -52,9 +52,13 @@ class Tooltip extends FlxSpriteGroup {
 			return value;
 		instance.visible = false;
 
-		instance.tooltipText.text = Utils.wrapColumns(text, 32);
-		var leWidth = instance.tooltipText.width + padding.x * 2;
+		instance.tooltipText.font = Paths.font('default');
+		instance.tooltipText.text = text;
+		var experimental = new FlxText(0, 0, 0, text);
+		experimental.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
+		var leWidth = Math.min(480, experimental.width) + padding.x * 2;
 		var leHeight = instance.tooltipText.height + padding.y * 2;
+		experimental.destroy();
 
 		instance.bg.scale.set(leWidth, leHeight);
 		instance.bg.updateHitbox();

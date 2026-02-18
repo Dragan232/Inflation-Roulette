@@ -23,11 +23,12 @@ class SkillCard extends SuffButton {
 		skillIcon.alpha = 0.75;
 		add(skillIcon);
 
-		skillTitle = new FlxText(usedImage.height, 8, usedImage.width - usedImage.height - 6, skill.name);
+		skillTitle = new FlxText(usedImage.height, 8, usedImage.width - usedImage.height - 6, Language.getPhrase('skill.${skill.id}.name'));
 		skillTitle.setFormat(Paths.font('default'), 32, FlxColor.WHITE);
 		add(skillTitle);
 
-		skillDescription = new FlxText(usedImage.height, 8 + skillTitle.height, usedImage.width - usedImage.height - 6, skill.description);
+		skillDescription = new FlxText(usedImage.height, 8 + skillTitle.height, usedImage.width - usedImage.height - 6,
+			Language.getPhrase('skill.${skill.id}.description'));
 		skillDescription.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
 		skillDescription.alpha = 0.5;
 		add(skillDescription);
@@ -49,7 +50,7 @@ class SkillCard extends SuffButton {
 		if (notEnoughConfidence) {
 			this.btnIcon.color = 0xFF808080;
 			this.alpha = 0.6;
-			skillCost.text = '${skill.cost} · <>';
+			skillCost.text = '${skill.cost} · </>';
 			costIcon.color = skillCost.color = 0xFFC00000;
 		} else {
 			this.btnIcon.color = 0xFFFFFFFF;

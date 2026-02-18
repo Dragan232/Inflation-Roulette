@@ -22,32 +22,36 @@ class LunarDate {
 	}
 
 	public function toString():String {
-		var year = this.year;
-		var leYear = LunarDateConstants.NUMBERS[Std.int(year / 1000) % 10] + LunarDateConstants.NUMBERS[Std.int(year / 100) % 10]
-			+ LunarDateConstants.NUMBERS[Std.int(year / 10) % 10] + LunarDateConstants.NUMBERS[Std.int(year % 10)];
+		try {
+			var year = this.year;
+			var leYear = LunarDateConstants.NUMBERS[Std.int(year / 1000) % 10] + LunarDateConstants.NUMBERS[Std.int(year / 100) % 10]
+				+ LunarDateConstants.NUMBERS[Std.int(year / 10) % 10] + LunarDateConstants.NUMBERS[Std.int(year % 10)];
 
-		var leMonth = LunarDateConstants.MONTHS[this.month - 1];
+			var leMonth = LunarDateConstants.MONTHS[this.month - 1];
 
-		var offsetYear = this.year - 4;
-		var leZodiac = LunarDateConstants.ZODIAC[offsetYear % 12];
-		var leStem = LunarDateConstants.STEMS[offsetYear % 10];
-		var leBranch = LunarDateConstants.BRANCHES[offsetYear % 12];
+			var offsetYear = this.year - 4;
+			var leZodiac = LunarDateConstants.ZODIAC[offsetYear % 12];
+			var leStem = LunarDateConstants.STEMS[offsetYear % 10];
+			var leBranch = LunarDateConstants.BRANCHES[offsetYear % 12];
 
-		var day = this.date + 1;
-		var leDate = '';
-		if (day < 11) {
-			leDate = LunarDateConstants.ONE_PREFIX + LunarDateConstants.NUMBERS[day];
-		} else if (day < 20) {
-			leDate = LunarDateConstants.TEN_PREFIX + LunarDateConstants.NUMBERS[day - 10];
-		} else {
-			if (day == 20)
-				day = 30;
-			leDate = LunarDateConstants.TWENTY_PREFIX + LunarDateConstants.NUMBERS[day - 20];
+			var day = this.date;
+			var leDate = '';
+			if (day < 11) {
+				leDate = LunarDateConstants.ONE_PREFIX + LunarDateConstants.NUMBERS[day];
+			} else if (day < 20) {
+				leDate = LunarDateConstants.TEN_PREFIX + LunarDateConstants.NUMBERS[day - 10];
+			} else {
+				if (day == 20)
+					day = 30;
+				leDate = LunarDateConstants.TWENTY_PREFIX + LunarDateConstants.NUMBERS[day - 20];
+			}
+			var leMonthPrefix = this.leap ? LunarDateConstants.LEAP_MONTH_PREFIX : "";
+			var leYearSuffix = LunarDateConstants.YEAR;
+
+			return '$leYear$leYearSuffix（$leStem$leBranch$leYearSuffix）・農曆$leMonthPrefix$leMonth$leDate・$leZodiac$leYearSuffix';
+		} catch (e:Dynamic) {
+			return '${year}, ${month}-${date}';
 		}
-		var leMonthPrefix = this.leap ? LunarDateConstants.LEAP_MONTH_PREFIX : "";
-		var leYearSuffix = LunarDateConstants.YEAR;
-
-		return '$leYear$leYearSuffix（$leStem$leBranch$leYearSuffix）・$leMonthPrefix$leMonth$leDate・$leZodiac$leYearSuffix';
 	}
 
 	public static inline function now():LunarDate {
@@ -55,7 +59,7 @@ class LunarDate {
 	}
 
 	public static function make(time:Date) {
-		var h = Std.int((time.getTime() - 1000 * 60 * 60 * 24) / LunarDateConstants.HOUR_TO_MICROSECONDS);
+		var h = Std.int((time.getTime()) / LunarDateConstants.HOUR_TO_MICROSECONDS);
 		var tyear = time.getFullYear();
 		var start = getCacheByYear(tyear);
 		var diff = Std.int((h - start) / 24); // HOURS to DAYS

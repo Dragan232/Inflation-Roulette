@@ -16,19 +16,19 @@ class Utilities {
 	 * 
 	 * @param path The directory relative to the asset folder of the game.
 	 */
-	inline public static function textFileToArray(path:String, mods:Bool = true):Array<String> {
+	inline public static function textFileToArray(path:String, addons:Bool = true):Array<String> {
 		var daList:String = null;
 		var lePath = Paths.getPath(path);
 		#if sys
-		var formatted:Array<String> = path.split(':');
-		path = formatted[formatted.length - 1];
 		if (FileSystem.exists(lePath))
 			daList = File.getContent(lePath);
 		#if _ALLOW_ADDONS
-		for (addon in Addons.getGlobalAddons()) {
-			var lePath = Paths.addons(addon + '/' + path);
-			if (FileSystem.exists(lePath))
-				daList = daList + '\n' + File.getContent(lePath);
+		if (addons) {
+			for (addon in Addons.getGlobalAddons()) {
+				var lePath = Paths.addons(addon + '/' + path);
+				if (FileSystem.exists(lePath))
+					daList = daList + '\n' + File.getContent(lePath);
+			}
 		}
 		#end
 		#else
@@ -139,7 +139,7 @@ class Utilities {
 		return FlxG.stage.application.meta.get('company') + '/' + FlxG.stage.application.meta.get('file');
 	}
 
-	inline public static function getGameTitle():String {
+	inline public static function getActualGameTitle():String {
 		@:privateAccess
 		return haxe.macro.Compiler.getDefine("title");
 	}

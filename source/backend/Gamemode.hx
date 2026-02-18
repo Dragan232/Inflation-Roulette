@@ -5,8 +5,8 @@ import tjson.TJSON as Json;
 
 class Gamemode {
 	public var id:String = 'nameless';
-	public var name:String = 'Nameless';
-	public var description:String = 'No description.';
+	// public var name:String = 'Nameless';
+	// public var description:String = 'No description.';
 	public var color:FlxColor = 0xFFA0A0C0;
 
 	public var cylinderSize:Int = Constants.CYLINDER_CAPACITY;
@@ -30,8 +30,8 @@ class Gamemode {
 		var rawData:GamemodeData = cast Json.parse(rawJson);
 
 		// I'm sorry
-		this.name = rawData.name;
-		this.description = rawData.description;
+		// this.name = rawData.name;
+		// this.description = rawData.description;
 		if (rawData.color != null)
 			this.color = FlxColor.fromString(rawData.color);
 
@@ -67,6 +67,6 @@ class Gamemode {
 	}
 
 	public function toString():String {
-		return 'Gamemode(id: ${id} | name: ${name} | description: ${description})';
+		return 'Gamemode(id: ${id})';
 	}
 }

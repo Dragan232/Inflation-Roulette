@@ -24,11 +24,11 @@ class CharacterSelectText extends FlxSpriteGroup {
 		}
 		this.clear();
 		if (character == null) { // Default character data
-			var text:FlxText = new FlxText(0, 0, 0, 'Hold Cards To See Info');
+			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase('characterSelect.default.description'));
 			text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
 			add(text);
 		} else if (character.id == 'random') {
-			var text:FlxText = new FlxText(0, 0, 0, 'Not sure who to choose? Let the game decide.');
+			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase('character.random.description'));
 			text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
 			add(text);
 		} else {
@@ -37,7 +37,7 @@ class CharacterSelectText extends FlxSpriteGroup {
 				var icons:Array<String> = [];
 				switch (item) {
 					case DESCRIPTION:
-						subString = character.description;
+						subString = Language.getPhrase('character.${character.id}.description');
 					case MAX_PRESSURE:
 						for (i in 0...character.maxPressure) {
 							icons.push('stats/pressure');

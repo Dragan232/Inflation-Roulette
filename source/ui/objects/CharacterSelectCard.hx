@@ -35,7 +35,7 @@ class CharacterSelectCard extends SuffButton {
 		};
 		add(charSprite);
 
-		charNameText = new FlxText(6, 6, width - 6 * 2, characterData.name.toUpperCase());
+		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('character.${characterData.id}.name').toUpperCase());
 		charNameText.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
 		add(charNameText);
 	}

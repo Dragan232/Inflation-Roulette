@@ -5,8 +5,8 @@ import backend.types.SkillData;
 
 typedef CharacterData = {
 	id:String,
-	name:String,
-	description:String,
+	// name:String,
+	// description:String,
 	maxPressure:Int,
 	maxConfidence:Int,
 	modifiers:Array<ModifierData>,

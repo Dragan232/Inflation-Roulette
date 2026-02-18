@@ -22,7 +22,7 @@ class SuffButton extends FlxSpriteGroup {
 	public var btnTextColorDisabled:FlxColor = 0xFF808080;
 	public var btnTextSize(default, set):Int = 48;
 	public var btnTextAlpha(default, set):Float = 1;
-	public var btnTextFont(default, set):String = 'default';
+	public var btnTextFontPath(default, set):String = Paths.font('default');
 
 	public var btnBGColor(default, set):FlxColor = 0xFF0F4894;
 	public var btnBGColorHovered:FlxColor = 0xFF4F9BFF;
@@ -98,7 +98,7 @@ class SuffButton extends FlxSpriteGroup {
 
 		if (text != null) {
 			btnText = new FlxText(0, 0, 0, text);
-			btnText.setFormat(Paths.font(btnTextFont), btnTextSize, 0xFFFFFFFF, CENTER);
+			btnText.setFormat(btnTextFontPath, btnTextSize, 0xFFFFFFFF, CENTER);
 			btnText.y = (btnBG.height - btnText.height) / 2;
 			btnText.alpha = btnTextAlpha;
 			add(btnText);
@@ -154,6 +154,8 @@ class SuffButton extends FlxSpriteGroup {
 		btnTextColor = value;
 		if (btnText != null)
 			btnText.color = btnTextColor;
+		if (btnIcon != null)
+			btnIcon.color = btnTextColor;
 		return btnTextColor;
 	}
 
@@ -161,22 +163,29 @@ class SuffButton extends FlxSpriteGroup {
 		btnTextAlpha = value;
 		if (btnText != null)
 			btnText.alpha = btnTextAlpha;
+		if (btnIcon != null)
+			btnIcon.alpha = btnTextAlpha;
 		return btnTextAlpha;
 	}
 
 	private function set_btnTextSize(value:Int):Int {
 		btnTextSize = value;
-		if (btnText != null)
+		if (btnText != null) {
 			btnText.size = btnTextSize;
+			btnText.updateHitbox();
+		}
 		centerStuffOnBG();
 		return btnTextSize;
 	}
 
-	private function set_btnTextFont(value:String):String {
-		btnTextFont = Paths.font(value);
-		if (btnText != null)
-			btnText.font = Paths.font(btnTextFont);
-		return Paths.font(btnTextFont);
+	private function set_btnTextFontPath(value:String):String {
+		btnTextFontPath = value;
+		if (btnText != null) {
+			btnText.font = btnTextFontPath;
+			btnText.updateHitbox();
+		}
+		centerStuffOnBG();
+		return btnTextFontPath;
 	}
 
 	private function set_btnBGAlpha(value:Float):Float {

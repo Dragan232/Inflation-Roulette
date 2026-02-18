@@ -134,7 +134,7 @@ class BlueberryHeliumStartupState extends SuffState {
 			text.y -= text.height;
 		}
 		var leText:FlxText = new FlxText(0, 0, FlxG.width, text);
-		leText.setFormat(Paths.font('default'), 32, 0xFFC0C0C0);
+		leText.setFormat(Paths.font('default', false), 32, 0xFFC0C0C0);
 		leText.x = 48;
 		leText.y = FlxG.height - leText.height - 48;
 		terminal.add(leText);

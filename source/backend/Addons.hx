@@ -1,6 +1,6 @@
 package backend;
 
-import backend.types.AddonData;
+import backend.types.AddonMetadata;
 import tjson.TJSON as Json;
 
 class Addons {
@@ -13,7 +13,7 @@ class Addons {
 		globalAddons = [];
 		#if _ALLOW_ADDONS
 		for (addon in updateAddonList()) {
-			var pack:Dynamic = getAddonData(addon);
+			var pack:Dynamic = getAddonMetadata(addon);
 			if (pack != null)
 				globalAddons.push(addon);
 			trace('Loaded addons: ' + addon);
@@ -37,7 +37,7 @@ class Addons {
 		return list;
 	}
 
-	public static function getAddonData(?folder:String = null):AddonData {
+	public static function getAddonMetadata(?folder:String = null):AddonMetadata {
 		#if _ALLOW_ADDONS
 		var path = Paths.addons(folder + '/metadata/metadata.json');
 		if (FileSystem.exists(path)) {
@@ -47,7 +47,7 @@ class Addons {
 				#else
 				var rawJson:String = Assets.getText(path);
 				#end
-				var leParsedJson:AddonData = Json.parse(rawJson);
+				var leParsedJson:AddonMetadata = Json.parse(rawJson);
 				if (rawJson != null && rawJson.length > 0)
 					return leParsedJson;
 			}

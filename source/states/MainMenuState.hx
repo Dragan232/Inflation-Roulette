@@ -13,6 +13,7 @@ import states.AddonsMenuState;
 #end
 import states.CreditsState;
 import states.InitStartupState;
+import states.LanguageSelectState;
 import states.utilities.UtilitiesMenuState;
 import substates.OptionsSubState;
 import substates.GamemodeSelectSubState;
@@ -31,19 +32,28 @@ class MainMenuState extends SuffState {
 	var buttonGroup:FlxTypedContainer<SuffButton> = new FlxTypedContainer<SuffButton>();
 	var topInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
 	var bottomInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
-	
+
 	final menuItemPadding:FlxPoint = new FlxPoint(10, 10);
-	final menuItemSize:FlxPoint = new FlxPoint(500, 440);
+	final menuItemSize:FlxPoint = new FlxPoint(520, 440);
 
 	var creditsButton:SuffButton;
 
 	static final menuItems:Array<Array<String>> = [
-		['Play', 'Options'],
-		['Achievements'],
+		['play', 'addons'],
+		// ['achievements'],
 		#if _ALLOW_ADDONS
-		['Addons', 'Utilities'],
+		['options'],
 		#end
-		['Gallery', 'Donate']
+		['language'],
+		['donate']
+	];
+
+	static final disabledMenuItems:Array<String> = [
+		// Name
+		'donate',
+		'utilities',
+		'gallery',
+		'achievements'
 	];
 
 	var currentEasterEggInput:String = '';
@@ -80,7 +90,7 @@ class MainMenuState extends SuffState {
 		add(logo);
 
 		splashText = new FlxText(0, 0, FlxG.width * 0.4, 'Empty');
-		splashText.setFormat(Paths.font('default'), 32, FlxColor.YELLOW, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
+		splashText.setFormat(Paths.font('default', false), 32, FlxColor.YELLOW, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
 		splashText.text = getRandomSplashText();
 		splashText.y = logo.y + logo.height + 10;
 		add(splashText);
@@ -105,13 +115,14 @@ class MainMenuState extends SuffState {
 		}
 
 		final bottomInfoTextList:Array<String> = [
-			Utils.getGameTitle(),
+			Language.getPhrase('game.title'),
 			#if _OFFICIAL_BUILD
-			VersionMetadata.getVersionName(FlxG.stage.application.meta.get('version')), 'Version ' + FlxG.stage.application.meta.get('version'),
+			VersionMetadata.getVersionName(FlxG.stage.application.meta.get('version')), Language.getPhrase('game.version.numeral.format',
+				[FlxG.stage.application.meta.get('version')]),
 			#else
-			'Modded Version ' + FlxG.stage.application.meta.get('version'),
+			Language.getPhrase('game.version.numeralModded.format', [FlxG.stage.application.meta.get('version')]),
 			#end
-			'${PlatformMetadata.getBuildName()} Build'
+			Language.getPhrase('game.build.format', [PlatformMetadata.getBuildName()])
 		];
 		add(bottomInfoTextGroup);
 		for (i in 0...bottomInfoTextList.length) {
@@ -128,9 +139,9 @@ class MainMenuState extends SuffState {
 		creditsButton.btnTextColorHovered = 0xFFFFFF00;
 		creditsButton.y = FlxG.height - creditsButton.height - 10;
 		creditsButton.onClick = function() {
-			menuButtonFunctions('CREDITS');
+			menuButtonFunctions('credits');
 		}
-		creditsButton.tooltipText = 'Copyright (C) NicklySuffer';
+		creditsButton.tooltipText = '© 2026 NicklySuffer';
 		add(creditsButton);
 
 		add(buttonGroup);
@@ -139,10 +150,10 @@ class MainMenuState extends SuffState {
 			for (iIndex => item in j) {
 				var curMenuItemSize:FlxPoint = new FlxPoint((menuItemSize.x - menuItemPadding.x * (j.length - 1)) / j.length,
 					(menuItemSize.y - menuItemPadding.y * (menuItems.length - 1)) / menuItems.length);
-				var button = new SuffButton(0, 0, item, null, null, curMenuItemSize.x, curMenuItemSize.y);
-				if (item == 'Donate') {
+				var button = new SuffButton(0, 0, Language.getPhrase('mainMenu.$item'), null, null, curMenuItemSize.x, curMenuItemSize.y);
+				if (disabledMenuItems.contains(item)) {
 					button.disabled = true;
-					button.tooltipText = 'Currently, donations are disabled due to developer circumstances.\nIf you want to support this game, please consider sharing it with others!';
+					button.tooltipText = Language.getPhrase('mainMenu.$item.tooltip.disabled');
 				}
 				button.x = ((FlxG.width / 2 - 40) - menuItemSize.x) / 2 + (curMenuItemSize.x + menuItemPadding.x) * iIndex;
 				button.y = ((FlxG.height - (FlxG.height - creditsButton.y)) - menuItemSize.y) / 2 + (curMenuItemSize.y + menuItemPadding.y) * jIndex;
@@ -277,9 +288,13 @@ class MainMenuState extends SuffState {
 			#if _ALLOW_ADDONS
 			case 'addons':
 				SuffState.switchState(new AddonsMenuState());
-			case 'utilities':
-				SuffState.switchState(new UtilitiesMenuState());
+				/* Not finished yet
+					case 'utilities':
+						SuffState.switchState(new UtilitiesMenuState());
+				 */
 			#end
+			case 'language':
+				SuffState.switchState(new LanguageSelectState());
 			case 'credits':
 				SuffState.switchState(new CreditsState());
 			case 'donate':

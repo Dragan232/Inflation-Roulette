@@ -49,11 +49,11 @@ class GamemodeSelectSubState extends SuffSubState {
 			var ID = id.replace('.json', '');
 			var leGamemode:Gamemode = new Gamemode(ID);
 
-			var leButton:SuffButton = new SuffButton(0, 0, leGamemode.name, null, null, buttonSize.x, buttonSize.y);
+			var leButton:SuffButton = new SuffButton(0, 0, Language.getPhrase('gamemode.$ID.name'), null, null, buttonSize.x, buttonSize.y);
 			leButton.x = boxRect.x + buttonMargin.x + (buttonPadding.x + buttonSize.x) * (i % buttonCount.x);
 			leButton.y = boxRect.y + buttonMargin.y + (buttonPadding.y + buttonSize.y) * Std.int(i / buttonCount.x);
 			leButton.btnBGColorHovered = leGamemode.color;
-			leButton.tooltipText = leGamemode.description;
+			leButton.tooltipText = Language.getPhrase('gamemode.$ID.description');
 			leButton.btnTextSize = buttonTextSize;
 			leButton.onClick = function() {
 				goGoGadgetGamemode(leGamemode);
@@ -61,7 +61,7 @@ class GamemodeSelectSubState extends SuffSubState {
 			add(leButton);
 		}
 
-		var headingText:FlxText = new FlxText(0, 0, 0, '* GAMEMODES *');
+		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('gamemodeSelect.title'));
 		var headingTextTargetY:Int = 4;
 		headingText.alpha = 0;
 		headingText.setFormat(Paths.font('default'), 64, FlxColor.WHITE);

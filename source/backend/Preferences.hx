@@ -11,7 +11,7 @@ import lime.system.DisplayMode;
  * Default list of settings to be used in-game.
  */
 class SaveVariables {
-	public var framerate:Int = 60;
+	public var maxFramerate:Int = 60;
 	public var enableFullscreen:Bool = false;
 	public var pauseOnUnfocus:Bool = false;
 	public var allowPopping:Bool = true;
@@ -37,6 +37,7 @@ class SaveVariables {
 	public var showFramerateOnDebugText:Bool = true;
 	public var showMemoryUsageOnDebugText:Bool = true;
 	public var showCurrentStateOnDebugText:Bool = false;
+	public var language:String = 'en-us';
 
 	public function new() {
 	}
@@ -104,12 +105,12 @@ class Preferences {
 		FlxG.mouse.useSystemCursor = !data.useBuiltInCursor;
 		FlxG.mouse.visible = !data.hideCursor;
 
-		if (data.framerate > FlxG.drawFramerate) {
-			FlxG.updateFramerate = data.framerate;
-			FlxG.drawFramerate = data.framerate;
+		if (data.maxFramerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = data.maxFramerate;
+			FlxG.drawFramerate = data.maxFramerate;
 		} else {
-			FlxG.drawFramerate = data.framerate;
-			FlxG.updateFramerate = data.framerate;
+			FlxG.drawFramerate = data.maxFramerate;
+			FlxG.updateFramerate = data.maxFramerate;
 		}
 	}
 }

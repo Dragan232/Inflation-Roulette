@@ -3,7 +3,7 @@
 	<!-- _________________________ Application Settings _________________________ -->
 	<set name="title" value="Inflation Roulette: Reloaded" />
 	<meta title="${title}" />
-	<app file="Inflation-Roulette" version="1.3" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
+	<app file="Inflation-Roulette" version="1.3.0" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
 
 	<haxedef name="title" value="${title}" />
 
@@ -53,7 +53,10 @@
 	<assets path="assets/fonts" preload="true"/>
 	<assets path="assets/sounds" exclude="*.ogg" if="web" preload="true"/>
 	<assets path="assets/sounds" exclude="*.mp3"  unless="web" preload="true"/>
-	<assets path="assets/music" preload="true"/>
+	<assets path="assets/music" exclude="*.ogg" if="web" preload="true"/>
+	<assets path="assets/music" exclude="*.mp3"  unless="web" preload="true"/>
+	<assets path="assets/lang" exclude="*.ogg" if="web" preload="true"/>
+	<assets path="assets/lang" exclude="*.mp3"  unless="web" preload="true"/>
 	<assets path="assets/images" preload="true"/>
 	<section if="_ALLOW_ADDONS">
 		<assets path='addons'/>
@@ -77,7 +80,6 @@
 	<haxelib name="flixel-addons" />
 
 	<haxelib name="tjson" />
-	<haxelib name="lunar" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>

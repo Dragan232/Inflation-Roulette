@@ -6,7 +6,7 @@ import states.MainMenuState;
 import states.PlayState;
 
 class PauseSubState extends SuffSubState {
-	var menuItems:Array<String> = ['Resume', 'Restart', 'Options', 'Exit'];
+	var menuItems:Array<String> = ['resume', 'restart', 'options', 'exit'];
 	var menuButtonGroup:FlxTypedGroup<SuffButton>;
 	var pauseMusic:FlxSound;
 
@@ -32,7 +32,7 @@ class PauseSubState extends SuffSubState {
 		pauseMusic.fadeIn(5, 0, 0.5 * Preferences.data.musicVolume);
 		MusicToast.play(Paths.musicMetadata('pause'));
 
-		var headingText:FlxText = new FlxText(0, 0, FlxG.width, '* PAUSE *');
+		var headingText:FlxText = new FlxText(0, 0, FlxG.width, Language.getPhrase('pauseMenu.title'));
 		var headingTextTargetY:Int = 4;
 		headingText.alpha = 0;
 		headingText.setFormat(Paths.font('default'), 64, FlxColor.WHITE, CENTER);
@@ -46,7 +46,7 @@ class PauseSubState extends SuffSubState {
 		add(menuButtonGroup);
 
 		for (i in 0...menuItems.length) {
-			var button:SuffButton = new SuffButton(0, 0, menuItems[i], null, null, 300, 120);
+			var button:SuffButton = new SuffButton(0, 0, Language.getPhrase('pauseMenu.${menuItems[i]}'), null, null, 300, 120);
 			if (i % 2 == 1) {
 				button.x = FlxG.width + button.width;
 			} else {
@@ -72,8 +72,8 @@ class PauseSubState extends SuffSubState {
 	function buttonFunction(daSelected:String) {
 		if (timePassedOnSubState < 0.25) // Prevent Insta-Unpausing
 			return;
-		switch (daSelected.toUpperCase()) {
-			case 'RESUME':
+		switch (daSelected.toLowerCase()) {
+			case 'resume':
 				PlayState.instance.isPaused = false;
 				PlayState.instance.resumeGame();
 				FlxG.camera.followLerp = usedFollowLerp;
@@ -82,12 +82,12 @@ class PauseSubState extends SuffSubState {
 				if (resetMusic) {
 					SuffState.playMusic('game');
 				}
-			case "RESTART":
+			case 'restart':
 				restartGame();
-			case "OPTIONS":
+			case 'options':
 				OptionsSubState.notInGame = false;
 				openSubState(new OptionsSubState());
-			case 'EXIT':
+			case 'exit':
 				PlayState.instance.ambientSound.pause();
 				SuffState.switchState(new MainMenuState(), BLOCKY);
 				SuffState.playMusic('null');

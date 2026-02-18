@@ -51,8 +51,8 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		// musicToast.add(nowPlayingText);
 
 		songTitleText = new FlxText(paddingX, bg.height - paddingY, 0, '');
-		songTitleText.y = (bg.height - songTitleText.height) / 2;
-		songTitleText.setFormat(Paths.font('default'), 16, FlxColor.WHITE, LEFT);
+		songTitleText.y = Std.int((bg.height - songTitleText.height) / 2);
+		songTitleText.setFormat(Paths.font('default', false), 16, FlxColor.WHITE, LEFT);
 		songTitleText.scrollFactor.set();
 		musicToast.add(songTitleText);
 
@@ -131,7 +131,7 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		if (FlxG.mouse.overlaps(instance.record, instance.musicToast.camera) && FlxG.mouse.justPressed) {
 			instance.leScale += 0.2;
 			SuffState.playUISound(Paths.sound('musicToastClick'));
-			instance.totalElasped = Math.max(startDelay, instance.totalElasped - 0.25);
+			instance.totalElasped = Math.max(startDelay + moveInDuration, instance.totalElasped - 0.25);
 		}
 		instance.record.scale.set(instance.leScale, instance.leScale);
 		instance.leScale = FlxMath.lerp(leScale, 1, elapsed * 14);

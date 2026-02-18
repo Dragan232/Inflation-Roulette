@@ -7,8 +7,8 @@ class Skill {
 	public var id:String = 'null';
 	public var cost:Int = 0;
 
-	public var name:String = 'Unnamed';
-	public var description:String = 'No description.';
+	// public var name:String = 'Unnamed';
+	// public var description:String = 'No description.';
 	public var defaultCost:Int = 0;
 
 	public function new(id:String, cost:Null<Int> = null, costMultiplier:Float = 1) {
@@ -20,8 +20,8 @@ class Skill {
 		this.defaultCost = json.defaultCost;
 		this.cost = Math.ceil(((cost != null) ? cost : this.defaultCost) * costMultiplier);
 
-		this.name = json.name;
-		this.description = json.description;
+		// this.name = json.name;
+		// this.description = json.description;
 	}
 
 	public function toString():String {

@@ -4,6 +4,7 @@ import ui.plugins.*;
 import backend.Paths;
 import backend.Utilities as Utils;
 import backend.Constants;
+import backend.Language;
 import backend.Preferences;
 // Flixel
 #if (flixel >= "5.3.0")

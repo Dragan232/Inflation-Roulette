@@ -14,7 +14,6 @@ class OptionsSubState extends SuffSubState {
 	var exitButton:SuffIconButton;
 
 	var optionsGroup:FlxSpriteGroup = new FlxSpriteGroup();
-	var optionsTitleToDescMap:Map<String, String> = new Map<String, String>();
 
 	static final optionsXPadding:Float = 32;
 	static final optionsYPadding:Float = 32;
@@ -78,63 +77,59 @@ class OptionsSubState extends SuffSubState {
 	function generateOptions() {
 		optionsGroup.clear();
 
-		createHeading('Gameplay');
+		createHeading('gameplay');
 
-		createBooleanOption('Eliminee Skip', "Players who are defeated will be skipped right over instead of playing an animation when it's their turn.",
+		createBooleanOption("ignoreEliminatedPlayers",
 			function(value:Bool) {
 				Preferences.data.ignoreEliminatedPlayers = value;
 			}, Preferences.data.ignoreEliminatedPlayers);
 
-		createHeading('Preferences');
+		createHeading('preferences');
 
-		createBooleanOption('Popping',
-			"Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead." +
-			(!notInGame ? ' (Only updates after restart!)' : ''),
+		createBooleanOption('allowPopping',
 			function(value:Bool) {
 				Preferences.data.allowPopping = value;
 			}, Preferences.data.allowPopping);
 
-		createBooleanOption('Borborygmi', "Players play belly gurgle sounds on idle when inflated.", function(value:Bool) {
+		createBooleanOption("allowBellyGurgles", function(value:Bool) {
 			Preferences.data.allowBellyGurgles = value;
 		}, Preferences.data.allowBellyGurgles);
 
-		createBooleanOption('Creaking', "Players play balloon overstretching sounds on idle when inflated.", function(value:Bool) {
+		createBooleanOption("allowBellyCreaks", function(value:Bool) {
 			Preferences.data.allowBellyCreaks = value;
 		}, Preferences.data.allowBellyCreaks);
 
 		// GRAPHICS SETTINGS
-		createHeading('Visuals & UI');
+		createHeading('visuals');
 
 		#if desktop
-		createBooleanOption('Fullscreen', 'Self-explanatory, but are you that deprived?', function(value:Bool) {
+		createBooleanOption('enableFullscreen', function(value:Bool) {
 			Preferences.data.enableFullscreen = value;
 		}, Preferences.data.enableFullscreen);
 		#end
 
-		createBooleanOption('Force Alising',
-			'Removes antialiasing from all sprites even when enabled. Improves performance, but may make some graphics look jagged.', function(value:Bool) {
+		createBooleanOption('enableForceAliasing', function(value:Bool) {
 				Preferences.data.enableForceAliasing = value;
 		}, Preferences.data.enableForceAliasing);
 
-		createBooleanOption('Animated Main Menu', 'Always play first startup animations in the Main Menu.', function(value:Bool) {
+		createBooleanOption('alwaysPlayMainMenuAnims', function(value:Bool) {
 			Preferences.data.alwaysPlayMainMenuAnims = value;
 		}, Preferences.data.alwaysPlayMainMenuAnims);
 
-		createBooleanOption('Music Toast',
-			'A notification containing the current background music name and its author will be shown whenever a music track is played.',
+		createBooleanOption('showMusicToast',
 			function(value:Bool) {
 				Preferences.data.showMusicToast = value;
 			}, Preferences.data.showMusicToast);
 
-		createBooleanOption('Letterboxing', 'Show black bars on top and bottom sides of the screen during player animations and cutscenes.',
+		createBooleanOption('enableLetterbox',
 			function(value:Bool) {
 				Preferences.data.enableLetterbox = value;
 			}, Preferences.data.enableLetterbox);
 
 		// AUDIO SETTINGS
-		createHeading('Audio & Music');
+		createHeading('audio');
 
-		createBooleanOption('Classic Music', "The game uses music in the original game instead of new music.", function(value:Bool) {
+		createBooleanOption("useClassicMusic", function(value:Bool) {
 			Preferences.data.useClassicMusic = value;
 			if (notInGame) {
 				SuffState.playMusic('options');
@@ -142,7 +137,7 @@ class OptionsSubState extends SuffSubState {
 			touchedMusicOption = !touchedMusicOption;
 		}, Preferences.data.useClassicMusic);
 
-		createSliderOption('Music Volume', 'The volume percentage of background music.', function(value:Float) {
+		createSliderOption('musicVolume', function(value:Float) {
 			Preferences.data.musicVolume = value;
 			if (notInGame)
 				FlxG.sound.music.volume = Preferences.data.musicVolume;
@@ -150,98 +145,96 @@ class OptionsSubState extends SuffSubState {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.musicVolume);
 
-		createSliderOption('Game Sound Volume', 'The volume percentage of game sounds.', function(value:Float) {
+		createSliderOption('gameSoundVolume', function(value:Float) {
 			Preferences.data.gameSoundVolume = value;
 			SuffState.playSound(Paths.soundRandom('weapon', 1, 3));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.gameSoundVolume);
 
-		createSliderOption('UI Sound Volume', 'The volume percentage of UI sounds.', function(value:Float) {
+		createSliderOption('uiSoundVolume', function(value:Float) {
 			Preferences.data.uiSoundVolume = value;
 			SuffState.playUISound(Paths.soundRandom('weapon', 1, 3));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.uiSoundVolume);
 
-		createHeading('Accessibility');
+		createHeading('accessibility');
 
-		createBooleanOption('Photosensitive Mode',
-			'Dampen screen flashes and other flashing effects.\nStrongly recommended for people with photosensitive epilepsy.', function(value:Bool) {
+		createBooleanOption('enablePhotosensitiveMode', function(value:Bool) {
 				Preferences.data.enablePhotosensitiveMode = value;
 		}, Preferences.data.enablePhotosensitiveMode);
 
-		createSliderOption('Camera Intensity', 'How strong screen shaking and other disorienting effects should be.', function(value:Float) {
+		createSliderOption('cameraEffectIntensity', function(value:Float) {
 			Preferences.data.cameraEffectIntensity = value;
-		}, 0, 1, 0.05, function(value:Float) {
+		}, 0, 2, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.cameraEffectIntensity);
 
-		createHeading('Cursor');
+		createHeading('cursor');
 
-		createBooleanOption('Built-In Cursor', 'Uses the custom in-game cursor instead of the default system mouse cursor.', function(value:Bool) {
+		createBooleanOption('useBuiltInCursor', function(value:Bool) {
 			Preferences.data.useBuiltInCursor = value;
 			FlxG.mouse.useSystemCursor = !value;
 		}, Preferences.data.useBuiltInCursor);
 
 		#if html5
-		createBooleanOption('Hide Cursor', 'Hides the mouse cursor entirely.\nCursor can be shown again by pressing [G] at any time.', function(value:Bool) {
+		createBooleanOption('hideCursor', function(value:Bool) {
 			Preferences.data.hideCursor = value;
 			FlxG.mouse.visible = !value;
 		}, Preferences.data.hideCursor);
 		#end
 
-		createBooleanOption('Cursor Sounds', 'Plays a click sound whenever the mouse cursor clicks something.', function(value:Bool) {
+		createBooleanOption('playCursorSounds', function(value:Bool) {
 			Preferences.data.playCursorSounds = value;
 		}, Preferences.data.playCursorSounds);
 
 		// TECHNICAL SETTINGS
-		createHeading('Technical');
+		createHeading('technical');
 
-		createSliderOption('Framerate', 'How many screen refreshes and game updates should the game do in one second.', function(value:Float) {
-			Preferences.data.framerate = Math.round(value);
+		createSliderOption('maxFramerate', function(value:Float) {
+			Preferences.data.maxFramerate = Math.round(value);
 		}, 30, 180, 10, function(value:Float) {
 			return '' + Math.round(value);
-		}, Preferences.data.framerate);
+		}, Preferences.data.maxFramerate);
 
 		#if !html5
-		createBooleanOption('Unfocus Pausing', 'Automatically pauses the game when out of focus.', function(value:Bool) {
+		createBooleanOption('pauseOnUnfocus', function(value:Bool) {
 			Preferences.data.pauseOnUnfocus = value;
 		}, Preferences.data.pauseOnUnfocus);
 		#end
 
 		#if (openfl && !html5)
-		createBooleanOption('VRAM Caching',
-			"Allows the GPU to be used for storing textures using VRAM for lower RAM usage.\nMay not work correctly with lower-end graphics cards.",
+		createBooleanOption("cacheOnGPU",
 			function(value:Bool) {
 				Preferences.data.cacheOnGPU = value;
 			}, Preferences.data.cacheOnGPU);
 		#end
 
-		createBooleanOption('Debug Keybinds', "Enable debug keybinds on PC. (If you're on mobile, too bad lmao)", function(value:Bool) {
+		createBooleanOption("enableDebugKeybinds", function(value:Bool) {
 			Preferences.data.enableDebugKeybinds = value;
 		}, Preferences.data.enableDebugKeybinds);
 
 		// DEBUG TEXT SETTINGS
-		createHeading('Debug Text');
+		createHeading('debugText');
 
-		createBooleanOption('Debug Text', 'Displays debug information on the top-left corner of the screen.', function(value:Bool) {
+		createBooleanOption('showDebugText', function(value:Bool) {
 			Preferences.data.showDebugText = value;
 			Main.fpsVar.updateText();
 		}, Preferences.data.showDebugText);
 
 		#if (openfl && !html5)
-		createBooleanOption('Framerate', 'Displays the current FPS on the Debug Text.', function(value:Bool) {
+		createBooleanOption('showFramerateOnDebugText', function(value:Bool) {
 			Preferences.data.showFramerateOnDebugText = value;
 			Main.fpsVar.updateText();
 		}, Preferences.data.showFramerateOnDebugText);
 
-		createBooleanOption('Memory Usage', 'Displays the current amount of memory used on the Debug Text.', function(value:Bool) {
+		createBooleanOption('showMemoryUsageOnDebugText', function(value:Bool) {
 			Preferences.data.showMemoryUsageOnDebugText = value;
 			Main.fpsVar.updateText();
 		}, Preferences.data.showMemoryUsageOnDebugText);
 
-		createBooleanOption('Current State', 'Displays the current menu being navigated on the Debug Text.', function(value:Bool) {
+		createBooleanOption('showCurrentStateOnDebugText', function(value:Bool) {
 			Preferences.data.showCurrentStateOnDebugText = value;
 			Main.fpsVar.updateText();
 		}, Preferences.data.showCurrentStateOnDebugText);
@@ -257,7 +250,7 @@ class OptionsSubState extends SuffSubState {
 	function createHeading(name:String) {
 		if (optionsGroup.members.length > 0)
 			optionsY += 32;
-		var text:FlxText = new FlxText(32, optionsY, 0, name);
+		var text:FlxText = new FlxText(32, optionsY, 0, Language.getPhrase('optionsMenu.heading.$name'));
 		text.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 		optionsY += 48;
@@ -267,17 +260,15 @@ class OptionsSubState extends SuffSubState {
 		}
 	}
 
-	function createBooleanOption(name:String, description:String, callback:Bool->Void, defaultValue:Bool) {
-		optionsTitleToDescMap.set(name, description);
-
-		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, name);
+	function createBooleanOption(ID:String, callback:Bool->Void, defaultValue:Bool) {
+		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('option.${ID}.name'));
 		text.setFormat(Paths.font('default'), 48, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 
-		var option:SuffBooleanOption = new SuffBooleanOption(text.x + text.width + 16, optionsY, callback, defaultValue, name);
+		var option:SuffBooleanOption = new SuffBooleanOption(text.x + text.width + 16, optionsY, callback, defaultValue);
 		text.y = option.y + (option.height - text.height) / 2;
 		option.camera = this.camera;
-		option.tooltipText = description;
+		option.tooltipText = Language.getPhrase('option.${ID}.description');
 		optionsGroup.add(option);
 
 		optionsY += option.height + 16;
@@ -286,19 +277,16 @@ class OptionsSubState extends SuffSubState {
 		}
 	}
 
-	function createSliderOption(name:String, description:String, callback:Float->Void, rangeMin:Float, rangeMax:Float, step:Float,
-			displayFunction:Float->String, defaultValue:Float) {
-		optionsTitleToDescMap.set(name, description);
-
-		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, name);
+	function createSliderOption(ID:String, callback:Float->Void, rangeMin:Float, rangeMax:Float, step:Float, displayFunction:Float->String, defaultValue:Float) {
+		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('option.${ID}.name'));
 		text.setFormat(Paths.font('default'), 48, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 
 		var option:SuffSliderOption = new SuffSliderOption(text.x + text.width + 16, optionsY, callback, rangeMin, rangeMax, step, displayFunction,
-			defaultValue, name);
+			defaultValue);
 		text.y = option.y + (option.height - text.height) / 2;
 		option.camera = this.camera;
-		option.tooltipText = description;
+		option.tooltipText = Language.getPhrase('option.${ID}.description');
 		optionsGroup.add(option);
 
 		optionsY += option.height + 16;

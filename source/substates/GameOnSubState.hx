@@ -27,7 +27,7 @@ class GameOnSubState extends SuffSubState {
 		slashBG.alpha = 0;
 		add(slashBG);
 
-		gameOn = new FlxText(0, 0, 0, 'GAME ON!');
+		gameOn = new FlxText(0, 0, 0, Language.getPhrase('gameOn.text'));
 		gameOn.setFormat(Paths.font('default'), 256, FlxColor.WHITE);
 		gameOn.alpha = 0;
 		gameOn.screenCenter();

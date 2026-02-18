@@ -11,7 +11,7 @@ class SuffBooleanOption extends FlxSpriteGroup {
 
 	public var tooltipText:String = '';
 
-	public function new(x:Float, y:Float, callback:Bool->Void, defaultValue:Bool = false, name:String = '') {
+	public function new(x:Float, y:Float, callback:Bool->Void, defaultValue:Bool = false) {
 		super(x, y);
 		onChangeCallback = callback;
 
@@ -28,7 +28,6 @@ class SuffBooleanOption extends FlxSpriteGroup {
 		add(parent);
 
 		this.currentValue = defaultValue;
-		this.name = name;
 
 		parent.animation.play('' + defaultValue, true, false, parent.animation.getByName('' + defaultValue).frames.length - 1);
 

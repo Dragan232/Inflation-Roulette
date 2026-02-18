@@ -27,13 +27,13 @@ class CreditsState extends SuffState {
 		['Developed With', '', 'HEADING'],
 		['HaxeFlixel', 'haxeflixel', 'LOGO', Std.int(FlxG.height / 4)],
 		[
-			'This game is made in 72 hours (correction: 2,048 hours) as a joke. I would like to thank my fans for their support throughout this game, as well as Discord members who provided feedback and ideas.',
+			'Initially started as a joke, this project has been in continuous development for a while now. I would like to thank my fans for their support throughout the development of this game, as well as Discord members who provided feedback and ideas.',
 			'',
 			'default',
 			Std.int(FlxG.height / 2)
 		],
 		[
-			'Thanks For Playing',
+			'Thanks For Playing!',
 			'',
 			'default',
 			-Std.int(FlxG.height / 2)
@@ -113,7 +113,7 @@ class CreditsState extends SuffState {
 					leFont = 'default';
 					leColor = FlxColor.YELLOW;
 				}
-				leChar.setFormat(Paths.font(leFont), leSize, leColor);
+				leChar.setFormat(Paths.font(leFont, false), leSize, leColor);
 			}
 			if (leLogo.height > leChar.height) {
 				leChar.y = (leLogo.height - leChar.height) / 2;

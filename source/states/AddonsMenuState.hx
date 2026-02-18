@@ -2,7 +2,7 @@ package states;
 
 import openfl.display.BlendMode;
 import backend.Addons;
-import backend.types.AddonData;
+import backend.types.AddonMetadata;
 import flixel.util.FlxGradient;
 import states.MainMenuState;
 import ui.objects.AddonMenuBG;
@@ -79,11 +79,10 @@ class AddonsMenuState extends SuffState {
 		if (leAddons.length <= 0) {
 			noAddonsInstalled = true;
 
-			var noModsDetected:FlxText = new FlxText(0, 0, 0, 'No Addons Detected');
+			var noModsDetected:FlxText = new FlxText(0, 0, 0, Language.getPhrase('addonsMenu.noAddonsDetected.title'));
 			noModsDetected.setFormat(Paths.font('default'), 64);
 
-			var noModsDetectedDesc:FlxText = new FlxText(0, 0, Std.int(noModsDetected.width * 1.5),
-				'No addons are detected within the addons folder. Please check whether you have included a metadata.json in the metadata folder in the addons.\nIf you think this is a mistake, please report your issue to our GitHub repository.');
+			var noModsDetectedDesc:FlxText = new FlxText(0, 0, Std.int(noModsDetected.width * 1.5), Language.getPhrase('addonsMenu.noAddonsDetected.content'));
 			noModsDetectedDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, CENTER);
 
 			noModsDetected.screenCenter(X);
@@ -114,7 +113,7 @@ class AddonsMenuState extends SuffState {
 		add(modItems);
 		for (i in 0...leAddons.length) {
 			var folder:String = leAddons[i];
-			var leModData:AddonData = cast Addons.getAddonData(folder);
+			var leModData:AddonMetadata = cast Addons.getAddonMetadata(folder);
 
 			var item:AddonMenuItem = new AddonMenuItem(modBG.x, modBG.y + AddonMenuItem.defaultHeight * i, folder, leModData);
 			item.onClick = function() {
@@ -161,7 +160,7 @@ class AddonsMenuState extends SuffState {
 		modDescriptionText.alpha = 0.75;
 		modMetadataItems.add(modDescriptionText);
 
-		modAuthorTitleText = new FlxText(0, 0, modBannerBG.width - 16 * 2, 'Authors:\n');
+		modAuthorTitleText = new FlxText(0, 0, modBannerBG.width - 16 * 2, Language.getPhrase('addonsMenu.authors') + '\n');
 		modAuthorTitleText.setFormat(Paths.font('default'), 16);
 		modAuthorTitleText.alpha = 0.75;
 		modMetadataItems.add(modAuthorTitleText);
@@ -193,7 +192,7 @@ class AddonsMenuState extends SuffState {
 		modMetadataItemsScrollBar.y = modBanner.y + modBanner.height + percent * (FlxG.height - modMetadataItemsScrollBar.height - modBanner.height);
 	}
 
-	function changeDisplayedMetadata(folder:String, addon:AddonData = null) {
+	function changeDisplayedMetadata(folder:String, addon:AddonMetadata = null) {
 		changeBanner(folder);
 
 		if (addon == null)

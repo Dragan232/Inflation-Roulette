@@ -4,9 +4,9 @@ import backend.Addons;
 import backend.CharacterManager;
 import backend.GameplayManager;
 import backend.SplashManager;
-import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.graphics.FlxGraphic;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
@@ -115,6 +115,7 @@ class Main extends Sprite {
 		#if _ALLOW_ADDONS
 		Addons.pushGlobalAddons();
 		#end
+		Language.initialize();
 		MusicToast.initialize();
 		Tooltip.initialize();
 		CustomCursorHandler.initialize();

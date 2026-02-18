@@ -16,8 +16,8 @@ import tjson.TJSON as Json;
 class Character extends FlxSprite {
 	// Metadata //
 	public var id:String = 'unnamed';
-	public var name:String = 'Unnamed';
-	public var description:String = 'No description.';
+	// public var name:String = 'Unnamed';
+	// public var description:String = 'No description.';
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var animSoundPaths:Map<String, Array<String>>;
 	public var belchThreshold:Int = 3;
@@ -65,9 +65,11 @@ class Character extends FlxSprite {
 		var rawJson2 = Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json');
 		var spriteJson:CharacterSpriteData = cast Json.parse(rawJson2);
 
-		name = json.name;
+		// name = json.name;
+		/*
 		if (json.description != null)
 			description = json.description;
+		*/
 		maxPressure = json.maxPressure;
 		maxConfidence = json.maxConfidence;
 		belchThreshold = spriteJson.belchThreshold;
@@ -298,6 +300,6 @@ class Character extends FlxSprite {
 	}
 
 	override function toString():String {
-		return 'Character(id: ${id} | name: ${name} | ${currentPressure} / ${maxPressure})';
+		return 'Character(id: ${id} | ${currentPressure} / ${maxPressure})';
 	}
 }

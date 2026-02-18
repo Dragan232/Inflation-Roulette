@@ -1,6 +1,6 @@
 package ui.objects;
 
-import backend.types.AddonData;
+import backend.types.AddonMetadata;
 
 class AddonMenuItem extends SuffButton {
 	public static final spacing:Int = 10;
@@ -13,9 +13,9 @@ class AddonMenuItem extends SuffButton {
 	var modDesc:FlxText;
 	var icon:FlxSprite;
 
-	public var addon:AddonData;
+	public var addon:AddonMetadata;
 
-	public function new(x:Float, y:Float, folder:String, leAddon:AddonData) {
+	public function new(x:Float, y:Float, folder:String, leAddon:AddonMetadata) {
 		super(x, y, null, null, null, defaultWidth, defaultHeight, false);
 		this.addon = leAddon;
 
