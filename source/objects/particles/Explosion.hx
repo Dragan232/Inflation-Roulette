@@ -18,8 +18,4 @@ class Explosion extends FlxSprite {
 			SuffState.playSound(Paths.sound('explosion'), volume);
 		}
 	}
-
-	override function update(elapsed:Float) {
-		super.update(elapsed);
-	}
 }

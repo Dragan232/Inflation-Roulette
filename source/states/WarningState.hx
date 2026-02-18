@@ -23,7 +23,7 @@ class WarningState extends SuffState {
 		warningTitle.scale.set(2, 2);
 		add(warningTitle);
 
-		warningDesc = new FlxText(0, 0, warningTitle.width * 2.25, warningText);
+		warningDesc = new FlxText(0, 0, FlxG.width * 0.85, warningText);
 		warningDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, LEFT);
 		warningDesc.x = Std.int((FlxG.width - warningDesc.width) / 2);
 		warningDesc.visible = false;
