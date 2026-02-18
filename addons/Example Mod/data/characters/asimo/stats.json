@@ -1,7 +1,4 @@
 {
-	"name": "Asimo",
-	"description": "This wolf just wants to have some fun. His experience in electrical occult allows him to overload weapons.",
-
 	"maxPressure": 3,
 	"maxConfidence": 5,
 	"modifiers": {},

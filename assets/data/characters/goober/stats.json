@@ -1,7 +1,4 @@
 {
-	"name": "Goober",
-	"description": "A sentient and dominant species found in urban areas. Proficient at tinkering with guns.",
-
 	"maxPressure": 4,
 	"maxConfidence": 4,
 	"modifiers": {},

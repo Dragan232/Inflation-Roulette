@@ -1,6 +1,4 @@
 {
-	"name": "Fifty-Fifty",
-	"description": "Purely a coin flip chance with replacement.\nQuick and risky gameplay.",
 	"color": "#80C040",
 
 	"cylinderSize": 2,
