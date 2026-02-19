@@ -41,7 +41,7 @@ class GameOnSubState extends SuffSubState {
 			ease: FlxEase.bounceOut,
 			onComplete: function(_) {
 				new FlxTimer().start(1, function(_) {
-					SuffState.switchState(nextState);
+					SuffState.switchState(nextState, DEFAULT, true);
 				});
 			}
 		});

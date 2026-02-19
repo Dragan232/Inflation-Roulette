@@ -60,8 +60,9 @@ class FPS extends TextField {
 		#end
 	}
 
-	public function reloadFont(color:Int = 0x000000) {
-		defaultTextFormat = new TextFormat(Paths.font("default"), 16, color);
+	public function reloadFont(color:Int = 0xFFFFFFFF) {
+		defaultTextFormat = new TextFormat(Paths.font('default'), 16, color);
+		updateText();
 	}
 
 	// Event Handlers
@@ -93,12 +94,12 @@ class FPS extends TextField {
 		visible = Preferences.data.showDebugText;
 		text = '';
 		if (Preferences.data.showFramerateOnDebugText)
-			text += 'FPS: $currentFPS\n';
+			text += Language.getPhrase('fpsText.format', [Language.getPhrase('fpsText.fps'), currentFPS]) + '\n';
 		#if (openfl && !html5)
 		if (Preferences.data.showMemoryUsageOnDebugText)
-			text += 'Memory: ${Utils.formatBytes(System.totalMemory, 1)}\n';
+			text += Language.getPhrase('fpsText.format', [Language.getPhrase('fpsText.memory'), Utils.formatBytes(System.totalMemory, 1)]) + '\n';
 		if (Preferences.data.showCurrentStateOnDebugText)
-			text += 'State: ${Main.mainClassState}\n';
+			text += Language.getPhrase('fpsText.format', [Language.getPhrase('fpsText.state'), Main.mainClassState]) + '\n';
 		#end
 	}
 }

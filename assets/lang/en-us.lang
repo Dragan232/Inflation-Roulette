@@ -27,6 +27,11 @@ mainMenu.utilities.tooltip.disabled = Modding Utilities will be released in the 
 mainMenu.gallery.tooltip.disabled = Gallery will be released in the next update.
 mainMenu.achievements.tooltip.disabled = Achievements will be released in the next update.
 
+fpsText.fps = FPS
+fpsText.memory = Memory
+fpsText.state = State
+fpsText.format = %1: %2
+
 warningMenu.title = WARNING
 warningMenu.content = This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing 'Accept', you acknowledge these warnings and fully bear any negative consequences caused by this game.
 warningMenu.accept = Accept

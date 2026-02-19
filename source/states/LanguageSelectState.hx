@@ -108,6 +108,7 @@ class LanguageSelectState extends SuffState {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
 					FlxG.resetState();
+					Main.fpsVar.reloadFont();
 				} else {
 					SuffState.playUISound(Paths.sound('ui/invalid'));
 				}
@@ -123,8 +124,8 @@ class LanguageSelectState extends SuffState {
 		add(selectorLeft);
 		add(selectorRight);
 
-		title = new FlxText(0, 32, (FlxG.width - languageOverlay.width) / 2 - 64, Language.getPhrase('languageMenu.title'));
-		title.setFormat(Paths.font('default'), 64, textColor);
+		title = new FlxText(0, 32, (FlxG.width - languageOverlay.width) / 2 - 72, Language.getPhrase('languageMenu.title'));
+		title.setFormat(Paths.font('default'), 48, textColor);
 		title.x = -title.width;
 		add(title);
 
@@ -223,7 +224,7 @@ class LanguageSelectState extends SuffState {
 		selectorLeft.x = btn.x - selectorLeft.width - 8;
 		selectorRight.x = btn.x + btn.width + 8;
 		selectedLine.x = btnSelected.x;
-		selectedLine.y = btnSelected.y + btnSelected.height - 6;
+		selectedLine.y = btnSelected.y + btnSelected.height - 7;
 
 		super.update(elapsed);
 

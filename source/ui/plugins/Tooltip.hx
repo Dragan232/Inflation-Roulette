@@ -6,6 +6,7 @@ import flixel.addons.ui.FlxUI9SliceSprite;
 
 class Tooltip extends FlxSpriteGroup {
 	public static var instance:Null<Tooltip> = null;
+	public static final tooltipWidth:Int = 484;
 
 	var bg:FlxSprite;
 	var bgOutline:FlxSprite;
@@ -13,7 +14,6 @@ class Tooltip extends FlxSpriteGroup {
 
 	public static var text(default, set):String = '';
 
-	static final maxWidth:Int = 480;
 	static final padding:FlxPoint = new FlxPoint(12, 8);
 	static final position:FlxPoint = new FlxPoint(40, -8);
 
@@ -26,7 +26,7 @@ class Tooltip extends FlxSpriteGroup {
 
 		scrollFactor.set();
 
-		tooltipText = new FlxText(padding.x, padding.y, 480, '');
+		tooltipText = new FlxText(padding.x, padding.y, tooltipWidth, '');
 		tooltipText.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
 
 		bg = new FlxSprite().makeGraphic(1, 1, 0xFF000000);
@@ -56,7 +56,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.tooltipText.text = text;
 		var experimental = new FlxText(0, 0, 0, text);
 		experimental.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
-		var leWidth = Math.min(480, experimental.width) + padding.x * 2;
+		var leWidth = Math.min(tooltipWidth, experimental.width) + padding.x * 2;
 		var leHeight = instance.tooltipText.height + padding.y * 2;
 		experimental.destroy();
 
