@@ -81,7 +81,7 @@ class LanguageSelectState extends SuffState {
 			var metadata:LanguageMetadata = cast Json.parse(metadataJson);
 			languageMetadataList.push(metadata);
 
-			var langFontPath = Paths.getPath('lang/$item/fonts/default.ttf');
+			var langFontPath = Paths.getPath('lang/$item/fonts/default_$item.ttf');
 			if (!Paths.fileExists(langFontPath, FONT)) {
 				langFontPath = Paths.font('default');
 			}

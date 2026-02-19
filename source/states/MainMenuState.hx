@@ -39,11 +39,13 @@ class MainMenuState extends SuffState {
 	var creditsButton:SuffButton;
 
 	static final menuItems:Array<Array<String>> = [
-		['play', 'addons'],
-		// ['achievements'],
+		['play',
 		#if _ALLOW_ADDONS
-		['options'],
+		'addons'
 		#end
+		],
+		// ['achievements'],
+		['options'],
 		['language'],
 		['donate']
 	];
