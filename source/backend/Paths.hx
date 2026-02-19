@@ -336,7 +336,7 @@ class Paths {
 
 		if (useLang) {
 			file = lang('images/$key.png');
-			if (!FileSystem.exists(file))
+			if (!fileExists(file, IMAGE))
 				file = getPath('images/$key.png');
 		} else {
 			file = getPath('images/$key.png');
@@ -426,8 +426,8 @@ class Paths {
 	}
 
 	inline static public function font(key:String, useLang:Bool = true) {
-		if (useLang && fileExists(lang('fonts/$key.ttf'), FONT))
-			return lang('fonts/$key.ttf');
+		if (useLang && fileExists(lang('fonts/${key}_${Preferences.data.language}.ttf'), FONT))
+			return lang('fonts/${key}_${Preferences.data.language}.ttf');
 		return getPath('fonts/$key.ttf');
 	}
 

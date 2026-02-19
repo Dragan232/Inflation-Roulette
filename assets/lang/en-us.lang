@@ -1,6 +1,6 @@
 game.title = Inflation Roulette: Reloaded
 game.titleShort = Inflation Roulette
-game.abbreviation = IRR
+game.acronym = IRR
 
 game.version.numeral.format = Version %1
 game.version.numeralModded.format = Modded Version %1
@@ -152,3 +152,10 @@ stats.skill = Skill
 stats.skills = Skills
 stats.modifier = Modifier
 stats.modifiers = Modifiers
+
+// Fallback for HTML build
+gamemode.fiftyFifty.name = Fifty-Fifty
+gamemode.fiftyFifty.description = Purely a coin flip chance with replacement.\nQuick and risky gameplay.
+
+character.asimo.name = Asimo
+character.asimo.description = This wolf just wants to have some fun. His experience in electrical occult allows him to overload weapons.

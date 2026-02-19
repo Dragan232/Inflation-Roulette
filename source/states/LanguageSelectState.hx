@@ -124,7 +124,7 @@ class LanguageSelectState extends SuffState {
 		add(selectorLeft);
 		add(selectorRight);
 
-		title = new FlxText(0, 32, (FlxG.width - languageOverlay.width) / 2 - 72, Language.getPhrase('languageMenu.title'));
+		title = new FlxText(0, 64, (FlxG.width - languageOverlay.width) / 2 - 64, Language.getPhrase('languageMenu.title'));
 		title.setFormat(Paths.font('default'), 48, textColor);
 		title.x = -title.width;
 		add(title);
@@ -141,6 +141,10 @@ class LanguageSelectState extends SuffState {
 
 		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
 		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton.btnTextColor = exitButton.btnTextColorHovered = exitButton.btnTextColorClicked = textColor;
+		exitButton.btnOutlineColor = exitButton.btnOutlineColorHovered = exitButton.btnOutlineColorClicked = textColor;
+		exitButton.btnBGColor = exitButton.btnBGColorHovered = exitButton.btnBGColorClicked = leBGColor;
+		exitButton.visible = false;
 		exitButton.onClick = function() {
 			exitMenu();
 		};
@@ -256,11 +260,9 @@ class LanguageSelectState extends SuffState {
 
 		bg.color = leBGColor;
 		bgOverlay.visible = true;
-		exitButton.btnTextColor = exitButton.btnTextColorHovered = exitButton.btnTextColorClicked = textColor;
-		exitButton.btnOutlineColor = exitButton.btnOutlineColorHovered = exitButton.btnOutlineColorClicked = textColor;
-		exitButton.btnBGColor = exitButton.btnBGColorHovered = exitButton.btnBGColorClicked = leBGColor;
 		ajuniga.loadGraphic(Paths.image('gui/menus/language/ajunigaBlended'));
 		ajuniga.angle = 0;
+		exitButton.visible = true;
 
 		regenerateContributorsList(languages[curSelected], languageMetadataList[curSelected].contributors);
 
