@@ -227,8 +227,10 @@ class LanguageSelectState extends SuffState {
 		selectorLeft.y = selectorRight.y = btn.y + (btn.height - selectorLeft.height) / 2;
 		selectorLeft.x = btn.x - selectorLeft.width - 8;
 		selectorRight.x = btn.x + btn.width + 8;
-		selectedLine.x = btnSelected.x;
-		selectedLine.y = btnSelected.y + btnSelected.height - 7;
+		if (selectedLine != null && btnSelected != null) {
+			selectedLine.x = btnSelected.x;
+			selectedLine.y = btnSelected.y + btnSelected.height - 7;
+		}
 
 		super.update(elapsed);
 
