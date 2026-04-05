@@ -3,11 +3,11 @@
 	<!-- _________________________ Application Settings _________________________ -->
 	<set name="title" value="Inflation Roulette: Reloaded" />
 	<meta title="${title}" />
-	<app file="Inflation-Roulette" version="1.3.1" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
+	<app file="Inflation-Roulette" version="2.0.0-b1" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
 
 	<haxedef name="title" value="${title}" />
 
-	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
+	<!--The HaxeFlixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<!-- <app preloader="Preloader" resizable="true" /> -->
 	<app preloader="states.PreloadState" />
@@ -15,7 +15,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" background="#000000" hardware="true" vsync="false" allow-high-dpi="true"/>
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
@@ -35,7 +35,7 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
-	<classpath name="source" />
+    <classpath name="source" path="source"/>
 
 	<!-- __________________________ Game Assets & Etc. __________________________ -->
 	
@@ -60,6 +60,7 @@
 	<assets path="assets/images" preload="true"/>
 	<section if="_ALLOW_ADDONS">
 		<assets path='addons'/>
+		<assets path='projects'/>
 	</section>
 	<section if="web">
 		<assets path='addons/Example Mod' exclude = '*/metadata' rename='assets' preload="true"/>
@@ -92,7 +93,7 @@
 	<!--Disable the native cursor API on Flash-->
 	<!--<haxedef name="FLX_NO_NATIVE_CURSOR" />-->
 
-	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
+	<!--Optimize inputs, be careful you will get null errors if you don't use conditionals in your game-->
 	<!-- <haxedef name="FLX_NO_MOUSE" if="mobile" /> -->
 	<!-- <haxedef name="FLX_NO_KEYBOARD" if="mobile" /> -->
 	<!-- <haxedef name="FLX_NO_TOUCH" if="desktop" /> -->
@@ -100,9 +101,6 @@
 
 	<!--Disable the Flixel core sound tray-->
 	<!--<haxedef name="FLX_NO_SOUND_TRAY" />-->
-
-	<!--Disable the Flixel sound management code-->
-	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->
 
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
@@ -125,7 +123,7 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
-	
+
 	<icon path="dev/icon16.png" size='16'/>
 	<icon path="dev/icon24.png" size='24'/>
 	<icon path="dev/icon32.png" size='32'/>

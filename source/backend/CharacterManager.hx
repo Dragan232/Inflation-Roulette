@@ -3,15 +3,26 @@ package backend;
 class CharacterManager {
 	public static var globalCharacterList:Array<String> = [];
 	public static var selectedCharacterList:Array<String> = ['goober', 'goober', 'goober', 'goober'];
-	public static var playerControlled:Array<Bool> = [true, false, false, false];
-	public static var cpuLevel:Array<Int> = [1, 1, 1, 1];
+	public static var cpuControlled:Array<Bool> = [false, true, true, true];
+	public static var cpuLevel:Array<Int> = [2, 2, 2, 2];
 
 	public function new() {
 		// ass
 	}
 
 	public static function initialize() {
-		globalCharacterList = Paths.readFolderDirectories('data/characters', 'data/characterList.txt', 'stats.json');
+		globalCharacterList = Paths.readFolderDirectories('data/characters', 'data/characters/characterList.txt', 'stats.json');
+		trace(globalCharacterList);
+		setPlayerCount(4);
+		precacheResultsSprites();
+	}
+
+	public static function precacheResultsSprites() {
+		Paths.music('resultsStart');
+		Paths.music('resultsLoop');
+		for (i in globalCharacterList) {
+			Paths.sparrowAtlas('ui/menus/results/characters/$i');
+		}
 	}
 
 	public static function parseRandomCharacters() {
@@ -20,5 +31,12 @@ class CharacterManager {
 				selectedCharacterList[i] = globalCharacterList[FlxG.random.int(0, globalCharacterList.length - 1)];
 			}
 		}
+	}
+
+	public static function setPlayerCount(value:Int = 4) {
+		selectedCharacterList = [for (i in 0...value) 'goober'];
+		cpuControlled = [for (i in 0...value) true];
+		cpuControlled[0] = false;
+		cpuLevel = [for (i in 0...value) 2];
 	}
 }

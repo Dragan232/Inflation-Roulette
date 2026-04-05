@@ -1,7 +1,7 @@
 package ui.objects;
 
-import backend.types.CharacterData;
-import backend.types.SkillData;
+import backend.typedefs.CharacterData;
+import backend.typedefs.SkillData;
 import backend.enums.CharacterSelectSubstring;
 import ui.objects.GameIcon;
 
@@ -16,7 +16,7 @@ class CharacterSelectText extends FlxSpriteGroup {
 		reloadText();
 	}
 
-	public function reloadText(character:CharacterData = null) {
+	public function reloadText(character:CharacterData = null, overlay:String = 'characterSelect.holdCardsToSeeInfo') {
 		var textX:Float = 0;
 		for (item in members) {
 			item.kill();
@@ -24,7 +24,7 @@ class CharacterSelectText extends FlxSpriteGroup {
 		}
 		this.clear();
 		if (character == null) { // Default character data
-			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase('characterSelect.default.description'));
+			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase(overlay));
 			text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
 			add(text);
 		} else if (character.id == 'random') {

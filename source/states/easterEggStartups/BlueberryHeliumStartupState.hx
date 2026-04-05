@@ -78,7 +78,7 @@ class BlueberryHeliumStartupState extends SuffState {
 	var skipIntroTimer:FlxTimer;
 
 	function startIntro() {
-		ambientSound = new FlxSound().loadEmbedded(Paths.sound('startup/blueberryhelium/fanAmbience'));
+		ambientSound = new FlxSound().loadEmbedded(Paths.sound('ui/startup/blueberryhelium/fanAmbience'));
 		ambientSound.looped = true;
 		ambientSound.play();
 
@@ -103,7 +103,7 @@ class BlueberryHeliumStartupState extends SuffState {
 		}
 
 		tobi = new FlxSprite(0, 530);
-		tobi.frames = Paths.sparrowAtlas('gui/menus/easterEggStartups/blueberryhelium/tobi');
+		tobi.frames = Paths.sparrowAtlas('ui/menus/easterEggStartups/blueberryhelium/tobi');
 		tobi.animation.addByPrefix('idle', 'tobi idle', 24);
 		tobi.animation.addByPrefix('type', 'tobi type', 24);
 		tobi.animation.play('idle', true);
@@ -158,7 +158,7 @@ class BlueberryHeliumStartupState extends SuffState {
 		});
 		tobi.y = 0;
 
-		SuffState.playUISound(Paths.sound('startup/blueberryhelium/limeTestLinux'), 2);
+		SuffState.playUISound(Paths.sound('ui/startup/blueberryhelium/limeTestLinux'), 2);
 		FlxTween.num(0, inputText.length, 1.4, {
 			onComplete: function(_) {
 				tobi.animation.play('idle', true);

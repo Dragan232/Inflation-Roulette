@@ -6,13 +6,10 @@ import backend.GameplayManager;
 import backend.SplashManager;
 import flixel.FlxGame;
 import flixel.FlxState;
-import flixel.graphics.FlxGraphic;
-import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
+import ui.objects.DebugText;
 import openfl.display.Sprite;
 import openfl.events.Event;
-import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.InitStartupState;
 // crash handler stuff
@@ -22,7 +19,7 @@ import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
-import sys.io.Process;
+
 #end
 
 class Main extends Sprite {
@@ -36,7 +33,7 @@ class Main extends Sprite {
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
-	public static var fpsVar:FPS;
+	public static var debugText:DebugText;
 
 	public static var mainClassState:Class<FlxState> = InitStartupState;
 
@@ -76,23 +73,27 @@ class Main extends Sprite {
 		}
 
 		FlxTransitionableState.skipNextTransOut = true;
+
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate,
 			game.skipSplash, game.startFullscreen));
 
 		#if !mobile
-		FlxG.save.bind('gamedata', Utils.getSavePath());
+		FlxG.save.bind('game', Utilities.getSavePath());
 		Preferences.loadPrefs();
-		fpsVar = new FPS(0, 0, 0xFFFFFF);
-		addChild(fpsVar);
+		debugText = new DebugText(0, 0, 0xFFFFFF);
+		addChild(debugText);
 		Lib.current.stage.align = "tl";
 
-		fpsVar.alpha = 0.5;
+		debugText.alpha = 0.5;
 		#end
+
+		FlxG.fixedTimestep = false;
+		FlxG.game.focusLostFramerate = 60;
+		FlxG.keys.preventDefaultKeys = [FlxKey.TAB];
 
 		#if html5
 		FlxG.autoPause = false;
 		#end
-		FlxG.mouse.visible = false;
 
 		#if _ALLOW_CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
@@ -116,7 +117,9 @@ class Main extends Sprite {
 		Addons.pushGlobalAddons();
 		#end
 		Language.initialize();
+		Achievements.initialize();
 		MusicToast.initialize();
+		AchievementToast.initialize();
 		Tooltip.initialize();
 		CustomCursorHandler.initialize();
 		SplashManager.parseSplashes();

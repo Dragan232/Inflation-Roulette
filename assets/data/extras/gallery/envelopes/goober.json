@@ -1,0 +1,17 @@
+{
+	"titleTranslationKey": "character.goober.name",
+	"hasCharacter": true,
+	"artwork": [
+		"gooberRender",
+		"gooberSticker",
+		"fanartForOriginalGame",
+		"imHighOnCrack"
+	],
+	"color": "#E0E0E0",
+	"quotes": [
+		"THE OG",
+		"SABOTAGIN'",
+		"FEELS GOOD",
+		"CITY BOY"
+	]
+}

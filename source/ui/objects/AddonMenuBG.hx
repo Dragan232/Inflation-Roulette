@@ -1,11 +1,5 @@
 package ui.objects;
 
-import backend.CharacterManager;
-import backend.types.CharacterData;
-import flixel.graphics.FlxGraphic;
-import flixel.util.FlxGradient;
-import states.CharacterSelectState;
-
 class AddonMenuBG extends FlxTypedSpriteGroup<AddonMenuBGTile> {
 	var tweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	var originalOffset:FlxPoint = new FlxPoint();

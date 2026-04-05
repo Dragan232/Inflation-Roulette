@@ -5,9 +5,9 @@ import states.WarningState;
 
 class InitStartupState extends SuffState {
 	override function create() {
-		super.create();
-
 		FlxG.mouse.visible = false;
+
+		super.create();
 
 		FlxTransitionableState.skipNextTransIn = true;
 		FlxTransitionableState.skipNextTransOut = true;
@@ -27,8 +27,8 @@ class InitStartupState extends SuffState {
 					SuffState.switchState(new ImHighOnCrackStartupState());
 				case 'blueberryhelium':
 					SuffState.switchState(new BlueberryHeliumStartupState());
-				case 'roomoneoone':
-					SuffState.switchState(new RoomOneOOneStartupState());
+				case 'roomoneohone':
+					SuffState.switchState(new RoomOneOhOneStartupState());
 				case 'ibeesbees':
 					SuffState.switchState(new IBeesBeesStartupState());
 				default:
@@ -42,5 +42,7 @@ class InitStartupState extends SuffState {
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+
+		FlxG.mouse.visible = false;
 	}
 }

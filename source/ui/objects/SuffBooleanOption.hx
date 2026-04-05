@@ -16,13 +16,13 @@ class SuffBooleanOption extends FlxSpriteGroup {
 		onChangeCallback = callback;
 
 		outline = new FlxSprite();
-		outline.frames = Paths.sparrowAtlas('gui/menus/options/boolean/outline');
+		outline.frames = Paths.sparrowAtlas('ui/menus/options/boolean/outline');
 		outline.animation.addByPrefix('true', 'on', 24, false);
 		outline.animation.addByPrefix('false', 'off', 24, false);
 		add(outline);
 
 		parent = new FlxSprite();
-		parent.frames = Paths.sparrowAtlas('gui/menus/options/boolean/base');
+		parent.frames = Paths.sparrowAtlas('ui/menus/options/boolean/base');
 		parent.animation.addByPrefix('true', 'on', 24, false);
 		parent.animation.addByPrefix('false', 'off', 24, false);
 		add(parent);
@@ -45,7 +45,7 @@ class SuffBooleanOption extends FlxSpriteGroup {
 			}
 			if (FlxG.mouse.justPressed) {
 				currentValue = !currentValue;
-				SuffState.playUISound(Paths.sound('ui/toggle' + Utils.capitalize(currentValue + '')));
+				SuffState.playUISound(Paths.sound('ui/toggle' + Utilities.capitalize(currentValue + '')));
 				onChangeCallback(currentValue);
 			}
 		} else {

@@ -1,0 +1,25 @@
+{
+	"titleTranslationKey": "galleryMainMenu.envelope.dev",
+	"hasCharacter": false,
+	"artwork": [
+		"devRender",
+		"bgOld",
+		"ajunigaOriginal",
+		"achievementIconReference",
+		"achievementIconSketch",
+		"fullExtrasArt",
+		"jukeboxScreenLightsOld",
+		"jukeboxScreenGlyphsOld",
+		"spriteCreatorConceptArt",
+		"oldCursor"
+	],
+	"color": "#00C080",
+	"quotes": [
+		"ngl this sucks",
+		"im gonna die",
+		":gold_sad:",
+		"peak cholera",
+		"this is horribl",
+		"ajuniga council"
+	]
+}

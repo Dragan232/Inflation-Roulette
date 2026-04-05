@@ -23,7 +23,7 @@ class StartupState extends SuffState {
 	var skipIntroTimer:FlxTimer;
 
 	function startIntro() {
-		logo = new FlxSprite().loadGraphic(Paths.image('gui/menus/nicklySufferLogo'));
+		logo = new FlxSprite().loadGraphic(Paths.image('ui/menus/nicklySufferLogo'));
 		blockCount = Std.int(logo.height);
 		logo.scale.set(scale, scale);
 		logo.updateHitbox();
@@ -40,7 +40,7 @@ class StartupState extends SuffState {
 			tileGroup.add(tile);
 		}
 
-		introSound = new FlxSound().loadEmbedded(Paths.sound('startup/nicklySufferIntro'));
+		introSound = new FlxSound().loadEmbedded(Paths.sound('ui/startup/nicklySufferIntro'));
 		introSound.volume = 0.7;
 		introSound.play();
 
@@ -61,7 +61,7 @@ class StartupState extends SuffState {
 
 		if (introSound != null)
 			introSound.stop();
-		SuffState.playUISound(Paths.sound('startup/transition'), 0.7);
+		SuffState.playUISound(Paths.sound('ui/startup/transition'), 0.7);
 		removingBlocks = true;
 		new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 			FlxTransitionableState.skipNextTransIn = true;

@@ -9,7 +9,7 @@
 		{
 			"useLunarCalender": false,
 			"start": "12-01",
-			"end": "12-26",
+			"end": "12-27",
 			"id": "christmas",
 			"name": "Christmas",
 			"colors": ["#00C000", "#FF2030"],
@@ -80,8 +80,8 @@
 		},
 		{
 			"useLunarCalender": true,
-			"start": "12-18",
-			"end": "01-10",
+			"start": "12-24",
+			"end": "01-08",
 			"id": "lunarNewYear",
 			"name": "Lunar New Year",
 			"colors": ["#FF0000", "#FFFF00"],
@@ -92,8 +92,7 @@
 				"give me red packets now",
 				"Visit your relatives!",
 				"Get judged by elders!",
-				"learn chinese i dare you",
-				"The creator works for the CCP!"
+				"learn chinese i dare you"
 			]
 		},
 		{
@@ -207,41 +206,29 @@
 		},
 		{
 			"useLunarCalender": false,
-			"start": "03-01",
-			"end": "03-31",
-			"id": "preHKDSE",
-			"name": "Pre-HKDSE Study Leave",
-			"colors": ["#004762"],
+			"start": "05-15",
+			"end": "05-15",
+			"id": "nicklysufferBDay",
+			"name": "NicklySuffer's Birthday",
+			"colors": ["#F9FCFF", "#79797F", "#3D3C3F", "#79797F"],
 			"splashes": [
-				"Study hard!",
-				"Cram shit into your brain!",
-				"Memorize useless Chinese passages!",
-				"Do group discussions at night!",
-				"Study hard, forget everything later",
-				"Add oil HKDSErs!",
-				"Cry on Result Day!"
-			]
-		},
-		{
-			"useLunarCalender": false,
-			"start": "04-01",
-			"end": "05-01",
-			"id": "hkdse",
-			"name": "HKDSE Period",
-			"colors": ["#F5A65F", "#00916E"],
-			"splashes": [
-				"Study harder!",
-				"Go to school by bus!",
-				"Listen to Greensleeves!",
-				"Good luck HKDSErs!",
-				"Try your best to read markers' minds!",
-				"Education reform? Never!"
+				"mom it's my birthday today",
+				"it's my birthday today",
+				"plz give me money",
+				"-1 year for my lifetime",
+				"this is so :gold_sad:",
+				"<3 the ajuniga corporation",
+				"don't goon; play tf2 instead",
+				"im in your walls",
+				".",
+				"<:("
 			]
 		}
 	],
 	"fallback": [
-		"Nicholas stop playing my game",
-		"Adrian stop playing my game",
+		"Nicholas you waste of life stop playing my game",
+		"Adrian ya blender monkey lookin' ass stop playing my game",
+		"John you lardius maximus stop playing my game",
 		"Do not play this in public!",
 		"Lock your doors before playing!",
 		"Repent your sins after playing!",
@@ -265,7 +252,8 @@
 		"Consumes more memory than Chrome!",
 		"Rigged horrendously!",
 		"No optimizations whatsoever!",
-		"Valid!",
+		"Pretty valid!",
+		"Want to be in the game? MAKE A MOD STUPID",
 		"Approved by nobody!",
 		"FDA disapproved!",
 		"Unsafe for consumption!",
@@ -281,6 +269,7 @@
 		"Lock your doors!",
 		"Not fun for the whole family!",
 		"Buy one get one free!",
-		"Happiness not guaranteed!"
+		"Happiness not guaranteed!",
+		"Reportedly won't run in Belarus"
 	]
 }

@@ -1,6 +1,6 @@
 package backend;
 
-import backend.types.AddonMetadata;
+import backend.typedefs.AddonMetadata;
 import tjson.TJSON as Json;
 
 class Addons {

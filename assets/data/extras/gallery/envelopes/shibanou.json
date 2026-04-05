@@ -1,0 +1,20 @@
+{
+	"titleTranslationKey": "character.shibanou.name",
+	"hasCharacter": true,
+	"artwork": [
+		"shibanouRender",
+		"shibanouSticker",
+		"shibanouReference",
+		"cobaltReference",
+		"shibanouDinner",
+		"shibanouGay",
+		"shibanouPoptart"
+	],
+	"color": "#FFDD32",
+	"quotes": [
+		"HYPNOTISM",
+		"HEH HEH HEH",
+		"EIGHTEEN",
+		"HI COBALT"
+	]
+}

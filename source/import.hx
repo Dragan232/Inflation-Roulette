@@ -1,17 +1,14 @@
 import ui.*;
 import ui.objects.SuffButton;
 import ui.plugins.*;
-import backend.Paths;
-import backend.Utilities as Utils;
+import backend.Achievements;
 import backend.Constants;
 import backend.Language;
+import backend.Paths;
 import backend.Preferences;
+import backend.Utilities;
 // Flixel
-#if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;
-#else
-import flixel.system.FlxSound;
-#end
 import flixel.FlxG;
 import flixel.FlxBasic;
 import flixel.FlxObject;

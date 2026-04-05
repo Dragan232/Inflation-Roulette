@@ -3,7 +3,7 @@ package ui.objects;
 class GameIcon extends FlxSprite {
 	public function new(x:Float, y:Float, tag:String, size:Int = 100) {
         super(x, y);
-		loadGraphic(Paths.image('gui/icons/$tag'));
+		loadGraphic(Paths.image('ui/icons/$tag'));
 		setGraphicSize(size, size);
 		updateHitbox();
     }

@@ -1,0 +1,18 @@
+{
+	"titleTranslationKey": "character.asimo.name",
+	"hasCharacter": true,
+	"artwork": [
+		"asimoRender",
+		"asimoSticker",
+		"asimoReference",
+		"asimoBetaAppearance",
+		"cyroConceptArt"
+	],
+	"color": "#A5A5A5",
+	"quotes": [
+		"ELECTRIC",
+		"CATACLYSM",
+		"CHARGE",
+		"WOLF KYLIS"
+	]
+}

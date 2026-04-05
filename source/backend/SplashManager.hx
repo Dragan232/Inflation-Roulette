@@ -1,8 +1,8 @@
 package backend;
 
 import backend.lunarDate.LunarDate;
-import backend.types.SplashCollectionData;
-import backend.types.SplashGroupData;
+import backend.typedefs.SplashCollectionData;
+import backend.typedefs.SplashGroupData;
 import tjson.TJSON as Json;
 
 class SplashManager {

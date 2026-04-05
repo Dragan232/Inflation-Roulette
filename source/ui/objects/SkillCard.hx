@@ -1,6 +1,6 @@
 package ui.objects;
 
-import objects.Skill;
+import backend.Skill;
 
 class SkillCard extends SuffButton {
 	public var skill:Skill;
@@ -15,30 +15,32 @@ class SkillCard extends SuffButton {
 
 	public function new(x:Float, y:Float, skill:Skill) {
 		this.skill = skill;
-		var usedImage = Paths.image('gui/skillCard');
-		var usedImageHovered = Paths.image('gui/skillCardHighlighted');
+		var usedImage = Paths.image('ui/skillCard');
+		var usedImageHovered = Paths.image('ui/skillCardHighlighted');
 		super(x, y, null, usedImage, usedImageHovered, usedImage.width, usedImage.height, false);
 
-		skillIcon = new GameIcon(5, 5, 'skills/${skill.id}', 110);
+		skillIcon = new GameIcon(5, 5, 'skills/${skill.id}', 90);
 		skillIcon.alpha = 0.75;
 		add(skillIcon);
 
-		skillTitle = new FlxText(usedImage.height, 8, usedImage.width - usedImage.height - 6, Language.getPhrase('skill.${skill.id}.name'));
+		skillTitle = new FlxText(usedImage.height, 5, usedImage.width - usedImage.height - 6, Language.getPhrase('skill.${skill.id}.name'));
 		skillTitle.setFormat(Paths.font('default'), 32, FlxColor.WHITE);
-		add(skillTitle);
 
-		skillDescription = new FlxText(usedImage.height, 8 + skillTitle.height, usedImage.width - usedImage.height - 6,
+		skillDescription = new FlxText(skillTitle.x, skillTitle.y + skillTitle.height, usedImage.width - usedImage.height - 6,
 			Language.getPhrase('skill.${skill.id}.description'));
-		skillDescription.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
+		skillDescription.setFormat(Paths.font('small'), 16, FlxColor.WHITE);
 		skillDescription.alpha = 0.5;
-		add(skillDescription);
 
-		costIcon = new GameIcon(usedImage.height, usedImage.height - 40, 'stats/confidence', 32);
+		costIcon = new GameIcon(usedImage.height, usedImage.height - 35, 'stats/confidence', 32);
 		costIcon.color = 0xFF4A4399;
-		add(costIcon);
 
-		skillCost = new FlxText(usedImage.height + costIcon.width + 2, usedImage.height - 40, 0, '' + skill.cost);
+		skillCost = new FlxText(usedImage.height + costIcon.width + 2, costIcon.y, 0, '' + skill.cost);
 		skillCost.setFormat(Paths.font('default'), 32, costIcon.color);
+		skillCost.y = costIcon.y + (costIcon.height - skillCost.height) / 2;
+
+		add(skillTitle);
+		add(skillDescription);
+		add(costIcon);
 		add(skillCost);
 
 		// skillCost.visible = costIcon.visible = (skill.cost > 0);

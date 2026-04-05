@@ -4,7 +4,7 @@ class CreditsSketch extends FlxSprite {
     public function new(tag:String) {
 		super(FlxG.width, 0);
 
-		loadGraphic(Paths.image('gui/menus/credits/sketches/' + tag));
+		loadGraphic(Paths.image('ui/menus/credits/sketches/' + tag));
 		var scal:Float = FlxG.random.float(0.5, 2);
 		scale.set(scal, scal);
 		updateHitbox();

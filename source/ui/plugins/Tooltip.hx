@@ -1,8 +1,6 @@
 package ui.plugins;
 
-import openfl.geom.Rectangle;
 import flixel.graphics.FlxGraphic;
-import flixel.addons.ui.FlxUI9SliceSprite;
 
 class Tooltip extends FlxSpriteGroup {
 	public static var instance:Null<Tooltip> = null;
@@ -31,7 +29,7 @@ class Tooltip extends FlxSpriteGroup {
 
 		bg = new FlxSprite().makeGraphic(1, 1, 0xFF000000);
 		bg.alpha = 0.7;
-		bgOutline = new FlxSprite().loadGraphic(Utils.makeBorder(1, 1, 4, 0xFFFFFFFF));
+		bgOutline = new FlxSprite().loadGraphic(Utilities.makeBorder(1, 1, 4, 0xFFFFFFFF));
 
 		add(bg);
 		add(bgOutline);
@@ -43,6 +41,7 @@ class Tooltip extends FlxSpriteGroup {
 	public static function initialize() {
 		FlxG.plugins.drawOnTop = true;
 		instance = new Tooltip();
+		text = '';
 		FlxG.plugins.add(instance);
 	}
 
@@ -63,7 +62,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.bg.scale.set(leWidth, leHeight);
 		instance.bg.updateHitbox();
 
-		instance.bgOutline.loadGraphic(Utils.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF));
+		instance.bgOutline.loadGraphic(Utilities.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF));
 		instance.visible = (FlxG.mouse.visible || Preferences.data.hideCursor) && (text.length > 0);
 		return value;
 	}

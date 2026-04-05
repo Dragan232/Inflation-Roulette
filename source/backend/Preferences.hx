@@ -1,12 +1,5 @@
 package backend;
 
-import flixel.util.FlxSave;
-import flixel.input.keyboard.FlxKey;
-import states.MainMenuState;
-import openfl.text.TextFormat;
-import lime.ui.Window;
-import lime.system.DisplayMode;
-
 /**
  * Default list of settings to be used in-game.
  */
@@ -20,15 +13,15 @@ class SaveVariables {
 	public var enablePhotosensitiveMode:Bool = false;
 	public var enableForceAliasing:Bool = false;
 	public var alwaysPlayMainMenuAnims:Bool = false;
+	public var cameraSpeed:Float = 0.75;
 	public var cameraEffectIntensity:Float = 1;
 	public var enableLetterbox:Bool = true;
 	public var showMusicToast:Bool = false;
-	public var useClassicMusic:Bool = false;
 	public var useBuiltInCursor:Bool = true;
 	public var hideCursor:Bool = false;
-	public var musicVolume:Float = 0.25;
+	public var musicVolume:Float = 0.2;
 	public var gameSoundVolume:Float = 1;
-	public var uiSoundVolume:Float = 0.5;
+	public var uiSoundVolume:Float = 0.25;
 	public var playCursorSounds:Bool = true;
 	public var allowBellyGurgles:Bool = false;
 	public var allowBellyCreaks:Bool = true;
@@ -37,6 +30,7 @@ class SaveVariables {
 	public var showFramerateOnDebugText:Bool = true;
 	public var showMemoryUsageOnDebugText:Bool = true;
 	public var showCurrentStateOnDebugText:Bool = false;
+	public var enableGLSL:Bool = true;
 	public var language:String = 'en-us';
 
 	public function new() {
@@ -61,7 +55,7 @@ class Preferences {
 	 * Saves the player's game settings and flushes them into the save directory.
 	 */
 	public static function savePrefs() {
-		FlxG.save.bind('preferences', Utils.getSavePath());
+		FlxG.save.bind('preferences', Utilities.getSavePath());
 
 		for (key in Reflect.fields(data)) {
 			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
@@ -69,7 +63,7 @@ class Preferences {
 		FlxG.save.flush();
 
 		trace("Preferences saved!");
-		FlxG.save.bind('game', Utils.getSavePath());
+		FlxG.save.bind('game', Utilities.getSavePath());
 	}
 
 	/**
@@ -81,7 +75,7 @@ class Preferences {
 		if (defaultData == null)
 			defaultData = new SaveVariables();
 
-		FlxG.save.bind('preferences', Utils.getSavePath());
+		FlxG.save.bind('preferences', Utilities.getSavePath());
 
 		for (key in Reflect.fields(data)) {
 			if (Reflect.hasField(FlxG.save.data, key)) {
@@ -90,10 +84,10 @@ class Preferences {
 			}
 		}
 
-		FlxG.save.bind('game', Utils.getSavePath());
+		FlxG.save.bind('game', Utilities.getSavePath());
 
-		if (Main.fpsVar != null) {
-			Main.fpsVar.updateText();
+		if (Main.debugText != null) {
+			Main.debugText.updateText();
 		}
 
 		#if !html5

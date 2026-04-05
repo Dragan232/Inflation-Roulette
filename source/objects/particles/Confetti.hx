@@ -1,8 +1,6 @@
 package objects.particles;
 
-import flixel.graphics.FlxGraphic;
 import flixel.effects.particles.FlxParticle;
-import states.PlayState;
 
 class Confetti extends FlxParticle {
 	var _swaySpeed:Float = 3;
@@ -12,7 +10,7 @@ class Confetti extends FlxParticle {
 	var _actualScaleX:Float = 0;
 	var _actualScaleY:Float = 0;
 
-	var _dying:Bool = false;
+	public static var floorY:Float = 690;
 
 	public function new() {
 		super();
@@ -25,16 +23,7 @@ class Confetti extends FlxParticle {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 		_age += elapsed;
-		if (y + velocity.y * elapsed >= PlayState.floorY - width / 2) {
-			if (!_dying) {
-				_dying = true;
-				FlxTween.tween(this, {alpha: 0}, 1, {
-					startDelay: FlxG.random.float(0.5, 2),
-					onComplete: function(_:FlxTween) {
-						destroy();
-					}
-				});
-			}
+		if (y + velocity.y * elapsed >= floorY - width / 2) {
 			angularVelocity = 0;
 			angle = 0;
 			velocity.x /= (1 + elapsed * 15);

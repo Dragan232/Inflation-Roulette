@@ -1,6 +1,6 @@
 package backend;
 
-import backend.types.GamemodeData;
+import backend.typedefs.GamemodeData;
 import tjson.TJSON as Json;
 
 class Gamemode {
@@ -23,6 +23,14 @@ class Gamemode {
 	public var skillsCostMultiplier:Float = 1;
 	public var skillsReplenishCountOnLive:Int = 0;
 	public var skillsReplenishCountOnBlank:Int = 0;
+
+	public var playerCount:Int = 4;
+
+	public var scoreWinBonusMultiplier:Float = 1;
+	public var scoreEdgingBonusMultiplierRange:Array<Float> = [0.5, 1.0];
+	public var scoreEdgingBonusMultiplier:Float = 1;
+	public var scoreSkillBonusRequirement:Int = 5;
+	public var scoreSkillBonusMultiplier:Float = 1;
 
 	public function new(id:String) {
 		this.id = id;
@@ -49,6 +57,7 @@ class Gamemode {
 			this.cylinderDamageChangeOnBlank = rawData.cylinderDamageChangeOnBlank;
 		if (rawData.cylinderTrueRandomness != null)
 			this.cylinderTrueRandomness = rawData.cylinderTrueRandomness;
+
 		if (rawData.skillsFixedPool != null)
 			this.skillsFixedPool = rawData.skillsFixedPool;
 		if (rawData.skillsExhaustible != null)
@@ -59,11 +68,22 @@ class Gamemode {
 			this.skillsReplenishCountOnBlank = rawData.skillsReplenishCountOnBlank;
 		if (rawData.skillsRandomPool != null)
 			this.skillsRandomPool = rawData.skillsRandomPool;
-		if (this.skillsRandomPool[0] == 'all') {
-			this.skillsRandomPool = Paths.readDirectories('data/skills', 'data/skillList.txt', 'json');
-		}
+		if (this.skillsRandomPool[0] == 'all')
+			this.skillsRandomPool = Paths.readDirectories('data/skills', 'data/skills/skillList.txt', 'json');
 		if (rawData.skillsCostMultiplier != null)
 			this.skillsCostMultiplier = rawData.skillsCostMultiplier;
+
+		if (rawData.playerCount != null)
+			this.playerCount = Std.int(FlxMath.bound(rawData.playerCount, 2, 6));
+
+		if (rawData.scoreWinBonusMultiplier != null)
+			this.scoreWinBonusMultiplier = Math.max(0, rawData.scoreWinBonusMultiplier);
+		if (rawData.scoreEdgingBonusMultiplierRange != null)
+			this.scoreEdgingBonusMultiplierRange = rawData.scoreEdgingBonusMultiplierRange;
+		if (rawData.scoreSkillBonusRequirement != null)
+			this.scoreSkillBonusRequirement = Std.int(Math.max(1, rawData.scoreSkillBonusRequirement));
+		if (rawData.scoreSkillBonusMultiplier != null)
+			this.scoreSkillBonusMultiplier = Math.max(0, rawData.scoreSkillBonusMultiplier);
 	}
 
 	public function toString():String {

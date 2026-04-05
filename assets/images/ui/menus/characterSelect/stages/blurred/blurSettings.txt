@@ -1,0 +1,9 @@
+This file has no effect on gameplay and is only used to document what settings I use for the background blur.
+
+Program: Paint.NET
+Setting: Gaussian Blur
+Configs:
+	Radius: 5.0
+	Gamma Boost: 0.0
+	Quality: 4
+Applied after downscaling screenshot

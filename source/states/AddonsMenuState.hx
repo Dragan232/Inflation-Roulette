@@ -2,7 +2,7 @@ package states;
 
 import openfl.display.BlendMode;
 import backend.Addons;
-import backend.types.AddonMetadata;
+import backend.typedefs.AddonMetadata;
 import flixel.util.FlxGradient;
 import states.MainMenuState;
 import ui.objects.AddonMenuBG;
@@ -135,7 +135,7 @@ class AddonsMenuState extends SuffState {
 
 		modBanner = new FlxSprite();
 
-		modBannerVignette = new FlxSprite().loadGraphic(Paths.image('gui/menus/addons/bannerVignette'));
+		modBannerVignette = new FlxSprite().loadGraphic(Paths.image('ui/menus/addons/bannerVignette'));
 		modBannerVignette.alpha = 0.5;
 		changeBanner('');
 
@@ -239,7 +239,7 @@ class AddonsMenuState extends SuffState {
 	function changeBanner(folder:String) {
 		var path:String = Paths.addons('$folder/metadata/banner.png');
 		if (!FileSystem.exists(path)) {
-			path = Paths.getImagePath('gui/menus/addons/defaultBanner');
+			path = Paths.getImagePath('ui/menus/addons/defaultBanner');
 		}
 		var leImage = Paths.cacheBitmap(path);
 		var leWidth:Float = Std.int(FlxG.width / 2 - padding - scrollBarWidth);

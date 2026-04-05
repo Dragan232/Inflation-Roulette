@@ -1,6 +1,6 @@
 package ui.objects;
 
-import backend.types.CharacterData;
+import backend.typedefs.CharacterData;
 
 class CharacterSelectCard extends SuffButton {
 	public var characterData:CharacterData;
@@ -17,14 +17,14 @@ class CharacterSelectCard extends SuffButton {
 
 		this.characterData = character;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('gui/menus/characterSelect/cards/${characterData.id}/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/cards/${characterData.id}/bg'));
 		add(bg);
 
-		outline = new FlxSprite().loadGraphic(Paths.image('gui/menus/characterSelect/cards/outline'));
+		outline = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/cards/outline'));
 		add(outline);
 
 		charSprite = new FlxSprite();
-		charSprite.frames = Paths.sparrowAtlas('gui/menus/characterSelect/cards/${characterData.id}/character');
+		charSprite.frames = Paths.sparrowAtlas('ui/menus/characterSelect/cards/${characterData.id}/character');
 		charSprite.animation.addByPrefix('idle', 'idle');
 		charSprite.animation.addByPrefix('selected', 'selected', 24, false);
 		charSprite.animation.play('idle');
@@ -35,8 +35,9 @@ class CharacterSelectCard extends SuffButton {
 		};
 		add(charSprite);
 
-		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('character.${characterData.id}.name').toUpperCase());
-		charNameText.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
+		var key = characterData.cardDisplayedKey != null ? characterData.cardDisplayedKey : 'character.${characterData.id}.name';
+		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase(key).toUpperCase());
+		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
 		add(charNameText);
 	}
 

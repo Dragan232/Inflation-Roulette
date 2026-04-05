@@ -1,11 +1,16 @@
 {
+	"cardDisplayedKey": "character.asimo.name",
 	"maxPressure": 3,
-	"maxConfidence": 5,
+	"maxConfidence": 6,
 	"modifiers": {},
 	"skills": [
 		{
 			"id": "reload",
 			"cost": 2
+		},
+		{
+			"id": "reveal",
+			"cost": 3
 		},
 		{
 			"id": "pressurize",

@@ -2,6 +2,7 @@ package backend.enums;
 
 enum SuffTransitionStyle {
 	DEFAULT;
-	BLOCKY;
+	TILES;
+	FADE;
 	INTERMISSION;
 }

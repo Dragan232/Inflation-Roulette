@@ -2,5 +2,7 @@
 	"name": "Yippers",
 	"author": "NicklySuffer",
 	"bpm": 120,
-	"toast": false
+	"toast": false,
+	"loopTime": -1,
+	"album": "volume1"
 }

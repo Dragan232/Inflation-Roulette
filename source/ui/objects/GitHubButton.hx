@@ -1,7 +1,5 @@
 package ui.objects;
 
-import flixel.graphics.FlxGraphic;
-
 class GitHubButton extends SuffIconButton {
 	public function new(x:Float, y:Float, directory:String = '') {
 		super(x, y, 'buttons/github');
@@ -16,7 +14,7 @@ class GitHubButton extends SuffIconButton {
 		this.btnTextColorDisabled = 0xFF96A199;
 
 		this.onClick = function() {
-			Utils.browserLoad('https://github.com/Sufferneer/Inflation-Roulette/' + directory);
+			Utilities.browserLoad('https://github.com/Sufferneer/Inflation-Roulette/' + directory);
 		};
 	}
 

@@ -13,12 +13,15 @@ class CreditsState extends SuffState {
 		['', '', 'GAME_LOGO', Std.int(FlxG.height / 4)],
 		['Design, Code, Art, Sound, Music', '', 'HEADING'],
 		['NicklySuffer', 'nicklysuffer', 'LOGO'],
-		['Original Concept, Music, Additional Art', '', 'HEADING'],
-		['Snowyboi', 'snowyboi', 'LOGO'],
+		['Original Concept', '', 'HEADING'],
+		['Snowyboi', '', 'default'],
 		['Sound Source', '', 'HEADING'],
-		['PixelCarnagee\n(OpenNSFW Sound Pack)', 'opennsfw', 'default'],
-		['Runey', '', 'default'],
-		['Linux Port', '', 'HEADING'],
+		['PixelCarnagee\n(OpenNSFW Sound Pack)', '', 'default'],
+		['Runey\n(Balloonomatopoeia)', '', 'default'],
+		['Additional UI Art', '', 'HEADING'],
+		['Globe-Freak', 'globe-freak', 'LOGO'],
+		['Bloom', 'bloom', 'LOGO'],
+		['Linux Port & GitHub Contributor', '', 'HEADING'],
 		['changedinflation.de', '', 'default'],
 		['Crash Handler', '', 'HEADING'],
 		['SqirraRNG', '', 'default'],
@@ -53,11 +56,11 @@ class CreditsState extends SuffState {
 		var bg:FlxSprite = new FlxSprite().loadGraphic(FlxGradient.createGradientBitmapData(FlxG.width, FlxG.height, [0xFF794080, 0xFF404080]));
 		add(bg);
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(64, 64, 128, 128, true, 0x33FFFFFF, 0x0));
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(64, 64, 128, 128, true, 0x40FFFFFF, 0x0));
 		grid.velocity.set(64, 64);
 		add(grid);
 
-		var overlay = new FlxBackdrop(Paths.image('gui/transitions/horizontal'), Y);
+		var overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
 		overlay.x = -overlay.width / 2 + 80;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF0000FF;
@@ -85,9 +88,9 @@ class CreditsState extends SuffState {
 
 			var leLogo = new FlxSprite(leCharSpace, 0);
 			if (line[1] != '' || line[2] == 'GAME_LOGO' || line[2] == 'NICKLY_SUFFER') {
-				var texturePath:String = 'gui/menus/credits/logos/${line[1]}';
+				var texturePath:String = 'ui/menus/credits/logos/${line[1]}';
 				if (line[2] == 'NICKLY_SUFFER') {
-					texturePath = 'gui/menus/nicklySufferLogo';
+					texturePath = 'ui/menus/nicklySufferLogo';
 					leLogo.scale.set(8, 8);
 				}
 				if (line[2] == 'GAME_LOGO') {
@@ -136,7 +139,7 @@ class CreditsState extends SuffState {
 		};
 		add(exitButton);
 
-		imageList = Paths.readDirectories('images/gui/menus/credits/sketches', 'images/gui/menus/credits/sketchesList.txt', 'png');
+		imageList = Paths.readDirectories('images/ui/menus/credits/sketches', 'images/ui/menus/credits/sketchesList.txt', 'png');
 	}
 
 	function exitMenu() {
@@ -158,13 +161,13 @@ class CreditsState extends SuffState {
 		}
 
 		if (FlxG.mouse.wheel != 0) {
-			creditScrollSpeed = FlxG.mouse.wheel * -30;
+			creditScrollSpeed = FlxG.mouse.wheel * -40;
 		} else if (FlxG.mouse.pressed && FlxG.mouse.x < FlxG.width / 2) {
 			creditScrollValue = creditScrollValue + FlxG.mouse.deltaY;
 		} else if (FlxG.mouse.justReleased) {
 			creditScrollSpeed = FlxG.mouse.deltaY / -2;
 		} else {
-			creditScrollValue -= elapsed * 50 * creditScrollSpeed;
+			creditScrollValue -= elapsed * 30 * creditScrollSpeed;
 		}
 		creditScrollSpeed = FlxMath.lerp(creditScrollSpeed, 1, elapsed * 5);
 		if (creditScrollValue > creditScrollValueUpperLimit) {

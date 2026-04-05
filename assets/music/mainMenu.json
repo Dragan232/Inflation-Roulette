@@ -2,5 +2,6 @@
 	"name": "Inflation Roulette",
 	"author": "NicklySuffer",
 	"bpm": 120,
-	"toast": true
+	"toast": true,
+	"album": "volume1"
 }

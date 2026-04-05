@@ -1,7 +1,7 @@
 package ui;
 
 import backend.enums.SuffTransitionStyle;
-import backend.types.MusicMetadata;
+import backend.typedefs.MusicMetadata;
 import flixel.addons.ui.FlxUIState;
 import flixel.FlxSubState;
 import flixel.FlxState;
@@ -11,6 +11,8 @@ import flixel.system.scaleModes.RatioScaleMode;
 import openfl.filters.ColorMatrixFilter;
 import tjson.TJSON as Json;
 import flash.media.Sound;
+import openfl.filters.ShaderFilter;
+import shaders.GrayscaleShader;
 
 class SuffState extends FlxUIState {
 	public static var currentMusicName:String = '';
@@ -29,33 +31,30 @@ class SuffState extends FlxUIState {
 		timePassedOnState = 0;
 	}
 
-	public static function playMusic(tag:String, volume:Float = 1, forceRestart:Bool = false, forceModernIfNoClassic:Bool = false, looped:Bool = true) {
+	public static function playMusic(tag:String, volume:Float = 1, forceRestart:Bool = false) {
 		var usedTag:String = tag;
 		if (usedTag == '' || usedTag == 'null') {
 			currentMusicName = 'null';
 			return;
 		}
-		if (Preferences.data.useClassicMusic) {
-			usedTag = 'classic/' + tag;
-		}
 		if (!forceRestart && currentMusicName == usedTag)
 			return;
 		//trace(Paths.getMusicPath(usedTag));
-		if (!Paths.fileExists(Paths.getMusicPath(usedTag), SOUND)) {
-			if (!forceModernIfNoClassic) {
-				trace('Music [$usedTag] cannot be found. Skipping');
-				return;
-			} else {
-				usedTag = tag;
-				trace('Music [$usedTag] cannot be found. Using Modern Music');
-			}
+		if (!Paths.fileExists(Paths.getMusicPath(usedTag))) {
+			trace('Music [$usedTag] cannot be found. Skipping');
+			return;
 		}
 		currentMusicName = usedTag;
 		FlxG.sound.playMusic(Paths.music(usedTag), volume * Preferences.data.musicVolume);
-		FlxG.sound.music.looped = looped;
 		var metadata:MusicMetadata = Paths.musicMetadata(usedTag);
 		if (metadata.toast)
 			MusicToast.play(metadata);
+		if (metadata.loopTime == null || metadata.loopTime >= 0) {
+			FlxG.sound.music.looped = true;
+			if (metadata.loopTime != null)
+				FlxG.sound.music.loopTime = metadata.loopTime;
+		} else
+			FlxG.sound.music.looped = false;
 		currentMusicBPM = metadata.bpm;
 	}
 
@@ -75,9 +74,6 @@ class SuffState extends FlxUIState {
 
 	override function update(elapsed:Float) {
 		timePassedOnState += elapsed;
-
-		if (FlxG.save.data != null)
-			FlxG.save.data.fullscreen = FlxG.fullscreen;
 
 		super.update(elapsed);
 	}
@@ -111,12 +107,11 @@ class SuffState extends FlxUIState {
 	}
 
 	public function toggleMonochrome(enable:Bool = false) {
-		// #if js return; #end
 		if (enable) {
-			var t:Float = Constants.MONOCHROME_BRIGHTNESS;
-			var filter = new ColorMatrixFilter([t, t, t, 0, 0, t, t, t, 0, 0, t, t, t, 0, 0, 0, 0, 0, 1, 0]);
+			if (!Preferences.data.enableGLSL) return;
+			var grayscale:GrayscaleShader = new GrayscaleShader();
 			for (i in 0...FlxG.cameras.list.length - 1) {
-				FlxG.cameras.list[i].filters = [filter];
+				FlxG.cameras.list[i].filters = [new ShaderFilter(grayscale)];
 			}
 		} else {
 			for (i in 0...FlxG.cameras.list.length - 1) {

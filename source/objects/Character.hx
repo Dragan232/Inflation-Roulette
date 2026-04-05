@@ -1,24 +1,23 @@
 package objects;
 
 import backend.GameplayManager;
-import backend.types.CharacterData;
-import backend.types.CharacterSpriteData;
-import backend.types.ModifierData;
-import backend.types.SkillData;
-import backend.types.AnimationData;
-import flash.media.Sound;
+import backend.typedefs.CharacterData;
+import backend.typedefs.CharacterSpriteData;
+import backend.typedefs.ModifierData;
+import backend.typedefs.SkillData;
 import flixel.graphics.frames.FlxAtlasFrames;
-import objects.Modifier;
-import objects.Skill;
+import backend.Modifier;
+import backend.Skill;
 import states.PlayState;
 import tjson.TJSON as Json;
+import shaders.FlashingShader;
+import objects.particles.Swirl;
 
 class Character extends FlxSprite {
 	// Metadata //
 	public var id:String = 'unnamed';
 	// public var name:String = 'Unnamed';
 	// public var description:String = 'No description.';
-	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var animSoundPaths:Map<String, Array<String>>;
 	public var belchThreshold:Int = 3;
 	public var gurgleThreshold:Int = 2;
@@ -26,7 +25,7 @@ class Character extends FlxSprite {
 	public var originPosition:Array<Int> = [0, 0];
 	public var poppedCameraOffset:Array<Int> = [0, 0];
 	public var cameraOffset:Array<Int> = [0, 0];
-	public var pointerOffset:Array<Int> = [0, 0];
+	public var headParticlePosition:Array<Int> = [0, 0];
 	public var poppingGravityMultiplier:Float = 1.0;
 	public var poppingVelocityMultiplier:Array<Float> = [1, 1];
 	public var disablePopping:Bool = false;
@@ -38,11 +37,16 @@ class Character extends FlxSprite {
 	public var maxConfidence:Int = 4;
 	public var currentSkills:Array<Skill> = [];
 	public var skillUseCount:Int = 0;
+	public var canUseSkills:Bool = true;
 
 	public var modifiers:Array<Modifier> = [];
 	public var skills:Array<Skill> = [];
 
 	public var cpuControlled:Bool = true;
+	public var cpuKnowsCylinderContents:Bool = false;
+	public var cpuSkillLevel:Int = 1;
+	public var boundingBox:FlxRect = new FlxRect(170, 70, 300, 500);
+	public var hovered:Bool = false;
 
 	// Modifier-Related Variables //
 	public var confidenceChangeOnLiveShot:Int = 1;
@@ -54,10 +58,11 @@ class Character extends FlxSprite {
 
 	var gurgleTimer:Float = 0;
 	var creakTimer:Float = 0;
+	var swirlSpawnTimer:Float = 0;
+
+	var flashingShader:FlashingShader;
 
 	public function new(character:String, x:Float = 0, y:Float = 0) {
-		super(x, y);
-
 		this.id = character;
 		var rawJson = Paths.getTextFromFile('data/characters/' + id + '/stats.json');
 		var json:CharacterData = cast Json.parse(rawJson);
@@ -81,55 +86,12 @@ class Character extends FlxSprite {
 			poppedCameraOffset = spriteJson.poppedCameraOffset;
 		if (spriteJson.cameraOffset != null)
 			cameraOffset = spriteJson.cameraOffset;
-		if (spriteJson.pointerOffset != null)
-			pointerOffset = spriteJson.pointerOffset;
+		if (spriteJson.headParticlePosition != null)
+			headParticlePosition = spriteJson.headParticlePosition;
 		if (spriteJson.poppingVelocityMultiplier != null)
 			poppingVelocityMultiplier = spriteJson.poppingVelocityMultiplier;
-		disablePopping = !!spriteJson.disablePopping;
+		disablePopping = !(!spriteJson.disablePopping);
 		poppingGravityMultiplier = spriteJson.poppingGravityMultiplier;
-
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
-		for (i in 1...spriteJson.spriteSheets.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
-			combinedAtlas.addAtlas(atlas, false);
-		}
-		frames = combinedAtlas;
-		antialiasing = (!Preferences.data.enableForceAliasing) ? !!spriteJson.antialiasing : false;
-
-		animOffsets = new Map<String, Array<Dynamic>>();
-		animSoundPaths = new Map<String, Array<String>>();
-
-		var animationsArray = spriteJson.animations;
-		if (animationsArray != null && animationsArray.length > 0) {
-			for (anim in animationsArray) {
-				var animName:String = '' + anim.name;
-				var animPrefix:String = '' + anim.prefix + '0'; // Prevent wocky shit from happening
-				var animFps:Int = anim.fps;
-				var animLoop:Bool = !!anim.loop;
-				var animIndices:Array<Int> = anim.indices;
-				if (animIndices != null && animIndices.length > 0) {
-					animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
-				} else {
-					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
-				}
-				if (anim.offset != null && anim.offset.length > 1) {
-					addOffset(animName, anim.offset[0], anim.offset[1]);
-				} else {
-					trace('Character $id has no offsets for animation ${animName}. Using default offsets.');
-				}
-				if (anim.soundPaths != null)
-					addSoundPath(animName, anim.soundPaths);
-			}
-		} else {
-			trace('Character $id has no animations');
-			animation.addByPrefix('idle0', 'idle0', 24);
-		}
-		animation.finishCallback = function(animName:String) {
-			if (idleAfterAnimation && !animName.startsWith('idle'))
-				playAnim('idle' + parseAnimationSuffix());
-			else if (animExists(animName + '-loop') && !idleAfterAnimation)
-				playAnim(animName + '-loop', false, false);
-		}
 
 		var modifiersArray:Array<ModifierData> = json.modifiers;
 		if (modifiersArray != null && modifiersArray.length > 0) {
@@ -139,7 +101,6 @@ class Character extends FlxSprite {
 				modifiers.push(new Modifier(modifierID, modifierValue));
 			}
 		}
-
 		parseModifiers();
 
 		var skillsArray:Array<SkillData> = json.skills;
@@ -154,34 +115,89 @@ class Character extends FlxSprite {
 			}
 		}
 
-		trace('$id MODIFIERS: ' + modifiers);
-		trace('$id SKILLS: ' + skills);
+		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[0]}');
+		for (i in 1...spriteJson.spriteSheetsMandatory.length) {
+			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[i]}');
+			combinedAtlas.addAtlas(atlas, false);
+		}
+		for (i in 0...spriteJson.spriteSheetsGameplay.length) {
+			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsGameplay[i]}');
+			combinedAtlas.addAtlas(atlas, false);
+		}
+		super(x, y);
+		frames = combinedAtlas;
+		antialiasing = (!Preferences.data.enableForceAliasing) ? !(!spriteJson.antialiasing) : false;
+
+		if (Preferences.data.enableGLSL) {
+			flashingShader = new FlashingShader();
+			this.shader = flashingShader;
+		}
+
+		animSoundPaths = new Map<String, Array<String>>();
+
+		var animationsArray = spriteJson.animations;
+		if (animationsArray != null && animationsArray.length > 0) {
+			for (anim in animationsArray) {
+				var animName:String = '' + anim.name;
+				var animPrefix:String = '' + anim.prefix + '0'; // Prevent wocky shit from happening
+				var animFps:Int = anim.fps;
+				var animLoop:Bool = !(!anim.loop);
+				var animIndices:Array<Int> = anim.indices;
+				if (animIndices != null && animIndices.length > 0) {
+					animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
+				} else {
+					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
+				}
+				if (anim.soundPaths != null)
+					addSoundPath(animName, anim.soundPaths);
+			}
+		} else {
+			trace('Character $id has no animations');
+			animation.addByPrefix('idle0', 'idle0', 24);
+		}
+		playAnim('idle');
+		boundingBox = new FlxRect((width - 250) / 2, 70, 250, 500);
+		animation.finishCallback = function(animName:String) {
+			if (idleAfterAnimation && !animName.startsWith('idle'))
+				playAnim('idle' + parseAnimationSuffix());
+			else if (animExists(animName + '-loop') && !idleAfterAnimation)
+				playAnim(animName + '-loop', false, false);
+		}
 	}
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+		if (flashingShader != null)
+			flashingShader.update(elapsed);
 		if (currentPressure <= maxPressure || !disableBellySounds) {
 			if (Preferences.data.allowBellyGurgles) {
-				if (gurgleThreshold >= -1 && currentPressure >= gurgleThreshold) {
+				if (gurgleThreshold > -1 && currentPressure >= gurgleThreshold) {
 					gurgleTimer -= elapsed;
 					if (gurgleTimer < 0) {
 						var intensity = Math.min(1, (currentPressure - gurgleThreshold + 1) / (maxPressure - gurgleThreshold + 1));
 						gurgleTimer = FlxG.random.float(1.0, 5.0) / intensity;
-						SuffState.playSound(Paths.soundRandom('belly/gurgles/gurgle', 1, Constants.GURGLES_SAMPLE_COUNT), intensity * 0.65,
+						SuffState.playSound(Paths.soundRandom('game/belly/gurgles/gurgle', 1, Constants.GURGLES_SAMPLE_COUNT), intensity * 0.65,
 							FlxG.random.float(0.5, 2.0));
 					}
 				}
 			}
 			if (Preferences.data.allowBellyCreaks) {
-				if (creakThreshold >= -1 && currentPressure >= creakThreshold) {
+				if (creakThreshold > -1 && currentPressure >= creakThreshold) {
 					creakTimer -= elapsed;
 					if (creakTimer < 0) {
 						var intensity = Math.min(1, (currentPressure - creakThreshold + 1) / (maxPressure - creakThreshold + 1));
 						creakTimer = FlxG.random.float(1.0, 5.0) / intensity;
-						SuffState.playSound(Paths.soundRandom('belly/creaks/creak', 1, Constants.CREAKS_SAMPLE_COUNT), intensity * 0.65,
+						SuffState.playSound(Paths.soundRandom('game/belly/creaks/creak', 1, Constants.CREAKS_SAMPLE_COUNT), intensity * 0.65,
 							FlxG.random.float(0.5, 1.0));
 					}
 				}
+			}
+		}
+		if (!canUseSkills) {
+			swirlSpawnTimer -= elapsed;
+			if (swirlSpawnTimer <= 0) {
+				FlxG.state.add(new Swirl(this.x + this.headParticlePosition[0] + FlxG.random.float(-1, 1) * this.width / 5, this.y + this.headParticlePosition[1] + FlxG.random.float() * this.height / 5, 0xFFC040FF));
+				swirlSpawnTimer = FlxG.random.float();
 			}
 		}
 	}
@@ -195,10 +211,6 @@ class Character extends FlxSprite {
 					confidenceChangeOnBlankShot += Std.int(modifier.value);
 			}
 		}
-	}
-
-	public function addOffset(name:String, x:Float = 0, y:Float = 0) {
-		animOffsets[name] = [x, y];
 	}
 
 	function trimAnimationName(AnimName:String) {
@@ -236,12 +248,7 @@ class Character extends FlxSprite {
 		if (Force)
 			idleAfterAnimation = BackToIdle;
 
-		var daOffset = animOffsets.get(usedAnimName);
-		if (animOffsets.exists(usedAnimName)) {
-			offset.set(daOffset[0] + originPosition[0], daOffset[1] + originPosition[1]);
-		} else {
-			offset.set(originPosition[0], originPosition[1]);
-		}
+		offset.set(originPosition[0], originPosition[1]);
 
 		if (playSound) {
 			var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
@@ -261,13 +268,8 @@ class Character extends FlxSprite {
 		}
 	}
 
-	public function calculatePressurePercentage(multiplied:Bool = false):Float {
+	public function getPressurePercentage(multiplied:Bool = false):Float {
 		return currentPressure / maxPressure * (multiplied ? 100 : 1);
-	}
-
-	public function resizeOffsets() {
-		for (i in animOffsets.keys())
-			animOffsets[i] = [animOffsets[i][0] * scale.x, animOffsets[i][1] * scale.y];
 	}
 
 	function joinAnimationName(AnimName:String, checkForExistance:Bool = true):String {
@@ -295,11 +297,27 @@ class Character extends FlxSprite {
 		return leAnim != null ? (leAnim.frames.length - 1) / leAnim.frameRate : 0;
 	}
 
+	public function mouseOverlapsBoundingBox() {
+		return FlxG.mouse.x >= this.x - this.offset.x + boundingBox.x && FlxG.mouse.x <= this.x - this.offset.x + boundingBox.x + boundingBox.width && FlxG.mouse.y >= this.y - this.offset.y + boundingBox.y && FlxG.mouse.y <= this.y - this.offset.y + boundingBox.y + boundingBox.height;
+	}
+
 	public function isEliminated() {
 		return currentPressure > maxPressure;
 	}
 
+	public function startFlashing() {
+		if (flashingShader == null) return;
+		flashingShader.time = 0.5;
+		flashingShader.flashSpeed = 2.0;
+	}
+
+	public function stopFlashing() {
+		if (flashingShader == null) return;
+		flashingShader.time = 0.0;
+		flashingShader.flashSpeed = 0.0;
+	}
+
 	override function toString():String {
-		return 'Character(id: ${id} | ${currentPressure} / ${maxPressure})';
+		return 'Character(id: ${id} | P:${currentPressure} / ${maxPressure} | C:${currentConfidence} / ${maxConfidence})';
 	}
 }

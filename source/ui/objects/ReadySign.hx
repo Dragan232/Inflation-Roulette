@@ -1,11 +1,5 @@
 package ui.objects;
 
-import backend.CharacterManager;
-import backend.types.CharacterData;
-import flixel.graphics.FlxGraphic;
-import flixel.util.FlxGradient;
-import states.CharacterSelectState;
-
 class ReadySign extends SuffButton {
 	var sign:FlxSprite;
 	var outline:FlxSprite;
@@ -16,14 +10,14 @@ class ReadySign extends SuffButton {
 		super((FlxG.width - 350 * signScale) / 2, 0, null, null, null, Std.int(350 * signScale), Std.int(240 * signScale), false);
 
 		sign = new FlxSprite();
-		sign.frames = Paths.sparrowAtlas('gui/menus/characterSelect/readySign/base');
+		sign.frames = Paths.sparrowAtlas('ui/menus/characterSelect/readySign/base');
 		sign.animation.addByPrefix('idle', 'idle', 24, false);
 		sign.scale.set(signScale, signScale);
 		sign.updateHitbox();
 		add(sign);
 
 		outline = new FlxSprite();
-		outline.frames = Paths.sparrowAtlas('gui/menus/characterSelect/readySign/outline');
+		outline.frames = Paths.sparrowAtlas('ui/menus/characterSelect/readySign/outline');
 		outline.animation.addByPrefix('idle', 'idle', 24, false);
 		outline.scale.set(signScale, signScale);
 		outline.updateHitbox();

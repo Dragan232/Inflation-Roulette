@@ -1,7 +1,6 @@
 package backend;
 
 import flixel.system.FlxAssets;
-import flixel.util.FlxSave;
 
 class Language {
 	public static final defaultLanguage:String = 'en-us';
@@ -17,7 +16,7 @@ class Language {
 
 	public static function fetchPhrases(langID:String = 'en-us'):Map<String, String> {
 		var lePhrases:Map<String, String> = [];
-		var loadedText:Array<String> = Utils.textFileToArray('lang/$langID.lang');
+		var loadedText:Array<String> = Utilities.textFileToArray('lang/$langID.lang');
 		for (text in loadedText) {
 			// Ignore comments and empty lines
 			if (text.startsWith('//') || text == '\n' && text.length <= 0)
@@ -25,19 +24,20 @@ class Language {
 			var splitText:Array<String> = text.split(' = ');
 			if (splitText.length <= 1)
 				continue;
-			lePhrases.set(splitText[0], splitText[1].replace('\\n', '\n'));
+			lePhrases.set(splitText[0], splitText[1].replace('\\n', '\n').replace('\\s', ' '));
 			// For some reason, Haxe does not recognize \n as a newline character when reading from a text file
+			// Also replace \s with whitespace
 		}
 		return lePhrases;
 	}
 
-	public static function getPhrase(key:String, parameters:Array<Dynamic> = null, emptyIfAbsent:Bool = false):String {
+	public static function getPhrase(key:String, parameters:Array<Dynamic> = null, placeholder:String = null):String {
 		var phrase:String = phrases.get(key);
 		if (phrase == null) // Fallback to the default language if the phrase does not exist in the current language
 			phrase = fallbackPhrases.get(key);
 		if (phrase == null) { // If the phrase does not exist in the fallback language
-			if (emptyIfAbsent) // Empty if phrase is not found and emptyIfAbsent is true
-				return '';
+			if (placeholder != null) // Empty if phrase is not found and placeholder is empty
+				return placeholder;
 			return key;
 		}
 		if (parameters == null) // If no parameters are given, just

@@ -2,5 +2,7 @@
 	"name": "Klsemicolon",
 	"author": "NicklySuffer",
 	"bpm": 180,
-	"toast": false
+	"toast": false,
+	"loopTime": -1,
+	"album": "volume1"
 }

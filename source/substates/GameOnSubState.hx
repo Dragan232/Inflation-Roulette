@@ -13,14 +13,14 @@ class GameOnSubState extends SuffSubState {
 
 		PlayState.hasSeenStartCutscene = false;
 		CharacterManager.parseRandomCharacters();
-		SuffState.playMusic('characterSelectEnd', 1, true, true, false);
+		SuffState.playMusic('characterSelectEnd', 1, true);
 
 		slashBGDim = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
 		slashBGDim.alpha = 0;
 		add(slashBGDim);
 
 		slashBG = new FlxSprite();
-		slashBG.frames = Paths.sparrowAtlas('gui/menus/characterSelect/slashBG');
+		slashBG.frames = Paths.sparrowAtlas('ui/menus/characterSelect/slashBG');
 		slashBG.animation.addByPrefix('idle', 'idle', 24, false);
 		slashBG.screenCenter();
 		slashBG.scale.set(1, 0.75);

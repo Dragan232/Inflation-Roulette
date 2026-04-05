@@ -27,7 +27,7 @@ class GamemodeSelectSubState extends SuffSubState {
 		FlxTween.tween(bg, {alpha: 0.5}, 0.5);
 		add(bg);
 
-		var box:SuffBox = new SuffBox(0, 0, 640, 480);
+		var box:SuffBox = new SuffBox(0, 0, 720, 560);
 		box.screenCenter();
 		add(box);
 
@@ -35,14 +35,13 @@ class GamemodeSelectSubState extends SuffSubState {
 
 		add(grpButtons);
 
-		var fileList = Paths.readDirectories('data/gamemodes', 'data/gamemodeList.txt', 'json');
+		var fileList = Paths.readDirectories('data/gamemodes', 'data/gamemodes/gamemodeList.txt', 'json');
 
 		var buttonCount:FlxPoint = new FlxPoint(2, 3);
 		buttonCount.x = Std.int(Math.sqrt(fileList.length));
 		buttonCount.y = Math.ceil(fileList.length / buttonCount.x);
 		var buttonSize:FlxPoint = new FlxPoint((boxRect.width - buttonMargin.x * 2 - buttonPadding.x * (buttonCount.x - 1)) / buttonCount.x,
 			(boxRect.height - buttonMargin.y * 2 - buttonPadding.y * (buttonCount.y - 1)) / buttonCount.y);
-		var buttonTextSize:Int = Math.floor(buttonSize.x / boxRect.width * 48 / 16) * 48;
 		// base size is 48, adjusted to correct to nearest 16.
 
 		for (i => id in fileList) {
@@ -52,19 +51,17 @@ class GamemodeSelectSubState extends SuffSubState {
 			var leButton:SuffButton = new SuffButton(0, 0, Language.getPhrase('gamemode.$ID.name'), null, null, buttonSize.x, buttonSize.y);
 			leButton.x = boxRect.x + buttonMargin.x + (buttonPadding.x + buttonSize.x) * (i % buttonCount.x);
 			leButton.y = boxRect.y + buttonMargin.y + (buttonPadding.y + buttonSize.y) * Std.int(i / buttonCount.x);
-			leButton.btnBGColorHovered = leGamemode.color;
+			leButton.btnBGColorHovered = leButton.btnBGColorClicked = leGamemode.color;
 			leButton.tooltipText = Language.getPhrase('gamemode.$ID.description');
-			leButton.btnTextSize = buttonTextSize;
 			leButton.onClick = function() {
 				goGoGadgetGamemode(leGamemode);
 			}
 			add(leButton);
 		}
 
-		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('gamemodeSelect.title'));
+		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('gamemodeSelect.title'), 48);
 		var headingTextTargetY:Int = 4;
 		headingText.alpha = 0;
-		headingText.setFormat(Paths.font('default'), 64, FlxColor.WHITE);
 		headingText.x = (FlxG.width - headingText.width) / 2;
 		headingText.y = -headingText.height;
 		FlxTween.tween(headingText, {alpha: 1, y: headingTextTargetY}, 0.75, {
@@ -85,14 +82,23 @@ class GamemodeSelectSubState extends SuffSubState {
 		switch (gamemode.id) {
 			case 'quickPlay':
 				GameplayManager.currentGamemode = GameplayManager.defaultGamemode;
+				GameplayManager.currentStage = FlxG.random.getObject(GameplayManager.globalStageList);
+				CharacterManager.setPlayerCount(GameplayManager.currentGamemode.playerCount);
 				var leRandom = [];
-				for (i in CharacterManager.selectedCharacterList)
+				var leCPUControl = [];
+				for (num => i in CharacterManager.selectedCharacterList) {
 					leRandom.push('random');
-				CharacterManager.selectedCharacterList = leRandom.copy();
+					leCPUControl.push(true);
+					CharacterManager.cpuLevel[num] = FlxG.random.int(1, 3);
+				}
+				leCPUControl[0] = false;
+				CharacterManager.selectedCharacterList = leRandom;
+				CharacterManager.cpuControlled = leCPUControl;
 				PlayState.hasSeenStartCutscene = false;
 				openSubState(new GameOnSubState(new PlayState()));
 			default:
 				GameplayManager.currentGamemode = gamemode;
+				CharacterManager.setPlayerCount(GameplayManager.currentGamemode.playerCount);
 				SuffState.switchState(new CharacterSelectState());
 		}
 	}

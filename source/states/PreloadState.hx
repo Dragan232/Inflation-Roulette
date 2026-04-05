@@ -12,10 +12,10 @@ import flash.text.TextFormatAlign;
 import flash.Lib;
 import flixel.FlxG;
 
-@:bitmap("assets/images/gui/menus/preload/criDeSadGold.png") class LogoImage extends BitmapData {
+@:bitmap("assets/images/ui/menus/preload/criDeSadGold.png") class LogoImage extends BitmapData {
 }
 
-@:bitmap("assets/images/gui/menus/preload/loadingText.png") class LoadingTextImage extends BitmapData {
+@:bitmap("assets/images/ui/menus/preload/loadingText.png") class LoadingTextImage extends BitmapData {
 }
 
 @:font("assets/fonts/default.ttf") class CustomFont extends Font {

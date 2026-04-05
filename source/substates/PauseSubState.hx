@@ -10,7 +10,7 @@ class PauseSubState extends SuffSubState {
 	var menuButtonGroup:FlxTypedGroup<SuffButton>;
 	var pauseMusic:FlxSound;
 
-	var usedFollowLerp:Float = 0;
+	public static var usedFollowLerp:Float = 0;
 
 	public static var resetMusic:Bool = false;
 
@@ -32,10 +32,10 @@ class PauseSubState extends SuffSubState {
 		pauseMusic.fadeIn(5, 0, 0.5 * Preferences.data.musicVolume);
 		MusicToast.play(Paths.musicMetadata('pause'));
 
-		var headingText:FlxText = new FlxText(0, 0, FlxG.width, Language.getPhrase('pauseMenu.title'));
+		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('pauseMenu.title'), 48);
 		var headingTextTargetY:Int = 4;
 		headingText.alpha = 0;
-		headingText.setFormat(Paths.font('default'), 64, FlxColor.WHITE, CENTER);
+		headingText.x = (FlxG.width - headingText.width) / 2;
 		headingText.y = -headingText.height;
 		FlxTween.tween(headingText, {alpha: 1, y: headingTextTargetY}, 0.75, {
 			ease: FlxEase.cubeOut
@@ -88,8 +88,9 @@ class PauseSubState extends SuffSubState {
 				OptionsSubState.notInGame = false;
 				openSubState(new OptionsSubState());
 			case 'exit':
+				Achievements.enabled = true;
 				PlayState.instance.ambientSound.pause();
-				SuffState.switchState(new MainMenuState(), BLOCKY);
+				SuffState.switchState(new MainMenuState(), TILES, true);
 				SuffState.playMusic('null');
 				FlxG.camera.followLerp = 0;
 		}

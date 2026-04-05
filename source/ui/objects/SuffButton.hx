@@ -9,6 +9,7 @@ import flixel.addons.ui.FlxUI9SliceSprite;
  */
 class SuffButton extends FlxSpriteGroup {
 	public var disabled(default, set):Bool = false;
+	public var visibleBG:Bool = true;
 	public var hovered:Bool = false;
 	public var clicked:Bool = false;
 	public var onIdle:Void->Void = null;
@@ -72,7 +73,7 @@ class SuffButton extends FlxSpriteGroup {
 	 */
 	public function new(x:Float, y:Float, ?text:String = null, ?img:FlxGraphic = null, ?imgHovered:FlxGraphic = null, ?width:Float = 300, ?height:Float = 100,
 			visibleBG:Bool = true) {
-		super(x, y);
+		super();
 
 		var leWidth = Std.int(width);
 		var leHeight = Std.int(height);
@@ -80,7 +81,7 @@ class SuffButton extends FlxSpriteGroup {
 		var btnBGRect = new Rectangle(0, 0, leWidth / bgScale, leHeight / bgScale);
 		var nineSlice = [20, 10, 44, 22];
 
-		btnBG = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('gui/boxes/boxBase'), btnBGRect, nineSlice, 0x11);
+		btnBG = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('ui/boxes/boxBase'), btnBGRect, nineSlice, 0x11);
 		btnBG.setGraphicSize(Std.int(leWidth), Std.int(leHeight));
 		btnBG.updateHitbox();
 		btnBG.color = btnBGColor;
@@ -88,7 +89,7 @@ class SuffButton extends FlxSpriteGroup {
 		btnBG.visible = visibleBG;
 		add(btnBG);
 
-		btnOutline = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('gui/boxes/boxOutline'), btnBGRect, nineSlice, 0x11);
+		btnOutline = new FlxUI9SliceSprite(0, 0, Paths.getImagePath('ui/boxes/boxOutline'), btnBGRect, nineSlice, 0x11);
 		btnOutline.setGraphicSize(Std.int(leWidth), Std.int(leHeight));
 		btnOutline.updateHitbox();
 		btnOutline.color = btnOutlineColor;
@@ -96,9 +97,15 @@ class SuffButton extends FlxSpriteGroup {
 		btnOutline.visible = visibleBG;
 		add(btnOutline);
 
+		this.visibleBG = visibleBG;
+
 		if (text != null) {
 			btnText = new FlxText(0, 0, 0, text);
 			btnText.setFormat(btnTextFontPath, btnTextSize, 0xFFFFFFFF, CENTER);
+			while (btnText.width > (btnBG.width - btnTextSize * 2 / 3.5) || btnText.height > (btnBG.height - btnTextSize * 2 / 3)) {
+				btnTextSize -= 16;
+				btnText.size = btnTextSize;
+			}
 			btnText.y = (btnBG.height - btnText.height) / 2;
 			btnText.alpha = btnTextAlpha;
 			add(btnText);
@@ -117,6 +124,9 @@ class SuffButton extends FlxSpriteGroup {
 		centerStuffOnBG();
 
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
+
+		this.x = x;
+		this.y = y;
 	}
 
 	function centerStuffOnBG() {
@@ -124,12 +134,12 @@ class SuffButton extends FlxSpriteGroup {
 		var iconWidth = (btnIcon != null ? btnIcon.width : 0);
 		var finalWidth = textWidth + iconWidth;
 		if (btnText != null) {
-			btnText.x = btnBG.x + (btnBG.width - finalWidth) / 2 + iconWidth;
-			btnText.y = btnBG.y + (btnBG.height - btnText.height) / 2;
+			btnText.x = Std.int(btnBG.x + (btnBG.width - finalWidth) / 2 + iconWidth);
+			btnText.y = Std.int(btnBG.y + (btnBG.height - btnText.height) / 2);
 		}
 		if (btnIcon != null) {
-			btnIcon.x = btnBG.x + (btnBG.width - finalWidth) / 2 - textWidth;
-			btnIcon.y = btnBG.y + (btnBG.height - btnIcon.height) / 2;
+			btnIcon.x = Std.int(btnBG.x + (btnBG.width - finalWidth) / 2 - textWidth);
+			btnIcon.y = Std.int(btnBG.y + (btnBG.height - btnIcon.height) / 2);
 		}
 	}
 
@@ -248,6 +258,10 @@ class SuffButton extends FlxSpriteGroup {
 				hovered = false;
 			}
 		}
+		
+		btnBG.visible = visibleBG && this.visible;
+		btnOutline.visible = visibleBG && this.visible;
+
 		super.update(elapsed);
 	}
 
@@ -268,7 +282,7 @@ class SuffButton extends FlxSpriteGroup {
 			SuffState.playUISound(Paths.sound(hoverSound));
 	}
 
-	function switchIconImage(img:FlxGraphic) {
+	public function switchIconImage(img:FlxGraphic) {
 		btnIcon.loadGraphic(img);
 		btnIcon.setGraphicSize(btnBG.width, btnBG.height);
 		btnIcon.updateHitbox();

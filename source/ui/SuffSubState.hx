@@ -1,12 +1,11 @@
 package ui;
 
 import flixel.FlxSubState;
-import flixel.FlxState;
 
 class SuffSubState extends FlxSubState {
 	public var timePassedOnSubState:Float = 0;
 
-	override function new() {
+	public function new() {
 		super();
 
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];

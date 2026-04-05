@@ -8,13 +8,10 @@ import objects.particles.Scrap;
 import states.PlayState;
 
 class ScrapEmitter extends FlxTypedEmitter<Scrap> {
-	var characterID:String = 'goober';
-
-	public function new(character:Character) {
-		super(character.x, character.y - character.width / 2.5, 25);
+	public function new(x, y, characterID:String, floorY:Float = 690) {
+		super(x, y, 25);
 		particleClass = Scrap;
-
-		this.characterID = character.id;
+		Scrap.floorY = floorY;
 
 		var leImage:FlxGraphic = Paths.image('game/particles/scrap/$characterID');
 		loadParticles(leImage, FlxG.random.int(6, 10), 0, true);

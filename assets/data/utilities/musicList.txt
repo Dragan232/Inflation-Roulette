@@ -1,0 +1,8 @@
+game
+characterSelect
+options
+credits
+pauseHD
+language
+achievements
+resultsLoop

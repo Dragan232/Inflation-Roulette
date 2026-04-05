@@ -1,7 +1,8 @@
 package states;
 
-import backend.types.LanguageMetadata;
+import backend.typedefs.LanguageMetadata;
 import objects.particles.Explosion;
+import states.WarningState;
 import ui.objects.GitHubButton;
 import ui.objects.SuffIconButton;
 import ui.objects.SuffTextButton;
@@ -9,6 +10,7 @@ import tjson.TJSON as Json;
 
 class LanguageSelectState extends SuffState {
 	public static var initialized:Bool = false;
+	public static var atWarningState:Bool = false;
 
 	var bg:FlxSprite;
 	var bgOverlay:FlxSprite;
@@ -21,8 +23,10 @@ class LanguageSelectState extends SuffState {
 	var exitButton:SuffIconButton;
 	var githubButton:GitHubButton;
 
-	final leBGColor:FlxColor = 0xFFFDE871;
-	final textColor:FlxColor = 0xFFDC7827;
+	var leBGColor:FlxColor = 0xFFFDE871;
+	var textColor:FlxColor = 0xFFDC7827;
+	final leBGColorAlt:FlxColor = 0xFF000000;
+	final textColorAlt:FlxColor = 0xFFFFFFFF;
 	var title:FlxText;
 	var description:FlxText;
 	var languageButtons:FlxTypedContainer<SuffTextButton> = new FlxTypedContainer<SuffTextButton>();
@@ -38,17 +42,24 @@ class LanguageSelectState extends SuffState {
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
 		add(bg);
 
-		bgOverlay = new FlxSprite().loadGraphic(Paths.image('gui/menus/language/bgOverlay'));
-		bgOverlay.alpha = 0.25;
+		bgOverlay = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/bgOverlay'));
+		bgOverlay.alpha = 0.2;
 		bgOverlay.visible = false;
 		bgOverlay.antialiasing = !Preferences.data.enableForceAliasing;
 		add(bgOverlay);
 
-		ajuniga = new FlxSprite().loadGraphic(Paths.image('gui/menus/language/ajuniga'));
+		ajuniga = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/ajuniga'));
 		ajuniga.screenCenter();
 		originalAjunigaPosition = new FlxPoint(ajuniga.x, ajuniga.y);
 		ajuniga.antialiasing = !Preferences.data.enableForceAliasing;
 		add(ajuniga);
+
+		if (atWarningState) {
+			leBGColor = leBGColorAlt;
+			textColor = textColorAlt;
+			bgOverlay.alpha = 0;
+			ajuniga.alpha = 0;
+		}
 
 		selectorLeft = new FlxText(0, 0, 0, '>', 48);
 		selectorLeft.font = Paths.font('default', false);
@@ -61,7 +72,7 @@ class LanguageSelectState extends SuffState {
 		selectorLeft.color = selectorRight.color = textColor;
 		add(contributorText);
 
-		languages = Utils.textFileToArray('lang/languageList.txt');
+		languages = Utilities.textFileToArray('lang/languageList.txt');
 		languages.unshift(Language.defaultLanguage);
 		languages.sort(function(a:String, b:String):Int {
 			a = a.toUpperCase();
@@ -82,7 +93,7 @@ class LanguageSelectState extends SuffState {
 			languageMetadataList.push(metadata);
 
 			var langFontPath = Paths.getPath('lang/$item/fonts/default_$item.ttf');
-			if (!Paths.fileExists(langFontPath, FONT)) {
+			if (!Paths.fileExists(langFontPath)) {
 				langFontPath = Paths.font('default');
 			}
 			var btn = new SuffTextButton(32, (FlxG.height - (languages.length * 64 + (languages.length - 1) * padding)) / 2 + (64 + padding) * num,
@@ -108,7 +119,7 @@ class LanguageSelectState extends SuffState {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
 					FlxG.resetState();
-					Main.fpsVar.reloadFont();
+					Main.debugText.reloadFont();
 				} else {
 					SuffState.playUISound(Paths.sound('ui/invalid'));
 				}
@@ -131,7 +142,7 @@ class LanguageSelectState extends SuffState {
 
 		description = new FlxText(0, title.y + title.height + 16, (FlxG.width - languageOverlay.width) / 2 - 64,
 			Language.getPhrase('languageMenu.description'));
-		description.setFormat(Paths.font('default'), 16, textColor);
+		description.setFormat(Paths.font('small'), 16, textColor);
 		description.x = -description.width;
 		add(description);
 
@@ -150,11 +161,12 @@ class LanguageSelectState extends SuffState {
 		};
 		add(exitButton);
 
-		if (!initialized) {
+		if (!initialized && !atWarningState) {
 			initialized = true;
 
 			SuffState.playMusic('null');
-			FlxG.sound.music.stop();
+			if (FlxG.sound.music != null)
+				FlxG.sound.music.stop();
 
 			tick = -duration;
 
@@ -183,8 +195,8 @@ class LanguageSelectState extends SuffState {
 		for (num => contributor in contributors) {
 			var text:FlxText = new FlxText(0, 0, 0, contributor, 32);
 			text.color = textColor;
-			var langFont = Paths.getPath('lang/$id/fonts/default.ttf');
-			if (Paths.fileExists(langFont, FONT))
+			var langFont = Paths.getPath('lang/$id/fonts/default_$id.ttf');
+			if (Paths.fileExists(langFont))
 				text.font = langFont;
 			else
 				text.font = Paths.font('default');
@@ -247,10 +259,14 @@ class LanguageSelectState extends SuffState {
 			return;
 		exiting = true;
 		initialized = false;
-		SuffState.playMusic('mainMenu');
-		FlxTransitionableState.skipNextTransIn = false;
-		FlxTransitionableState.skipNextTransOut = false;
-		SuffState.switchState(new MainMenuState());
+		FlxTransitionableState.skipNextTransIn = atWarningState;
+		FlxTransitionableState.skipNextTransOut = atWarningState;
+		if (!atWarningState) {
+			SuffState.playMusic('mainMenu');
+			SuffState.switchState(new MainMenuState());
+		} else {
+			SuffState.switchState(new WarningState());
+		}
 	}
 
 	function transition(instant:Bool = false) {
@@ -262,7 +278,7 @@ class LanguageSelectState extends SuffState {
 
 		bg.color = leBGColor;
 		bgOverlay.visible = true;
-		ajuniga.loadGraphic(Paths.image('gui/menus/language/ajunigaBlended'));
+		ajuniga.loadGraphic(Paths.image('ui/menus/language/ajunigaBlended'));
 		ajuniga.angle = 0;
 		exitButton.visible = true;
 
@@ -315,6 +331,7 @@ class LanguageSelectState extends SuffState {
 			ajuniga.scale.set(1.5, 1.5);
 			title.x = description.x = githubButton.x = 32;
 		}
-		SuffState.playMusic('language');
+		if (!atWarningState)
+			SuffState.playMusic('language');
 	}
 }

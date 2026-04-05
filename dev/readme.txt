@@ -23,4 +23,4 @@ NicklySuffer
 Producer, programmer, artist/animator, music composer & sound design
 
 Snowyboi
-Original game/concept, artist, alt music composer
+Original game/concept

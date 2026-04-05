@@ -1,6 +1,6 @@
 package backend;
 
-import backend.types.MusicMetadata;
+import backend.typedefs.MusicMetadata;
 import backend.Addons;
 import flash.media.Sound;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -32,24 +32,24 @@ class Paths {
 	 */
 	public static function precacheBellySounds() {
 		for (i in 1...Constants.CREAKS_SAMPLE_COUNT + 1) {
-			var key:String = 'belly/creaks/creak_' + i;
+			var key:String = 'game/belly/creaks/creak_' + i;
 			precacheSound(key);
 		}
 		for (i in 1...Constants.GURGLES_SAMPLE_COUNT + 1) {
-			var key:String = 'belly/gurgles/gurgle_' + i;
+			var key:String = 'game/belly/gurgles/gurgle_' + i;
 			precacheSound(key);
 		}
 		for (i in 1...Constants.BELCHES_SAMPLE_COUNT + 1) {
-			var key:String = 'belly/belches/belch_' + i;
+			var key:String = 'game/belly/belches/belch_' + i;
 			precacheSound(key);
 		}
 		for (i in 1...Constants.FWOOMPS_SAMPLE_COUNT + 1) {
-			var key:String = 'belly/fwoomps/fwoompLarge_' + i;
+			var key:String = 'game/belly/fwoomps/fwoompLarge_' + i;
 			precacheSound(key);
-			key = 'belly/fwoomps/fwoompSmall_' + i;
+			key = 'game/belly/fwoomps/fwoompSmall_' + i;
 			precacheSound(key);
 		}
-		precacheSound('belly/burst');
+		precacheSound('game/belly/burst');
 		trace('All belly sounds precached!');
 	}
 
@@ -175,11 +175,13 @@ class Paths {
 	 * @param addons Whether the function checks the addon folders as well.
 	 */
 	inline public static function readDirectories(path:String, listPath:String = '', fileFormat:String = '', addons:Bool = true) {
-		var pathsInFolder:Array<String> = Utils.textFileToArray(listPath);
+		var pathsInFolder:Array<String> = Utilities.textFileToArray(listPath);
 		#if sys
 		// Main folder
 		if (FileSystem.exists(Paths.getPath(path))) {
 			for (i in FileSystem.readDirectory(Paths.getPath(path))) {
+				if (!i.endsWith('.$fileFormat'))
+					continue;
 				var item = i.replace('.$fileFormat', '');
 				if (!pathsInFolder.contains(item) && !FileSystem.isDirectory(Paths.getPath(path + '/' + i)))
 					pathsInFolder.push(item);
@@ -215,7 +217,7 @@ class Paths {
 	 * @param addons Whether the function checks the addon folders as well.
 	 */
 	inline public static function readFolderDirectories(path:String, listPath:String = '', fileToCheck:String = '', addons:Bool = true) {
-		var pathsInFolder:Array<String> = Utils.textFileToArray(listPath);
+		var pathsInFolder:Array<String> = Utilities.textFileToArray(listPath);
 		#if sys
 		// Main folder
 		if (FileSystem.exists(Paths.getPath(path))) {
@@ -232,9 +234,7 @@ class Paths {
 			for (addon in Addons.getGlobalAddons()) {
 				if (FileSystem.exists(Paths.addons('$addon/$path'))) {
 					for (i in FileSystem.readDirectory(Paths.addons('$addon/$path'))) {
-						if (!pathsInFolder.contains(i)
-							&& FileSystem.isDirectory(Paths.addons('$addon/$path/$i'))
-							&& FileSystem.exists(Paths.addons('$addon/$path/$i/$fileToCheck')))
+						if (!pathsInFolder.contains(i) && FileSystem.isDirectory(Paths.addons('$addon/$path/$i')) && FileSystem.exists(Paths.addons('$addon/$path/$i/$fileToCheck')))
 							pathsInFolder.push(i);
 					}
 				}
@@ -297,10 +297,6 @@ class Paths {
 	 */
 	inline static public function musicMetadata(tag:String):MusicMetadata {
 		var usedTag:String = tag;
-		if (Preferences.data.useClassicMusic && fileExists(getMusicPath('music/classic/' + tag), SOUND)) {
-			usedTag = 'classic/' + tag;
-		}
-
 		var json:MusicMetadata = null;
 		var rawJson = getTextFromFile('music/' + usedTag + '.json');
 		if (rawJson != null) {
@@ -336,7 +332,7 @@ class Paths {
 
 		if (useLang) {
 			file = lang('images/$key.png');
-			if (!fileExists(file, IMAGE))
+			if (!fileExists(file))
 				file = getPath('images/$key.png');
 		} else {
 			file = getPath('images/$key.png');
@@ -426,12 +422,12 @@ class Paths {
 	}
 
 	inline static public function font(key:String, useLang:Bool = true) {
-		if (useLang && fileExists(lang('fonts/${key}_${Preferences.data.language}.ttf'), FONT))
+		if (useLang && fileExists(lang('fonts/${key}_${Preferences.data.language}.ttf')))
 			return lang('fonts/${key}_${Preferences.data.language}.ttf');
 		return getPath('fonts/$key.ttf');
 	}
 
-	public static function fileExists(path:String, type:AssetType) {
+	public static function fileExists(path:String, ?type:AssetType = null) {
 		#if sys
 		if (FileSystem.exists(path)) {
 			return true;
@@ -526,21 +522,21 @@ class Paths {
 
 	inline static public function addonsSounds(path:String, key:String) {
 		var langPath = addonFolders('lang/${Preferences.data.language}/' + path + '/' + key + '.' + SOUND_EXT);
-		if (fileExists(langPath, SOUND))
+		if (fileExists(langPath))
 			return langPath;
 		return addonFolders(path + '/' + key + '.' + SOUND_EXT);
 	}
 
 	inline static public function addonsImages(key:String) {
 		var langPath = addonFolders('lang/${Preferences.data.language}/images/' + key + '.png');
-		if (fileExists(langPath, IMAGE))
+		if (fileExists(langPath))
 			return langPath;
 		return addonFolders('images/' + key + '.png');
 	}
 
 	inline static public function addonsXml(key:String) {
 		var langPath = addonFolders('lang/${Preferences.data.language}/images/' + key + '.xml');
-		if (fileExists(langPath, IMAGE))
+		if (fileExists(langPath))
 			return langPath;
 		return addonFolders('images/' + key + '.xml');
 	}

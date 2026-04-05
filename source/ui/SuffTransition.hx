@@ -2,6 +2,7 @@ package ui;
 
 import backend.enums.SuffTransitionStyle;
 import ui.objects.SuffTransitionBlock;
+import ui.SuffSubState;
 
 class SuffTransition extends SuffSubState {
 	public static var finishCallback:Void->Void;
@@ -18,11 +19,14 @@ class SuffTransition extends SuffSubState {
 
 	static final widthHeightGCF:Int = 80;
 
-	// Blocky
+	// Tiles
 	var blockDuration:Float = 0;
 	var transitionProgess:Float = 0;
 	var durationPerBlock:Float = 0;
 	var curBlock:Int = 0;
+
+	// Fade
+	var blackFade:FlxSprite;
 
 	// Intermission
 	final bandCount:Int = 12;
@@ -71,13 +75,13 @@ class SuffTransition extends SuffSubState {
 
 		switch (style) {
 			case DEFAULT:
-				var tran:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gui/transitions/default'));
+				var tran:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/transitions/default'));
 				tran.setGraphicSize(Std.int(tran.width * FlxG.width / 1280), Std.int(tran.height * FlxG.height / 720));
 				tran.updateHitbox();
 				tran.color = 0xFF000000;
 				trans.add(tran);
-			case BLOCKY:
-				var imageList = Paths.readDirectories('images/gui/transitions/blocky', 'images/gui/transitions/blockList.txt', 'png');
+			case TILES:
+				var imageList = Paths.readDirectories('images/ui/transitions/tiles', 'images/ui/transitions/tiles/tileList.txt', 'png');
 
 				for (h in 0...Math.ceil(FlxG.height / blockSize)) {
 					for (w in 0...Math.ceil(FlxG.width / blockSize)) {
@@ -88,6 +92,8 @@ class SuffTransition extends SuffSubState {
 						trans.add(tran);
 					}
 				}
+			case FADE:
+			// No
 			case INTERMISSION:
 				if (FlxG.sound.music != null) {
 					SuffState.playMusic('null');
@@ -141,12 +147,12 @@ class SuffTransition extends SuffSubState {
 					trans.y = -widthHeightGCF;
 					leTween = FlxTween.tween(trans, {y: FlxG.height}, duration, {
 						onComplete: function(twn:FlxTween) {
-							close();
+							this.close();
 						},
 						ease: FlxEase.quadOut
 					});
 				}
-			case BLOCKY:
+			case TILES:
 				var usedDuration:Float = duration * 5;
 				durationPerBlock = usedDuration / (trans.members.length - 1);
 				if (!transIn) {
@@ -167,9 +173,20 @@ class SuffTransition extends SuffSubState {
 						transitionProgess = value;
 					});
 				}
+			case FADE:
+				if (!transIn) {
+					FlxG.camera.fade(0xFF000000, duration * 1.5, function() {
+						startLoading(showLoadingText);
+					});
+				} else {
+					endLoading();
+					FlxG.camera.fade(0xFF000000, duration * 1.5, true, function() {
+						close();
+					});
+				}
 			case INTERMISSION:
 				if (!transIn) {
-					SuffState.playUISound(Paths.sound('easterEgg'));
+					SuffState.playUISound(Paths.sound('ui/mainMenu/easterEgg'));
 					new FlxTimer().start(0.625, function(_) {
 						FlxTween.num(0, 1, bandDecayDuration, {
 							onComplete: function(_) {
@@ -187,9 +204,9 @@ class SuffTransition extends SuffSubState {
 
 	function updateTransition(elapsed:Float, style:SuffTransitionStyle = DEFAULT) {
 		switch (style) {
-			case DEFAULT:
+			default:
 				// Nothing to update, yet
-			case BLOCKY:
+			case TILES:
 				blockDuration += elapsed;
 				if (blockDuration >= durationPerBlock) {
 					for (_ in 0...Math.ceil(blockDuration / durationPerBlock)) {

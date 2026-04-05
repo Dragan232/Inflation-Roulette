@@ -1,11 +1,12 @@
 package states;
 
-import states.easterEggStartups.*;
+import ui.objects.SuffIconButton;
 
 class WarningState extends SuffState {
 	var warningTitle:FlxText;
 	var warningDesc:FlxText;
 	var acceptButton:SuffButton;
+	var languageButton:SuffIconButton;
 
 	var warningText:String = 'This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing \'Accept\', you acknowledge these warnings and fully bear any negative consequences caused by this game.';
 	var typingRate:Float = 0;
@@ -24,7 +25,7 @@ class WarningState extends SuffState {
 		add(warningTitle);
 
 		warningDesc = new FlxText(0, 0, FlxG.width * 0.85, warningText);
-		warningDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, LEFT);
+		warningDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, JUSTIFY);
 		warningDesc.x = Std.int((FlxG.width - warningDesc.width) / 2);
 		warningDesc.visible = false;
 		add(warningDesc);
@@ -35,11 +36,12 @@ class WarningState extends SuffState {
 		acceptButton.btnBGColor = 0xFF000000;
 		acceptButton.btnBGColorHovered = 0xFF000000;
 		acceptButton.btnBGColorDisabled = 0xFFFFFFFF;
-		acceptButton.btnBGColorClicked = 0xFFFFFFFF;
-		acceptButton.clickSound = 'confetti';
+		acceptButton.btnBGColorClicked = 0xFF000000;
+		acceptButton.releaseSound = 'game/confetti';
 		acceptButton.screenCenter();
 		acceptButton.onClick = function() {
 			acceptButton.disabled = true;
+			languageButton.visible = false;
 			SuffState.playUISound(Paths.music('win'), Preferences.data.musicVolume);
 			FlxG.save.data.acknowledgedTermsOfService = true;
 			FlxG.save.data.termsOfService = warningText;
@@ -54,6 +56,24 @@ class WarningState extends SuffState {
 
 		warningDesc.y = (FlxG.height - (warningTitle.height + warningDesc.height + acceptButton.height + 10)) / 2 + warningTitle.height;
 		acceptButton.y = FlxG.height;
+
+		languageButton = new SuffIconButton(20, 20, 'buttons/language', null, 2);
+		languageButton.x = FlxG.width - languageButton.width - 20;
+		languageButton.y = FlxG.height;
+		languageButton.btnOutlineColor = languageButton.btnOutlineColorHovered = languageButton.btnOutlineColorClicked = 0xFFFFFFFF;
+		languageButton.btnBGColor = languageButton.btnBGColorHovered = languageButton.btnBGColorClicked = 0xFF000000;
+		languageButton.onClick = function () {
+			LanguageSelectState.atWarningState = true;
+			SuffState.switchState(new LanguageSelectState());
+		};
+		add(languageButton);
+		FlxTween.tween(languageButton, {y: FlxG.height - languageButton.height - 20}, 0.75, {
+			ease: FlxEase.backOut,
+			startDelay: 0.5,
+			onComplete: function(_) {
+				FlxG.mouse.visible = true;
+			}
+		});
 
 		FlxTween.tween(warningTitle, {'scale.x': 1, 'scale.y': 1, alpha: 1}, 0.75, {
 			ease: FlxEase.backOut,
@@ -81,9 +101,9 @@ class WarningState extends SuffState {
 			typingTick += typingRate * elapsed;
 			warningDesc.text = warningText.substring(0, Math.round(typingTick));
 			if (FlxG.mouse.pressed) {
-				typingRate = 110;
+				typingRate = 150;
 			} else {
-				typingRate = 55;
+				typingRate = 50;
 			}
 		}
 		if (typingTick > warningText.length) {
@@ -91,7 +111,6 @@ class WarningState extends SuffState {
 			typingRate = 0;
 			typingTick = warningText.length;
 			warningDesc.text = warningText;
-			FlxG.mouse.visible = true;
 			FlxTween.tween(acceptButton, {
 				y: warningDesc.y + warningDesc.height + 10
 			}, 0.75, {

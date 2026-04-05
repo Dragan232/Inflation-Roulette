@@ -1,5 +1,5 @@
 export/
 private/
 **/*.zip
-.vscode
-.idea
+.idea/
+.haxelib/

@@ -1,5 +1,7 @@
 package backend;
 
+import backend.enums.AchievementTier;
+
 /**
  * A store of unchanging, globally relevant values.
  */
@@ -17,6 +19,8 @@ class Constants {
 	 */
 	public static final TO_RADIANS:Float = Math.PI / 180;
 
+	public static final GOLDEN_RATIO:Float = (1 + Math.sqrt(5)) / 2;
+
 	// GAMEPLAY CONSTANTS
 
 	/**
@@ -30,18 +34,11 @@ class Constants {
 	public static final LIVE_ROUND_COUNT:Int = 1;
 
 	// VISUAL CONSTANTS
-
-	/**
-	 * How bright should the monochrome filter during the pause screen be.
-	 */
-	public static final MONOCHROME_BRIGHTNESS:Float = 1 / 3;
-
 	/**
 	 * How fast should the game camera move in default.
 	 * 0 means the camera does not move at all.
 	 * 1 means the camera moves instantly.
 	 */
-	public static final DEFAULT_CAMERA_FOLLOW_LERP:Float = 0.1;
 
 	/**
 	 * The representative color of a player. First item is for Player 1, second is for Player 2, and so on.
@@ -58,6 +55,13 @@ class Constants {
 		0xFFFF00C0, // Magenta
 	];
 
+	public static final ACHIEVEMENT_TIER_COLORS:Map<AchievementTier, FlxColor> = [
+		AchievementTier.LAME => 0xFFD0A090,
+		AchievementTier.COMMON => 0xFFFFFFFF,
+		AchievementTier.GOOD => 0xFFFFD000,
+		AchievementTier.EPIC => 0xFF00D0FF
+	];
+
 	public static final DEFAULT_SPLASH_TEXT_COLORS:Array<FlxColor> = [0xFFFFFF00];
 
 	/**
@@ -67,7 +71,7 @@ class Constants {
 	public static final CHARACTER_CARD_DIMENSIONS:Array<Int> = [150, 200];
 
 	#if _ALLOW_EASTER_EGGS
-	public static final EASTER_EGG_INPUTS:Array<String> = ['imhighoncrack', 'blueberryhelium', 'roomoneoone', 'ibeesbees'];
+	public static final EASTER_EGG_INPUTS:Array<String> = ['imhighoncrack', 'blueberryhelium', 'roomoneohone', 'ibeesbees'];
 	#end
 	public static final ALPHABET_UPPERCASE:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

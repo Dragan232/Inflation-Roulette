@@ -1,4 +1,5 @@
 {
+	"cardDisplayedKey": "character.goober.name",
 	"maxPressure": 4,
 	"maxConfidence": 4,
 	"modifiers": {},

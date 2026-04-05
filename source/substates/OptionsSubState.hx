@@ -10,7 +10,6 @@ class OptionsSubState extends SuffSubState {
 	var bg:FlxSprite;
 	var bg2:FlxSprite;
 	var scrollBar:FlxSprite;
-	var headingText:FlxText;
 	var exitButton:SuffIconButton;
 
 	var optionsGroup:FlxSpriteGroup = new FlxSpriteGroup();
@@ -109,8 +108,12 @@ class OptionsSubState extends SuffSubState {
 		#end
 
 		createBooleanOption('enableForceAliasing', function(value:Bool) {
-				Preferences.data.enableForceAliasing = value;
+			Preferences.data.enableForceAliasing = value;
 		}, Preferences.data.enableForceAliasing);
+
+		createBooleanOption('enableGLSL', function(value:Bool) {
+			Preferences.data.enableGLSL = value;
+		}, Preferences.data.enableGLSL);
 
 		createBooleanOption('alwaysPlayMainMenuAnims', function(value:Bool) {
 			Preferences.data.alwaysPlayMainMenuAnims = value;
@@ -129,14 +132,6 @@ class OptionsSubState extends SuffSubState {
 		// AUDIO SETTINGS
 		createHeading('audio');
 
-		createBooleanOption("useClassicMusic", function(value:Bool) {
-			Preferences.data.useClassicMusic = value;
-			if (notInGame) {
-				SuffState.playMusic('options');
-			}
-			touchedMusicOption = !touchedMusicOption;
-		}, Preferences.data.useClassicMusic);
-
 		createSliderOption('musicVolume', function(value:Float) {
 			Preferences.data.musicVolume = value;
 			if (notInGame)
@@ -147,14 +142,14 @@ class OptionsSubState extends SuffSubState {
 
 		createSliderOption('gameSoundVolume', function(value:Float) {
 			Preferences.data.gameSoundVolume = value;
-			SuffState.playSound(Paths.soundRandom('weapon', 1, 3));
+			SuffState.playSound(Paths.soundRandom('game/weapon', 1, 3));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.gameSoundVolume);
 
 		createSliderOption('uiSoundVolume', function(value:Float) {
 			Preferences.data.uiSoundVolume = value;
-			SuffState.playUISound(Paths.soundRandom('weapon', 1, 3));
+			SuffState.playUISound(Paths.soundRandom('game/weapon', 1, 3));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.uiSoundVolume);
@@ -164,6 +159,13 @@ class OptionsSubState extends SuffSubState {
 		createBooleanOption('enablePhotosensitiveMode', function(value:Bool) {
 				Preferences.data.enablePhotosensitiveMode = value;
 		}, Preferences.data.enablePhotosensitiveMode);
+
+		createSliderOption('cameraSpeed', function(value:Float) {
+			Preferences.data.cameraSpeed = value;
+			PauseSubState.usedFollowLerp = 60 / FlxG.updateFramerate * 0.1 * Preferences.data.cameraSpeed;
+		}, 0.25, 2, 0.05, function(value:Float) {
+			return Math.round(value * 100) + '%';
+		}, Preferences.data.cameraSpeed);
 
 		createSliderOption('cameraEffectIntensity', function(value:Float) {
 			Preferences.data.cameraEffectIntensity = value;
@@ -194,7 +196,8 @@ class OptionsSubState extends SuffSubState {
 
 		createSliderOption('maxFramerate', function(value:Float) {
 			Preferences.data.maxFramerate = Math.round(value);
-		}, 30, 180, 10, function(value:Float) {
+			PauseSubState.usedFollowLerp = 60 / FlxG.updateFramerate * 0.1 * Preferences.data.cameraSpeed;
+		}, 30, 300, 10, function(value:Float) {
 			return '' + Math.round(value);
 		}, Preferences.data.maxFramerate);
 
@@ -220,23 +223,23 @@ class OptionsSubState extends SuffSubState {
 
 		createBooleanOption('showDebugText', function(value:Bool) {
 			Preferences.data.showDebugText = value;
-			Main.fpsVar.updateText();
+			Main.debugText.updateText();
 		}, Preferences.data.showDebugText);
 
 		#if (openfl && !html5)
 		createBooleanOption('showFramerateOnDebugText', function(value:Bool) {
 			Preferences.data.showFramerateOnDebugText = value;
-			Main.fpsVar.updateText();
+			Main.debugText.updateText();
 		}, Preferences.data.showFramerateOnDebugText);
 
 		createBooleanOption('showMemoryUsageOnDebugText', function(value:Bool) {
 			Preferences.data.showMemoryUsageOnDebugText = value;
-			Main.fpsVar.updateText();
+			Main.debugText.updateText();
 		}, Preferences.data.showMemoryUsageOnDebugText);
 
 		createBooleanOption('showCurrentStateOnDebugText', function(value:Bool) {
 			Preferences.data.showCurrentStateOnDebugText = value;
-			Main.fpsVar.updateText();
+			Main.debugText.updateText();
 		}, Preferences.data.showCurrentStateOnDebugText);
 		#end
 

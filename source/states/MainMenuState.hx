@@ -8,19 +8,26 @@ import backend.VersionMetadata;
 #end
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
+import states.AchievementsState;
 #if _ALLOW_ADDONS
 import states.AddonsMenuState;
 #end
 import states.CreditsState;
 import states.InitStartupState;
 import states.LanguageSelectState;
-import states.utilities.UtilitiesMenuState;
+import utilities.states.UtilitiesMainMenuState;
 import substates.OptionsSubState;
+import substates.ExtrasSubState;
 import substates.GamemodeSelectSubState;
 import ui.objects.GameLogo;
+import backend.Scoring.Scoring.gradePercent;
+import backend.typedefs.ScoreData;
+import backend.enums.ScoreRank;
+import backend.Scoring;
 
 class MainMenuState extends SuffState {
 	public static var initialized:Bool = false;
+	static var dongCount:Int = 0;
 
 	var finishedAnimation:Bool = true;
 
@@ -29,33 +36,34 @@ class MainMenuState extends SuffState {
 	var logo:GameLogo;
 	var splashText:FlxText;
 
+	var dongText:FlxText;
+	var dongCommentText:FlxText;
+	final dongCommentTargets:Array<Int> = [
+		0, 10, 20, 50, 100, 200, 300, 320, 340, 360, 380, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 3000, 5000, 10000, 10010
+	];
+
 	var buttonGroup:FlxTypedContainer<SuffButton> = new FlxTypedContainer<SuffButton>();
 	var topInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
 	var bottomInfoTextGroup:FlxTypedSpriteGroup<FlxText> = new FlxTypedSpriteGroup<FlxText>();
 
 	final menuItemPadding:FlxPoint = new FlxPoint(10, 10);
-	final menuItemSize:FlxPoint = new FlxPoint(520, 440);
+	final menuItemSize:FlxPoint = new FlxPoint(520, 550);
 
 	var creditsButton:SuffButton;
 
 	static final menuItems:Array<Array<String>> = [
-		['play',
+		['play'],
 		#if _ALLOW_ADDONS
-		'addons'
+		['addons', 'utilities'],
 		#end
-		],
-		// ['achievements'],
-		['options'],
-		['language'],
-		['donate']
+		['achievements'],
+		['options', 'language'],
+		['extras', 'donate']
 	];
 
 	static final disabledMenuItems:Array<String> = [
 		// Name
-		'donate',
-		'utilities',
-		'gallery',
-		'achievements'
+		'donate'
 	];
 
 	var currentEasterEggInput:String = '';
@@ -63,10 +71,6 @@ class MainMenuState extends SuffState {
 	override public function create():Void {
 		// Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
-
-		FlxG.fixedTimestep = false;
-		FlxG.game.focusLostFramerate = 60;
-		FlxG.keys.preventDefaultKeys = [TAB];
 
 		if (FlxG.sound.music == null || SuffState.currentMusicName == 'null') { // idk lmao
 			SuffState.playMusic('mainMenu');
@@ -79,17 +83,22 @@ class MainMenuState extends SuffState {
 		grid.velocity.set(-32, -32);
 		add(grid);
 
-		overlay = new FlxBackdrop(Paths.image('gui/transitions/horizontal'), Y);
+		overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
 		overlay.x = -overlay.width / 2 - 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF105060;
 		overlay.alpha = 0.75;
 		add(overlay);
 
-		logo = new GameLogo(0, 0);
+		logo = new GameLogo(0, 0, false);
+		logo.showVersion = true;
 		logo.x = FlxG.width / 2 + (FlxG.width / 2 - logo.width) / 2;
 		logo.y = (FlxG.height - logo.height) / 2;
 		add(logo);
+
+		dongText = new FlxText(0, 0, 0, '', 32);
+		dongText.alignment = CENTER;
+		add(dongText);
 
 		splashText = new FlxText(0, 0, FlxG.width * 0.4, 'Empty');
 		splashText.setFormat(Paths.font('default', false), 32, FlxColor.YELLOW, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
@@ -97,6 +106,12 @@ class MainMenuState extends SuffState {
 		splashText.y = logo.y + logo.height + 10;
 		add(splashText);
 		tweenSplashTextColor();
+
+		dongCommentText = new FlxText(0, 0, FlxG.width * 0.4, '', 32);
+		dongCommentText.x = logo.x + (logo.width - dongCommentText.width) / 2;
+		dongCommentText.y = splashText.y;
+		dongCommentText.alignment = CENTER;
+		add(dongCommentText);
 
 		var topInfoTextList:Array<String> = [];
 		if (SplashManager.isSpecialDay) {
@@ -135,8 +150,8 @@ class MainMenuState extends SuffState {
 			bottomInfoTextGroup.add(infoText);
 		}
 
-		var creditImage = Paths.image('gui/menus/nicklySufferLogo');
-		var creditImageHovered = Paths.image('gui/menus/nicklySufferLogoHighlighted');
+		var creditImage = Paths.image('ui/menus/nicklySufferLogo');
+		var creditImageHovered = Paths.image('ui/menus/nicklySufferLogoHighlighted');
 		creditsButton = new SuffButton(10, 0, '', creditImage, creditImageHovered, creditImage.width * 2, creditImage.height * 2, false);
 		creditsButton.btnTextColorHovered = 0xFFFFFF00;
 		creditsButton.y = FlxG.height - creditsButton.height - 10;
@@ -180,6 +195,8 @@ class MainMenuState extends SuffState {
 		finishedAnimation = false;
 		var logoX = logo.x;
 		var logoY = logo.y;
+		logo.showVersion = false;
+		logo.animated = true;
 		logo.x = (FlxG.width - logo.width) / 2;
 		logo.y = -logo.height;
 		FlxTween.tween(logo, {y: logoY}, 1, {
@@ -188,7 +205,10 @@ class MainMenuState extends SuffState {
 		});
 		FlxTween.tween(logo, {x: logoX}, 1, {
 			ease: FlxEase.quintInOut,
-			startDelay: 1.5
+			startDelay: 1.5,
+			onComplete: function(_) {
+				logo.showVersion = true;
+			}
 		});
 
 		var overlayPos = overlay.x;
@@ -290,25 +310,82 @@ class MainMenuState extends SuffState {
 			#if _ALLOW_ADDONS
 			case 'addons':
 				SuffState.switchState(new AddonsMenuState());
-				/* Not finished yet
-					case 'utilities':
-						SuffState.switchState(new UtilitiesMenuState());
-				 */
+			case 'utilities':
+				SuffState.switchState(new UtilitiesMainMenuState());
 			#end
 			case 'language':
+				LanguageSelectState.atWarningState = false;
 				SuffState.switchState(new LanguageSelectState());
+			case 'achievements':
+				SuffState.switchState(new AchievementsState());
+			case 'extras':
+				openSubState(new ExtrasSubState());
 			case 'credits':
 				SuffState.switchState(new CreditsState());
 			case 'donate':
-				Utils.browserLoad('https://ko-fi.com/nicklysuffer');
+                Utilities.browserLoad('https://ko-fi.com/nicklysuffer');
 		}
 	}
 
 	var splashTextChangeTimer:Float = 0;
 	var displayedLogoScale:Float = GameLogo.logoScale;
 
+	function dong() {
+		splashTextChangeTimer = 0;
+		displayedLogoScale -= 0.025;
+		changeSplashText();
+		FlxTween.cancelTweensOf(splashText, ['y']);
+		FlxTween.tween(splashText, {y: logo.y + logo.height + 10}, 0.08, {ease: FlxEase.cubeOut});
+		SuffState.playUISound(Paths.sound('ui/dong'));
+
+		dongCount++;
+		dongText.text = Language.getPhrase('mainMenu.dongs', [dongCount]);
+		dongText.x = logo.x + (logo.width - dongText.width) / 2;
+		FlxTween.cancelTweensOf(dongText, ['scale.x', 'scale.y', 'angle']);
+		dongText.angle = FlxG.random.int(-10, 10);
+		dongText.scale.set(FlxG.random.float(1.1, 1.25), FlxG.random.float(1.1, 1.25));
+		dongsPerSecond += 1;
+		FlxTween.tween(dongText.scale, {x: FlxG.random.float(0.75, 0.9), y: FlxG.random.float(0.75, 0.9)}, 0.05, {
+			onComplete: function(_) {
+				FlxTween.tween(dongText.scale, {x: 1, y: 1}, 0.05);
+			}
+		});
+		FlxTween.tween(dongText, {angle: 0}, 0.1);
+		if (dongTextTick > 2) {
+			dongText.y = -dongText.height;
+			FlxTween.cancelTweensOf(dongText, ['y']);
+			FlxTween.tween(dongText, {y: 16}, 0.5, {
+				ease: FlxEase.quintOut
+			});
+		}
+		dongTextTick = 0;
+
+		for (i in 0...dongCommentTargets.length) {
+			if (dongCount < dongCommentTargets[i]) {
+				dongCommentText.text = Language.getPhrase('mainMenu.dongs.comment.' + dongCommentTargets[i - 1], [], '');
+				break;
+			}
+		}
+		if (dongCount >= dongCommentTargets[dongCommentTargets.length - 2])
+			Achievements.advanceProgress('noLife', [true]);
+	}
+
+	var dongTextTick:Float = 6;
+	var dongsPerSecond:Float = 0;
+
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+
+		dongTextTick += elapsed;
+		if (dongTextTick >= 2 && dongTextTick <= (2 + elapsed)) {
+			FlxTween.tween(dongText, {y: -dongText.height * 2}, 4, {
+				ease: FlxEase.quadInOut
+			});
+		}
+
+		dongsPerSecond *= (1 - elapsed);
+		splashText.offset.x = -Math.pow(Math.max(0, dongsPerSecond - 5) * 6, 2);
+		dongCommentText.alpha = FlxMath.bound(splashText.offset.x / -2000, 0, 1);
 
 		logo.angle = splashText.angle = Math.sin(SuffState.timePassedOnState) * 5;
 		displayedLogoScale = FlxMath.lerp(displayedLogoScale, GameLogo.logoScale, elapsed * 10);
@@ -320,12 +397,7 @@ class MainMenuState extends SuffState {
 		splashText.scale.set(splashTextScale, splashTextScale);
 		if (finishedAnimation) {
 			if (FlxG.mouse.overlaps(logo) && FlxG.mouse.justPressed) {
-				splashTextChangeTimer = 0;
-				displayedLogoScale -= 0.025;
-				changeSplashText();
-				FlxTween.cancelTweensOf(splashText, ['y']);
-				FlxTween.tween(splashText, {y: logo.y + logo.height + 10}, 0.08, {ease: FlxEase.cubeOut});
-				SuffState.playUISound(Paths.sound('musicToastClick'));
+				dong();
 			}
 
 			if (FlxG.mouse.overlaps(bottomInfoTextGroup.members[bottomInfoTextGroup.members.length - 1])
@@ -335,7 +407,7 @@ class MainMenuState extends SuffState {
 				FlxG.save.data.easterEggStartup = '';
 				FlxG.save.flush();
 
-				SuffState.playUISound(Paths.sound('startup/transition'), 0.75, 3);
+				SuffState.playUISound(Paths.sound('ui/startup/transition'), 0.75, 3);
 			}
 
 			splashTextChangeTimer += elapsed;
@@ -344,6 +416,45 @@ class MainMenuState extends SuffState {
 				fadeSplashText();
 			}
 		}
+
+		/*
+		if (FlxG.keys.justPressed.Q) {
+			var player1:ScoreData = {
+				charID: 'goober',
+				cpuControlled: false,
+				charPressure: 0,
+				winBonus: 5500,
+				edgingBonus: 4700,
+				skillBonus: 1800
+			};
+			var player2:ScoreData = {
+				charID: 'goober',
+				cpuControlled: true,
+				charPressure: 1.25,
+				winBonus: 0,
+				edgingBonus: 4700,
+				skillBonus: 1800
+			};
+			var player3:ScoreData = {
+				charID: 'goober',
+				cpuControlled: false,
+				charPressure: 1.25,
+				winBonus: 0,
+				edgingBonus: 4700,
+				skillBonus: 0
+			};
+			var player4:ScoreData = {
+				charID: 'goober',
+				cpuControlled: true,
+				charPressure: 1.25,
+				winBonus: 0,
+				edgingBonus: 0,
+				skillBonus: 1800
+			};
+			ResultsState.data = [player2, player1, player3, player4];
+			SuffState.switchState(new ResultsState());
+		}
+		*/
 
 		#if _ALLOW_EASTER_EGGS
 		if (FlxG.keys.firstJustPressed() != FlxKey.NONE) {
@@ -359,8 +470,9 @@ class MainMenuState extends SuffState {
 					var formattedInput = currentEasterEggInput.toLowerCase();
 					if (currentEasterEggInput.toLowerCase() == easterEgg) {
 						FlxG.save.data.easterEggStartup = formattedInput;
+						Achievements.advanceProgress('allEasterEggs', [formattedInput]);
 						FlxG.save.flush();
-						SuffState.switchState(new InitStartupState(), INTERMISSION);
+						SuffState.switchState(new InitStartupState(), INTERMISSION, true);
 						break;
 					}
 				}

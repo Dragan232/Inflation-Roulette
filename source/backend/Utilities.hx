@@ -4,8 +4,8 @@ import flixel.graphics.FlxGraphic;
 import flixel.util.FlxSort;
 import flixel.util.FlxSpriteUtil;
 import openfl.display.BitmapData;
-import openfl.utils.Assets;
 import openfl.Lib;
+import openfl.utils.Assets;
 
 /**
  * Utilities for various functions.
@@ -74,7 +74,7 @@ class Utilities {
 	 * @param pressed Whether to use the pressed version of the cursor.
 	 */
 	public static function changeCursorImage(tag:String, pressed:Bool = false):Void {
-		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gui/cursor/${tag}' + (pressed ? 'Held' : '')));
+		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/cursor/${tag}' + (pressed ? 'Held' : '')));
 		FlxG.mouse.load(spr.pixels, 1, -7, -6);
 	}
 
@@ -185,38 +185,55 @@ class Utilities {
 		return whitespace.map(str, (r) -> r.matched(0).toUpperCase());
 	}
 
-	// Fetched from thx.core library. Thanks fponticelli!
-	static var SPLIT_LINES = ~/\r\n|\n\r|\n|\r/g;
-	static var WSG = ~/[ \t\r\n]+/g;
-
-	static function wrapLine(s:String, columns:Int, indent:String, newline:String) {
-		var parts = [], pos = 0, len = s.length, ilen = indent.length;
-		columns -= ilen;
-		while (true) {
-			if (pos + columns >= len - ilen) {
-				parts.push(s.substring(pos));
-				break;
-			}
-
-			var i = 0;
-			while (!StringTools.isSpace(s, pos + columns - i) && i < columns)
-				i++;
-			if (i == columns) {
-				// search ahead
-				i = 0;
-				while (!StringTools.isSpace(s, pos + columns + i) && pos + columns + i < len)
-					i++;
-				parts.push(s.substring(pos, pos + columns + i));
-				pos += columns + i + 1;
-			} else {
-				parts.push(s.substring(pos, pos + columns - i));
-				pos += columns - i + 1;
-			}
-		}
-
-		return indent + parts.join(newline + indent);
+	public static function getUsername():String {
+		return Sys.environment()["USERNAME"];
 	}
 
-	public static function wrapColumns(s:String, columns = 78, indent = "", newline = "\n")
-		return SPLIT_LINES.split(s).map(function(part) return wrapLine(StringTools.trim(WSG.replace(part, " ")), columns, indent, newline)).join(newline);
+	public static function getExecutablePath(backslash:Bool = true):String {
+		if (!backslash)
+			return haxe.io.Path.directory(Sys.executablePath()).replace('\\', '/');
+		return haxe.io.Path.directory(Sys.executablePath());
+	}
+
+	public static inline function getDarkerShade(color:FlxColor, darkness:Float = 0.25, hueShifted:Bool = true) {
+		var hue = color.hue;
+		var saturation = color.saturation;
+		if (hueShifted) {
+			if (hue >= 120 && hue < 270)
+				hue += 30 * FlxMath.signOf(darkness);
+			else
+				hue -= 30 * FlxMath.signOf(darkness);
+
+			saturation = Math.min(1, saturation * 1.1);
+		}
+		var brightness = Math.min(1, Math.pow(color.brightness * (1 - darkness), Constants.GOLDEN_RATIO));
+		return FlxColor.fromHSB(hue, saturation, brightness);
+	}
+
+	public static inline function getLighterShade(color:FlxColor, lightness:Float = 0.25, hueShifted:Bool = true) {
+		var hue = color.hue;
+		var saturation = color.saturation;
+		if (hueShifted) {
+			if (hue >= 60 && hue <= 270)
+				hue -= 30 * FlxMath.signOf(lightness);
+			else
+				hue = Math.min(hue + 30 * FlxMath.signOf(lightness), 60);
+
+			saturation = Math.max(0, saturation - lightness);
+		}
+		var brightness = Math.min(1, color.brightness * 1.1);
+		return FlxColor.fromHSB(hue, saturation, brightness);
+	}
+
+	inline static public function replaceWithSubstr(original:String = '', char:String = ''):String {
+		var or:String = original;
+		var ret:String = '';
+		for (i in 0...or.length) {
+			var leChar = char;
+			if (original.charAt(i) == ' ')
+				leChar = ' ';
+			ret += leChar;
+		}
+		return ret;
+	}
 }

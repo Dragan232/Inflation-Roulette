@@ -1,6 +1,6 @@
 package ui.objects;
 
-import backend.types.AddonMetadata;
+import backend.typedefs.AddonMetadata;
 
 class AddonMenuItem extends SuffButton {
 	public static final spacing:Int = 10;
@@ -25,7 +25,7 @@ class AddonMenuItem extends SuffButton {
 
 		var path:String = Paths.addons('$folder/metadata/pack.png');
 		if (!FileSystem.exists(path)) {
-			path = Paths.getImagePath('gui/menus/addons/defaultIcon');
+			path = Paths.getImagePath('ui/menus/addons/defaultIcon');
 		}
 		var leIconImage = Paths.cacheBitmap(path);
 		var iconOffset:Float = (defaultHeight - iconSize) / 2;

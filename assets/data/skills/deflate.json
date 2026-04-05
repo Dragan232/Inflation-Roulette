@@ -1,3 +1,4 @@
 {
-	"defaultCost": 4
+	"defaultCost": 4,
+	"offensive": false
 }

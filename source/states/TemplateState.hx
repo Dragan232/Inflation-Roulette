@@ -1,9 +1,20 @@
 package states;
 
+import ui.objects.SuffIconButton;
+
 class TemplateState extends SuffState {
 	var exiting:Bool = false;
+	var exitButton:SuffIconButton;
+
 	override function create() {
 		super.create();
+
+		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton.onClick = function() {
+			exitMenu();
+		};
+		add(exitButton);
 	}
 
 	function exitMenu() {
@@ -17,7 +28,7 @@ class TemplateState extends SuffState {
 		super.update(elapsed);
 
 		if (FlxG.keys.justPressed.ESCAPE) {
-			SuffState.switchState(new MainMenuState());
+			exitMenu();
 		}
 	}
 }
