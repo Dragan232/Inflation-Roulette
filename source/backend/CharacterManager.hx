@@ -1,5 +1,8 @@
 package backend;
 
+import tjson.TJSON;
+import backend.typedefs.CharacterCosmeticData;
+
 class CharacterManager {
 	public static var globalCharacterList:Array<String> = [];
 	public static var selectedCharacterList:Array<String> = ['goober', 'goober', 'goober', 'goober'];
@@ -13,15 +16,25 @@ class CharacterManager {
 	public static function initialize() {
 		globalCharacterList = Paths.readFolderDirectories('data/characters', 'data/characters/characterList.txt', 'stats.json');
 		trace(globalCharacterList);
+		for (i in globalCharacterList) {
+			precacheSpriteSheets(i);
+		}
 		setPlayerCount(4);
-		precacheResultsSprites();
+		precacheResultsAssets();
 	}
 
-	public static function precacheResultsSprites() {
+	public static function precacheResultsAssets() {
 		Paths.music('resultsStart');
 		Paths.music('resultsLoop');
 		for (i in globalCharacterList) {
 			Paths.sparrowAtlas('ui/menus/results/characters/$i');
+		}
+	}
+
+	public static function precacheSpriteSheets(char:String) {
+		var rawJson:CharacterCosmeticData = cast TJSON.parse(Paths.getTextFromFile('data/characters/$char/cosmetic.json'));
+		for (i in rawJson.spriteSheets) {
+			Paths.sparrowAtlas('game/characters/$char/$i');
 		}
 	}
 

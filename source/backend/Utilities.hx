@@ -181,19 +181,24 @@ class Utilities {
 	 * @param str The string to be formatted.
 	 */
 	public static function capitalize(str:String):String {
-		var whitespace = ~/(?<=\r|\s|^)([a-z])/g;
-		return whitespace.map(str, (r) -> r.matched(0).toUpperCase());
+		return str.charAt(0).toUpperCase() + str.substr(1, str.length - 1).toLowerCase();
 	}
 
 	public static function getUsername():String {
+		#if sys
 		return Sys.environment()["USERNAME"];
+		#else
+		return 'User';
+		#end
 	}
 
+	#if sys
 	public static function getExecutablePath(backslash:Bool = true):String {
 		if (!backslash)
 			return haxe.io.Path.directory(Sys.executablePath()).replace('\\', '/');
 		return haxe.io.Path.directory(Sys.executablePath());
 	}
+	#end
 
 	public static inline function getDarkerShade(color:FlxColor, darkness:Float = 0.25, hueShifted:Bool = true) {
 		var hue = color.hue;

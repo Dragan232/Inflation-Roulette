@@ -14,7 +14,9 @@ import flixel.addons.ui.FlxUIWidget;
 import flixel.util.FlxCollision;
 import utilities.enums.StageEditorObjectType;
 import openfl.Lib;
+#if _ALLOW_UTILITIES
 import backend.FileDialogHandler;
+#end
 import openfl.display.PNGEncoderOptions;
 import openfl.utils.ByteArray;
 import openfl.display.BitmapData;

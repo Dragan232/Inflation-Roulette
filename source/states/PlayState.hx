@@ -17,8 +17,6 @@ import objects.Stage;
 import backend.Scoring;
 import objects.particles.SkillIndicator;
 import ui.objects.RevealBullet;
-import flixel.effects.FlxFlicker.FlxFlicker.flicker;
-import flixel.effects.FlxFlicker;
 
 class PlayState extends SuffState {
 	public var characterGroup:FlxTypedContainer<Character> = new FlxTypedContainer<Character>();

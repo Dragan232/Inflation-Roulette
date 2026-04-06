@@ -1,9 +1,5 @@
 package;
 
-import backend.Addons;
-import backend.CharacterManager;
-import backend.GameplayManager;
-import backend.SplashManager;
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Lib;
@@ -11,7 +7,7 @@ import ui.objects.DebugText;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import lime.app.Application;
-import states.InitStartupState;
+import states.PreloadState;
 // crash handler stuff
 #if _ALLOW_CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
@@ -26,7 +22,7 @@ class Main extends Sprite {
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: InitStartupState, // initial game state
+		initialState: PreloadState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
 		skipSplash: true, // if the default flixel splash screen should be skipped
@@ -35,7 +31,7 @@ class Main extends Sprite {
 
 	public static var debugText:DebugText;
 
-	public static var mainClassState:Class<FlxState> = InitStartupState;
+	public static var mainClassState:Class<FlxState> = PreloadState;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -78,8 +74,6 @@ class Main extends Sprite {
 			game.skipSplash, game.startFullscreen));
 
 		#if !mobile
-		FlxG.save.bind('game', Utilities.getSavePath());
-		Preferences.loadPrefs();
 		debugText = new DebugText(0, 0, 0xFFFFFF);
 		addChild(debugText);
 		Lib.current.stage.align = "tl";
@@ -112,19 +106,6 @@ class Main extends Sprite {
 			if (FlxG.game != null)
 				resetSpriteCache(FlxG.game);
 		});
-
-		#if _ALLOW_ADDONS
-		Addons.pushGlobalAddons();
-		#end
-		Language.initialize();
-		Achievements.initialize();
-		MusicToast.initialize();
-		AchievementToast.initialize();
-		Tooltip.initialize();
-		CustomCursorHandler.initialize();
-		SplashManager.parseSplashes();
-		CharacterManager.initialize();
-		GameplayManager.initialize();
 	}
 
 	static function resetSpriteCache(sprite:Sprite):Void {

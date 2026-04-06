@@ -26,7 +26,7 @@ class DissolveShader extends FlxShader {
 		vec2 pos_in_grid = uv * cells_count;
 		vec2 cell_pos_in_grid =  floor(pos_in_grid);
 		vec2 local_pos_in_cell = (pos_in_grid - cell_pos_in_grid);
-		vec2 blend = local_pos_in_cell * local_pos_in_cell * (3.0f - 2.0f * local_pos_in_cell);
+		vec2 blend = local_pos_in_cell * local_pos_in_cell * (3.0 - 2.0 * local_pos_in_cell);
 
 		vec2 left_top = cell_pos_in_grid + vec2(0, 1);
 		vec2 right_top = cell_pos_in_grid + vec2(1, 1);

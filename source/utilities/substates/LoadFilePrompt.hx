@@ -1,9 +1,12 @@
 package utilities.substates;
 
+#if _ALLOW_UTILITIES
 import backend.FileDialogHandler;
 import openfl.net.FileFilter;
+#end
 
 class LoadFilePrompt extends UtilitiesBaseMenuSubState {
+	#if _ALLOW_UTILITIES
 	var loadFileButton:SuffButton;
 	public static var loadFileFunction:String -> Void;
 	var newFileButton:SuffButton;
@@ -51,4 +54,5 @@ class LoadFilePrompt extends UtilitiesBaseMenuSubState {
 		if (newFileFunction != null)
 			add(newFileButton);
 	}
+	#end
 }

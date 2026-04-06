@@ -1,8 +1,6 @@
 {
-	"spriteSheetsMandatory": [
-		"mandatory"
-	],
-	"spriteSheetsGameplay": [
+	"spriteSheets": [
+		"mandatory",
 		"shooting",
 		"cutscenes",
 		"skills"

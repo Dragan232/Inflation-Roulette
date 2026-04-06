@@ -2,7 +2,7 @@ package objects;
 
 import backend.GameplayManager;
 import backend.typedefs.CharacterData;
-import backend.typedefs.CharacterSpriteData;
+import backend.typedefs.CharacterCosmeticData;
 import backend.typedefs.ModifierData;
 import backend.typedefs.SkillData;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -68,7 +68,7 @@ class Character extends FlxSprite {
 		var json:CharacterData = cast Json.parse(rawJson);
 
 		var rawJson2 = Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json');
-		var spriteJson:CharacterSpriteData = cast Json.parse(rawJson2);
+		var spriteJson:CharacterCosmeticData = cast Json.parse(rawJson2);
 
 		// name = json.name;
 		/*
@@ -115,13 +115,9 @@ class Character extends FlxSprite {
 			}
 		}
 
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[0]}');
-		for (i in 1...spriteJson.spriteSheetsMandatory.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[i]}');
-			combinedAtlas.addAtlas(atlas, false);
-		}
-		for (i in 0...spriteJson.spriteSheetsGameplay.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsGameplay[i]}');
+		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
+		for (i in 1...spriteJson.spriteSheets.length) {
+			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
 			combinedAtlas.addAtlas(atlas, false);
 		}
 		super(x, y);
@@ -275,14 +271,6 @@ class Character extends FlxSprite {
 	function joinAnimationName(AnimName:String, checkForExistance:Bool = true):String {
 		var usedAnimName:String = AnimName;
 		if (checkForExistance && animExists(AnimName + parseAnimationSuffix()))
-			usedAnimName = AnimName + parseAnimationSuffix();
-		return usedAnimName;
-	}
-
-	function joinSoundName(AnimName:String):String {
-		var usedAnimName:String = AnimName;
-		if (animSoundPaths.get(AnimName + parseAnimationSuffix()) != null
-			&& animSoundPaths.get(AnimName + parseAnimationSuffix()).length > 0)
 			usedAnimName = AnimName + parseAnimationSuffix();
 		return usedAnimName;
 	}

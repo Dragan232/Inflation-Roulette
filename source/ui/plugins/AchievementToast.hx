@@ -58,8 +58,8 @@ class AchievementToast extends FlxSpriteGroup {
 		FlxTween.tween(instance, {y: FlxG.height - instance.height - 20}, 0.5, {
 			ease: FlxEase.backOut,
 			onStart: function(_) {
-				SuffState.playUISound(Paths.sound('ui/achievements/achievement' + Utilities.capitalize('${Achievements
-				.achievementsList.get(id).tier}')), 0.75);
+				SuffState.playUISound(Paths.sound('ui/achievements/achievement' + Achievements
+				.achievementsList.get(id).tier), 0.75);
 			}
 		});
 		new FlxTimer().start(0.75, function(_) {

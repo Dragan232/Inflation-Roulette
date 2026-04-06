@@ -29,6 +29,8 @@ class GalleryEntryState extends SuffState {
 	var artworkButton:SuffIconButton;
 	var exitButton:SuffIconButton;
 
+	var clickRate:Float = 0;
+
 	override function create() {
 		for (art in envelopeData.artwork) {
 			Paths.image('ui/menus/extras/gallery/images/${envelopeData.id}/$art');
@@ -125,7 +127,9 @@ class GalleryEntryState extends SuffState {
 		};
 		add(artworkButton);
 
-		if (envelopeData.hasCharacter && (Paths.fileExists(Paths.getPath('data/characters/${envelopeData.id}/cosmetic.json')) || Paths.fileExists(Paths.addonFolders('data/characters/${envelopeData.id}/cosmetic.json')))) {
+		var hasJson:Bool = Paths.fileExists(Paths.getPath('data/characters/${envelopeData.id}/cosmetic.json'));
+		var hasAddonJson:Bool = #if _ALLOW_ADDONS Paths.fileExists(Paths.addonFolders('data/characters/${envelopeData.id}/cosmetic.json')) #else false #end;
+		if (envelopeData.hasCharacter && (hasJson || hasAddonJson)) {
 			character = new CharacterSimple(envelopeData.id, 0, 0);
 			character.playAnim('idle');
 			character.x = FlxG.width + character.width / 2;
@@ -165,6 +169,7 @@ class GalleryEntryState extends SuffState {
 			FlxTween.tween(render, {x: FlxG.width}, 0.25, {
 				ease: FlxEase.quintOut,
 				onComplete: function(_) {
+					character.popped = false;
 					character.currentPressure = 0;
 					character.playAnim('idle');
 					characterHitbox.visible = character.getPressurePercentage() <= 1;
@@ -235,29 +240,33 @@ class GalleryEntryState extends SuffState {
 		if (character == null || !characterHitbox.visible)
 			return;
 		if (FlxG.mouse.overlaps(characterHitbox, this.camera) && FlxG.mouse.justPressed) {
+			clickRate += 1;
 			character.currentPressure++;
-			var fwoompSuffix:String = character.getPressurePercentage() >= 0.5 ? 'Large' : 'Small';
-			SuffState.playSound(Paths.soundRandom('game/belly/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
 			if (character.currentPressure <= character.maxPressure) {
+				var fwoompSuffix:String = character.getPressurePercentage() >= 0.5 ? 'Large' : 'Small';
+				SuffState.playSound(Paths.soundRandom('game/belly/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
 				character.playAnim('shocked', true);
 				if (idleTimer != null) idleTimer.cancel();
 				idleTimer = new FlxTimer().start(1.0, function(_) {
 					character.playAnim('idle', true);
 				});
 			} else {
-				characterHitbox.visible = false;
-				character.playAnim('idle', true);
-				if (Preferences.data.allowPopping) {
+				if (clickRate > 5 && !character.disableBellySounds && Preferences.data.allowPopping) {
 					character.disableBellySounds = true;
+					character.popped = true;
 					SuffState.playSound(Paths.sound('game/belly/burst'));
 					if (!Preferences.data.enablePhotosensitiveMode)
 						FlxG.camera.flash(0xFFFFFFFF, 0.125);
 					FlxG.camera.shake(0.02 * Preferences.data.cameraEffectIntensity, 0.125);
+					character.playAnim('idle', true);
 					scraps = new ScrapEmitter(character.x, character.y - character.height / 2.5, character.id, 690);
 					members.insert(members.indexOf(artworkButton) - 1, scraps);
+				} else {
+					character.playAnim('helpless', true);
 				}
 			}
 		}
+		clickRate *= (1 - elapsed);
 	}
 
 	var idleTimer:FlxTimer;

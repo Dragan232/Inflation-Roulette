@@ -1,6 +1,8 @@
 package utilities.substates;
 
+#if _ALLOW_UTILITIES
 import backend.FileDialogHandler;
+#end
 
 class LoadDirectoryPrompt extends UtilitiesBaseMenuSubState {
 	var loadFileButton:SuffButton;

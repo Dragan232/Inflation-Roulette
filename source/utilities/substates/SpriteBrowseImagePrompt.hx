@@ -1,6 +1,8 @@
 package utilities.substates;
 
+#if _ALLOW_UTILITIES
 import backend.FileDialogHandler;
+#end
 import flash.net.FileFilter;
 import ui.objects.SuffIconButton;
 import openfl.display.Bitmap;

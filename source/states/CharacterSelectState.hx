@@ -205,22 +205,15 @@ class CharacterSelectState extends SuffState {
 		stageSelectGroup.y = FlxG.height;
 
 		FlxG.save.bind('preferences', Utilities.getSavePath());
-		if (FlxG.save.data.characterCPUControlled == null) {
-			FlxG.save.data.characterCPUControlled = '01111111';
-		}
-		if (FlxG.save.data.characterSkillLevel == null) {
-			FlxG.save.data.characterSkillLevel = '22222222';
-		}
-		FlxG.save.flush();
+		var CPUControlled:String = FlxG.save.data.characterCPUControlled != null ? FlxG.save.data.characterCPUControlled : '01111111';
+		var SkillLevel:String = FlxG.save.data.characterSkillLevel != null ? FlxG.save.data.characterSkillLevel : '22222222';
 		FlxG.save.bind('game', Utilities.getSavePath());
-		var characterCPUControlled:String = FlxG.save.data.characterCPUControlled;
-		var characterSkillLevel:String = FlxG.save.data.characterSkillLevel;
 		for (i in 0...CharacterManager.selectedCharacterList.length) {
-			var int = characterCPUControlled.charAt(i);
+			var int = CPUControlled.charAt(i);
 			if (int.length <= 0)
 				if (i == 0) int = '0'; else int = '1';
 			CharacterManager.cpuControlled[i] = Std.parseInt(int) == 1;
-			var int = characterSkillLevel.charAt(i);
+			var int = SkillLevel.charAt(i);
 			if (int.length <= 0) int = '2';
 			CharacterManager.cpuLevel[i] = Std.parseInt(int);
 		}
@@ -613,9 +606,15 @@ class CharacterSelectState extends SuffState {
 		cardTweens.set('rightStageButton', FlxTween.tween(rightStageButton, {y: FlxG.height}, 0.75, {ease: FlxEase.quintOut}));
 		cardTweens.set('description', FlxTween.tween(description, {alpha: 0}, 0.25, {ease: FlxEase.quintOut}));
 		selectCharacterTxt.visible = false;
-		FlxFlicker.flicker(stageSelectGroup, 1, !Preferences.data.enablePhotosensitiveMode ? FlxG.elapsed : 2, function(_) {
-			moveOnToPlayerSettings();
-		});
+		if (!Preferences.data.enablePhotosensitiveMode) {
+			FlxFlicker.flicker(stageSelectGroup, 1, FlxG.elapsed, function(_) {
+				moveOnToPlayerSettings();
+			});
+		} else {
+			new FlxTimer().start(1, function(_) {
+				moveOnToPlayerSettings();
+			});
+		}
 	}
 
 	function moveOnToPlayerSettings() {
@@ -713,6 +712,7 @@ class CharacterSelectState extends SuffState {
 		for (i in CharacterManager.cpuControlled) {
 			characterCPUControlled += i ? '1' : '0';
 		}
+		FlxG.save.bind('preferences', Utilities.getSavePath());
 		FlxG.save.data.characterCPUControlled = characterCPUControlled;
 		var characterSkillLevel = '';
 		for (i in CharacterManager.cpuLevel) {
@@ -723,6 +723,7 @@ class CharacterSelectState extends SuffState {
 		}
 		FlxG.save.data.characterSkillLevel = characterSkillLevel;
 		FlxG.save.flush();
+		FlxG.save.bind('game', Utilities.getSavePath());
 		isExiting = true;
 		readySign.moveSign(true);
 		openSubState(new GameOnSubState(new PlayState()));

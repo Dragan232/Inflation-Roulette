@@ -1,9 +1,7 @@
 {
-	"spriteSheetsMandatory": [
+	"spriteSheets": [
 		"actions",
-		"cutscenes"
-	],
-	"spriteSheetsGameplay": [
+		"cutscenes",
 		"shooting"
 	],
 	"animations": [

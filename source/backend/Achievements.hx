@@ -83,6 +83,7 @@ class Achievements {
 			}
 		}
 
+		trace(achievementsList);
 		trace(curProgress);
 	}
 
@@ -94,8 +95,9 @@ class Achievements {
 				return curProgress.get(id)[0] < Achievements.achievementsList.get(id).target;
 			case LIST:
 				var locked:Bool = false;
+				var requirements:Array<String> = curProgress.get(id);
 				for (item in Achievements.achievementsList.get(id).items) {
-					if (!curProgress.get(id).contains(item))
+					if (!requirements.contains(item))
 						locked = true;
 				}
 				return locked;
@@ -111,9 +113,10 @@ class Achievements {
 			case NUMBER:
 				curProgress[id][0] = Std.int(FlxMath.bound(curProgress[id][0] + progress[0], 0, Achievements.achievementsList[id].target));
 			case LIST:
+				var requirements:Array<String> = curProgress.get(id);
 				for (item in progress) {
-					if (!curProgress[id].contains(item))
-						curProgress[id].push(item);
+					if (!requirements.contains(item))
+						requirements.push(item);
 				}
 		}
 		var curLocked:Bool = isLocked(id);

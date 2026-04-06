@@ -1,9 +1,7 @@
 {
-	"spriteSheetsMandatory": [
+	"spriteSheets": [
 		"idle",
-		"shocked"
-	],
-	"spriteSheetsGameplay": [
+		"shocked",
 		"preShoot",
 		"shoot",
 		"skillPressurize",

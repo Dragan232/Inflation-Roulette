@@ -31,6 +31,9 @@ class GalleryMainMenuState extends SuffState {
 
 		add(envelopes);
 		var list:Array<String> = Paths.readDirectories('data/extras/gallery/envelopes', 'data/extras/gallery/envelopes/envelopeList.txt', 'json');
+		list.remove('dev');
+		list.push('dev');
+		// Make sure dev envelope is at the last
 		for (num => item in list) {
 			var envelope:GalleryEnvelope = new GalleryEnvelope(0, 0, item);
 			envelopeWidth = envelope.width + envelopeSpacing * (list.length - 1);

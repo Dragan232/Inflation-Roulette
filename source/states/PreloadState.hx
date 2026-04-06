@@ -1,62 +1,96 @@
 package states;
 
-import flixel.system.FlxBasePreloader;
-import openfl.display.Sprite;
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.text.Font;
-import flash.text.TextField;
-import flash.text.TextFormat;
-import flash.text.TextFormatAlign;
-import flash.Lib;
-import flixel.FlxG;
+import backend.Addons;
+import backend.GameplayManager;
+import backend.CharacterManager;
+import backend.SplashManager;
 
-@:bitmap("assets/images/ui/menus/preload/criDeSadGold.png") class LogoImage extends BitmapData {
-}
+class PreloadState extends SuffState {
+	#if desktop
+	var bg:FlxSprite;
+	var preloadTxt:FlxText;
+	#end
 
-@:bitmap("assets/images/ui/menus/preload/loadingText.png") class LoadingTextImage extends BitmapData {
-}
+	var loadingProgress:Int = -1;
+	var loadingTexts:Array<String> = ['characters', 'gameplay', 'achievements', 'toasts', 'tooltip', 'cursor', 'splashes'];
 
-@:font("assets/fonts/default.ttf") class CustomFont extends Font {
-}
+	override function create() {
+		super.create();
 
-class PreloadState extends FlxBasePreloader {
-	public function new(MinDisplayTime:Float = 0, ?AllowedURLs:Array<String>) {
-		#if !desktop
-		super(3, AllowedURLs);
+		Preferences.loadPrefs();
+		#if _ALLOW_ADDONS
+		Addons.pushGlobalAddons();
+		#end
+		Language.initialize();
+
+		#if desktop
+		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/preload/loadingArt'));
+		bg.alpha = 0;
+		preloadTxt = new FlxText(0, 0, FlxG.width, '', 32);
+		preloadTxt.alignment = CENTER;
+
+		bg.screenCenter();
+		bg.y = Std.int((FlxG.height - (bg.height + preloadTxt.height + 10)) / 2);
+		preloadTxt.y = bg.y + bg.height + 10;
+
+		add(bg);
+		add(preloadTxt);
+		FlxTween.tween(bg, {alpha: 1}, 0.5, {
+			onComplete: function(_) {
+				loadShit();
+			}
+		});
 		#else
-		super(MinDisplayTime, AllowedURLs);
+		loadShit();
+		#end
+		FlxG.mouse.visible = false;
+	}
+
+	function loadShit() {
+		loadingProgress++;
+		#if desktop
+		preloadTxt.text = Language.getPhrase('preloadMenu.progress.' + loadingTexts[loadingProgress]);
+		#end
+		new FlxTimer().start(#if desktop 0.2 #else 0 #end, function(_) {
+			switch (loadingProgress) {
+				case 0:
+					CharacterManager.initialize();
+				case 1:
+					GameplayManager.initialize();
+				case 2:
+					Achievements.initialize();
+				case 3:
+					MusicToast.initialize();
+					AchievementToast.initialize();
+				case 4:
+					Tooltip.initialize();
+				case 5:
+					CustomCursorHandler.initialize();
+					#if desktop
+					FlxG.mouse.visible = true;
+					#end
+				case 6:
+					SplashManager.parseSplashes();
+			}
+			if (loadingProgress >= loadingTexts.length - 1)
+				finishLoadingShit();
+			else
+				loadShit();
+		});
+	}
+
+	function finishLoadingShit() {
+		#if desktop
+		preloadTxt.text = Language.getPhrase('preloadMenu.finished');
+		FlxG.camera.fade(0xFF000000, 1, false, function() {
+			SuffState.switchState(new InitStartupState());
+		});
+		#else
+		SuffState.switchState(new InitStartupState());
 		#end
 	}
 
-	var logo:Sprite;
-	var text:Sprite;
-
-	override function create():Void {
-		super.create();
-
-		this._width = Std.int(Lib.current.stage.stageWidth);
-		this._height = Std.int(Lib.current.stage.stageHeight);
-
-		logo = new Sprite();
-		logo.addChild(new Bitmap(new LogoImage(0, 0))); // Sets the graphic of the sprite to a Bitmap object, which uses our embedded BitmapData class.
-		addChild(logo);
-
-		text = new Sprite();
-		text.addChild(new Bitmap(new LoadingTextImage(0, 0)));
-		addChild(text);
-	}
-
-	override function update(Percent:Float):Void {
-		logo.scaleX = 1 + Percent;
-		logo.x = (this._width - logo.width) / 2;
-		logo.y = (this._height - logo.height) * 0.3;
-
-		text.scaleX = 1 + Percent * 6;
-		text.x = (this._width - text.width) / 2;
-		text.y = (this._height - text.height) * 0.75;
-
-		super.update(Percent);
+	override function update(elapsed:Float) {
+		super.update(elapsed);
 	}
 }

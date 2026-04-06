@@ -1,8 +1,6 @@
 package backend.typedefs;
 
-typedef CharacterSpriteData = {
-	spriteSheetsMandatory:Array<String>,
-	spriteSheetsGameplay:Array<String>,
+typedef CharacterCosmeticData = {
 	?spriteSheets:Array<String>,
 	animations:Array<AnimationData>,
 	belchThreshold:Int,

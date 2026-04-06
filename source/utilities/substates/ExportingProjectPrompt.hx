@@ -12,7 +12,7 @@ import backend.typedefs.CharacterData;
 import backend.typedefs.SkillData;
 import backend.typedefs.SkillMetadata;
 import backend.Skill;
-import backend.typedefs.CharacterSpriteData;
+import backend.typedefs.CharacterCosmeticData;
 import backend.typedefs.AnimationData;
 
 class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
@@ -131,9 +131,8 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 			skills: convertSkillData(CharacterCreatorState.spriteData.skills),
 			modifiers: []
 		};
-		var cosmetic:CharacterSpriteData = {
-			spriteSheetsMandatory: ['0'],
-			spriteSheetsGameplay: [for (i in 0...curSpriteSheet) '$i'],
+		var cosmetic:CharacterCosmeticData = {
+			spriteSheets: [for (i in 0...curSpriteSheet) '$i'],
 			animations: animationDataArray,
 			belchThreshold: Std.int(stats.maxPressure * 0.5),
 			gurgleThreshold: Std.int(stats.maxPressure * 0.5),

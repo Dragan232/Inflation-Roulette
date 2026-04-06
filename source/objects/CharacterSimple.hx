@@ -1,7 +1,7 @@
 package objects;
 
 import backend.typedefs.CharacterData;
-import backend.typedefs.CharacterSpriteData;
+import backend.typedefs.CharacterCosmeticData;
 import flixel.graphics.frames.FlxAtlasFrames;
 import states.PlayState;
 import tjson.TJSON as Json;
@@ -10,6 +10,8 @@ class CharacterSimple extends FlxSprite {
 	// Metadata //
 	public var id:String = 'unnamed';
 	public var originPosition:Array<Int> = [0, 0];
+
+	public var animSoundPaths:Map<String, Array<String>>;
 
 	// Gameplay Variables //
 	public var currentPressure:Int = 0;
@@ -21,6 +23,7 @@ class CharacterSimple extends FlxSprite {
 	// Cosmetic Variables //
 	public var idleAfterAnimation:Bool = true;
 	public var disableBellySounds:Bool = false;
+	public var popped:Bool = false;
 
 	var gurgleTimer:Float = 0;
 	var creakTimer:Float = 0;
@@ -33,7 +36,7 @@ class CharacterSimple extends FlxSprite {
 		var json:CharacterData = cast Json.parse(rawJson);
 
 		var rawJson2 = Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json');
-		var spriteJson:CharacterSpriteData = cast Json.parse(rawJson2);
+		var spriteJson:CharacterCosmeticData = cast Json.parse(rawJson2);
 
 		// name = json.name;
 		/*
@@ -46,15 +49,16 @@ class CharacterSimple extends FlxSprite {
 		gurgleThreshold = spriteJson.gurgleThreshold;
 		creakThreshold = spriteJson.creakThreshold;
 
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[0]}');
-		for (i in 1...spriteJson.spriteSheetsMandatory.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheetsMandatory[i]}');
+		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
+		for (i in 1...spriteJson.spriteSheets.length) {
+			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
 			combinedAtlas.addAtlas(atlas, false);
 		}
 		frames = combinedAtlas;
 		antialiasing = (!Preferences.data.enableForceAliasing) ? !(!spriteJson.antialiasing) : false;
 
 		var animationsArray = spriteJson.animations;
+		animSoundPaths = new Map<String, Array<String>>();
 		if (animationsArray != null && animationsArray.length > 0) {
 			for (anim in animationsArray) {
 				var animName:String = '' + anim.name;
@@ -67,6 +71,8 @@ class CharacterSimple extends FlxSprite {
 				} else {
 					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
 				}
+				if (anim.soundPaths != null)
+					addSoundPath(animName, anim.soundPaths);
 			}
 		} else {
 			trace('Character $id has no animations');
@@ -106,7 +112,15 @@ class CharacterSimple extends FlxSprite {
 		return (animation.getByName(AnimName) != null);
 	}
 
-	public function playAnim(AnimName:String, Force:Bool = true, flipX:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void {
+	public function addSoundPath(name:String, pathArray:Array<String>) {
+		if (!animSoundPaths.exists(name))
+			animSoundPaths[name] = [];
+		for (path in pathArray) {
+			animSoundPaths[name].push(path);
+		}
+	}
+
+	public function playAnim(AnimName:String, Force:Bool = true, flipX:Bool = false, playSound:Bool = true, Reversed:Bool = false, Frame:Int = 0):Void {
 		var usedAnimName:String = joinAnimationName(AnimName);
 		if (!animExists(usedAnimName)) {
 			trace('Animation [${usedAnimName}] for $id does not exist');
@@ -116,12 +130,20 @@ class CharacterSimple extends FlxSprite {
 		animation.play(usedAnimName, Force, Reversed, Frame);
 
 		offset.set(originPosition[0], originPosition[1]);
+
+		if (playSound) {
+			var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
+			if (animSoundPaths.exists(usedAnimName)) {
+				var daSound = daSoundList[FlxG.random.int(0, daSoundList.length - 1)];
+				SuffState.playSound(Paths.sound(daSound));
+			}
+		}
 	}
 
 	public function parseAnimationSuffix() {
 		return switch (currentPressure) {
 			case(_ > maxPressure) => true:
-				if (Preferences.data.allowPopping)
+				if (popped)
 					'Null';
 				else
 					'Overinflated';

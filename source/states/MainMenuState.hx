@@ -15,7 +15,9 @@ import states.AddonsMenuState;
 import states.CreditsState;
 import states.InitStartupState;
 import states.LanguageSelectState;
+#if _ALLOW_UTILITIES
 import utilities.states.UtilitiesMainMenuState;
+#end
 import substates.OptionsSubState;
 import substates.ExtrasSubState;
 import substates.GamemodeSelectSubState;
@@ -54,7 +56,7 @@ class MainMenuState extends SuffState {
 	static final menuItems:Array<Array<String>> = [
 		['play'],
 		#if _ALLOW_ADDONS
-		['addons', 'utilities'],
+		['addons', #if _ALLOW_UTILITIES 'utilities' #end],
 		#end
 		['achievements'],
 		['options', 'language'],

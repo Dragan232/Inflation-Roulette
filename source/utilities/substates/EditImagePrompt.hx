@@ -4,7 +4,9 @@ import utilities.objects.TemplateImage;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 import flash.net.FileFilter;
+#if _ALLOW_UTILITIES
 import backend.FileDialogHandler;
+#end
 import openfl.geom.Rectangle;
 import openfl.geom.Point;
 import utilities.states.AnimationEditorState;
