@@ -127,8 +127,8 @@ class ResultsState extends SuffState {
 		barLeaderboard.alpha = 0.04;
 		barLeaderboard.y = barUp.height - barLeaderboard.height;
 		add(barLeaderboard);
-		for (playerNum => rank in ranks) {
-			var leData = data[rank];
+		for (rank => playerNum in ranks) {
+			var leData = data[playerNum];
 			var isCPU:Bool = data[playerNum].cpuControlled;
 			var isWinner:Bool = highestScoreIndices.contains(playerNum);
 			var hasDuplicate:Bool = [for (char in data) if (char.charID == leData.charID) char.charID].length > 1;
@@ -137,12 +137,12 @@ class ResultsState extends SuffState {
 			var text = new FlxText(0, 0, str, 32);
 			text.y = barUp.height + rank * (text.height + 8);
 			text.color = Constants.PLAYER_COLORS[playerNum];
-			if (data[playerNum].charPressure <= 1) {
+			if (leData.charPressure <= 1) {
 				var outlineColor = text.color;
 				outlineColor.saturation *= 0.75;
 				text.setBorderStyle(OUTLINE, outlineColor, 0.25);
 			}
-			if (data[playerNum].cpuControlled) {
+			if (leData.cpuControlled) {
 				text.color.saturation *= 0.5;
 				text.alpha = 0.4;
 			}

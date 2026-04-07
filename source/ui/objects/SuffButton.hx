@@ -102,7 +102,7 @@ class SuffButton extends FlxSpriteGroup {
 		if (text != null) {
 			btnText = new FlxText(0, 0, 0, text);
 			btnText.setFormat(btnTextFontPath, btnTextSize, 0xFFFFFFFF, CENTER);
-			while (btnText.width > (btnBG.width - btnTextSize * 2 / 3.5) || btnText.height > (btnBG.height - btnTextSize * 2 / 3)) {
+			while ((btnText.width > (btnBG.width - btnTextSize * 2 / 3.5) || btnText.height > (btnBG.height - btnTextSize * 2 / 3)) && btnTextSize > 16) {
 				btnTextSize -= 16;
 				btnText.size = btnTextSize;
 			}

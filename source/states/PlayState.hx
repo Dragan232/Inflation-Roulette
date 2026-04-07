@@ -294,6 +294,8 @@ class PlayState extends SuffState {
 		};
 		add(skillCancelButton);
 
+		reloadRevealUI();
+
 		focusCameraOnPlayer(currentTurnIndex);
 		if (!hasSeenStartCutscene) {
 			playStartCutscene();
@@ -927,6 +929,7 @@ class PlayState extends SuffState {
 		}
 		if (!pumpGun.visible)
 			playGunContactSound();
+		reloadPlayerUI(currentTurnIndex);
 		if (change != 0) {
 			pumpGun.visible = true;
 			doTween('pumpGunPass', FlxTween.tween(pumpGun, {x: pumpGunXDestinations[currentTurnIndex]}, 0.5, {
@@ -964,7 +967,6 @@ class PlayState extends SuffState {
 			togglePlayerUI(!CharacterManager.cpuControlled[currentTurnIndex]);
 			toggleLetterbox(CharacterManager.cpuControlled[currentTurnIndex]);
 		}
-		reloadPlayerUI(currentTurnIndex);
 	}
 
 	function startCPUAction() {
@@ -1007,9 +1009,11 @@ class PlayState extends SuffState {
 					if (skill.id == 'sabotage' || skill.id == 'polarize' || skill.id == 'reload' || skill.id == 'assault')
 						wantSkillChance = 1;
 				} else {
-					if (skill.id == 'pressurize')
+					if (skill.id == 'pressurize' || skill.id == 'assault' || skill.id == 'reload')
 						wantSkillChance = 0;
 				}
+			} else {
+				if (skill.id == 'polarize') wantSkillChance = 0;
 			}
 			if (char.currentPressure > 0 && skill.id == 'deflate') {
 				if (char.cpuSkillLevel >= 3) wantSkillChance = 1;
@@ -1196,6 +1200,7 @@ class PlayState extends SuffState {
 			tmr.active = false);
 		FlxTween.globalManager.forEach(function(twn:FlxTween) if (!twn.finished)
 			twn.active = false);
+		ambientSound.pause();
 
 		openSubState(new PauseSubState());
 	}
@@ -1210,6 +1215,7 @@ class PlayState extends SuffState {
 			twn.active = true);
 
 		super.closeSubState();
+		ambientSound.resume();
 	}
 
 	override function update(elapsed:Float) {

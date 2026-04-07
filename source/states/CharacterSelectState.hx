@@ -38,7 +38,7 @@ class CharacterSelectState extends SuffState {
 	public static final cardOccupicationHeight:Float = 0.35;
 
 	var sectionWidth:Int = Math.ceil(FlxG.width / CharacterManager.selectedCharacterList.length);
-	var optionY:Array<Float> = [16, 16, 16, 16];
+	var optionY:Array<Float> = [16, 16, 16, 16, 16, 16, 16, 16];
 
 	var initialCardY:Float = 0;
 	var initialDescriptionY:Float = 0;

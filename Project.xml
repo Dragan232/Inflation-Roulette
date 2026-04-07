@@ -3,7 +3,7 @@
 	<!-- _________________________ Application Settings _________________________ -->
 	<set name="title" value="Inflation Roulette: Reloaded" />
 	<meta title="${title}" />
-	<app file="Inflation-Roulette" version="2.0.0-b2" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
+	<app file="Inflation-Roulette" version="2.0.0" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
 
 	<haxedef name="title" value="${title}" />
 
