@@ -7,13 +7,13 @@
 			"id": "bg",
 			"graphic": "bg",
 			"position": ["c", "c"],
-			"scrollFactor": [0.3, 0.5]
+			"scrollFactor": [0.5, 0.8]
 		},
 		{
 			"id": "blackboard",
 			"graphic": "blackboard",
 			"position": ["c", "-110"],
-			"scrollFactor": [0.3, 0.5]
+			"scrollFactor": [0.5, 0.8]
 		},
 		{
 			"id": "floor",
@@ -26,7 +26,7 @@
 			"graphic": "workstation",
 			"position": ["c", "100"],
 			"scale": [0.8, 0.8],
-			"scrollFactor": [0.5, 0.8]
+			"scrollFactor": [0.6, 0.9]
 		}
 	],
 	"characterX": [217, 1062],
@@ -41,5 +41,45 @@
 		}
 	],
 	"gunScrollFactor": [1.25, 1.15],
-	"foregroundObjects": []
+	"foregroundObjects": [
+		{
+			"id": "passerby",
+			"graphic": "passerby",
+			"animations": [
+				{
+					"name": "estevan",
+					"prefix": "estevan",
+					"fps": 24
+				},
+				{
+					"name": "zoid",
+					"prefix": "zoid",
+					"fps": 24
+				},
+				{
+					"name": "clay",
+					"prefix": "clay",
+					"fps": 24
+				},
+				{
+					"name": "hanz",
+					"prefix": "hanz",
+					"fps": 24
+				},
+				{
+					"name": "toxic",
+					"prefix": "toxic",
+					"fps": 24
+				}
+			],
+			"position": ["c-1440", "360"],
+			"scrollFactor": [1.5, 1.2],
+			"walkStep": [90, 0],
+			"walkMovement": [0, 50],
+			"velocity": [320, 0],
+			"respawnTime": 30,
+			"randomAnim": true,
+			"randomAnimOnRespawn": true
+		}
+	]
 }

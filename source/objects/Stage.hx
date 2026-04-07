@@ -11,7 +11,7 @@ import backend.CharacterManager;
 class Stage extends FlxBasic {
 	private var game(get, never):PlayState;
 	public var data:StageData;
-	public var objects:Map<String, FlxBasic> = new Map<String, FlxBasic>();
+	public var objects:Map<String, StageObject> = new Map<String, StageObject>();
 
 	public function new(id:String = 'classic') {
 		data = cast Json.parse(Paths.getTextFromFile('data/stages/$id.json'));
@@ -24,20 +24,20 @@ class Stage extends FlxBasic {
 		var tableObjects:Array<StageObjectData> = data.tableObjects;
 		var foregroundObjects:Array<StageObjectData> = data.foregroundObjects;
 		for (object in backgroundObjects) {
-			var obj:FlxSprite = loadObject(object, data.id);
+			var obj:StageObject = loadObject(object, data.id);
 			addBehindCharacters(object.id, obj);
 		}
 		for (object in tableObjects) {
-			var obj:FlxSprite = loadObject(object, data.id);
+			var obj:StageObject = loadObject(object, data.id);
 			addBehindGun(object.id, obj);
 		}
 		for (object in foregroundObjects) {
-			var obj:FlxSprite = loadObject(object, data.id);
+			var obj:StageObject = loadObject(object, data.id);
 			addObject(object.id, obj);
 		}
 	}
 
-	public static function parsePosition(object:FlxSprite, pos:Array<String>):Array<Float> {
+	public static function parsePosition(object:StageObject, pos:Array<String>):Array<Float> {
 		var x:Float = 0;
 		var y:Float = 0;
 		if (pos[0].startsWith('c')) {
@@ -73,68 +73,81 @@ class Stage extends FlxBasic {
 		return [x, y];
 	}
 
-	public static function loadObject(object:StageObjectData, stageID:String = 'classic') {
-		trace(object);
-		var obj:FlxSprite = new FlxSprite();
-		if (object.animationData != null) {
-			var animData:AnimationData = object.animationData;
-			obj.frames = Paths.sparrowAtlas('game/stages/$stageID/' + object.graphic);
-			obj.animation.addByPrefix('i', animData.prefix, animData.fps);
-			obj.animation.play('i');
+	public static function loadObject(objectData:StageObjectData, stageID:String = 'classic'):StageObject {
+		trace(objectData);
+		var object:StageObject = new StageObject();
+		if (objectData.walkStep != null)
+			object.walkStep = objectData.walkStep;
+		if (objectData.walkMovement != null)
+			object.walkMovement = objectData.walkMovement;
+		object.randomAnimOnRespawn = !(!objectData.randomAnimOnRespawn);
+		if (objectData.respawnTime != null)
+			object.respawnTime = objectData.respawnTime;
+		if (objectData.animations != null) {
+			object.frames = Paths.sparrowAtlas('game/stages/$stageID/' + objectData.graphic);
+			var animations:Array<AnimationData> = cast objectData.animations;
+			for (animData in animations) {
+				object.animation.addByPrefix(animData.name, animData.prefix, animData.fps);
+			}
+			if (objectData.randomAnim == true)
+				object.animation.play(FlxG.random.getObject(object.animation.getNameList()), true);
+			else
+				object.animation.play(animations[0].name, true);
 		} else {
-			obj.loadGraphic(Paths.image('game/stages/$stageID/' + object.graphic));
+			object.loadGraphic(Paths.image('game/stages/$stageID/' + objectData.graphic));
 		}
-		if (object.scrollFactor != null && object.scrollFactor.length == 2)
-			obj.scrollFactor.set(object.scrollFactor[0], object.scrollFactor[1]);
-		if (object.hideCharacter != null)
-			obj.visible = !CharacterManager.selectedCharacterList.contains(object.hideCharacter);
-		if (object.showCharacter != null)
-			obj.visible = CharacterManager.selectedCharacterList.contains(object.showCharacter);
-		if (object.scale != null) {
-			if (object.scale.length == 2)
-				obj.scale.set(object.scale[0], object.scale[1]); else if (object.scale.length == 1)
-				obj.scale.set(object.scale[0], object.scale[0]);
+		if (objectData.scrollFactor != null && objectData.scrollFactor.length == 2)
+			object.scrollFactor.set(objectData.scrollFactor[0], objectData.scrollFactor[1]);
+		if (objectData.hideCharacter != null)
+			object.visible = !CharacterManager.selectedCharacterList.contains(objectData.hideCharacter);
+		if (objectData.showCharacter != null)
+			object.visible = CharacterManager.selectedCharacterList.contains(objectData.showCharacter);
+		if (objectData.scale != null) {
+			if (objectData.scale.length == 2)
+				object.scale.set(objectData.scale[0], objectData.scale[1]); else if (objectData.scale.length == 1)
+				object.scale.set(objectData.scale[0], objectData.scale[0]);
 		}
-		if (object.updateHitbox == true)
-			obj.updateHitbox();
-		if (object.color != null)
-			obj.color = FlxColor.fromString(object.color);
-		if (object.alpha != null)
-			obj.alpha = object.alpha;
-		if (object.blend != null)
-			obj.blend = object.blend.toLowerCase();
-		if (object.flipX != null)
-			obj.flipX = object.flipX;
-		if (object.flipY != null)
-			obj.flipY = object.flipY;
-		if (object.angle != null)
-			obj.angle = object.angle;
-		if (object.velocity != null && object.velocity.length == 2)
-			obj.velocity.set(object.velocity[0], object.velocity[1]);
-		if (object.angularVelocity != null)
-			obj.angularVelocity = object.angularVelocity;
-		obj.antialiasing = (object.antialiasing == true) && !Preferences.data.enableForceAliasing;
-		var pos = parsePosition(obj, object.position);
-		obj.x = pos[0];
-		obj.y = pos[1];
-		return obj;
+		if (objectData.updateHitbox == true)
+			object.updateHitbox();
+		if (objectData.color != null)
+			object.color = FlxColor.fromString(objectData.color);
+		if (objectData.alpha != null)
+			object.alpha = objectData.alpha;
+		if (objectData.blend != null)
+			object.blend = objectData.blend.toLowerCase();
+		if (objectData.flipX != null)
+			object.flipX = objectData.flipX;
+		if (objectData.flipY != null)
+			object.flipY = objectData.flipY;
+		if (objectData.angle != null)
+			object.angle = objectData.angle;
+		if (objectData.velocity != null && objectData.velocity.length == 2)
+			object.velocity.set(objectData.velocity[0], objectData.velocity[1]);
+		if (objectData.angularVelocity != null)
+			object.angularVelocity = objectData.angularVelocity;
+		object.antialiasing = (objectData.antialiasing == true) && !Preferences.data.enableForceAliasing;
+		var pos = parsePosition(object, objectData.position);
+		object.x = pos[0];
+		object.y = pos[1];
+		object.originalPosition.set(pos[0], pos[1]);
+		return object;
 	}
 
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
 	}
 
-	public function addObject(tag:String, object:FlxBasic) {
+	public function addObject(tag:String, object:StageObject) {
 		objects.set(tag, object);
-		return PlayState.instance.add(object);
+		return game.add(object);
 	}
 
-	public function addBehindGun(tag:String, object:FlxBasic) {
+	public function addBehindGun(tag:String, object:StageObject) {
 		objects.set(tag, object);
 		return game.members.insert(game.members.indexOf(game.pumpGun), object);
 	}
 
-	public function addBehindCharacters(tag:String, object:FlxBasic) {
+	public function addBehindCharacters(tag:String, object:StageObject) {
 		objects.set(tag, object);
 		return game.members.insert(game.members.indexOf(game.characterGroup), object);
 	}
