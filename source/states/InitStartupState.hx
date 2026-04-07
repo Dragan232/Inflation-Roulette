@@ -1,6 +1,8 @@
 package states;
 
+#if _ALLOW_EASTER_EGGS
 import states.easterEggStartups.*;
+#end
 import states.WarningState;
 
 class InitStartupState extends SuffState {

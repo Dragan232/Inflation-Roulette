@@ -45,7 +45,7 @@
 		<define name="_CHECK_FOR_UPDATES"/>
 		<define name="_ALLOW_ADDONS" if="desktop" />
 		<define name="_ALLOW_UTILITIES" if="desktop" />
-		<define name="_ALLOW_EASTER_EGGS"/>
+		<define name="_ALLOW_EASTER_EGGS" if="desktop" />
 	</section>
 
 	<!-- Preload Assets -->
@@ -70,8 +70,10 @@
 	<section if="desktop">
 		<assets path='assets/desktop' rename='assets' preload="true"/>
 	</section>
-	<assets path="assets/embed" exclude="*.ogg" rename='assets' if="web" preload="true" embed="true"/>
-	<assets path="assets/embed" exclude="*.mp3" rename='assets' unless="web" preload="true" embed="true"/>
+	<section if="_ALLOW_EASTER_EGGS">
+		<assets path="assets/embed" exclude="*.ogg" rename='assets' if="web" preload="true" embed="true"/>
+		<assets path="assets/embed" exclude="*.mp3" rename='assets' unless="web" preload="true" embed="true"/>
+	</section>
 
     <assets path='dev/readme.txt' rename="readme.txt"/>
 
