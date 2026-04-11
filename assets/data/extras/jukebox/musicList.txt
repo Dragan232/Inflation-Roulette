@@ -3,6 +3,7 @@ cutscene
 game
 characterSelect
 characterSelectEnd
+win
 options
 credits
 pause

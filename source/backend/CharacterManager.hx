@@ -13,13 +13,14 @@ class CharacterManager {
 		// ass
 	}
 
-	public static function initialize() {
+	public static function initialize(precacheSprites:Bool = true) {
 		globalCharacterList = Paths.readFolderDirectories('data/characters', 'data/characters/characterList.txt', 'stats.json');
 		trace(globalCharacterList);
+		setPlayerCount(4);
+		if (!precacheSprites) return;
 		for (i in globalCharacterList) {
 			precacheSpriteSheets(i);
 		}
-		setPlayerCount(4);
 		precacheResultsAssets();
 	}
 

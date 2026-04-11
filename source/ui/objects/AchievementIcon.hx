@@ -8,7 +8,7 @@ class AchievementIcon extends FlxSprite {
 	}
 
 	public function loadIconGraphic(id:String, locked:Bool = false) {
-		if (Preferences.data.allowPopping && Paths.fileExists(Paths.getImagePath
+		if (Preferences.data.enablePopping && Paths.fileExists(Paths.getImagePath
 		('ui/menus/achievements/icons/${id}_popping')))
 			id = id + '_popping';
 		var iconPath = 'ui/menus/achievements/icons/$id';

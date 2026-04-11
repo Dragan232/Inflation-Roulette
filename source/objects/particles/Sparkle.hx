@@ -15,12 +15,12 @@ class Sparkle extends FlxSprite {
 		offset.x += width / 2;
 		offset.y += height / 2;
 		this.finishCallback = finishCallback;
-		animation.finishCallback = function(_) {
+		animation.onFinish.add(function(_) {
 			if (finishCallback != null)
 				finishCallback(this);
 			else
 				this.destroy();
-		}
+		});
 	}
 
 	public override function update(elapsed:Float) {

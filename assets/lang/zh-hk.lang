@@ -69,9 +69,10 @@ extrasMenu.title = 額外遊戲內容
 extrasMenu.gallery = 畫廊
 extrasMenu.jukebox = 點唱機
 
-debugText.framerate = 幀
-debugText.memory = 憶
-debugText.state = 單
+debugText.framerate = FPS
+debugText.memory = RAM
+debugText.memoryPeak = RAM高峰
+debugText.state = 選單
 debugText.format = %1: %2
 
 warningMenu.title = 警告
@@ -89,12 +90,12 @@ optionsMenu.heading.debugText = 調試文字
 
 option.ignoreEliminatedPlayers.name = 跳過淘汰者
 option.ignoreEliminatedPlayers.description = 被擊敗的玩家在輪到他們行動時不會播放動畫。
-option.allowPopping.name = 爆裂
-option.allowPopping.description = 玩家被擊敗之後會非致命地爆裂。\n如果被關閉，玩家會被過度膨脹。\n將在下一場遊戲中生效。
-option.allowBellyGurgles.name = 腹鳴
-option.allowBellyGurgles.description = 玩家在充氣狀態下發出腹部蠕動聲。
-option.allowBellyCreaks.name = 嘎吱
-option.allowBellyCreaks.description = 玩家在充氣狀態下發出氣球嘎吱的聲音。
+option.enablePopping.name = 爆裂
+option.enablePopping.description = 玩家被擊敗之後會非致命地爆裂。\n如果被關閉，玩家會被過度膨脹。\n將在下一場遊戲中生效。
+option.enableBellyGurgles.name = 腹鳴
+option.enableBellyGurgles.description = 玩家在充氣狀態下發出腹部蠕動聲。
+option.enableBellyCreaks.name = 嘎吱
+option.enableBellyCreaks.description = 玩家在充氣狀態下發出氣球嘎吱的聲音。
 option.enableFullscreen.name = 全螢幕
 option.enableFullscreen.description = 無需贅述，但你真的那麼匱乏嗎？
 option.enableForceAliasing.name = 強迫鋸齒
@@ -406,6 +407,7 @@ preloadMenu.progress.toasts = 正在建置通知⋯⋯
 preloadMenu.progress.tooltip = 正在建置工具提示⋯⋯
 preloadMenu.progress.cursor = 正在裝飾滑鼠遊標⋯⋯
 preloadMenu.progress.splashes = 正在寫入閃爍標語⋯⋯
+preloadMenu.progress.music = 正在尋找音樂光碟⋯⋯
 preloadMenu.finished = 完成！
 
 // Fallback for HTML build

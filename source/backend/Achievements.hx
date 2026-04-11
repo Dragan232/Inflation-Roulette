@@ -35,13 +35,13 @@ class Achievements {
 		createAchievement('allGameModeWins', {
 			tier: GOOD,
 			type: LIST,
-			items: ['reloaded', 'inequality', 'classic', 'charge', '1v1', 'sixPlayers'],
+			items: ['reloaded', 'inequality', 'classic', '1v1', 'sixPlayers', 'charge', 'fiftyFifty'],
 			itemTranslationKey: 'gamemode.%.name'
 		});
 		createAchievement('allCharacterWins', {
 			tier: GOOD,
 			type: LIST,
-			items: ['goober', 'asimo', 'shibanou'],
+			items: ['goober', 'asimo', 'chester', 'shibanou'],
 			itemTranslationKey: 'character.%.name.short'
 		});
 		createAchievement('noLife', {

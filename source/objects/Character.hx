@@ -44,7 +44,10 @@ class Character extends FlxSprite {
 
 	public var cpuControlled:Bool = true;
 	public var cpuKnowsCylinderContents:Bool = false;
+	public var cpuSabotageVictim:Bool = false;
+	public var cpuSkillMemories:Array<String> = [];
 	public var cpuSkillLevel:Int = 1;
+
 	public var boundingBox:FlxRect = new FlxRect(170, 70, 300, 500);
 	public var hovered:Bool = false;
 
@@ -153,12 +156,12 @@ class Character extends FlxSprite {
 		}
 		playAnim('idle');
 		boundingBox = new FlxRect((width - 250) / 2, 70, 250, 500);
-		animation.finishCallback = function(animName:String) {
+		animation.onFinish.add(function(animName:String) {
 			if (idleAfterAnimation && !animName.startsWith('idle'))
 				playAnim('idle' + parseAnimationSuffix());
 			else if (animExists(animName + '-loop') && !idleAfterAnimation)
 				playAnim(animName + '-loop', false, false);
-		}
+		});
 	}
 
 	override function update(elapsed:Float) {
@@ -166,7 +169,7 @@ class Character extends FlxSprite {
 		if (flashingShader != null)
 			flashingShader.update(elapsed);
 		if (currentPressure <= maxPressure || !disableBellySounds) {
-			if (Preferences.data.allowBellyGurgles) {
+			if (Preferences.data.enableBellyGurgles) {
 				if (gurgleThreshold > -1 && currentPressure >= gurgleThreshold) {
 					gurgleTimer -= elapsed;
 					if (gurgleTimer < 0) {
@@ -177,7 +180,7 @@ class Character extends FlxSprite {
 					}
 				}
 			}
-			if (Preferences.data.allowBellyCreaks) {
+			if (Preferences.data.enableBellyCreaks) {
 				if (creakThreshold > -1 && currentPressure >= creakThreshold) {
 					creakTimer -= elapsed;
 					if (creakTimer < 0) {
@@ -258,7 +261,7 @@ class Character extends FlxSprite {
 	public function parseAnimationSuffix() {
 		return switch (currentPressure) {
 			case(_ > maxPressure) => true:
-				if (PlayState.currentSessionAllowPopping) 'Null'; else 'Overinflated';
+				if (PlayState.currentSessionenablePopping) 'Null'; else 'Overinflated';
 			default:
 				'' + currentPressure;
 		}

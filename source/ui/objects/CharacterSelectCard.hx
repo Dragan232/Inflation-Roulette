@@ -28,11 +28,11 @@ class CharacterSelectCard extends SuffButton {
 		charSprite.animation.addByPrefix('idle', 'idle');
 		charSprite.animation.addByPrefix('selected', 'selected', 24, false);
 		charSprite.animation.play('idle');
-		charSprite.animation.finishCallback = function(animName:String) {
+		charSprite.animation.onFinish.add(function(animName:String) {
 			if (animName == 'selected' && charSprite.animation.curAnim.reversed) {
 				charSprite.animation.play('idle', true);
 			}
-		};
+		});
 		add(charSprite);
 
 		var key = characterData.cardDisplayedKey != null ? characterData.cardDisplayedKey : 'character.${characterData.id}.name';

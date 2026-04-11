@@ -12,4 +12,5 @@ typedef StageData = {
 	characterY:Float,
 	gunY:Float,
 	gunScrollFactor:Array<Float>,
+	?showCameramanChance:Float
 }

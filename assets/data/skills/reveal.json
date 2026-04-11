@@ -1,4 +1,6 @@
 {
 	"defaultCost": 2,
-	"offensive": false
+	"offensive": false,
+	"cpuConservePreferred": true,
+	"cpuUseOnce": true
 }

@@ -17,6 +17,7 @@ import objects.Stage;
 import backend.Scoring;
 import objects.particles.SkillIndicator;
 import ui.objects.RevealBullet;
+import shaders.GaussianBlurShader;
 
 class PlayState extends SuffState {
 	public var characterGroup:FlxTypedContainer<Character> = new FlxTypedContainer<Character>();
@@ -58,6 +59,8 @@ class PlayState extends SuffState {
 	var cameraFocusButton:SuffIconButton;
 	var skillCancelButton:SuffIconButton;
 
+	var gaussianBlurShader:GaussianBlurShader = new GaussianBlurShader(20);
+
 	// Sounds
 	public var ambientSound:FlxSound;
 
@@ -92,7 +95,7 @@ class PlayState extends SuffState {
 	// backend shit
 	public static var instance:PlayState;
 
-	public static var currentSessionAllowPopping:Bool = true;
+	public static var currentSessionenablePopping:Bool = true;
 
 	// Achievement shit
 	var pressurizeStreak:Array<Int> = [];
@@ -121,7 +124,7 @@ class PlayState extends SuffState {
 
 		stage = new Stage(GameplayManager.currentStage);
 
-		currentSessionAllowPopping = Preferences.data.allowPopping;
+		currentSessionenablePopping = Preferences.data.enablePopping;
 
 		currentTurnIndex = 0;
 
@@ -169,9 +172,39 @@ class PlayState extends SuffState {
 		pumpGun.scrollFactor.set(stage.data.gunScrollFactor[0], stage.data.gunScrollFactor[1]);
 		add(pumpGun);
 
+		var showCameramanChance:Float = stage.data.showCameramanChance != null ? stage.data.showCameramanChance : 1 / 128;
+		if (!hasSeenStartCutscene && (FlxG.random.bool(showCameramanChance * 100))) {
+			var cobalt:FlxSprite = new FlxSprite();
+			cobalt.frames = Paths.sparrowAtlas('game/cobalt');
+			cobalt.animation.addByPrefix('appear', 'appear', 24, false);
+			cobalt.animation.play('appear');
+			cobalt.animation.onFrameChange.add(function(animName, frameNumber, frameIndex) {
+				if (frameNumber == 1) SuffState.playSound(Paths.sound('game/glassTap'));
+			});
+			cobalt.animation.onFinish.add(function(_) {
+				cobalt.destroy();
+				new FlxTimer().start(0.1, function(timer) {
+					camFollow.x += FlxG.random.int(-1, 1) * 2;
+					camFollow.y -= FlxG.random.int(-1, 1) * 2;
+					if (timer.loopsLeft == 0) {
+						camFollow.x = FlxG.width / 2;
+						camFollow.y = FlxG.height / 2;
+					}
+				}, 10);
+			});
+			if (Preferences.data.enableGLSL) {
+				cobalt.shader = new GaussianBlurShader(16, 0.5);
+				cobalt.scale.set(1.1, 1.1);
+				cobalt.antialiasing = !Preferences.data.enableForceAliasing;
+			} else
+				cobalt.color = 0xFF808080;
+			cobalt.camera = camOther;
+			add(cobalt);
+		}
+
 		stage.load();
 
-		selectLight = new FlxSprite().loadGraphic(Paths.image('game/selectLight' + (FlxG.random.bool(1 / 1024 * 100) ? 'Alt' : '')));
+		selectLight = new FlxSprite().loadGraphic(Paths.image('game/selectLight' + (FlxG.random.bool(1 / 128 * 100) ? 'Alt' : '')));
 		selectLight.visible = false;
 		members.insert(members.indexOf(characterGroup), selectLight);
 
@@ -181,7 +214,7 @@ class PlayState extends SuffState {
 		ambientSound.play();
 
 		// UI Stuff//
-		letterboxTop = new FlxSprite().makeGraphic(FlxG.width, Std.int((FlxG.height - FlxG.width / 20 * 9) / 2), FlxColor.BLACK);
+		letterboxTop = new FlxSprite().makeGraphic(FlxG.width + 50, Std.int((FlxG.height - FlxG.width / 20 * 9) / 2), FlxColor.BLACK);
 		letterboxTop.camera = camOther;
 		letterboxTop.y = -letterboxTop.height;
 		add(letterboxTop);
@@ -568,6 +601,12 @@ class PlayState extends SuffState {
 				}
 				if (!CharacterManager.cpuControlled[playerIndex])
 					Achievements.advanceProgress('sabotages', [1]);
+				for (i in 0...characterGroup.members.length) {
+					if (!getPlayer((playerIndex + 1) % characterGroup.members.length).isEliminated()) {
+						getPlayer((playerIndex + 1) % characterGroup.members.length).cpuSabotageVictim = true;
+						break;
+					}
+				}
 			case 'pressurize':
 				liveRoundDamage *= 2;
 				lastPressurizeUserIndex = playerIndex;
@@ -582,6 +621,7 @@ class PlayState extends SuffState {
 					getPlayer(playerIndex).currentPressure = 0;
 				}
 			case 'reveal':
+				getPlayer(playerIndex).cpuKnowsCylinderContents = true;
 				revealCylinderContents = true;
 		}
 
@@ -757,7 +797,7 @@ class PlayState extends SuffState {
 			var percent = getPlayer(playerIndex).getPressurePercentage();
 			var fwoompSuffix:String = percent >= 0.5 ? 'Large' : 'Small';
 			SuffState.playSound(Paths.soundRandom('game/belly/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
-			if (Preferences.data.allowBellyCreaks) {
+			if (Preferences.data.enableBellyCreaks) {
 				SuffState.playSound(Paths.soundRandom('game/belly/creaks/creak', 1, Constants.CREAKS_SAMPLE_COUNT), percent, percent * 1.5 + 1);
 			}
 
@@ -776,6 +816,7 @@ class PlayState extends SuffState {
 		if (passToPlayer) {
 			getPlayer(playerIndex).currentConfidence = Std.int(FlxMath.bound(getPlayer(playerIndex).currentConfidence, 0, getPlayer(playerIndex).maxConfidence));
 			revealCylinderContents = false;
+			getPlayer(playerIndex).cpuSabotageVictim = false;
 			doTimer('playerChangeTurn', new FlxTimer().start(getPlayer(playerIndex).getCurAnimLength(), function(_:FlxTimer) {
 				if (getPlayer(playerIndex).currentPressure > getPlayer(playerIndex).maxPressure) {
 					eliminatePlayer(playerIndex, 1);
@@ -838,7 +879,7 @@ class PlayState extends SuffState {
 		isEnding = evaluateEnding(); // Check if remaining players are eliminated
 		playGunContactSound();
 		pumpGun.visible = true;
-		if (currentSessionAllowPopping && !getPlayer(playerIndex).disablePopping) { // Pop player instead
+		if (currentSessionenablePopping && !getPlayer(playerIndex).disablePopping) { // Pop player instead
 			getPlayer(playerIndex).playAnim('popped', false);
 			var character = getPlayer(playerIndex);
 			members.insert(members.indexOf(characterGroup), new ScrapEmitter(character.x, character.y - character.width / 2.5, character.id, stage.data.characterY));
@@ -856,7 +897,7 @@ class PlayState extends SuffState {
 
 		if (!isEnding) {
 			FlxG.sound.music.resume();
-			doTween('aTweenButItsATimerLol', FlxTween.tween(camGame, {alpha: 1}, (currentSessionAllowPopping ? 2.5 : 1), {
+			doTween('aTweenButItsATimerLol', FlxTween.tween(camGame, {alpha: 1}, (currentSessionenablePopping ? 2.5 : 1), {
 				onUpdate: function(_:FlxTween) {
 					focusCameraOnPlayer(playerIndex);
 				}, onComplete: function(_:FlxTween) {
@@ -977,6 +1018,7 @@ class PlayState extends SuffState {
 	}
 
 	function evaluateCPUActions(charIndex:Int) {
+		if (isEnding) return;
 		var char = getPlayer(charIndex);
 		if (char.cpuSkillLevel <= 1 || !char.canUseSkills) {
 			trace('CPU cannot use skills');
@@ -992,6 +1034,7 @@ class PlayState extends SuffState {
 				currentRoundIsLive = true;
 		}
 		for (skillIndex => skill in char.currentSkills) {
+			if (char.cpuSkillMemories.contains(skill.id) && skill.cpuUseOnce) continue;
 			if (char.currentConfidence - skill.cost < 0) {
 				trace('Not enough confidence for ${skill.id}');
 				continue;
@@ -1004,7 +1047,7 @@ class PlayState extends SuffState {
 			}
 			if (!skill.offensive)
 				wantSkillChance *= 1.25;
-			if (char.cpuKnowsCylinderContents) {
+			if (char.cpuKnowsCylinderContents || char.cpuSabotageVictim) {
 				if (currentRoundIsLive) {
 					if (skill.id == 'sabotage' || skill.id == 'polarize' || skill.id == 'reload' || skill.id == 'assault')
 						wantSkillChance = 1;
@@ -1019,6 +1062,8 @@ class PlayState extends SuffState {
 				if (char.cpuSkillLevel >= 3) wantSkillChance = 1;
 				else if (char.cpuSkillLevel >= 2) wantSkillChance += char.getPressurePercentage() * 0.5;
 			}
+			if (skill.cpuConservePreferred)
+				wantSkillChance = wantSkillChance * wantSkillChance;
 			wantSkillChance = Math.min(1, wantSkillChance);
 			if (!FlxG.random.bool(wantSkillChance * 100)) {
 				trace('Does not want to use ${skill.id} yet');
@@ -1027,8 +1072,6 @@ class PlayState extends SuffState {
 
 			actionName = 'activateSkill';
 
-			if (skill.id == 'reveal')
-				char.cpuKnowsCylinderContents = true;
 			index = '$skillIndex';
 			if (skill.offensive) {
 				actionName = 'activateOffensiveSkill';
@@ -1039,16 +1082,17 @@ class PlayState extends SuffState {
 						maxPressureIndex = FlxMath.wrap(maxPressureIndex + 1, 0, characterGroup.members.length - 1);
 					for (i in 2...characterGroup.members.length) {
 						var targetIndex:Int = FlxMath.wrap(charIndex + i, 0, characterGroup.members.length - 1);
-						if (getPlayer(targetIndex).isEliminated()) continue;
+						if (getPlayer(targetIndex).isEliminated() || targetIndex == charIndex) continue;
 						if (getPlayer(targetIndex).currentPressure > getPlayer(maxPressureIndex).currentPressure) {
 							maxPressureIndex = targetIndex;
 						}
 					}
+					if (maxPressureIndex == charIndex) continue;
 					target = '|$maxPressureIndex';
 				} else {
-					var tar:Int = FlxG.random.int(0, characterGroup.members.length - 1);
+					var tar:Int = FlxG.random.int(0, characterGroup.members.length - 1, [charIndex]);
 					while (getPlayer(tar).isEliminated()) {
-						tar = FlxG.random.int(0, characterGroup.members.length - 1);
+						tar = FlxG.random.int(0, characterGroup.members.length - 1, [charIndex]);
 					}
 					target = '|$tar';
 				}
@@ -1061,23 +1105,28 @@ class PlayState extends SuffState {
 		var params = actions.split('|');
 		switch (params[0]) {
 			default:
-				deployGun(currentTurnIndex, function() return getPlayer(currentTurnIndex).getPressurePercentage());
+				getPlayer(charIndex).cpuSkillMemories = [];
+				deployGun(charIndex, function() return getPlayer(charIndex).getPressurePercentage());
 			case 'activateSkill':
-				activateSkill(currentTurnIndex, Std.parseInt(params[1]));
-				new FlxTimer().start(FlxG.random.float() + 0.5 + getPlayer(currentTurnIndex).getCurAnimLength(), function(_) {
-					evaluateCPUActions(currentTurnIndex);
-				});
+				var skill:Skill = getPlayer(charIndex).currentSkills[Std.parseInt(params[1])];
+				getPlayer(charIndex).cpuSkillMemories.push(skill.id);
+				activateSkill(charIndex, Std.parseInt(params[1]));
+				doTimer('cpuAction', new FlxTimer().start(FlxG.random.float() + 0.5 + getPlayer(charIndex).getCurAnimLength(), function(_) {
+					evaluateCPUActions(charIndex);
+				}));
 			case 'activateOffensiveSkill':
-				activateOffensiveSkill(currentTurnIndex, Std.parseInt(params[1]), Std.parseInt(params[2]));
-				new FlxTimer().start(FlxG.random.float() + 1.5 + getPlayer(currentTurnIndex).getCurAnimLength(), function(_) {
-					evaluateCPUActions(currentTurnIndex);
-				});
+				var skill:Skill = getPlayer(charIndex).currentSkills[Std.parseInt(params[1])];
+				getPlayer(charIndex).cpuSkillMemories.push(skill.id);
+				activateOffensiveSkill(charIndex, Std.parseInt(params[1]), Std.parseInt(params[2]));
+				doTimer('cpuAction', new FlxTimer().start(FlxG.random.float() + 1.5 + getPlayer(charIndex).getCurAnimLength(), function(_) {
+					evaluateCPUActions(charIndex);
+				}));
 		}
 	}
 
 	function focusCameraOnPlayer(playerIndex:Int) {
 		var characterCameraOffset:Array<Int> = getPlayer(playerIndex).cameraOffset;
-		if (getPlayer(playerIndex).isEliminated() && currentSessionAllowPopping)
+		if (getPlayer(playerIndex).isEliminated() && currentSessionenablePopping)
 			characterCameraOffset = getPlayer(playerIndex).poppedCameraOffset;
 
 		camFollow.x = getPlayer(playerIndex).x + characterCameraOffset[0];

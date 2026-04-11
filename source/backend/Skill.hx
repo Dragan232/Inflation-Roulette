@@ -11,6 +11,8 @@ class Skill {
 	// public var description:String = 'No description.';
 	public var defaultCost:Int = 0;
 	public var offensive:Bool = false;
+	public var cpuConservePreferred:Bool = false;
+	public var cpuUseOnce:Bool = true;
 
 	public function new(id:String, cost:Null<Int> = null, costMultiplier:Float = 1) {
 		this.id = id;

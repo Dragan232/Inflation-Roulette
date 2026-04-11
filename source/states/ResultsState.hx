@@ -204,10 +204,10 @@ class ResultsState extends SuffState {
 			char.animation.addByPrefix('lose', 'lose${suffix}0', 24, false);
 			char.animation.addByPrefix('lose-loop', 'lose${suffix}Loop0', 24, true);
 			char.animation.play('idle', true, false, FlxG.random.int(0, char.animation.getByName('idle').numFrames - 1));
-			char.animation.finishCallback = function(anim:String) {
+			char.animation.onFinish.add(function(anim:String) {
 				if ((anim.startsWith('win')) && !anim.endsWith('-loop'))
 					char.animation.play(anim + '-loop', true, false, FlxG.random.int(0, char.animation.getByName(anim + '-loop').numFrames - 1));
-			}
+			});
 			if (!spriteExists) {
 				char.alpha = 0.325;
 				char.color = 0xFF000000;

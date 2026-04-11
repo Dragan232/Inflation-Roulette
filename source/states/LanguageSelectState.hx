@@ -258,7 +258,7 @@ class LanguageSelectState extends SuffState {
 		if (exiting)
 			return;
 		exiting = true;
-		initialized = false;
+		// initialized = false;
 		FlxTransitionableState.skipNextTransIn = atWarningState;
 		FlxTransitionableState.skipNextTransOut = atWarningState;
 		if (!atWarningState) {

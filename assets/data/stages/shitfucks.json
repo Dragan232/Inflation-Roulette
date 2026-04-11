@@ -27,6 +27,53 @@
 			"position": ["c", "100"],
 			"scale": [0.8, 0.8],
 			"scrollFactor": [0.6, 0.9]
+		},
+		{
+			"id": "workstationLightLeft",
+			"graphic": "light",
+			"position": ["c-675", "50"],
+			"scale": [0.25, 0.25],
+			"antialiasing": true,
+			"alpha": 0.25,
+			"color": "#FFFF80",
+			"scrollFactor": [0.6, 0.9],
+			"blend": "add"
+		},
+		{
+			"id": "workstationLightCenter",
+			"graphic": "light",
+			"position": ["c-600", "50"],
+			"scale": [0.25, 0.25],
+			"antialiasing": true,
+			"alpha": 0.25,
+			"color": "#FFFF80",
+			"scrollFactor": [0.6, 0.9],
+			"blend": "add"
+		},
+		{
+			"id": "workstationLightRight",
+			"graphic": "light",
+			"position": ["c-525", "50"],
+			"scale": [0.25, 0.25],
+			"antialiasing": true,
+			"alpha": 0.25,
+			"color": "#FFFF80",
+			"scrollFactor": [0.6, 0.9],
+			"blend": "add"
+		},
+		{
+			"id": "tableLeft",
+			"graphic": "table",
+			"position": ["c-1280", "360"],
+			"scale": [0.75, 0.75],
+			"scrollFactor": [1, 1]
+		},
+		{
+			"id": "tableRight",
+			"graphic": "table",
+			"position": ["c+1280", "360"],
+			"scale": [0.75, 0.75],
+			"scrollFactor": [1, 1]
 		}
 	],
 	"characterX": [217, 1062],
@@ -72,14 +119,47 @@
 					"fps": 24
 				}
 			],
-			"position": ["c-1440", "360"],
+			"position": ["c-1690", "360"],
 			"scrollFactor": [1.5, 1.2],
 			"walkStep": [90, 0],
 			"walkMovement": [0, 50],
 			"velocity": [320, 0],
-			"respawnTime": 30,
+			"respawnTime": 34,
 			"randomAnim": true,
 			"randomAnimOnRespawn": true
+		},
+		{
+			"id": "lightLeft",
+			"graphic": "light",
+			"position": ["c-960", "-600"],
+			"scale": [3, 3],
+			"antialiasing": true,
+			"alpha": 0.5,
+			"color": "#FFFF80",
+			"scrollFactor": [1.5, 1.2],
+			"blend": "add"
+		},
+		{
+			"id": "lightCenter",
+			"graphic": "light",
+			"position": ["c", "-600"],
+			"scale": [3, 3],
+			"antialiasing": true,
+			"alpha": 0.5,
+			"color": "#FFFF80",
+			"scrollFactor": [1.5, 1.2],
+			"blend": "add"
+		},
+		{
+			"id": "lightRight",
+			"graphic": "light",
+			"position": ["c+960", "-600"],
+			"scale": [3, 3],
+			"antialiasing": true,
+			"alpha": 0.5,
+			"color": "#FFFF80",
+			"scrollFactor": [1.5, 1.2],
+			"blend": "add"
 		}
 	]
 }

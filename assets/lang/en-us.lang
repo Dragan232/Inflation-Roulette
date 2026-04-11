@@ -111,6 +111,7 @@ extrasMenu.jukebox = Jukebox
 
 debugText.framerate = FPS
 debugText.memory = RAM
+debugText.memoryPeak = RAM Peak
 debugText.state = State
 // %1: Debug Text
 debugText.format = %1: %2
@@ -131,12 +132,12 @@ optionsMenu.heading.debugText = Debug Text
 
 option.ignoreEliminatedPlayers.name = Eliminee Skip
 option.ignoreEliminatedPlayers.description = Players who are defeated will not play an animation when it's their turn.
-option.allowPopping.name = Popping
-option.allowPopping.description = Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead.\nTakes effect in the next game.
-option.allowBellyGurgles.name = Borborygmi
-option.allowBellyGurgles.description = Players play belly gurgle sounds on idle when inflated.
-option.allowBellyCreaks.name = Creaking
-option.allowBellyCreaks.description = Players play balloon overstretching sounds on idle when inflated.
+option.enablePopping.name = Popping
+option.enablePopping.description = Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead.\nTakes effect in the next game.
+option.enableBellyGurgles.name = Borborygmi
+option.enableBellyGurgles.description = Players play belly gurgle sounds on idle when inflated.
+option.enableBellyCreaks.name = Creaking
+option.enableBellyCreaks.description = Players play balloon overstretching sounds on idle when inflated.
 option.enableFullscreen.name = Fullscreen
 option.enableFullscreen.description = Self-explanatory, but are you that deprived?
 // Yes. This DOES mean Forced Aliasing as in like forcing to turn off anti-aliasing
@@ -496,6 +497,7 @@ preloadMenu.progress.toasts = Constructing Notifs...
 preloadMenu.progress.tooltip = Building Tooltips...
 preloadMenu.progress.cursor = Decorating Mouse Cursor...
 preloadMenu.progress.splashes = Writing Splashes...
+preloadMenu.progress.music = Finding Music Discs...
 preloadMenu.finished = All Set!
 
 // Fallback for HTML build

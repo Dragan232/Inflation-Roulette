@@ -1,8 +1,6 @@
 package substates;
 
 import ui.objects.SuffIconButton;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxSpriteContainer;
 import ui.objects.GalleryArtwork;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import backend.typedefs.GalleryArtworkMetadata;
@@ -17,7 +15,7 @@ class GalleryArtworkSubState extends SuffSubState {
 	var leftButton:SuffIconButton;
 	var rightButton:SuffIconButton;
 	var exitButton:SuffIconButton;
-	var text:FlxText;
+	var title:FlxText;
 	var description:FlxText;
 
 	var curSelected:Int = 0;
@@ -45,10 +43,10 @@ class GalleryArtworkSubState extends SuffSubState {
 			ease: FlxEase.quintOut
 		});
 
-		text = new FlxText(0, 0, FlxG.width * 0.5, '', 16);
-		text.alignment = CENTER;
-		text.screenCenter(X);
-		add(text);
+		title = new FlxText(0, 0, FlxG.width * 0.5, '', 16);
+		title.alignment = CENTER;
+		title.screenCenter(X);
+		add(title);
 
 		description = new FlxText(0, 0, FlxG.width * 0.5, '', 16);
 		description.alignment = JUSTIFY;
@@ -95,17 +93,18 @@ class GalleryArtworkSubState extends SuffSubState {
 		curSelected = FlxMath.wrap(curSelected + delta, 0, artworkGroup.members.length - 1);
 		artworkGroup.x = curSelected * -FlxG.width;
 		FlxTween.cancelTweensOf(artworkGroup);
-		artworkGroup.y = 0;
 		var artworkData:GalleryArtworkMetadata = cast Json.parse(Paths.getTextFromFile('data/extras/gallery/art/${envelopeID}/${artwork[curSelected]}.json'));
-		text.text = '(${curSelected + 1} / ${artwork.length})\n' + artworkData.title + ' - ' + artworkData.artist;
-		text.y = Std.int(artworkGroup.members[curSelected].y + artworkGroup.members[curSelected].height - artworkGroup.y);
 		description.text = artworkData.description;
+		title.text = '(${curSelected + 1} / ${artwork.length})\n' + artworkData.title + ' - ' + artworkData.artist;
+		artworkGroup.y = (title.height + description.height) / -4;
+		var originalArtworkGroup = artworkGroup.y;
+		title.y = Std.int(artworkGroup.members[curSelected].y + artworkGroup.members[curSelected].height);
 		// description.updateHitbox();
 		description.alignment = description.height <= 32 ? CENTER : JUSTIFY;
-		description.y = text.y + text.height;
+		description.y = title.y + title.height;
 
-		artworkGroup.y = 20;
-		FlxTween.tween(artworkGroup, {y: 0}, 0.25, {
+		artworkGroup.y += 20;
+		FlxTween.tween(artworkGroup, {y: originalArtworkGroup}, 0.25, {
 			ease: FlxEase.quintOut
 		});
 	}

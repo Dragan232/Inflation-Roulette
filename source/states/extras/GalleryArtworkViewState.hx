@@ -32,7 +32,7 @@ class GalleryArtworkViewState extends SuffState {
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 
-		FlxCamera.defaultCameras = [camGame];
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		super.create();
 

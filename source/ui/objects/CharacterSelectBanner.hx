@@ -1,7 +1,6 @@
 package ui.objects;
 
 import backend.CharacterManager;
-import backend.typedefs.CharacterData;
 import flixel.graphics.FlxGraphic;
 import flixel.util.FlxGradient;
 import states.CharacterSelectState;
@@ -77,12 +76,12 @@ class CharacterSelectBanner extends SuffButton {
 		character.animation.play('start');
 		character.x = this.x + (bg.width - character.width) / 2;
 		character.clipRect = new FlxRect((bg.width - character.width) / -2, 0, bg.width, bg.height);
-		character.animation.finishCallback = function(name:String) {
+		character.animation.onFinish.add(function(name:String) {
 			if (name == 'start') {
 				allowBlinking = true;
 				blinkTick = FlxG.random.float() * 3;
 			}
-		};
+		});
 	}
 
 	override function update(elapsed:Float) {

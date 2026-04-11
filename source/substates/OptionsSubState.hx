@@ -85,18 +85,18 @@ class OptionsSubState extends SuffSubState {
 
 		createHeading('preferences');
 
-		createBooleanOption('allowPopping',
+		createBooleanOption('enablePopping',
 			function(value:Bool) {
-				Preferences.data.allowPopping = value;
-			}, Preferences.data.allowPopping);
+				Preferences.data.enablePopping = value;
+			}, Preferences.data.enablePopping);
 
-		createBooleanOption("allowBellyGurgles", function(value:Bool) {
-			Preferences.data.allowBellyGurgles = value;
-		}, Preferences.data.allowBellyGurgles);
+		createBooleanOption("enableBellyGurgles", function(value:Bool) {
+			Preferences.data.enableBellyGurgles = value;
+		}, Preferences.data.enableBellyGurgles);
 
-		createBooleanOption("allowBellyCreaks", function(value:Bool) {
-			Preferences.data.allowBellyCreaks = value;
-		}, Preferences.data.allowBellyCreaks);
+		createBooleanOption("enableBellyCreaks", function(value:Bool) {
+			Preferences.data.enableBellyCreaks = value;
+		}, Preferences.data.enableBellyCreaks);
 
 		// GRAPHICS SETTINGS
 		createHeading('visuals');
@@ -226,22 +226,22 @@ class OptionsSubState extends SuffSubState {
 			Main.debugText.updateText();
 		}, Preferences.data.showDebugText);
 
-		#if (openfl && !html5)
 		createBooleanOption('showFramerateOnDebugText', function(value:Bool) {
 			Preferences.data.showFramerateOnDebugText = value;
 			Main.debugText.updateText();
 		}, Preferences.data.showFramerateOnDebugText);
 
+		#if (openfl && !html5)
 		createBooleanOption('showMemoryUsageOnDebugText', function(value:Bool) {
 			Preferences.data.showMemoryUsageOnDebugText = value;
 			Main.debugText.updateText();
 		}, Preferences.data.showMemoryUsageOnDebugText);
+		#end
 
 		createBooleanOption('showCurrentStateOnDebugText', function(value:Bool) {
 			Preferences.data.showCurrentStateOnDebugText = value;
 			Main.debugText.updateText();
 		}, Preferences.data.showCurrentStateOnDebugText);
-		#end
 
 		var lastItem = optionsGroup.members[optionsGroup.members.length - 1];
 		optionsScrollLowerLimit = -(lastItem.y + lastItem.height + optionsYPadding);

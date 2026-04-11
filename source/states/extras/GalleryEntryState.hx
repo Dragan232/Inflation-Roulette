@@ -251,7 +251,7 @@ class GalleryEntryState extends SuffState {
 					character.playAnim('idle', true);
 				});
 			} else {
-				if (clickRate > 5 && !character.disableBellySounds && Preferences.data.allowPopping) {
+				if (clickRate > 5 && !character.disableBellySounds && Preferences.data.enablePopping) {
 					character.disableBellySounds = true;
 					character.popped = true;
 					SuffState.playSound(Paths.sound('game/belly/burst'));

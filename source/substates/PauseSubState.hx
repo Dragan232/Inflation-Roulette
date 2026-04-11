@@ -1,7 +1,6 @@
 package substates;
 
 import backend.enums.SuffTransitionStyle;
-import flixel.addons.transition.FlxTransitionableState;
 import states.MainMenuState;
 import states.PlayState;
 
@@ -104,6 +103,7 @@ class PauseSubState extends SuffSubState {
 	}
 
 	public static function restartGame(noTrans:Bool = true) {
+		if (FlxG.keys.pressed.SHIFT) PlayState.hasSeenStartCutscene = false;
 		SuffState.resetState();
 	}
 

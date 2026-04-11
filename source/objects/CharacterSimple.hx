@@ -3,7 +3,6 @@ package objects;
 import backend.typedefs.CharacterData;
 import backend.typedefs.CharacterCosmeticData;
 import flixel.graphics.frames.FlxAtlasFrames;
-import states.PlayState;
 import tjson.TJSON as Json;
 
 class CharacterSimple extends FlxSprite {
@@ -83,7 +82,7 @@ class CharacterSimple extends FlxSprite {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 		if (currentPressure <= maxPressure || !disableBellySounds) {
-			if (Preferences.data.allowBellyGurgles) {
+			if (Preferences.data.enableBellyGurgles) {
 				if (gurgleThreshold >= -1 && currentPressure >= gurgleThreshold) {
 					gurgleTimer -= elapsed;
 					if (gurgleTimer < 0) {
@@ -94,7 +93,7 @@ class CharacterSimple extends FlxSprite {
 					}
 				}
 			}
-			if (Preferences.data.allowBellyCreaks) {
+			if (Preferences.data.enableBellyCreaks) {
 				if (creakThreshold >= -1 && currentPressure >= creakThreshold) {
 					creakTimer -= elapsed;
 					if (creakTimer < 0) {

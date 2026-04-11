@@ -12,7 +12,7 @@ class PreloadState extends SuffState {
 	#end
 
 	var loadingProgress:Int = -1;
-	var loadingTexts:Array<String> = ['characters', 'gameplay', 'achievements', 'toasts', 'tooltip', 'cursor', 'splashes'];
+	var loadingTexts:Array<String> = ['characters', 'gameplay', 'music', 'achievements', 'toasts', 'tooltip', 'cursor', 'splashes'];
 
 	override function create() {
 		super.create();
@@ -54,22 +54,29 @@ class PreloadState extends SuffState {
 		new FlxTimer().start(#if desktop 0.2 #else 0 #end, function(_) {
 			switch (loadingProgress) {
 				case 0:
-					CharacterManager.initialize();
+					CharacterManager.initialize(#if !desktop false #end);
 				case 1:
 					GameplayManager.initialize();
 				case 2:
-					Achievements.initialize();
+					#if desktop
+					var musicList = Utilities.textFileToArray('data/extras/jukebox/musicList.txt', true);
+					for (music in musicList) {
+						Paths.music(music);
+					}
+					#end
 				case 3:
+					Achievements.initialize();
+				case 4:
 					MusicToast.initialize();
 					AchievementToast.initialize();
-				case 4:
-					Tooltip.initialize();
 				case 5:
+					Tooltip.initialize();
+				case 6:
 					CustomCursorHandler.initialize();
 					#if desktop
 					FlxG.mouse.visible = true;
 					#end
-				case 6:
+				case 7:
 					SplashManager.parseSplashes();
 			}
 			if (loadingProgress >= loadingTexts.length - 1)

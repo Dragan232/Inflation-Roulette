@@ -3,14 +3,17 @@ package shaders;
 import flixel.system.FlxAssets.FlxShader;
 
 class GaussianBlurShader extends FlxShader {
+	// Original shader:
 	@:glFragmentSource('
+	#pragma header
 	const float PI = 3.141592654;
-	uniform float Directions;
-	uniform float Quality;
-	uniform float Size;
+	const float Directions = 16.0;
+	const float Quality = 8.0;
+	uniform float blurSize;
+	uniform float brightness;
 
 	void main() {
-		vec2 Radius = Size / openfl_TextureSize;
+		vec2 Radius = blurSize / openfl_TextureSize;
 		vec2 uv = openfl_TextureCoordv.xy;
 		vec4 Color = texture2D(bitmap, uv);
 
@@ -22,13 +25,13 @@ class GaussianBlurShader extends FlxShader {
 		}
 
 		Color /= Quality * Directions - 15.0;
-		gl_FragColor = Color;
+		gl_FragColor = vec4(Color.rgb * brightness, Color.a);
 	}
     ')
-	public function new(Size:Float = 8.0) {
+
+	public function new(size:Float = 8.0, brightness:Float = 1) {
 		super();
-		Directions.value = [16.0];
-		Quality.value = [8.0];
-		this.Size.value = [Size];
+		this.blurSize.value = [size];
+		this.brightness.value = [brightness];
 	}
 }

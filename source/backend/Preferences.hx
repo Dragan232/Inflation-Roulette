@@ -7,7 +7,7 @@ class SaveVariables {
 	public var maxFramerate:Int = 60;
 	public var enableFullscreen:Bool = false;
 	public var pauseOnUnfocus:Bool = false;
-	public var allowPopping:Bool = true;
+	public var enablePopping:Bool = true;
 	public var ignoreEliminatedPlayers:Bool = false;
 	public var enableDebugKeybinds:Bool = false;
 	public var enablePhotosensitiveMode:Bool = false;
@@ -19,12 +19,12 @@ class SaveVariables {
 	public var showMusicToast:Bool = false;
 	public var useBuiltInCursor:Bool = true;
 	public var hideCursor:Bool = false;
-	public var musicVolume:Float = 0.5;
+	public var musicVolume:Float = 0.25;
 	public var gameSoundVolume:Float = 1;
 	public var uiSoundVolume:Float = 0.5;
 	public var playCursorSounds:Bool = true;
-	public var allowBellyGurgles:Bool = false;
-	public var allowBellyCreaks:Bool = true;
+	public var enableBellyGurgles:Bool = false;
+	public var enableBellyCreaks:Bool = true;
 	public var cacheOnGPU:Bool = true;
 	public var showDebugText:Bool = false;
 	public var showFramerateOnDebugText:Bool = true;

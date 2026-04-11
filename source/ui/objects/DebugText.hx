@@ -2,15 +2,14 @@ package ui.objects;
 
 import openfl.text.TextField;
 import openfl.text.TextFormat;
+import openfl.system.System;
+
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
 #end
 #if flash
 import openfl.Lib;
-#end
-#if openfl
-import openfl.system.System;
 #end
 
 /**
@@ -86,7 +85,11 @@ class DebugText extends TextField {
 		}
 
 		cacheCount = currentCount;
+
+		if (System.totalMemoryNumber > memPeak) memPeak = System.totalMemoryNumber;
 	}
+
+	private var memPeak:Float = 0;
 
 	public function updateText() {
 		visible = Preferences.data.showDebugText;
@@ -94,10 +97,12 @@ class DebugText extends TextField {
 		if (Preferences.data.showFramerateOnDebugText)
 			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.framerate'), currentFPS]) + '\n';
 		#if (openfl && !html5)
-		if (Preferences.data.showMemoryUsageOnDebugText)
-			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.memory'), Utilities.formatBytes(System.totalMemory, 1)]) + '\n';
-		if (Preferences.data.showCurrentStateOnDebugText)
-			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.state'), Main.mainClassState]) + '\n';
+		if (Preferences.data.showMemoryUsageOnDebugText) {
+			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.memory'), Utilities.formatBytes(System.totalMemoryNumber, 1)]) + '\n';
+			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.memoryPeak'), Utilities.formatBytes(memPeak, 1)]) + '\n';
+		}
 		#end
+		if (Preferences.data.showCurrentStateOnDebugText)
+			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.state'), Type.getClassName(Main.mainClassState)]) + '\n';
 	}
 }

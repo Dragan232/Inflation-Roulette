@@ -39,11 +39,6 @@ mainMenu.utilities.tooltip.disabled = Инструменты Моддинга б
 mainMenu.gallery.tooltip.disabled = Галерея будет доступна в следующем обновлении.
 mainMenu.achievements.tooltip.disabled = Достижения будут доступны в следующем обновлении.
 
-debugText.fps = ФПС
-debugText.memory = RAM
-debugText.state = Стостояние
-debugText.format = %1: %2
-
 warningMenu.title = ВНИМАНИЕ
 warningMenu.content = Игра создана для лиц СТАРШЕ 18 ЛЕТ!\nЭто игра про фетиши, в основном о НАДУВАНИИ ФУРЕЙ, и может быть неприемлима для некоторых лиц. Доп. Контент созданный третьими лицами не модерируется, и может вызвать сильнейший дискомфорт у некоторых игроков. Публикация видео и стримминг этой игры на платформах где преобладают дети крайне не рекомендуется.\nЭта игра также содержит мигающие изображения и тряску экрана, что может вызвать приступ эпилепсии у некоторых игроков. Эти эффекты могут быть убраны в меню Настроек.\nНажимая 'Принять', вы были уведомлены о всех правилах и нежелательных эффектах. Мы не несём за это ответственность.
 warningMenu.accept = Принять
@@ -59,12 +54,12 @@ optionsMenu.heading.debugText = Доп Штучки
 
 option.ignoreEliminatedPlayers.name = Пропуск Выбывших
 option.ignoreEliminatedPlayers.description = Выбывшие игроки не будут проигрывать анимацию на свой ход.
-option.allowPopping.name = Лопанье
-option.allowPopping.description = При поражении игроки нелетально лопаются.\nЕсли выключено, персонажи будут становится переполненными.\nНачинает работать в следующей игре.
-option.allowBellyGurgles.name = Звуки Живота
-option.allowBellyGurgles.description = Игроки проигрывают звук урчания живота пока стоят или надуваются.
-option.allowBellyCreaks.name = Скрипы
-option.allowBellyCreaks.description = Игроки начинают проигрывать звук скрипа шарика пока стоят или надуваются.
+option.enablePopping.name = Лопанье
+option.enablePopping.description = При поражении игроки нелетально лопаются.\nЕсли выключено, персонажи будут становится переполненными.\nНачинает работать в следующей игре.
+option.enableBellyGurgles.name = Звуки Живота
+option.enableBellyGurgles.description = Игроки проигрывают звук урчания живота пока стоят или надуваются.
+option.enableBellyCreaks.name = Скрипы
+option.enableBellyCreaks.description = Игроки начинают проигрывать звук скрипа шарика пока стоят или надуваются.
 option.enableFullscreen.name = Полный Экран
 option.enableFullscreen.description = Говорит само за себя, неужто ты настолько туп?
 option.enableForceAliasing.name = Насильное Сглаживание
@@ -219,6 +214,7 @@ extrasMenu.jukebox = Проигрыватель
 
 debugText.framerate = ФПС
 debugText.memory = RAM
+debugText.memoryPeak = RAM Peak
 debugText.state = Состояние
 debugText.format = %1: %2
 
@@ -417,6 +413,7 @@ preloadMenu.progress.toasts = Создаём Уведомления...
 preloadMenu.progress.tooltip = Строим Подсказки Инструментам...
 preloadMenu.progress.cursor = Украшаем Курсор Мыши...
 preloadMenu.progress.splashes = Пишем Сплеши...
+preloadMenu.progress.music = Находим Музыкальные Диски...
 preloadMenu.finished = Готово!
 
 // Fallback for HTML build
