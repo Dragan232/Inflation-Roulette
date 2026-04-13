@@ -67,6 +67,7 @@ class PlayState extends SuffState {
 	// Game Logic
 	var currentTurnIndex:Int = 0;
 	var winnerIndex:Null<Int> = null;
+	public var canUseSkillKeybinds:Bool = false;
 
 	var cylinderContent:Array<Bool> = []; // True: Live, False: Blank
 	var liveRoundDamage:Int = 1;
@@ -305,15 +306,7 @@ class PlayState extends SuffState {
 		cameraFocusButton.y = FlxG.height - cameraFocusButton.height - 20;
 		cameraFocusButton.camera = camHUD;
 		cameraFocusButton.onClick = function() {
-			isManuallyFocusingStage = !isManuallyFocusingStage;
-			if (isManuallyFocusingStage) {
-				focusCameraOnStage();
-				togglePlayerUI(false);
-			} else {
-				focusCameraOnPlayer(currentTurnIndex);
-				togglePlayerUI(true);
-			}
-			updateSkillAvailability(currentTurnIndex);
+			toggleCameraFocus();
 		};
 		add(cameraFocusButton);
 
@@ -518,6 +511,7 @@ class PlayState extends SuffState {
 		togglePauseFunctionality(true);
 		toggleLetterbox(false);
 		cameraFocusButton.visible = true;
+		canUseSkillKeybinds = true;
 		SuffState.playMusic('game', 1, true);
 
 		doTween('camHUD', FlxTween.tween(camHUD, {alpha: 1}, 0.5));
@@ -561,6 +555,7 @@ class PlayState extends SuffState {
 			return;
 		}
 
+		canUseSkillKeybinds = false;
 		togglePlayerUI(false);
 		toggleCameraFocusButton(false);
 		if (skill.offensive) {
@@ -649,6 +644,7 @@ class PlayState extends SuffState {
 				toggleLetterbox(false);
 				toggleCameraFocusButton(true);
 			}
+			canUseSkillKeybinds = !getPlayer(currentTurnIndex).cpuControlled;
 		}));
 	}
 
@@ -687,6 +683,7 @@ class PlayState extends SuffState {
 					getPlayer(victimIndex).canUseSkills = false;
 					doTimer('reenablePlayerUI', new FlxTimer().start(1.5, function(_:FlxTimer) {
 						changeTurn();
+						canUseSkillKeybinds = !getPlayer(attackerIndex).cpuControlled;
 					}));
 			}
 			focusCameraOnPlayer(victimIndex);
@@ -727,6 +724,7 @@ class PlayState extends SuffState {
 
 	public function cancelOffensiveSkill() {
 		isSelectingPlayer = false;
+		canUseSkillKeybinds = true;
 		togglePlayerUI((currentTurnIndex == offensiveSkillAttacker && !CharacterManager.cpuControlled[currentTurnIndex]));
 		if (currentTurnIndex == offensiveSkillAttacker) {
 			toggleCameraFocusButton(true);
@@ -897,7 +895,7 @@ class PlayState extends SuffState {
 
 		if (!isEnding) {
 			FlxG.sound.music.resume();
-			doTween('aTweenButItsATimerLol', FlxTween.tween(camGame, {alpha: 1}, (currentSessionenablePopping ? 2.5 : 1), {
+			doTween('aTweenButItsATimerLol', FlxTween.tween(camGame, {alpha: 1}, ((currentSessionenablePopping && !getPlayer(playerIndex).disablePopping) ? 2.5 : 1), {
 				onUpdate: function(_:FlxTween) {
 					focusCameraOnPlayer(playerIndex);
 				}, onComplete: function(_:FlxTween) {
@@ -985,8 +983,9 @@ class PlayState extends SuffState {
 						getPlayer(currentTurnIndex).playAnim('prepareShoot', false);
 						playGunContactSound();
 						pumpGun.visible = false;
-						togglePlayerUI(!CharacterManager.cpuControlled[currentTurnIndex]);
-						toggleLetterbox(CharacterManager.cpuControlled[currentTurnIndex]);
+						canUseSkillKeybinds = !getPlayer(currentTurnIndex).cpuControlled;
+						togglePlayerUI(!getPlayer(currentTurnIndex).cpuControlled);
+						toggleLetterbox(getPlayer(currentTurnIndex).cpuControlled);
 						if (getPlayer(currentTurnIndex).cpuControlled) {
 							startCPUAction();
 						} else {
@@ -1126,7 +1125,7 @@ class PlayState extends SuffState {
 
 	function focusCameraOnPlayer(playerIndex:Int) {
 		var characterCameraOffset:Array<Int> = getPlayer(playerIndex).cameraOffset;
-		if (getPlayer(playerIndex).isEliminated() && currentSessionenablePopping)
+		if (getPlayer(playerIndex).isEliminated() && (currentSessionenablePopping && !getPlayer(playerIndex).disablePopping))
 			characterCameraOffset = getPlayer(playerIndex).poppedCameraOffset;
 
 		camFollow.x = getPlayer(playerIndex).x + characterCameraOffset[0];
@@ -1223,6 +1222,18 @@ class PlayState extends SuffState {
 		uiRevealGroup.y = shootButton.y + (shootButton.height - uiRevealGroup.height) * 0.75;
 	}
 
+	function toggleCameraFocus() {
+		isManuallyFocusingStage = !isManuallyFocusingStage;
+		if (isManuallyFocusingStage) {
+			focusCameraOnStage();
+			togglePlayerUI(false);
+		} else {
+			focusCameraOnPlayer(currentTurnIndex);
+			togglePlayerUI(true);
+		}
+		updateSkillAvailability(currentTurnIndex);
+	}
+
 	function evaluateEnding() {
 		var aliveCharCount:Int = 0;
 		var aliveCharIndex:Int = 0;
@@ -1273,32 +1284,36 @@ class PlayState extends SuffState {
 		pressureBar.updateBar();
 		confidenceBar.updateBar();
 
-		if (FlxG.keys.justPressed.ESCAPE) {
-			if (isSelectingPlayer)
-				cancelOffensiveSkill(); else
-				pauseGame();
-		}
-
 		if (!isPaused) {
 			FlxG.camera.zoom = FlxMath.lerp(FlxG.camera.zoom, camFollowZoom, FlxMath.bound(elapsed * 5, 0, 1));
 
-			if (FlxG.keys.justPressed.ENTER && !CharacterManager.cpuControlled[currentTurnIndex] && !shootButton.disabled) {
+			if (Controls.justPressed('shoot') && !CharacterManager.cpuControlled[currentTurnIndex] && !shootButton.disabled) {
 				deployGun(currentTurnIndex, function() return getPlayer(currentTurnIndex).getPressurePercentage());
 			}
 
+			if (canUseSkillKeybinds) {
+				for (num => skillCard in skillCardsGroup.members) {
+					if (Controls.justPressed('skill${num + 1}')) {
+						activateSkill(currentTurnIndex, num);
+					}
+				}
+			}
+
 			if (Preferences.data.enableDebugKeybinds) {
-				if (FlxG.keys.justPressed.Z) {
+				if (Controls.justPressed('debug1')) {
 					Achievements.enabled = false;
 					getPlayer(currentTurnIndex).currentConfidence += 1;
 					updateSkillAvailability(currentTurnIndex);
 				}
-				if (FlxG.keys.justPressed.X) {
+				if (Controls.justPressed('debug2')) {
 					Achievements.enabled = false;
 					shoot(currentTurnIndex);
 				}
 			}
 
 			if (isSelectingPlayer) {
+				if (Controls.justPressed('exit'))
+					cancelOffensiveSkill();
 				for (num => player in characterGroup) {
 					if (num != offensiveSkillAttacker && !player.isEliminated() && player.mouseOverlapsBoundingBox()) {
 						if (!player.hovered) {
@@ -1321,6 +1336,11 @@ class PlayState extends SuffState {
 						player.hovered = false;
 					}
 				}
+			} else {
+				if (Controls.justPressed('camera') && !cameraFocusButton.disabled)
+					toggleCameraFocus();
+				else if (Controls.justPressed('pause') && canPause)
+					pauseGame();
 			}
 
 			for (player in characterGroup) {

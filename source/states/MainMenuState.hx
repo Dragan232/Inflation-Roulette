@@ -419,45 +419,6 @@ class MainMenuState extends SuffState {
 			}
 		}
 
-		/*
-		if (FlxG.keys.justPressed.Q) {
-			var player1:ScoreData = {
-				charID: 'goober',
-				cpuControlled: false,
-				charPressure: 0,
-				winBonus: 5500,
-				edgingBonus: 4700,
-				skillBonus: 1800
-			};
-			var player2:ScoreData = {
-				charID: 'goober',
-				cpuControlled: true,
-				charPressure: 1.25,
-				winBonus: 0,
-				edgingBonus: 4700,
-				skillBonus: 1800
-			};
-			var player3:ScoreData = {
-				charID: 'goober',
-				cpuControlled: false,
-				charPressure: 1.25,
-				winBonus: 0,
-				edgingBonus: 4700,
-				skillBonus: 0
-			};
-			var player4:ScoreData = {
-				charID: 'goober',
-				cpuControlled: true,
-				charPressure: 1.25,
-				winBonus: 0,
-				edgingBonus: 0,
-				skillBonus: 1800
-			};
-			ResultsState.data = [player2, player1, player3, player4];
-			SuffState.switchState(new ResultsState());
-		}
-		*/
-
 		#if _ALLOW_EASTER_EGGS
 		if (FlxG.keys.firstJustPressed() != FlxKey.NONE) {
 			var keyPressed:FlxKey = FlxG.keys.firstJustPressed();

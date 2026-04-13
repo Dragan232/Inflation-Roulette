@@ -160,12 +160,12 @@ class JukeboxState extends SuffState {
 
 		record.angle = (FlxG.sound.music.time - FlxG.sound.music.loopTime) / 1000 / (60 / SuffState.currentMusicBPM) * 45;
 
-		if (allowInput) {
-			if (FlxG.keys.justPressed.LEFT) {
+		if (allowInput && Controls.justPressed('exit')) {
+			if (Controls.justPressed('left')) {
 				changePage(-1);
-			} else if (FlxG.keys.justPressed.RIGHT) {
+			} else if (Controls.justPressed('right')) {
 				changePage(1);
-			} else if (FlxG.keys.justPressed.ESCAPE) {
+			} else if (Controls.justPressed('exit')) {
 				exitMenu();
 			}
 		}

@@ -177,7 +177,7 @@ class CreditsState extends SuffState {
 		}
 		creditsTxtGroup.y = creditScrollValue;
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 	}

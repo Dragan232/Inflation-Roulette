@@ -292,7 +292,7 @@ class AddonsMenuState extends SuffState {
 			}
 		}
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			backToMainMenu();
 		}
 		if (FlxG.mouse.pressed) {

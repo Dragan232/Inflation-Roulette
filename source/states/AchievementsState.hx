@@ -317,12 +317,12 @@ class AchievementsState extends SuffState {
 		cameraPosLerped.x = FlxMath.lerp(cameraPosLerped.x, cameraPos.x - cameraPosOffset.x, elapsed * 8);
 		cameraPosLerped.y = FlxMath.lerp(cameraPosLerped.y, cameraPos.y - cameraPosOffset.y, elapsed * 8);
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
-		if (FlxG.keys.justPressed.UP) {
+		if (Controls.justPressed('up')) {
 			changePage(-1);
-		} else if (FlxG.keys.justPressed.DOWN) {
+		} else if (Controls.justPressed('down')) {
 			changePage(1);
 		}
 		if (FlxG.mouse.wheel != 0) {

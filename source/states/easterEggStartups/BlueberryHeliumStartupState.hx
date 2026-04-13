@@ -1,6 +1,7 @@
 package states.easterEggStartups;
 
 import flixel.group.FlxSpriteContainer;
+import backend.Controls;
 
 class BlueberryHeliumStartupState extends SuffState {
 	override function create() {
@@ -216,7 +217,7 @@ class BlueberryHeliumStartupState extends SuffState {
 		if (!loadedObjects)
 			return;
 
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed) {
+		if (Controls.justPressed('exit') || Controls.justPressed('shoot') || FlxG.mouse.justPressed) {
 			skipIntro();
 		}
 	}

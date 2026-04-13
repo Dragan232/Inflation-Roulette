@@ -113,7 +113,7 @@ class GamemodeSelectSubState extends SuffSubState {
 		super.update(elapsed);
 
 		if (!leaving) {
-			if (FlxG.keys.justPressed.ESCAPE) {
+			if (Controls.justPressed('exit')) {
 				exitMenu();
 			}
 		}

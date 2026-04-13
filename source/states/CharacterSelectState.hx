@@ -423,13 +423,13 @@ class CharacterSelectState extends SuffState {
 
 		if (!isExiting) {
 			if (status == CHARACTER_SELECT) {
-				if (FlxG.keys.justPressed.A || FlxG.keys.justPressed.LEFT) {
+				if (Controls.justPressed('left')) {
 					changePage(-1);
-				} else if (FlxG.keys.justPressed.D || FlxG.keys.justPressed.RIGHT) {
+				} else if (Controls.justPressed('right')) {
 					changePage(1);
 				}
 			}
-			if (FlxG.keys.justPressed.ESCAPE) {
+			if (Controls.justPressed('exit')) {
 				if (status == PLAYER_SETTINGS)
 					moveOnToStageSelect();
 				else if (status == STAGE_SELECT) {

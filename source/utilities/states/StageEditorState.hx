@@ -263,7 +263,7 @@ class StageEditorState extends UtilitiesBaseMenuState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			if (selectedObject != null)
 				selectedObject = null;
 			else if (inScreenshotMode) {

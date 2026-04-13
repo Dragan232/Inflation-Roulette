@@ -103,7 +103,7 @@ class ExtrasSubState extends SuffSubState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 	}

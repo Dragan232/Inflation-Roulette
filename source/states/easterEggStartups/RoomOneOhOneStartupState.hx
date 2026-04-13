@@ -137,7 +137,7 @@ class RoomOneOhOneStartupState extends SuffState {
 		FlxG.camera.x = Std.int(shakeForceX);
 		FlxG.camera.y = Std.int(shakeForceY);
 
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed) {
+		if (Controls.justPressed('exit') || Controls.justPressed('shoot') || FlxG.mouse.justPressed) {
 			skipIntroTimer.cancel();
 			skipIntro();
 		}

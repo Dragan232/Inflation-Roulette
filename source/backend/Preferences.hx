@@ -33,6 +33,24 @@ class SaveVariables {
 	public var enableGLSL:Bool = true;
 	public var language:String = 'en-us';
 
+	public var keybinds:Map<String, Array<FlxKey>> = [
+		'shoot' => [ENTER, Z],
+		'exit' => [ESCAPE, X],
+		'camera' => [BACKSLASH, C],
+		'skill1' => [ONE],
+		'skill2' => [TWO],
+		'skill3' => [THREE],
+		'skill4' => [FOUR],
+		'pause' => [ESCAPE],
+		'up' => [FlxKey.UP, W],
+		'left' => [FlxKey.LEFT, A],
+		'down' => [FlxKey.DOWN, S],
+		'right' => [FlxKey.RIGHT, D],
+		'showCursor' => [G],
+		'debug1' => [N],
+		'debug2' => [M]
+	];
+
 	public function new() {
 	}
 }
@@ -41,23 +59,16 @@ class SaveVariables {
  * Handles the player's game settings.
  */
 class Preferences {
-	/**
-	 * The current list of setting variables and its values that the game is currently using.
-	 */
 	public static var data:SaveVariables = null;
-
-	/**
-	 * List of setting variables and its default values.
-	 */
 	public static var defaultData:SaveVariables = null;
 
-	/**
-	 * Saves the player's game settings and flushes them into the save directory.
-	 */
+	public static final manuallyProcessedKeys = ['keybinds'];
+
 	public static function savePrefs() {
 		FlxG.save.bind('preferences', Utilities.getSavePath());
 
 		for (key in Reflect.fields(data)) {
+			if (manuallyProcessedKeys.contains(key)) continue;
 			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
 		}
 		FlxG.save.flush();
@@ -78,11 +89,19 @@ class Preferences {
 		FlxG.save.bind('preferences', Utilities.getSavePath());
 
 		for (key in Reflect.fields(data)) {
-			if (Reflect.hasField(FlxG.save.data, key)) {
-				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
-				// trace('loaded - $key: ${Reflect.field(FlxG.save.data, key)}');
-			}
+			if (manuallyProcessedKeys.contains(key) || !Reflect.hasField(FlxG.save.data, key)) continue;
+			Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
 		}
+
+		FlxG.save.bind('controls', Utilities.getSavePath());
+		if (FlxG.save.data.keybinds != null) {
+			var savedMap:Map<String, Array<FlxKey>> = FlxG.save.data.keybinds;
+			for (name => value in savedMap)
+				data.keybinds.set(name, value);
+		} else {
+			FlxG.save.data.keybinds = new Map<String, Array<FlxKey>>();
+		}
+		Controls.reloadKeybinds();
 
 		FlxG.save.bind('game', Utilities.getSavePath());
 

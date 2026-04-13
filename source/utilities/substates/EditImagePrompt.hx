@@ -114,14 +114,14 @@ class EditImagePrompt extends UtilitiesBaseMenuSubState {
 	override function update(elapsed:Float) {
 		var stepSize:Int = 1;
 		if (FlxG.keys.anyPressed([SHIFT, CONTROL])) stepSize = 10;
-		if (FlxG.keys.justPressed.LEFT) {
+		if (Controls.justPressed('left')) {
 			moveSprite(-1 * stepSize, 0);
-		} else if (FlxG.keys.justPressed.RIGHT) {
+		} else if (Controls.justPressed('right')) {
 			moveSprite(1 * stepSize, 0);
 		}
-		if (FlxG.keys.justPressed.UP) {
+		if (Controls.justPressed('up')) {
 			moveSprite(0, -1 * stepSize);
-		} else if (FlxG.keys.justPressed.DOWN) {
+		} else if (Controls.justPressed('down')) {
 			moveSprite(0, 1 * stepSize);
 		}
 		if (FlxG.mouse.overlaps(sprite) && FlxG.mouse.justPressed && !isGrabbingSprite) {

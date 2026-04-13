@@ -246,7 +246,7 @@ class LanguageSelectState extends SuffState {
 
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 		if (FlxG.mouse.justPressed) {

@@ -78,6 +78,10 @@ class OptionsSubState extends SuffSubState {
 
 		createHeading('gameplay');
 
+		createButtonOption('controls', function() {
+			openSubState(new ControlsOptionsSubState());
+		});
+
 		createBooleanOption("ignoreEliminatedPlayers",
 			function(value:Bool) {
 				Preferences.data.ignoreEliminatedPlayers = value;
@@ -298,6 +302,18 @@ class OptionsSubState extends SuffSubState {
 		}
 	}
 
+	function createButtonOption(ID:String, callback:Void->Void) {
+		var text:FlxText = new FlxText(Language.getPhrase('option.${ID}.name'), 48);
+		var button:SuffButton = new SuffButton(optionsXPadding, optionsY, text.text, text.width + 80, 96);
+		button.btnTextSize = 48;
+		button.onClick = callback;
+		button.camera = this.camera;
+		button.tooltipText = Language.getPhrase('option.${ID}.description');
+		optionsGroup.add(button);
+
+		optionsY += button.height + 16;
+	}
+
 	function updateScrollBar() {
 		scrollBar.alpha = 0.375;
 
@@ -334,7 +350,7 @@ class OptionsSubState extends SuffSubState {
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitOptionsMenu();
 		}
 		if (FlxG.mouse.wheel != 0) {

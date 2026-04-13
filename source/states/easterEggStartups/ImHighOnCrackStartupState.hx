@@ -115,7 +115,7 @@ class ImHighOnCrackStartupState extends SuffState {
 		if (!loadedObjects)
 			return;
 
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed) {
+		if (Controls.justPressed('exit') || Controls.justPressed('shoot') || FlxG.mouse.justPressed) {
 			skipIntro();
 		}
 

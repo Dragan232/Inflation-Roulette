@@ -138,6 +138,8 @@ option.enableBellyGurgles.name = Borborygmi
 option.enableBellyGurgles.description = Players play belly gurgle sounds on idle when inflated.
 option.enableBellyCreaks.name = Creaking
 option.enableBellyCreaks.description = Players play balloon overstretching sounds on idle when inflated.
+option.controls.name = Configure Controls
+option.controls.description = Modify keybinds.
 option.enableFullscreen.name = Fullscreen
 option.enableFullscreen.description = Self-explanatory, but are you that deprived?
 // Yes. This DOES mean Forced Aliasing as in like forcing to turn off anti-aliasing

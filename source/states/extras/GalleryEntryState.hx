@@ -233,7 +233,7 @@ class GalleryEntryState extends SuffState {
 
 		descriptionRate = FlxG.mouse.pressed ? 10 : 1;
 
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 

@@ -111,7 +111,7 @@ class GalleryArtworkViewState extends SuffState {
 		super.update(elapsed);
 
 		if (!allowInput) return;
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 		if (FlxG.mouse.pressed) {

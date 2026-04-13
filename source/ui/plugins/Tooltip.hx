@@ -76,7 +76,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.x = FlxMath.bound(leMousePos.x + position.x, 0, FlxG.width - instance.bg.width);
 		instance.y = FlxMath.bound(leMousePos.y + position.y, 0, FlxG.height - instance.bg.height);
 
-		if (Preferences.data.hideCursor && FlxG.keys.justPressed.G) {
+		if (Preferences.data.hideCursor && Controls.justPressed('showCursor')) {
 			Preferences.data.hideCursor = false;
 			Preferences.savePrefs();
 			Preferences.loadPrefs();

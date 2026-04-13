@@ -72,7 +72,7 @@ class StartupState extends SuffState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed) {
+		if (Controls.justPressed('exit') || Controls.justPressed('shoot') || FlxG.mouse.justPressed) {
 			if (skipIntroTimer != null)
 				skipIntroTimer.cancel();
 			skipIntro();

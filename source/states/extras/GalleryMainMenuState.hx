@@ -127,7 +127,7 @@ class GalleryMainMenuState extends SuffState {
 				item.intendedPos.y = (FlxG.height - item.height) / 2;
 			}
 		}
-		if (FlxG.keys.justPressed.ESCAPE) {
+		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
 	}

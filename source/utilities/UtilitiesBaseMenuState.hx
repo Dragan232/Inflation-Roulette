@@ -39,7 +39,7 @@ class UtilitiesBaseMenuState extends SuffState {
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		if (escapeToLeave && FlxG.keys.justPressed.ESCAPE) {
+		if (escapeToLeave && Controls.justPressed('exit')) {
 			leaveMenu();
 		}
 	}

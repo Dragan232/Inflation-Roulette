@@ -261,7 +261,7 @@ class Character extends FlxSprite {
 	public function parseAnimationSuffix() {
 		return switch (currentPressure) {
 			case(_ > maxPressure) => true:
-				if (PlayState.currentSessionenablePopping) 'Null'; else 'Overinflated';
+				if (PlayState.currentSessionenablePopping && !disablePopping) 'Null'; else 'Overinflated';
 			default:
 				'' + currentPressure;
 		}
