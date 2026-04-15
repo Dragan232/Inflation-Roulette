@@ -22,6 +22,12 @@ class LoadFilePrompt extends UtilitiesBaseMenuSubState {
 		var daFileFilter:Array<FileFilter> = [new FileFilter('JSON', 'json')];
 		if (fileFilter != null)
 			daFileFilter = fileFilter;
+		
+		#if !windows
+		defaultPath = defaultPath.replace('\\', '/');
+		#else
+		defaultPath = defaultPath.replace('/', '\\');
+		#end
 
 		loadFileButton = new SuffButton(0, 0, Language.getPhrase('utilitiesMenu.loadFile'), 400, 100);
 		loadFileButton.screenCenter();

@@ -193,7 +193,7 @@ class Utilities {
 	}
 
 	#if sys
-	public static function getExecutablePath(backslash:Bool = true):String {
+	public static function getExecutablePath(backslash:Bool = #if windows true #else false #end):String {
 		if (!backslash)
 			return haxe.io.Path.directory(Sys.executablePath()).replace('\\', '/');
 		return haxe.io.Path.directory(Sys.executablePath());

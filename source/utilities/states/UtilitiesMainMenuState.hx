@@ -6,8 +6,6 @@ import utilities.substates.ErrorPrompt;
 import utilities.substates.NewSpriteProjectPrompt;
 import utilities.substates.GenericPrompt;
 import ui.objects.SuffIconButton;
-import utilities.substates.LoadFilePrompt;
-import utilities.substates.LoadFilePrompt;
 
 class UtilitiesMainMenuState extends UtilitiesBaseMenuState {
 	final buttons:Array<String> = [
