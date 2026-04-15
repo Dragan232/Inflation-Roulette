@@ -132,14 +132,15 @@ optionsMenu.heading.debugText = Debug Text
 
 option.ignoreEliminatedPlayers.name = Eliminee Skip
 option.ignoreEliminatedPlayers.description = Players who are defeated will not play an animation when it's their turn.
+// This option is a button.
+option.controls.name = Configure Controls
+option.controls.description = 
 option.enablePopping.name = Popping
 option.enablePopping.description = Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead.\nTakes effect in the next game.
 option.enableBellyGurgles.name = Borborygmi
 option.enableBellyGurgles.description = Players play belly gurgle sounds on idle when inflated.
 option.enableBellyCreaks.name = Creaking
 option.enableBellyCreaks.description = Players play balloon overstretching sounds on idle when inflated.
-option.controls.name = Configure Controls
-option.controls.description = Modify keybinds.
 option.enableFullscreen.name = Fullscreen
 option.enableFullscreen.description = Self-explanatory, but are you that deprived?
 // Yes. This DOES mean Forced Aliasing as in like forcing to turn off anti-aliasing
@@ -168,7 +169,7 @@ option.cameraEffectIntensity.description = How strong screen shaking and other d
 option.useBuiltInCursor.name = Built-In Cursor
 option.useBuiltInCursor.description = Uses the custom in-game cursor instead of the default system mouse cursor.
 option.hideCursor.name = Hide Cursor
-option.hideCursor.description = Hides the mouse cursor entirely.\nCursor can be shown again by pressing [G] at any time.
+option.hideCursor.description = Hides the mouse cursor entirely.\nCursor can be shown again by pressing %1 at any time.
 option.playCursorSounds.name = Cursor Sounds
 option.playCursorSounds.description = Plays a click sound whenever the mouse cursor clicks something.
 option.maxFramerate.name = Maximum Framerate
@@ -472,7 +473,7 @@ resultsMenu.badPlayers = DISAPPOINTMENTS
 resultsMenu.leaderboard.playerFormat = %1%2
 resultsMenu.leaderboard.playerDuplicateFormat = %1%2 #%3
 // Unless you want to be really specific, it is recommended to leave this string empty
-resultsMenu.leaderboard.playerType.human =
+resultsMenu.leaderboard.playerType.human = 
 // If the string is not empty, it is recommended to put a whitespace after it.
 resultsMenu.leaderboard.playerType.cpu = CPU\s
 // %1: Rank, %2: Player Format, %3: Score, %4: Grade

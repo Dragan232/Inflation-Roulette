@@ -2,8 +2,8 @@ package utilities.substates;
 
 import ui.objects.SuffIconButton;
 import flixel.addons.ui.FlxUIInputText;
-import flixel.addons.ui.FlxUINumericStepper;
-import flixel.addons.ui.FlxUIButton;
+import ui.addons.SuffUINumericStepper;
+import ui.addons.SuffUIButton;
 import haxe.Json;
 import utilities.states.CharacterCreatorState;
 
@@ -11,13 +11,13 @@ class NewSpriteProjectPrompt extends UtilitiesBaseMenuSubState {
 	var exitButton:SuffIconButton;
 	var name:FlxUIInputText;
 	var author:FlxUIInputText;
-	var framerate:FlxUINumericStepper;
-	var dimensionX:FlxUINumericStepper;
-	var dimensionY:FlxUINumericStepper;
-	var maxPressure:FlxUINumericStepper;
+	var framerate:SuffUINumericStepper;
+	var dimensionX:SuffUINumericStepper;
+	var dimensionY:SuffUINumericStepper;
+	var maxPressure:SuffUINumericStepper;
 	var skills:FlxUIInputText;
 
-	var confirmButton:FlxUIButton;
+	var confirmButton:SuffUIButton;
 
 	public function new() {
 		super();
@@ -47,21 +47,21 @@ class NewSpriteProjectPrompt extends UtilitiesBaseMenuSubState {
 
 		var text:FlxText = new FlxText(text.x, text.y + text.height + 32, 0, Language.getPhrase('characterCreator.parameter.defaultFramerate'), 32);
 		add(text);
-		framerate = new FlxUINumericStepper(text.x + text.width + 32, text.y, 1, 24, 1, 30, 0, 32);
+		framerate = new SuffUINumericStepper(text.x + text.width + 32, text.y, 1, 24, 1, 30, 0, 32);
 		add(framerate);
 
 		var text:FlxText = new FlxText(text.x, text.y + text.height + 32, 0, Language.getPhrase('characterCreator.parameter.defaultDimensions'), 32);
 		add(text);
-		dimensionX = new FlxUINumericStepper(text.x + text.width + 32, text.y, 80, 640, 80, 1280, 0, 32);
+		dimensionX = new SuffUINumericStepper(text.x + text.width + 32, text.y, 80, 640, 80, 1280, 0, 32);
 		add(dimensionX);
-		dimensionY = new FlxUINumericStepper(dimensionX.x + dimensionX.width, dimensionX.y, 80, 640, 80, 1280, 0, 32);
+		dimensionY = new SuffUINumericStepper(dimensionX.x + dimensionX.width, dimensionX.y, 80, 640, 80, 1280, 0, 32);
 		add(dimensionY);
 		var text:FlxText = new FlxText(text.x, text.y + text.height, 640, Language.getPhrase('characterCreator.newCharacter.unchangeableParameter'), 16);
 		add(text);
 
 		var text:FlxText = new FlxText(text.x, text.y + text.height + 32, 0, Language.getPhrase('characterCreator.parameter.maxPressure'), 32);
 		add(text);
-		maxPressure = new FlxUINumericStepper(text.x + text.width + 32, text.y, 1, 4, 1, 9, 0, 32);
+		maxPressure = new SuffUINumericStepper(text.x + text.width + 32, text.y, 1, 4, 1, 9, 0, 32);
 		add(maxPressure);
 
 		var text:FlxText = new FlxText(text.x, text.y + text.height + 32, 0, Language.getPhrase('characterCreator.parameter.skills'), 32);
@@ -71,7 +71,7 @@ class NewSpriteProjectPrompt extends UtilitiesBaseMenuSubState {
 		var text:FlxText = new FlxText(text.x, text.y + text.height, 0, Language.getPhrase('characterCreator.parameter.skills.description'), 32);
 		add(text);
 
-		confirmButton = new FlxUIButton(text.x, text.y + text.height + 32, Language.getPhrase('characterCreator.newCharacter.create'), function() {
+		confirmButton = new SuffUIButton(text.x, text.y + text.height + 32, Language.getPhrase('characterCreator.newCharacter.create'), function() {
 			attemptToCreateCharacter();
 		});
 		confirmButton.setLabelFormat(32, 0x333333);

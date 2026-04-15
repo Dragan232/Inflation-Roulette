@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package unused.ui;
 
 class FlxUIAssets {
 	// images

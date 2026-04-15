@@ -1,16 +1,13 @@
 package utilities.states;
 
-import flixel.addons.ui.FlxUIButton;
-import flixel.addons.ui.FlxUIInputText;
-import flixel.addons.ui.FlxUINumericStepper;
-import flixel.addons.ui.FlxUITabMenu;
+import ui.addons.SuffUIButton;
 import tjson.TJSON as Json;
 import utilities.substates.ChoicePrompt;
 import backend.typedefs.StageData;
 import backend.typedefs.StageObjectData;
 import objects.Stage;
 import utilities.objects.CharacterDummy;
-import flixel.addons.ui.FlxUIWidget;
+import ui.addons.SuffUIWidget;
 import flixel.util.FlxCollision;
 import utilities.enums.StageEditorObjectType;
 import openfl.Lib;
@@ -170,10 +167,10 @@ class StageEditorState extends UtilitiesBaseMenuState {
 		trace(objectsOrder);
 	}
 
-	var stageUI:FlxUIWidget;
+	var stageUI:SuffUIWidget;
 
 	function generateStageUI() {
-		stageUI = new FlxUIWidget(970, 10, 250, 300);
+		stageUI = new SuffUIWidget(970, 10, 250, 300);
 		stageUI.setLabelText(Language.getPhrase('stageEditor.stage'));
 		stageUI.camera = camHUD;
 		stageUI.draggable = false;
@@ -183,7 +180,7 @@ class StageEditorState extends UtilitiesBaseMenuState {
 		var text:FlxText = new FlxText(20, 40, stageUI.width - 40, Language.getPhrase('stageEditor.stage.description'), 16);
 		stageUI.addObject(text);
 
-		var exitButton = new FlxUIButton(Language.getPhrase('stageEditor.exit'), function () {
+		var exitButton = new SuffUIButton(Language.getPhrase('stageEditor.exit'), function () {
 			leaveMenu();
 		});
 		exitButton.resize(stageUI.width - 40, 32);
@@ -192,14 +189,14 @@ class StageEditorState extends UtilitiesBaseMenuState {
 		exitButton.x = 20;
 		exitButton.y = stageUI.height - exitButton.height - 20;
 
-		var screenshotButton = new FlxUIButton(Language.getPhrase('stageEditor.screenshot'), function () {
+		var screenshotButton = new SuffUIButton(Language.getPhrase('stageEditor.screenshot'), function () {
 			screenShot();
 		});
 		screenshotButton.resize(exitButton.width, exitButton.height);
 		screenshotButton.x = 20;
 		screenshotButton.y = exitButton.y - screenshotButton.height - 5;
 
-		var reloadButton = new FlxUIButton(Language.getPhrase('stageEditor.reload'), function () {
+		var reloadButton = new SuffUIButton(Language.getPhrase('stageEditor.reload'), function () {
 			reloadBG();
 		});
 		reloadButton.resize(exitButton.width, exitButton.height);
@@ -225,17 +222,17 @@ class StageEditorState extends UtilitiesBaseMenuState {
 
 	var inScreenshotMode:Bool = false;
 
-	var objectListUI:FlxUIWidget;
+	var objectListUI:SuffUIWidget;
 
 	function generateObjectListUI() {
-		objectListUI = new FlxUIWidget(10, 10, 200, FlxG.height - 20);
+		objectListUI = new SuffUIWidget(10, 10, 200, FlxG.height - 20);
 		objectListUI.draggable = false;
 		objectListUI.setLabelText(Language.getPhrase('stageEditor.objectList', ['N/A']));
 		objectListUI.camera = camHUD;
 		add(objectListUI);
 
 		for (num => obj in objectsOrder) {
-			var objButton:FlxUIButton = new FlxUIButton(20, 40 + 30 * num, obj, function() {
+			var objButton:SuffUIButton = new SuffUIButton(20, 40 + 30 * num, obj, function() {
 				selectObject(obj);
 			});
 			switch (obj) {
@@ -312,12 +309,6 @@ class StageEditorState extends UtilitiesBaseMenuState {
 		camFollow.x = leObj.x + leObj.width / 2 * (type != CHARACTER ? 1 : 0);
 		camFollow.y = leObj.y + (type != CHARACTER ? leObj.height / 2 : -leObj.height / 2);
 		updateCameraTxt();
-	}
-
-	public override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if (id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
-		} else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
-		}
 	}
 
 	public override function leaveMenu() {

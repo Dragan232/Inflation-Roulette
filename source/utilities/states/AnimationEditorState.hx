@@ -6,16 +6,17 @@ import ui.objects.SuffIconButton;
 import utilities.substates.SpriteBrowseImagePrompt;
 import utilities.objects.FrameTimeBar;
 import openfl.utils.ByteArray;
-import flixel.addons.ui.FlxUIButton;
+import ui.addons.SuffUIButton;
 import utilities.typedefs.SpriteProjectAnimData;
 import openfl.display.PNGEncoderOptions;
-import flixel.addons.ui.FlxUINumericStepper;
+import ui.addons.SuffUINumericStepper;
 import utilities.substates.ChoicePrompt;
 import utilities.states.CharacterCreatorState;
 import flixel.addons.ui.FlxUIInputText;
 import utilities.substates.GenericPrompt;
 import haxe.Exception;
 import utilities.substates.ErrorPrompt;
+import flixel.addons.ui.FlxUINumericStepper;
 
 class AnimationEditorState extends UtilitiesBaseMenuState {
 	public static var frames:Array<FlxGraphic> = [null];
@@ -217,16 +218,16 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 		var framerateText = new FlxText(animNameText.x, animNameText.y + animNameText.height + 16, 0, Language.getPhrase('characterCreator.parameter.framerate'), 16);
 		add(framerateText);
 
-		framerateStepper = new FlxUINumericStepper(framerateText.x, framerateText.y + framerateText.height + 8, 1, framerate, 1, 30);
+		framerateStepper = new SuffUINumericStepper(framerateText.x, framerateText.y + framerateText.height + 8, 1, framerate, 1, 30);
 		add(framerateStepper);
 
-		var saveButton:FlxUIButton = new FlxUIButton(framerateStepper.x, framerateStepper.y + framerateStepper.height + 16, Language.getPhrase('animationCreator.save'), function() {
+		var saveButton:SuffUIButton = new SuffUIButton(framerateStepper.x, framerateStepper.y + framerateStepper.height + 16, Language.getPhrase('animationCreator.save'), function() {
 			saveAnimData();
 		});
 		saveButton.resize(emptyBar.width - 32, 48);
 		add(saveButton);
 
-		var exitButton:FlxUIButton = new FlxUIButton(saveButton.x, 0, Language.getPhrase('animationCreator.exit'), function() {
+		var exitButton:SuffUIButton = new SuffUIButton(saveButton.x, 0, Language.getPhrase('animationCreator.exit'), function() {
 			leaveMenu();
 		});
 		exitButton.color = 0xFF2020;
@@ -236,7 +237,7 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 		add(exitButton);
 	}
 
-	var framerateStepper:FlxUINumericStepper;
+	var framerateStepper:SuffUINumericStepper;
 
 	static function renderFrameGroup() {
 		if (frameGroup != null)
@@ -412,7 +413,7 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 	}
 
 	public override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is SuffUINumericStepper)) {
 			if (sender == framerateStepper) {
 				framerate = Std.int(framerateStepper.value);
 				frameTimeBar.updateFramerate(framerate);

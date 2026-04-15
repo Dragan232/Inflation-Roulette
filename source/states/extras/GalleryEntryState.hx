@@ -105,15 +105,8 @@ class GalleryEntryState extends SuffState {
 		descriptionText = Language.getPhrase('galleryMainMenu.envelope.${envelopeData.id}.description');
 		description = new FlxText(title.x, title.y + title.height + 16, FlxG.width / 2 - title.x * 2, descriptionText, 32);
 		description.font = Paths.font('default');
-		var tries:Int = 0;
 		while (description.height > FlxG.height - title.y - description.y) {
-			if (tries % 2 == 0) { // First it tries to switch to a smaller font
-				description.font = Paths.font('small');
-			} else { // If that doesn't work, nudge the size by 4px then use the regular font to try again
-				description.font = Paths.font('default');
-				description.size -= 1;
-			}
-			tries++;
+			description.size -= 1;
 		}
 		description.text = '';
 		description.color = title.color;

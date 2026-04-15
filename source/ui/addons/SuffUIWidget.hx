@@ -1,16 +1,17 @@
-package flixel.addons.ui;
+package ui.addons;
 
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.addons.ui.FlxUI9SliceSprite;
-import flixel.addons.ui.FlxUIButton;
+import ui.addons.SuffUIButton;
 import flixel.addons.ui.FlxUIGroup;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import openfl.geom.Rectangle;
+import flixel.addons.ui.FlxUIAssets;
 
 /**
  * ...
@@ -18,7 +19,7 @@ import openfl.geom.Rectangle;
  * https://harpwood.itch.io/
  */
 
-class FlxUIWidget extends FlxUIGroup {
+class SuffUIWidget extends FlxUIGroup {
 	var area:FlxUI9SliceSprite;
 	var areaWidth:Int;
 	var areaHeight:Int;
@@ -26,7 +27,7 @@ class FlxUIWidget extends FlxUIGroup {
 	var label:FlxText;
 	var canMove:Bool = false;
 	var dragArea:FlxSprite;
-	var minBtn:FlxUIButton;
+	var minBtn:SuffUIButton;
 	var isMinimized:Bool = false;
 	public var draggable:Bool = true;
 
@@ -49,7 +50,7 @@ class FlxUIWidget extends FlxUIGroup {
 		dragArea.setPosition(5, 5);
 		add(dragArea);
 
-		minBtn = new FlxUIButton(Width - 37, 6, '-', toggle);
+		minBtn = new SuffUIButton(Width - 37, 6, '-', toggle);
 		minBtn.setLabelFormat(32);
 		minBtn.resize(30, 24);
 		add(minBtn);

@@ -6,18 +6,20 @@ import tjson.TJSON as Json;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUIInputText;
-import flixel.addons.ui.FlxUINumericStepper;
+import ui.addons.SuffUINumericStepper;
 import utilities.objects.ExplorerFile;
 import utilities.enums.ExplorerFileFileType;
 import utilities.objects.ExplorerPathText;
 import utilities.enums.CharacterCreatorAnimType;
-import flixel.addons.ui.FlxUIButton;
+import ui.addons.SuffUIButton;
 import utilities.substates.SpriteBrowseImagePrompt;
 import utilities.states.AnimationEditorState;
 import utilities.substates.ChoicePrompt;
 import utilities.substates.GenericPrompt;
 import utilities.substates.ExportingProjectPrompt;
 import utilities.substates.ErrorPrompt;
+import flixel.addons.ui.FlxUINumericStepper;
+import ui.addons.SuffUITabMenu;
 
 class CharacterCreatorState extends UtilitiesBaseMenuState {
 	public static final version:String = '1.0.0';
@@ -78,7 +80,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 
 	public static var explorerCurPath = 'root/';
 
-	var UI_box:FlxUITabMenu;
+	var UI_box:SuffUITabMenu;
 	var explorerPathTxt:ExplorerPathText;
 	var explorerPathBar:FlxSprite;
 	var explorerDescBar:FlxSprite;
@@ -104,7 +106,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 			{name: 'Metadata', label: Language.getPhrase('characterCreator.dataType.metadata')},
 			{name: 'Spritedata', label: Language.getPhrase('characterCreator.dataType.spriteData')},
 		];
-		UI_box = new FlxUITabMenu(null, tabs, true);
+		UI_box = new SuffUITabMenu(null, tabs, true);
 		UI_box.resize(340, 700);
 		UI_box.x = 930;
 		UI_box.y = 10;
@@ -113,7 +115,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 		generateSpritedataUI();
 		add(UI_box);
 
-		var exitButton = new FlxUIButton(Language.getPhrase('characterCreator.exit'), function () {
+		var exitButton = new SuffUIButton(Language.getPhrase('characterCreator.exit'), function () {
 			leaveMenu();
 		});
 		exitButton.resize(UI_box.width / 2 - 20 - 10, 32);
@@ -123,7 +125,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 		exitButton.y = UI_box.y + UI_box.height - exitButton.height - 20;
 		add(exitButton);
 
-		var saveButton = new FlxUIButton(Language.getPhrase('characterCreator.save'), function () {
+		var saveButton = new SuffUIButton(Language.getPhrase('characterCreator.save'), function () {
 			saveJSONData();
 			openSubState(new GenericPrompt('characterCreator.saveSuccessful.prompt'));
 		});
@@ -132,7 +134,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 		saveButton.y = exitButton.y - saveButton.height - 10;
 		add(saveButton);
 
-		var exportButton = new FlxUIButton(Language.getPhrase('characterCreator.export'), function () {
+		var exportButton = new SuffUIButton(Language.getPhrase('characterCreator.export'), function () {
 			openSubState(new ChoicePrompt('characterCreator.confirmExport.prompt', function() {
 				initExportShit();
 			}, 1100));
@@ -260,24 +262,24 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 		}
 	}
 
-	var spriteDataMaxPressureStepper:FlxUINumericStepper;
-	var spriteDataMaxConfidenceStepper:FlxUINumericStepper;
-	var spriteDataDefaultFramerateStepper:FlxUINumericStepper;
+	var spriteDataMaxPressureStepper:SuffUINumericStepper;
+	var spriteDataMaxConfidenceStepper:SuffUINumericStepper;
+	var spriteDataDefaultFramerateStepper:SuffUINumericStepper;
 	var spriteDataSkillsInputText:FlxUIInputText;
-	var spriteDataReloadSkillsButton:FlxUIButton;
+	var spriteDataReloadSkillsButton:SuffUIButton;
 	function generateSpritedataUI() {
 		var tabGroup = new FlxUI(null, UI_box);
 		tabGroup.name = 'Spritedata';
 
-		spriteDataDefaultFramerateStepper = new FlxUINumericStepper(20, 44, 1, spriteData.defaultFramerate, 1, 30);
+		spriteDataDefaultFramerateStepper = new SuffUINumericStepper(20, 44, 1, spriteData.defaultFramerate, 1, 30);
 		tabGroup.add(new FlxText(spriteDataDefaultFramerateStepper.x, spriteDataDefaultFramerateStepper.y - 24, 0, Language.getPhrase('characterCreator.parameter.defaultFramerate'), 16));
 		tabGroup.add(spriteDataDefaultFramerateStepper);
 
-		spriteDataMaxConfidenceStepper = new FlxUINumericStepper(20, spriteDataDefaultFramerateStepper.y + 72, 1, spriteData.maxConfidence, 1, 6);
+		spriteDataMaxConfidenceStepper = new SuffUINumericStepper(20, spriteDataDefaultFramerateStepper.y + 72, 1, spriteData.maxConfidence, 1, 6);
 		tabGroup.add(new FlxText(20, spriteDataMaxConfidenceStepper.y - 24, 0, Language.getPhrase('characterCreator.parameter.maxConfidence'), 16));
 		tabGroup.add(spriteDataMaxConfidenceStepper);
 
-		spriteDataMaxPressureStepper = new FlxUINumericStepper(20, spriteDataMaxConfidenceStepper.y + 72, 1, spriteData.maxPressure, 1, 9);
+		spriteDataMaxPressureStepper = new SuffUINumericStepper(20, spriteDataMaxConfidenceStepper.y + 72, 1, spriteData.maxPressure, 1, 9);
 		tabGroup.add(new FlxText(20, spriteDataMaxPressureStepper.y - 24, 0, Language.getPhrase('characterCreator.parameter.maxPressure'), 16));
 		tabGroup.add(spriteDataMaxPressureStepper);
 
@@ -285,7 +287,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 		tabGroup.add(new FlxText(20, spriteDataSkillsInputText.y - 24 - 16, 0, Language.getPhrase('characterCreator.parameter.skills') + '\n' + Language.getPhrase('characterCreator.parameter.skills.description'), 16));
 		tabGroup.add(spriteDataSkillsInputText);
 
-		spriteDataReloadSkillsButton = new FlxUIButton(20, spriteDataSkillsInputText.y + 32, Language.getPhrase('characterCreator.reloadSkills'), function() {
+		spriteDataReloadSkillsButton = new SuffUIButton(20, spriteDataSkillsInputText.y + 32, Language.getPhrase('characterCreator.reloadSkills'), function() {
 			spriteData.skills = spriteDataSkillsInputText.text.split(',').map(item -> item.trim());
 			reloadSkills();
 			generateExplorer();
@@ -454,7 +456,7 @@ class CharacterCreatorState extends UtilitiesBaseMenuState {
 			} else if (sender == metadataAuthorInputText) {
 				metadata.author = metadataAuthorInputText.text;
 			}
-		} else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
+		} else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is SuffUINumericStepper)) {
 			if (sender == spriteDataDefaultFramerateStepper) {
 				spriteData.defaultFramerate = Std.int(spriteDataDefaultFramerateStepper.value);
 			} else if (sender == spriteDataMaxPressureStepper) {
