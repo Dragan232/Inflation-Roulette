@@ -1,5 +1,5 @@
 {
 	"title": "Jukebox Capsule LCD Glyphs (Old)",
-	"description": "Some sprite sheet I made using Python. Initially used a variant of Suffirat called Suffirat Mono, but scrapped in favor of proportional fonts. The text is handled using INDIVIDUALLY SEPARATED sprites now. Gross.",
+	"description": "Some sprite sheet I made using Python. Initially used a variant of Suffirat called Suffirat Mono, but scrapped in favor of proportional fonts.",
 	"artist": "NicklySuffer"
 }

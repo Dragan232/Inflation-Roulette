@@ -10,11 +10,11 @@ class JukeboxRecord extends FlxSpriteGroup {
 		super();
 
 		label = new FlxSprite();
-		label.antialiasing = !Preferences.data.enableForceAliasing;
+		label.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(label);
 
 		base = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/record/base'));
-		base.antialiasing = !Preferences.data.enableForceAliasing;
+		base.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(base);
 
 		this.album = album;

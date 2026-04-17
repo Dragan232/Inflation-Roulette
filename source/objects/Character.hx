@@ -125,7 +125,7 @@ class Character extends FlxSprite {
 		}
 		super(x, y);
 		frames = combinedAtlas;
-		antialiasing = (!Preferences.data.enableForceAliasing) ? !(!spriteJson.antialiasing) : false;
+		antialiasing = (!Preferences.data.enableForcedAliasing) ? !(!spriteJson.antialiasing) : false;
 
 		if (Preferences.data.enableGLSL) {
 			flashingShader = new FlashingShader();

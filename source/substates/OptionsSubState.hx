@@ -3,6 +3,7 @@ package substates;
 import ui.objects.SuffBooleanOption;
 import ui.objects.SuffIconButton;
 import ui.objects.SuffSliderOption;
+import states.PlayState;
 
 class OptionsSubState extends SuffSubState {
 	public static var notInGame:Bool = true;
@@ -105,15 +106,19 @@ class OptionsSubState extends SuffSubState {
 		// GRAPHICS SETTINGS
 		createHeading('visuals');
 
+		createBooleanOption('hideHUD', function(value:Bool) {
+			Preferences.data.hideHUD = value;
+		}, Preferences.data.hideHUD);
+
 		#if desktop
 		createBooleanOption('enableFullscreen', function(value:Bool) {
 			Preferences.data.enableFullscreen = value;
 		}, Preferences.data.enableFullscreen);
 		#end
 
-		createBooleanOption('enableForceAliasing', function(value:Bool) {
-			Preferences.data.enableForceAliasing = value;
-		}, Preferences.data.enableForceAliasing);
+		createBooleanOption('enableForcedAliasing', function(value:Bool) {
+			Preferences.data.enableForcedAliasing = value;
+		}, Preferences.data.enableForcedAliasing);
 
 		createBooleanOption('enableGLSL', function(value:Bool) {
 			Preferences.data.enableGLSL = value;
@@ -183,13 +188,6 @@ class OptionsSubState extends SuffSubState {
 			Preferences.data.useBuiltInCursor = value;
 			FlxG.mouse.useSystemCursor = !value;
 		}, Preferences.data.useBuiltInCursor);
-
-		#if html5
-		createBooleanOption('hideCursor', function(value:Bool) {
-			Preferences.data.hideCursor = value;
-			FlxG.mouse.visible = !value;
-		}, Preferences.data.hideCursor);
-		#end
 
 		createBooleanOption('playCursorSounds', function(value:Bool) {
 			Preferences.data.playCursorSounds = value;
@@ -334,6 +332,8 @@ class OptionsSubState extends SuffSubState {
 		close();
 		if (notInGame) {
 			SuffState.playMusic('mainMenu');
+		} else {
+			PlayState.instance.camHUD.visible = !Preferences.data.hideHUD;
 		}
 	}
 

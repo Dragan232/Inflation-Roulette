@@ -22,8 +22,7 @@ class Language {
 			if (text.startsWith('//') || text == '\n' && text.length <= 0)
 				continue;
 			var splitText:Array<String> = text.split(' = ');
-			if (splitText.length <= 1)
-				continue;
+			if (splitText[1] == null) splitText[1] = '';
 			lePhrases.set(splitText[0], splitText[1].replace('\\n', '\n').replace('\\s', ' '));
 			// For some reason, Haxe does not recognize \n as a newline character when reading from a text file
 			// Also replace \s with whitespace

@@ -51,7 +51,7 @@ class PreloadState extends SuffState {
 		#if desktop
 		preloadTxt.text = Language.getPhrase('preloadMenu.progress.' + loadingTexts[loadingProgress]);
 		#end
-		new FlxTimer().start(#if desktop 0.2 #else 0 #end, function(_) {
+		new FlxTimer().start(#if desktop FlxG.elapsed #else 0 #end, function(_) {
 			switch (loadingProgress) {
 				case 0:
 					CharacterManager.initialize(#if !desktop false #end);
@@ -87,11 +87,30 @@ class PreloadState extends SuffState {
 	}
 
 	function finishLoadingShit() {
+		if (FlxG.save.data.gameStartupCount == null)
+			FlxG.save.data.gameStartupCount = 0;
+		FlxG.save.data.gameStartupCount++;
+		FlxG.save.flush();
 		#if desktop
-		preloadTxt.text = Language.getPhrase('preloadMenu.finished');
-		FlxG.camera.fade(0xFF000000, 1, false, function() {
-			SuffState.switchState(new InitStartupState());
-		});
+		if (FlxG.save.data.gameStartupCount % 12 == 0 || FlxG.keys.pressed.SPACE) {
+			var originalDimensions:Array<Float> = [bg.width, bg.height];
+			bg.loadGraphic(Paths.image('ui/menus/preload/nextUpdateLeakBroTrustMeBroImNotCappingBro'));
+			bg.setGraphicSize(Std.int(originalDimensions[0]), Std.int(originalDimensions[1]));
+			bg.updateHitbox();
+			preloadTxt.visible = false;
+			SuffState.playUISound(Paths.sound('ui/void'));
+			new FlxTimer().start(0.5, function(_) {
+				FlxG.camera.fade(0xFF000000, 0, false);
+				new FlxTimer().start(4.0, function(_) {
+					SuffState.switchState(new InitStartupState());
+				});
+			});
+		} else {
+			preloadTxt.text = Language.getPhrase('preloadMenu.finished');
+			FlxG.camera.fade(0xFF000000, 1, false, function() {
+				SuffState.switchState(new InitStartupState());
+			});
+		}
 		#else
 		SuffState.switchState(new InitStartupState());
 		#end

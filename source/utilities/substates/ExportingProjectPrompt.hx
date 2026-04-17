@@ -85,7 +85,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 		var animData:SpriteProjectAnimData = cast Json.parse(File.getContent(UtilitiesBaseMenuState.loadedPath + '/anims/bannerBlink.json'));
 		bannerKeyframes += animData.keyframes.length;
 
-		var what = newSpriteSheet(4096, 4096);
+		var what = newSpriteSheet(4096, 4096, CharacterCreatorState.spriteData.defaultDimensions[0], CharacterCreatorState.spriteData.defaultDimensions[1]);
 		baseBitmap = what[0];
 		baseXML = what[1];
 		new FlxTimer().start(0.02, function(_) {
@@ -173,11 +173,13 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 		return xml;
 	}
 
-	function newSpriteSheet(width:Int = 4096, height:Int = 4096):Array<Dynamic> {
+	function newSpriteSheet(width:Int = 4096, height:Int = 4096, spriteWidth:Int = 640, spriteHeight:Int = 640):Array<Dynamic> {
 		var bitmap = new BitmapData(width, height, true, 0x00000000);
 		var xml = '<?xml version="1.0" encoding="utf-8"?>\n<TextureAtlas imagePath="$curSpriteSheet.png">\n\t<!-- Created with IRR Character Creator version 1.0.0 -->\n';
+		baseBitmapSpritesLeft = Std.int(width / spriteWidth) * Std.int(height / spriteHeight);
 		return [bitmap, xml];
 	}
+	var baseBitmapSpritesLeft = 36;
 	var baseBitmap:BitmapData;
 	var baseXML:String = '';
 	var basePointer:Point = new Point(0, 0);
@@ -202,7 +204,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 		switch (exportingAnim) {
 			case 'scraps':
 				var pointer:Point = new Point(0, 0);
-				var what = newSpriteSheet(180 * animData.numFrames, 180);
+				var what = newSpriteSheet(180 * animData.numFrames, 180, 180, 180);
 				var base:BitmapData = what[0];
 				for (i in 0...animData.numFrames) {
 					var sprite:BitmapData = BitmapData.fromFile(UtilitiesBaseMenuState.loadedPath + '/sprites/$exportingAnim/$i.png');
@@ -211,7 +213,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 				}
 				exportSpriteSheet(base, null, 'exports/$projectName/images/game/particles/scraps', '$characterID');
 			case 'cardBG':
-				var what = newSpriteSheet(150, 200);
+				var what = newSpriteSheet(150, 200, 150, 200);
 				var base:BitmapData = what[0];
 				var sprite:BitmapData = BitmapData.fromFile(UtilitiesBaseMenuState.loadedPath + '/sprites/$exportingAnim/0.png');
 				base.copyPixels(sprite, sprite.rect, new Point(5, 5));
@@ -220,7 +222,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 				secPointer.x = 5;
 				secPointer.y = 5;
 				var leAnimName:String = 'idle';
-				var what = newSpriteSheet(150 * cardKeyframes, 200);
+				var what = newSpriteSheet(150 * cardKeyframes, 200, 150, 200);
 				secBitmap = what[0];
 				secXML = what[1];
 				for (i in 0...animData.numFrames) {
@@ -246,7 +248,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 				secPointer.x = 0;
 				secPointer.y = 0;
 				var leAnimName:String = 'start';
-				var what = newSpriteSheet(320 * bannerKeyframes, 468);
+				var what = newSpriteSheet(320 * bannerKeyframes, 468, 320, 468);
 				secBitmap = what[0];
 				secXML = what[1];
 				for (i in 0...animData.numFrames) {
@@ -274,10 +276,21 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 					var oldBasePointerX = basePointer.x;
 					var oldBasePointerY = basePointer.y;
 					trace(exportingAnim, i);
+					if (baseBitmapSpritesLeft - animData.keyframes.length < 0) {
+						exportSpriteSheet(baseBitmap, baseXML, 'exports/$projectName/images/game/characters/$characterID', '$curSpriteSheet');
+						trace(exportingAnim, 'new spritesheet!!!');
+						curSpriteSheet++;
+						var what = newSpriteSheet(4096, 4096, CharacterCreatorState.spriteData.defaultDimensions[0], CharacterCreatorState.spriteData.defaultDimensions[1]);
+						baseBitmap = what[0];
+						baseXML = what[1];
+						basePointer.x = 0;
+						basePointer.y = 0;
+					}
 					if (animData.keyframes.contains(i)) {
 						trace(exportingAnim, 'export keyframe');
 						sprite = BitmapData.fromFile(UtilitiesBaseMenuState.loadedPath + '/sprites/$exportingAnim/$i.png');
 						baseBitmap.copyPixels(sprite, sprite.rect, basePointer);
+						baseBitmapSpritesLeft--;
 						basePointer.x += sprite.width;
 						if (basePointer.x > baseBitmap.width - sprite.width) {
 							basePointer.x = 0;
@@ -287,7 +300,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 							exportSpriteSheet(baseBitmap, baseXML, 'exports/$projectName/images/game/characters/$characterID', '$curSpriteSheet');
 							trace(exportingAnim, 'new spritesheet!!!');
 							curSpriteSheet++;
-							var what = newSpriteSheet();
+							var what = newSpriteSheet(4096, 4096, CharacterCreatorState.spriteData.defaultDimensions[0], CharacterCreatorState.spriteData.defaultDimensions[1]);
 							baseBitmap = what[0];
 							baseXML = what[1];
 							basePointer.x = 0;
@@ -309,7 +322,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 		exportedAnims.push(exportingAnim);
 		bar.updateBar();
 		curAnim++;
-		new FlxTimer().start(0.02, function(_) {
+		new FlxTimer().start(FlxG.elapsed, function(_) {
 			export();
 		});
 	}

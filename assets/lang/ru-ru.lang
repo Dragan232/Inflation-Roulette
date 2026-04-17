@@ -62,8 +62,8 @@ option.enableBellyCreaks.name = Скрипы
 option.enableBellyCreaks.description = Игроки начинают проигрывать звук скрипа шарика пока стоят или надуваются.
 option.enableFullscreen.name = Полный Экран
 option.enableFullscreen.description = Говорит само за себя, неужто ты настолько туп?
-option.enableForceAliasing.name = Насильное Сглаживание
-option.enableForceAliasing.description = Насильно включает сглаживание всем спрайтам. Улучшает производительность, но графика может выглядеть хуже.
+option.enableForcedAliasing.name = Насильное Сглаживание
+option.enableForcedAliasing.description = Насильно включает сглаживание всем спрайтам. Улучшает производительность, но графика может выглядеть хуже.
 option.alwaysPlayMainMenuAnims.name = Увлекающее Меню
 option.alwaysPlayMainMenuAnims.description = Всегда проигрывать анимацию запуска главного меню.
 option.showMusicToast.name = Музыкальные Плашки
@@ -84,8 +84,6 @@ option.cameraEffectIntensity.name = Интенсивность Камеры
 option.cameraEffectIntensity.description = Сила тряски экрана и прочих дезориентирующих штук.
 option.useBuiltInCursor.name = Встроенный Курсор
 option.useBuiltInCursor.description = Использовать внутриигровой курсор или ваш системный курсор.
-option.hideCursor.name = Спрятать Курсор
-option.hideCursor.description = Полностью прячет курсор мыши.\nЧтобы включить его обратно можно нажать [G] в любое время.
 option.playCursorSounds.name = Звук Курсора
 option.playCursorSounds.description = Проигрывать звук каждый раз когда вы кликаете.
 option.maxFramerate.name = Максимальное ФПС
@@ -169,7 +167,6 @@ pauseMenu.title = ПАУЗА
 pauseMenu.resume = Продолжить
 pauseMenu.restart = Рестарт
 pauseMenu.options = Настройки
-pauseMenu.exit = Выход
 
 stats.pressure = Давление
 stats.confidence = Уверенность
@@ -218,7 +215,7 @@ debugText.memoryPeak = RAM Peak
 debugText.state = Состояние
 debugText.format = %1: %2
 
-option.enableForceAliasing.name = Принудительное Сглаживание
+option.enableForcedAliasing.name = Принудительное Сглаживание
 option.enableGLSL.name = Шейдеры
 option.enableGLSL.description = Включает GLSL шейдеры для некоторых элементов меню. Отключение этой функции может снизить нагрузку на видеокарты с низкой производительностью.
 
@@ -404,6 +401,7 @@ menu.no = Нет
 menu.ok = Ок
 menu.confirm = Подтвердить
 menu.cancel = Отмена
+menu.exit = Выход
 
 preloadMenu.progress.characters = Загружаем Персонажей...
 preloadMenu.progress.gameplay = Загрузжаем Режимов Игры...

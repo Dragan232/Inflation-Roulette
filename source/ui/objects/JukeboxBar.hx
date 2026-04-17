@@ -25,7 +25,7 @@ class JukeboxBar extends FlxSpriteGroup {
 		this.album = cast Json.parse(Paths.getTextFromFile('data/extras/jukebox/albums/${music.album}.json'));
 
 		back = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/bar/back'));
-		back.antialiasing = !Preferences.data.enableForceAliasing;
+		back.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(back);
 
 		text = new JukeboxBarText(40, 36, music.name);

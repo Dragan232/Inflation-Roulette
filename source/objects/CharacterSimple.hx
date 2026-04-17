@@ -54,7 +54,7 @@ class CharacterSimple extends FlxSprite {
 			combinedAtlas.addAtlas(atlas, false);
 		}
 		frames = combinedAtlas;
-		antialiasing = (!Preferences.data.enableForceAliasing) ? !(!spriteJson.antialiasing) : false;
+		antialiasing = (!Preferences.data.enableForcedAliasing) ? !(!spriteJson.antialiasing) : false;
 
 		var animationsArray = spriteJson.animations;
 		animSoundPaths = new Map<String, Array<String>>();

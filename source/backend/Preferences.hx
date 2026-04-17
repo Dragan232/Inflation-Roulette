@@ -11,14 +11,14 @@ class SaveVariables {
 	public var ignoreEliminatedPlayers:Bool = false;
 	public var enableDebugKeybinds:Bool = false;
 	public var enablePhotosensitiveMode:Bool = false;
-	public var enableForceAliasing:Bool = false;
+	public var enableForcedAliasing:Bool = false;
 	public var alwaysPlayMainMenuAnims:Bool = false;
 	public var cameraSpeed:Float = 0.75;
 	public var cameraEffectIntensity:Float = 1;
 	public var enableLetterbox:Bool = true;
 	public var showMusicToast:Bool = false;
 	public var useBuiltInCursor:Bool = true;
-	public var hideCursor:Bool = false;
+	public var hideHUD:Bool = false;
 	public var musicVolume:Float = 0.25;
 	public var gameSoundVolume:Float = 1;
 	public var uiSoundVolume:Float = 0.5;
@@ -37,18 +37,20 @@ class SaveVariables {
 		'shoot' => [ENTER, Z],
 		'exit' => [ESCAPE, X],
 		'camera' => [BACKSLASH, C],
-		'skill1' => [ONE],
-		'skill2' => [TWO],
-		'skill3' => [THREE],
-		'skill4' => [FOUR],
-		'pause' => [ESCAPE],
-		'up' => [FlxKey.UP, W],
+		'skill1' => [ONE, NUMPADONE],
+		'skill2' => [TWO, NUMPADTWO],
+		'skill3' => [THREE, NUMPADTHREE],
+		'skill4' => [FOUR, FlxKey.NONE],
+		'pause' => [ESCAPE, FlxKey.NONE],
+		'up' => [FlxKey.UP, W, FlxKey.NONE],
 		'left' => [FlxKey.LEFT, A],
 		'down' => [FlxKey.DOWN, S],
 		'right' => [FlxKey.RIGHT, D],
-		'showCursor' => [G],
-		'debug1' => [N],
-		'debug2' => [M]
+		'debug1' => [SLASH, FlxKey.NONE],
+		'debug2' => [PERIOD, FlxKey.NONE],
+		'debug3' => [COMMA, FlxKey.NONE],
+		'debug4' => [M, FlxKey.NONE],
+		'debug5' => [N, FlxKey.NONE]
 	];
 
 	public function new() {
@@ -71,9 +73,12 @@ class Preferences {
 			if (manuallyProcessedKeys.contains(key)) continue;
 			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
 		}
-		FlxG.save.flush();
 
-		trace("Preferences saved!");
+		FlxG.save.bind('controls', Utilities.getSavePath());
+		FlxG.save.data.keybinds = data.keybinds;
+
+		// trace("Preferences saved!");
+		FlxG.save.flush();
 		FlxG.save.bind('game', Utilities.getSavePath());
 	}
 
@@ -116,7 +121,6 @@ class Preferences {
 		FlxG.fullscreen = data.enableFullscreen;
 
 		FlxG.mouse.useSystemCursor = !data.useBuiltInCursor;
-		FlxG.mouse.visible = !data.hideCursor;
 
 		if (data.maxFramerate > FlxG.drawFramerate) {
 			FlxG.updateFramerate = data.maxFramerate;

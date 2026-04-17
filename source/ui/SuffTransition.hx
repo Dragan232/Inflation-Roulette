@@ -234,8 +234,7 @@ class SuffTransition extends SuffSubState {
 	}
 
 	function endLoading() {
-		if (!Preferences.data.hideCursor)
-			FlxG.mouse.visible = true;
+		FlxG.mouse.visible = true;
 		loadingTxt.visible = false;
 	}
 

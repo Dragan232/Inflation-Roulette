@@ -63,7 +63,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.bg.updateHitbox();
 
 		instance.bgOutline.loadGraphic(Utilities.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF));
-		instance.visible = (FlxG.mouse.visible || Preferences.data.hideCursor) && (text.length > 0);
+		instance.visible = (FlxG.mouse.visible) && (text.length > 0);
 		return value;
 	}
 
@@ -75,12 +75,6 @@ class Tooltip extends FlxSpriteGroup {
 		var leMousePos = FlxG.mouse.getScreenPosition(this.camera);
 		instance.x = FlxMath.bound(leMousePos.x + position.x, 0, FlxG.width - instance.bg.width);
 		instance.y = FlxMath.bound(leMousePos.y + position.y, 0, FlxG.height - instance.bg.height);
-
-		if (Preferences.data.hideCursor && Controls.justPressed('showCursor')) {
-			Preferences.data.hideCursor = false;
-			Preferences.savePrefs();
-			Preferences.loadPrefs();
-		}
 
 		super.update(elapsed);
 	}

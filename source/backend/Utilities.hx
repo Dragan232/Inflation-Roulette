@@ -57,6 +57,12 @@ class Utilities {
 		return daList;
 	}
 
+	inline public static function formatKey(key:Null<FlxKey>):String {
+		var keyName = 'NONE';
+		if (key != null) keyName = '$key';
+		return Language.getPhrase('keybind.' + keyName, [], Utilities.capitalize(keyName));
+	}
+
 	/**
 	 * Find the shortest distance between two points (represented by an Array) via Pythagorean theorem.
 	 * 

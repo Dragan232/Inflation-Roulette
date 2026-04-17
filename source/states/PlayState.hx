@@ -89,9 +89,9 @@ class PlayState extends SuffState {
 	var camFollowZoom:Float = 0.8;
 	var isManuallyFocusingStage:Bool = false;
 
-	public static var camGame:FlxCamera;
-	public static var camHUD:FlxCamera;
-	public static var camOther:FlxCamera;
+	public var camGame:FlxCamera;
+	public var camHUD:FlxCamera;
+	public var camOther:FlxCamera;
 
 	// backend shit
 	public static var instance:PlayState;
@@ -114,6 +114,7 @@ class PlayState extends SuffState {
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
+		camHUD.visible = !Preferences.data.hideHUD;
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
@@ -173,7 +174,7 @@ class PlayState extends SuffState {
 		pumpGun.scrollFactor.set(stage.data.gunScrollFactor[0], stage.data.gunScrollFactor[1]);
 		add(pumpGun);
 
-		var showCameramanChance:Float = stage.data.showCameramanChance != null ? stage.data.showCameramanChance : 1 / 128;
+		var showCameramanChance:Float = stage.data.showCameramanChance != null ? stage.data.showCameramanChance : 1 / 16;
 		if (!hasSeenStartCutscene && (FlxG.random.bool(showCameramanChance * 100))) {
 			var cobalt:FlxSprite = new FlxSprite();
 			cobalt.frames = Paths.sparrowAtlas('game/cobalt');
@@ -196,7 +197,7 @@ class PlayState extends SuffState {
 			if (Preferences.data.enableGLSL) {
 				cobalt.shader = new GaussianBlurShader(16, 0.5);
 				cobalt.scale.set(1.1, 1.1);
-				cobalt.antialiasing = !Preferences.data.enableForceAliasing;
+				cobalt.antialiasing = !Preferences.data.enableForcedAliasing;
 			} else
 				cobalt.color = 0xFF808080;
 			cobalt.camera = camOther;
@@ -1210,6 +1211,7 @@ class PlayState extends SuffState {
 
 	function reloadRevealUI() {
 		uiRevealGroup.clear();
+		uiRevealGroup.visible = revealCylinderContents && !getPlayer(currentTurnIndex).cpuControlled;
 		if (!revealCylinderContents) return;
 		var arrow:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/bulletArrow'));
 		for (num => state in cylinderContent) {

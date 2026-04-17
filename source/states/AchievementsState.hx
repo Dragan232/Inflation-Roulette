@@ -3,7 +3,7 @@ package states;
 import backend.typedefs.AchievementData;
 import backend.enums.AchievementTier;
 import flixel.effects.FlxFlicker;
-import substates.ResetAchievementSubState;
+import substates.ResetAchievementPrompt;
 import ui.objects.AchievementPlaque;
 import ui.objects.AchievementProgressBar;
 import ui.objects.SuffIconButton;
@@ -171,7 +171,7 @@ class AchievementsState extends SuffState {
 		var black = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
 		black.scrollFactor.set();
 		add(black);
-		FlxTween.tween(black, {alpha: 0.75}, 1, {
+		FlxTween.tween(black, {alpha: 0.75}, FlxG.sound.music.loopTime * 0.001, {
 			onComplete: function(_) {
 				black.destroy();
 				showUI();
@@ -254,7 +254,7 @@ class AchievementsState extends SuffState {
 			return;
 
 		resetButton.onClick = function() {
-			openSubState(new ResetAchievementSubState(data.id));
+			openSubState(new ResetAchievementPrompt(data.id));
 		};
 
 		resetButton.visible = true;

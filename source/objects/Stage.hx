@@ -125,7 +125,7 @@ class Stage extends FlxBasic {
 			object.velocity.set(objectData.velocity[0], objectData.velocity[1]);
 		if (objectData.angularVelocity != null)
 			object.angularVelocity = objectData.angularVelocity;
-		object.antialiasing = (objectData.antialiasing == true) && !Preferences.data.enableForceAliasing;
+		object.antialiasing = (objectData.antialiasing == true) && !Preferences.data.enableForcedAliasing;
 		var pos = parsePosition(object, objectData.position);
 		object.x = pos[0];
 		object.y = pos[1];

@@ -45,13 +45,13 @@ class LanguageSelectState extends SuffState {
 		bgOverlay = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/bgOverlay'));
 		bgOverlay.alpha = 0.2;
 		bgOverlay.visible = false;
-		bgOverlay.antialiasing = !Preferences.data.enableForceAliasing;
+		bgOverlay.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(bgOverlay);
 
 		ajuniga = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/ajuniga'));
 		ajuniga.screenCenter();
 		originalAjunigaPosition = new FlxPoint(ajuniga.x, ajuniga.y);
-		ajuniga.antialiasing = !Preferences.data.enableForceAliasing;
+		ajuniga.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(ajuniga);
 
 		if (atWarningState) {

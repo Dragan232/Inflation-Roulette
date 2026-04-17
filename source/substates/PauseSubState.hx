@@ -6,6 +6,7 @@ import states.PlayState;
 
 class PauseSubState extends SuffSubState {
 	var menuItems:Array<String> = ['resume', 'restart', 'options', 'exit'];
+	var menuItemLabelKeys:Array<String> = ['pauseMenu.resume', 'pauseMenu.restart', 'pauseMenu.options', 'menu.exit'];
 	var menuButtonGroup:FlxTypedGroup<SuffButton>;
 	var pauseMusic:FlxSound;
 
@@ -45,7 +46,7 @@ class PauseSubState extends SuffSubState {
 		add(menuButtonGroup);
 
 		for (i in 0...menuItems.length) {
-			var button:SuffButton = new SuffButton(0, 0, Language.getPhrase('pauseMenu.${menuItems[i]}'), null, null, 300, 120);
+			var button:SuffButton = new SuffButton(0, 0, Language.getPhrase(menuItemLabelKeys[i]), null, null, 300, 120);
 			if (i % 2 == 1) {
 				button.x = FlxG.width + button.width;
 			} else {

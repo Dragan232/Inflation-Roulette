@@ -1,6 +1,6 @@
 package ui.objects;
 import ui.objects.JukeboxBarText.JukeboxBarTextCharacter;
-import ui.objects.JukeboxBarText.JukeboxBarTextCharacter;
+
 class JukeboxBarText extends FlxSpriteGroup {
 	public function new(x, y, text = '') {
 		super();
@@ -36,7 +36,7 @@ class JukeboxBarText extends FlxSpriteGroup {
 }
 
 class JukeboxBarTextCharacter extends FlxSprite {
-	static final glyphs:String = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	// static final glyphs:String = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 	public static final pixelSize:Int = 4;
 	public static final ascenderHeight:Int = 4;
 	public static final spacing:Int = 1;
@@ -51,9 +51,10 @@ class JukeboxBarTextCharacter extends FlxSprite {
 		//trace(character, glyphs);
 
 		var path = '${character.fastCodeAt(0)}';
-		if (!Paths.fileExists(Paths.getImagePath('ui/menus/extras/jukebox/bar/glyphs/' + path)))
-			path = 'missing';
-		this.loadGraphic(Paths.image('ui/menus/extras/jukebox/bar/glyphs/' + path));
-		this.antialiasing = !Preferences.data.enableForceAliasing;
+		this.frames = Paths.sparrowAtlas('ui/menus/extras/jukebox/bar/glyphs');
+		this.animation.addByPrefix('idle', path + ' ');
+		this.animation.play('idle', true);
+		this.updateHitbox();
+		this.antialiasing = !Preferences.data.enableForcedAliasing;
 	}
 }
