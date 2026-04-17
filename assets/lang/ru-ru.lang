@@ -54,6 +54,40 @@ optionsMenu.heading.debugText = Доп Штучки
 
 option.ignoreEliminatedPlayers.name = Пропуск Выбывших
 option.ignoreEliminatedPlayers.description = Выбывшие игроки не будут проигрывать анимацию на свой ход.
+
+// This option is a button.
+option.controls.name = Управление
+option.controls.description = Настройка клавиш.
+
+option.controls.gameplay = Геймплей
+option.controls.keybind.shoot = Выстрел
+option.controls.keybind.exit = Отмена Действия
+option.controls.keybind.camera = Вклуючить Кинематографичную Камеру
+option.controls.keybind.skill1 = Использовать Скилл 1
+option.controls.keybind.skill2 = Использовать Скилл 2
+option.controls.keybind.skill3 = Использовать Скилл 3
+option.controls.keybind.skill4 = Использовать Скилл 4
+option.controls.keybind.pause = Пауза
+option.controls.ui = Интерфейс
+option.controls.keybind.up = Вверх
+option.controls.keybind.left = Влево
+option.controls.keybind.down = Вниз
+option.controls.keybind.right = Вправо
+option.controls.debug = Дебаг
+option.controls.keybind.debug1 = Дебаг Клавиша #1
+option.controls.keybind.debug2 = Дебаг Клавиша #2
+option.controls.keybind.debug3 = Дебаг Клавиша #3
+option.controls.keybind.debug4 = Дебаг Клавиша #4
+option.controls.keybind.debug5 = Дебаг Клавиша #5
+
+// 1: Keybind Name, 2: Key Orientation (Primary/Secondary)
+option.controls.bindingKey.title = Настройка %1\n%2 Клавиши
+option.controls.bindingKey.bindType.0 = Первичная
+option.controls.bindingKey.bindType.1 = Вторичная
+option.controls.bindingKey.subtitle = Нвжмите Любую Кнопку
+option.controls.bindingKey.bind = Установить
+option.controls.bindingKey.remove = Убрать
+
 option.enablePopping.name = Лопанье
 option.enablePopping.description = При поражении игроки нелетально лопаются.\nЕсли выключено, персонажи будут становится переполненными.\nНачинает работать в следующей игре.
 option.enableBellyGurgles.name = Звуки Живота
@@ -290,6 +324,8 @@ galleryMainMenu.envelope.shibanou.description = Фамилия Нобу; Имя 
 galleryMainMenu.envelope.chester.description = Будучи главным бариста кофейни, он был вынужден играть в эту игру в качестве представителя компании. Из-за плохих академических результатов и обычно нехаризматичного поведения его мечта о процветании и богатстве пока недостижима.\n\nЕго ежедневная работа заключается в приготовлении чрезмерно сладких напитков для похотливых клиентов. Некоторые говорят, что эти напитки обладают «расширяющим» эффектом, что привлекло внимание нескольких инспекторов по безопасности пищевых продуктов. Однако из-за их монополистического влияния в обществе предупреждения со стороны пищевого ведомства ни к чему не привели.\n\nЧестер — персонаж, принадлежащий NicklySuffer, созданный до разработки Рулетка Надуваетльств Перезапуск (Inflation Roulette Reloaded).
 galleryMainMenu.envelope.dev = Арты Создателей
 galleryMainMenu.envelope.dev.description = Коллекция концепт-артов, скетчей и неиспользованных ассетов, что создали разработчики.\n\nзлая           птичка
+galleryMainMenu.envelope.community = Арты Сообщества
+galleryMainMenu.envelope.community.description = Коллекция фанартов от друзей разработчиков и сообщества игры.
 galleryEntryMenu.viewFullImage = Посмотреть Полное Изображение
 
 gameUI.selectTarget = ВЫБЕРИТЕ ЦЕЛЬ

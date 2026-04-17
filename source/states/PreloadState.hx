@@ -87,12 +87,35 @@ class PreloadState extends SuffState {
 	}
 
 	function finishLoadingShit() {
-		if (FlxG.save.data.gameStartupCount == null)
-			FlxG.save.data.gameStartupCount = 0;
-		FlxG.save.data.gameStartupCount++;
-		FlxG.save.flush();
 		#if desktop
-		if (FlxG.save.data.gameStartupCount % 12 == 0 || FlxG.keys.pressed.SPACE) {
+		/*
+		SCRAM YOU FUCKER GET THE FUCK OUTTA HERE
+		
+		LIKE GET THE FUCK OUT OF HERE
+		
+		SERIOUSLY
+		
+		GET OUT
+		
+		NO
+		
+		SHOO
+		
+		OUT
+		
+		ARF ARF ARFARFARFARF
+		
+		NO
+		
+		No
+		
+		no
+		
+		:/
+		
+		ya know what whatever
+		 */
+		if ((Date.now().getHours() == 21 && Date.now().getMinutes() == 21) || FlxG.keys.pressed.SPACE) {
 			var originalDimensions:Array<Float> = [bg.width, bg.height];
 			bg.loadGraphic(Paths.image('ui/menus/preload/nextUpdateLeakBroTrustMeBroImNotCappingBro'));
 			bg.setGraphicSize(Std.int(originalDimensions[0]), Std.int(originalDimensions[1]));
