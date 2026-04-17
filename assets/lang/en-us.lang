@@ -143,7 +143,6 @@ option.controls.keybind.camera = Toggle Cinematic
 option.controls.keybind.skill1 = Use Skill 1
 option.controls.keybind.skill2 = Use Skill 2
 option.controls.keybind.skill3 = Use Skill 3
-option.controls.keybind.skill4 = Use Skill 4
 option.controls.keybind.pause = Pause Game
 option.controls.ui = UI
 option.controls.keybind.up = Up
@@ -151,11 +150,8 @@ option.controls.keybind.left = Left
 option.controls.keybind.down = Down
 option.controls.keybind.right = Right
 option.controls.debug = Debug
-option.controls.keybind.debug1 = Debug Key #1
-option.controls.keybind.debug2 = Debug Key #2
-option.controls.keybind.debug3 = Debug Key #3
-option.controls.keybind.debug4 = Debug Key #4
-option.controls.keybind.debug5 = Debug Key #5
+option.controls.keybind.debug1 = Debug Key 1
+option.controls.keybind.debug2 = Debug Key 2
 
 // 1: Keybind Name, 2: Key Orientation (Primary/Secondary)
 option.controls.bindingKey.title = Configuring %1\n%2 Key

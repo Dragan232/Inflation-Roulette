@@ -98,7 +98,7 @@ class PreloadState extends SuffState {
 			bg.setGraphicSize(Std.int(originalDimensions[0]), Std.int(originalDimensions[1]));
 			bg.updateHitbox();
 			preloadTxt.visible = false;
-			SuffState.playUISound(Paths.sound('ui/void'));
+			SuffState.playUISound(Paths.sound('void'));
 			new FlxTimer().start(0.5, function(_) {
 				FlxG.camera.fade(0xFF000000, 0, false);
 				new FlxTimer().start(4.0, function(_) {
