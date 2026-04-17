@@ -115,7 +115,7 @@ class PreloadState extends SuffState {
 		
 		ya know what whatever
 		 */
-		if ((Date.now().getHours() == 21 && Date.now().getMinutes() == 21) || FlxG.keys.pressed.SPACE) {
+		if ((Date.now().getHours() == 21 && Date.now().getMinutes() == 21)) {
 			var originalDimensions:Array<Float> = [bg.width, bg.height];
 			bg.loadGraphic(Paths.image('ui/menus/preload/nextUpdateLeakBroTrustMeBroImNotCappingBro'));
 			bg.setGraphicSize(Std.int(originalDimensions[0]), Std.int(originalDimensions[1]));
