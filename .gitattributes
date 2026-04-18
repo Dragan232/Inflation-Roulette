@@ -1,3 +1,12 @@
 # Auto detect text files and perform LF normalization
-* text=auto
-* text eol=lf
+*.json eol=lf
+*.hx eol=lf
+*.txt eol=lf
+
+*.png binary
+*.mp3 binary
+*.ogg binary
+*.flac binary
+*.zip binary
+*.7z binary
+*.ttf binary
