@@ -181,15 +181,24 @@ class FileReferenceCustom extends FileReference {
 		#if desktop
 		var filter = null;
 
+		// windows: `*.png;tga`
+		// linux: `*.png *.tga`
 		if (typeFilter != null) {
 			var filters = [];
 
 			for (type in typeFilter) {
-				filters.push(StringTools.replace(StringTools.replace(type.extension, "*.", ""), ';', ","));
+				var extension = type.extension.replace(';', ",");
+				#if windows
+				extension = extension.replace("*.", "");
+				#end
+				filters.push(extension);
 			}
 
 			filter = filters.join(#if windows ';' #else ' ' #end);
 		}
+		if (filter.startsWith('*.'))
+			filter = filter.substr(2, filter.length - 2);
+		trace(filter);
 
 		var openFileDialog = new FileDialog();
 		openFileDialog.onCancel.add(openFileDialog_onCancel);
