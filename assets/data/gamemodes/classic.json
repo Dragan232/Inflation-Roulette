@@ -1,0 +1,7 @@
+{
+	"color": "#40C0C0",
+
+	"cylinderTrueRandomness": true,
+	"skillsFixedPool": ["sabotage"],
+	"skillsCostMultiplier": 0
+}

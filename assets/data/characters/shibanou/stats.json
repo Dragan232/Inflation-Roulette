@@ -1,0 +1,16 @@
+{
+	"cardDisplayedKey": "character.shibanou.name",
+	"maxPressure": 4,
+	"maxConfidence": 7,
+	"modifiers": {},
+	"skills": [
+		{
+			"id": "sabotage",
+			"cost": 4
+		},
+		{
+			"id": "amnesia",
+			"cost": 3
+		}
+	]
+}

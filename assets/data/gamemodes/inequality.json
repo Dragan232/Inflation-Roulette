@@ -1,0 +1,10 @@
+{
+	"color": "#FF2080",
+
+	"skillsRandomPool": ["all"],
+	"skillsCostMultiplier": 0,
+	"skillsReplenishCountOnLive": 1,
+	"skillsExhaustible": true,
+
+	"scoreSkillBonusRequirement": 10
+}

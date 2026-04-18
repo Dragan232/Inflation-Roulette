@@ -1,0 +1,8 @@
+reloaded
+quickPlay
+inequality
+classic
+1v1
+sixPlayers
+charge
+fiftyFifty

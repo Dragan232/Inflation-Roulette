@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="passerby.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="clay0000" x="0" y="0" width="720" height="560"/>
+	<SubTexture name="estevan0000" x="720" y="0" width="720" height="560"/>
+	<SubTexture name="hanz0000" x="0" y="560" width="720" height="560"/>
+	<SubTexture name="toxic0000" x="720" y="560" width="720" height="560"/>
+	<SubTexture name="zoid0000" x="0" y="1120" width="720" height="560"/>
+</TextureAtlas>
