@@ -29,7 +29,7 @@ class SpriteBrowseImagePrompt extends UtilitiesBaseMenuSubState {
 		loadFileButton = new SuffButton(0, 0, Language.getPhrase('utilitiesMenu.browseImage'), 500, 100);
 		loadFileButton.screenCenter();
 		loadFileButton.onClick = function() {
-			fileDialog.open(null, Language.getPhrase('utilitiesMenu.browseImage'), [new FileFilter('PNG', 'png'), new FileFilter('TGA', 'tga')], function () {
+			fileDialog.open(null, Language.getPhrase('utilitiesMenu.browseImage'), [new FileFilter('PNG', 'png')], function () {
 				try {
 					var bitmapData:BitmapData = BitmapData.fromFile(fileDialog.path);
 					openSubState(new EditImagePrompt(bitmapData, width, height, template));
