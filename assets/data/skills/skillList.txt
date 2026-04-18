@@ -1,0 +1,8 @@
+reload
+reveal
+sabotage
+assault
+pressurize
+polarize
+deflate
+amnesia

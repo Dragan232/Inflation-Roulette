@@ -1,0 +1,35 @@
+{
+	"stageCameraZoom": 0.8,
+	"characterCameraZoom": 1.2,
+	"cameraBounds": [-640, -240, 2560, 1080],
+	"backgroundObjects": [
+		{
+			"id": "bg",
+			"graphic": "bg",
+			"position": ["c", "c"],
+			"scrollFactor": [0, 0]
+		},
+		{
+			"id": "tableShadow",
+			"graphic": "table",
+			"position": ["c", "600"],
+			"scrollFactor": [1.1, 1],
+			"color": "#000000",
+			"blend": "MULTIPLY",
+			"alpha": 0.125
+		}
+	],
+	"characterX": [217, 1062],
+	"characterY": 690,
+	"gunY": 520,
+	"gunScrollFactor": [1.25, 1.15],
+	"tableObjects": [
+		{
+			"id": "table",
+			"graphic": "table",
+			"position": ["c", "500"],
+			"scrollFactor": [1.2, 1.1]
+		}
+	],
+	"foregroundObjects": []
+}

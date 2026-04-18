@@ -1,0 +1,15 @@
+{
+	"titleTranslationKey": "galleryMainMenu.envelope.community",
+	"hasCharacter": false,
+	"artwork": [
+		"communityRender",
+		"gooberDoll",
+		"imHighOnCrack",
+		"thisGunLookFire",
+		"chesterAndGoober"
+	],
+	"color": "#E00080",
+	"quotes": [
+		":sad_gold:"
+	]
+}

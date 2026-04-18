@@ -1,0 +1,20 @@
+{
+	"titleTranslationKey": "character.chester.name",
+	"hasCharacter": true,
+	"artwork": [
+		"chesterRender",
+		"chesterSticker",
+		"chesterReference",
+		"chesterOriginalAppearance",
+		"chesterUniform",
+		"shitfucksReference",
+		"shitfucksReferenceEmpty"
+	],
+	"color": "#00BFBF",
+	"quotes": [
+		"SHITFUCKS",
+		"WAGE SLAVE",
+		"COFFEE",
+		"SHARK?"
+	]
+}

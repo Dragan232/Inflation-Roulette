@@ -1,0 +1,14 @@
+mainMenu
+cutscene
+game
+characterSelect
+characterSelectEnd
+win
+options
+credits
+pause
+pauseHD
+language
+achievements
+resultsStart
+resultsLoop

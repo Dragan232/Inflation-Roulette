@@ -1,0 +1,283 @@
+{
+	"shared": [
+		"Made by NicklySuffer!",
+		"Courtesy of NicklySuffer!",
+		"Endorsed by Snowyboi!",
+		"Eighteen-plus!"
+	],
+	"unique": [
+		{
+			"useLunarCalender": false,
+			"start": "12-01",
+			"end": "12-27",
+			"id": "christmas",
+			"name": "Christmas",
+			"colors": ["#00C000", "#FF2030"],
+			"splashes": [
+				"Happy Holidays!",
+				"Merry Christmas!",
+				"Happy Hanukkah!",
+				"Don't drink too much!",
+				"ho ho holy shit",
+				"The defrosting is real",
+				"Don't forget about Jesus!",
+				"he sees you when you're sleeping",
+				"he knows when you're awake",
+				"Indulge yourself!",
+				"Slient night, holy night",
+				"You're getting coal this year"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "10-01",
+			"end": "10-31",
+			"id": "halloween",
+			"name": "Halloween",
+			"colors": ["#FF8000", "#400080"],
+			"splashes": [
+				"Happy Halloween!",
+				"Trick or treat!",
+				"Ghosts everywhere",
+				"OOGA BOOGA",
+				"It is Spooky Month!",
+				"Spooktober time",
+				"Spooky scary skeletons",
+				"Shit your pants!",
+				":gold_sad:"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "12-29",
+			"end": "12-31",
+			"id": "newyearseve",
+			"name": "New Year's Eve",
+			"colors": ["#FF00FF", "#0000FF"],
+			"splashes": [
+				"Happy New Year's Eve!",
+				"Get ready for the new year!",
+				"Party tonight!",
+				"Time is running out.",
+				"The sun is leaking.",
+				"Make your resolutions!"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "01-01",
+			"end": "01-03",
+			"id": "newyear",
+			"name": "New Year",
+			"colors": ["#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"],
+			"splashes": [
+				"Happy New Year!",
+				"Ignore your resolutions!",
+				"Overdose on alcohol!",
+				"Don't drink and drive!",
+				"Hit the gym later!"
+			]
+		},
+		{
+			"useLunarCalender": true,
+			"start": "12-24",
+			"end": "01-08",
+			"id": "lunarNewYear",
+			"name": "Lunar New Year",
+			"colors": ["#FF0000", "#FFFF00"],
+			"splashes": [
+				"Happy Lunar New Year!",
+				"Wishing you prosperity!",
+				"Gong xi fa cai!",
+				"give me red packets now",
+				"Visit your relatives!",
+				"Get judged by elders!",
+				"learn chinese i dare you"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "06-08",
+			"end": "06-08",
+			"id": "1984",
+			"name": "Nineteen Eighty-Four Anniversary",
+			"colors": ["#C00000", "#404040"],
+			"splashes": [
+				"Happy 1984!",
+				"Big brother is watching you!",
+				"War is peace!",
+				"Freedom is slavery!",
+				"Ignorance is strength!",
+				"Thoughtcrime is death!",
+				"Who controls the past controls the future!",
+				"Who controls the present controls the past!",
+				"2 + 2 = 5!",
+				"SWINE SWINE SWINE",
+				"[Removed by Minitrue]",
+				"Doubleplusgood day, Doubleplusungood game",
+				"DOWN WITH BIG BROTHER",
+				"Orwell was right.",
+				"GO TO ROOM 101",
+				"Down with Goldstein!",
+				"Oldthinkers unbellyful Ingsoc!"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "06-01",
+			"end": "06-30",
+			"id": "pride",
+			"name": "Pride Month",
+			"colors": ["#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"],
+			"splashes": [
+				"Happy Pride Month!",
+				"Love is love!",
+				"Be yourself!",
+				"Supports LGBTQ+!",
+				"You are valid!",
+				"Lesbian rights!",
+				"Gay rights!",
+				"Bisexual rights!",
+				"Trans rights!"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "02-14",
+			"end": "02-14",
+			"name": "Valentine's Day",
+			"id": "valentines",
+			"colors": ["#FF00FF", "#FFFFFF"],
+			"splashes": [
+				"Happy Valentine's Day!",
+				"Love is in the air!",
+				"Roses are red!",
+				"Violets are blue!",
+				"xoxo",
+				"<3",
+				"Love yourself!"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "07-01",
+			"end": "07-01",
+			"id": "hk",
+			"name": "HK Establishment Day",
+			"colors": ["#FF0000", "#FFFFFF"],
+			"splashes": [
+				"Happy Hong Kong Establishment Day!",
+				"Celebrate HK!",
+				"Diu lei lo mo!"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "07-04",
+			"end": "07-04",
+			"id": "independence",
+			"name": "USA Independence Day",
+			"colors": ["#FF0020", "#FFFFFF", "#0020FF"],
+			"splashes": [
+				"Happy Independence Day!",
+				"Celebrate freedom!",
+				"Fireworks!",
+				"Glory to the Land of McDonald's!",
+				"Second amendment!"
+			]
+		},
+		{
+			"useLunarCalender": true,
+			"start": "08-10",
+			"end": "08-16",
+			"id": "midautumnfestival",
+			"name": "Mid-Autumn Festival",
+			"colors": ["#0000A0", "#FFFF00"],
+			"splashes": [
+				"Happy Mid-Autumn Festival!",
+				"Happy Mooncake Festival!",
+				"Happy Moon Festival!",
+				"Eat lantern; play mooncake",
+				"Unite with your family!",
+				"Go outside and hang out!",
+				"Drink elixir of immortality and fly away!",
+				"The moon is pregnant they say"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "05-15",
+			"end": "05-15",
+			"id": "nicklysufferBDay",
+			"name": "NicklySuffer's Birthday",
+			"colors": ["#F9FCFF", "#79797F", "#3D3C3F", "#79797F"],
+			"splashes": [
+				"mom it's my birthday today",
+				"it's my birthday today",
+				"plz give me money",
+				"-1 year for my lifetime",
+				"this is so :gold_sad:",
+				"<3 the ajuniga corporation",
+				"don't goon; play tf2 instead",
+				"im in your walls",
+				".",
+				"<:("
+			]
+		}
+	],
+	"fallback": [
+		"Nicholas you waste of life stop playing my game",
+		"Adrian ya blender monkey lookin' ass stop playing my game",
+		"John you lardius maximus stop playing my game",
+		"Do not play this in public!",
+		"Lock your doors before playing!",
+		"Repent your sins after playing!",
+		"Original music!",
+		"Configurable keybinds!",
+		"Modding tools!",
+		"Character Creator!",
+		"Stages!",
+		"Results screen!",
+		"Achievements!",
+		"Multilingual!",
+		"Look at our Gallery!",
+		"Check out our Jukebox!",
+		"Grr at the cameraman!",
+		"Read our documentation!",
+		"OpenFL!",
+		"HaxeFlixel!",
+		"Compiled by Lime!",
+		"Written in Haxe!",
+		"HTML!",
+		"Achievement icons drawn by Globe-Freak!",
+		"Gallery stickers drawn by EchoBloom!",
+		"Linux port by changedinflation.de!",
+		"Macintosh port coming soon, I think",
+		"Android port coming soon, I think",
+		"Also try Inflation Roulette Expanded!",
+		"Also try The Dealer's Choice!",
+		"Also try the Original!",
+		"Absolutely zaza-free!",
+		"Cancer-inducing!",
+		"Don't play at 9:21 PM!",
+		"Consumes more memory than Chrome!",
+		"Structured horrendously!",
+		"No optimizations whatsoever!",
+		"Pretty valid!",
+		"Want to be in the game? MAKE A MOD STUPID",
+		"Approved by nobody!",
+		"FDA disapproved!",
+		"Unsafe for consumption!",
+		"Runs effectively without GPU!",
+		"Spaghetti code guaranteed!",
+		"Console port coming never!",
+		"All proceeds go to CCP!",
+		"Gamble your soul away!",
+		"May cause nausea!",
+		"May cause feelings of rage!",
+		"May cause bouts of cringe!",
+		"Not fun for the whole family!",
+		"Happiness not guaranteed!",
+		"Reportedly won't run in Belarus"
+	]
+}
