@@ -9,7 +9,13 @@
 		{
 			"name": "flixel-addons",
 			"type": "haxelib",
-			"version": "3.3.2",
+			"version": "4.0.1",
+			"dir": null
+		},
+		{
+			"name": "flixel-tools",
+			"type": "haxelib",
+			"version": "1.5.1",
 			"dir": null
 		},
 		{
@@ -22,6 +28,18 @@
 			"name": "hxcpp-debug-server",
 			"type": "haxelib",
 			"version": "1.2.4",
+			"dir": null
+		},
+		{
+			"name": "lime",
+			"type": "haxelib",
+			"version": "8.3.0",
+			"dir": null
+		},
+		{
+			"name": "openfl",
+			"type": "haxelib",
+			"version": "9.5.0",
 			"dir": null
 		},
 		{
