@@ -190,6 +190,8 @@ class FileReferenceCustom extends FileReference {
 				var extension = type.extension.replace(';', ",");
 				#if windows
 				extension = extension.replace("*.", "");
+				#else
+				extension = '*.' + extension;
 				#end
 				filters.push(extension);
 			}
