@@ -4,7 +4,8 @@ import backend.Addons;
 import backend.GameplayManager;
 import backend.CharacterManager;
 import backend.SplashManager;
-import openfl.Lib;
+import openfl.utils.Assets.Assets.getBitmapData;
+import openfl.utils.Assets;
 
 class PreloadState extends SuffState {
 	#if desktop
@@ -21,10 +22,6 @@ class PreloadState extends SuffState {
 		Preferences.loadPrefs();
 		#if _ALLOW_ADDONS
 		Addons.pushGlobalAddons();
-		#end
-		#if linux
-		var icon = Paths.image('iconLinux');
-		FlxG.stage.window.setIcon(icon.bitmap.image);
 		#end
 		Language.initialize();
 

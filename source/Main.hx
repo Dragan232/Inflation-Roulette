@@ -15,6 +15,15 @@ import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
+import openfl.utils.Assets;
+
+#end
+
+#if linux
+import openfl.utils.Assets;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
 #end
 
 class Main extends Sprite {
@@ -56,6 +65,9 @@ class Main extends Sprite {
 	}
 
 	private function setupGame():Void {
+		#if linux
+		FlxG.stage.window.setIcon(Assets.getBitmapData('iconLinux').image);
+		#end
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 

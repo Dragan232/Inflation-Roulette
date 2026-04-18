@@ -185,7 +185,7 @@ class FileReferenceCustom extends FileReference {
 			var filters = [];
 
 			for (type in typeFilter) {
-				filters.push(StringTools.replace(StringTools.replace(type.extension, "*.", ""), ";", ","));
+				filters.push(StringTools.replace(StringTools.replace(type.extension, "*.", ""), #if windows ';' #else ' ' #end, ","));
 			}
 
 			filter = filters.join(";");
