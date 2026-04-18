@@ -9,8 +9,14 @@ class UtilitiesBaseMenuState extends SuffState {
 	public var bg:FlxBackdrop;
 	public var exitButton:SuffIconButton;
 	var musicList:Array<String> = [];
-	public static var loadedPath:String = null;
+	public static var loadedPath(default, set):String = null;
 	public var escapeToLeave:Bool = true;
+	
+	private static function set_loadedPath(value:String):String {
+		loadedPath = value.replace('\\', '/');
+		return value;
+	}
+	
 	override function create() {
 		musicList = Utilities.textFileToArray('data/utilities/musicList.txt');
 

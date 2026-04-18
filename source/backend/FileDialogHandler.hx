@@ -194,7 +194,11 @@ class FileReferenceCustom extends FileReference {
 		var openFileDialog = new FileDialog();
 		openFileDialog.onCancel.add(openFileDialog_onCancel);
 		openFileDialog.onSelect.add(openFileDialog_onSelect);
+		#if windows
 		var exeDir:String = defaultName == null ? Utilities.getExecutablePath() : defaultName.replace('/', '\\');
+		#else
+		var exeDir:String = defaultName == null ? Utilities.getExecutablePath() : defaultName.replace('\\', '/');
+		#end
 		trace(exeDir);
 		openFileDialog.browse(browseType, filter, exeDir, title);
 		return true;

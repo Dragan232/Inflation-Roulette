@@ -44,7 +44,6 @@ class Main extends Sprite {
 
 	public static function main():Void {
 		Lib.current.addChild(new Main());
-
 	}
 
 	public function new() {
@@ -66,7 +65,7 @@ class Main extends Sprite {
 
 	private function setupGame():Void {
 		#if linux
-		stage.window.setIcon (Assets.getBitmapData("linuxicon").image);
+		stage.window.setIcon(Paths.image('iconLinux').bitmap.image);
 		#end
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
@@ -81,7 +80,7 @@ class Main extends Sprite {
 
 		FlxTransitionableState.skipNextTransOut = true;
 
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate,
+		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate,
 			game.skipSplash, game.startFullscreen));
 
 		#if !mobile
