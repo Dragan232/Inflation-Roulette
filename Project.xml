@@ -86,7 +86,7 @@
 
 	<haxelib name="tjson" />
 
-	<haxelib name="lime" version="8.3.0" />
+	<haxelib name="lime" version="8.3.1" />
 	<haxelib name="openfl" version="9.5.0" />
 
 	<!-- Enables a terminal log prompt on debug builds -->

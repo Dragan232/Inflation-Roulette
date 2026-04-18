@@ -185,10 +185,10 @@ class FileReferenceCustom extends FileReference {
 			var filters = [];
 
 			for (type in typeFilter) {
-				filters.push(StringTools.replace(StringTools.replace(type.extension, "*.", ""), #if windows ';' #else ' ' #end, ","));
+				filters.push(StringTools.replace(StringTools.replace(type.extension, "*.", ""), ';', ","));
 			}
 
-			filter = filters.join(";");
+			filter = filters.join(#if windows ';' #else ' ' #end);
 		}
 
 		var openFileDialog = new FileDialog();
