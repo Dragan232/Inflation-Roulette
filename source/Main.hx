@@ -18,6 +18,13 @@ import sys.io.File;
 
 #end
 
+#if linux
+import openfl.utils.Assets;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
+#end
+
 class Main extends Sprite {
 	var game = {
 		width: 1280, // WINDOW width
@@ -37,6 +44,7 @@ class Main extends Sprite {
 
 	public static function main():Void {
 		Lib.current.addChild(new Main());
+
 	}
 
 	public function new() {
@@ -57,6 +65,9 @@ class Main extends Sprite {
 	}
 
 	private function setupGame():Void {
+		#if linux
+		stage.window.setIcon (Assets.getBitmapData("linuxicon").image);
+		#end
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
