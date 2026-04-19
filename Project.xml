@@ -43,7 +43,7 @@
 
 	<section if="_OFFICIAL_BUILD">
 		<define name="_CHECK_FOR_UPDATES"/>
-		<define name="_ALLOW_ADDONS" if="desktop" />
+		<define name="_ALLOW_ADDONS" unless="html5" />
 		<define name="_ALLOW_UTILITIES" if="desktop" />
 		<define name="_ALLOW_EASTER_EGGS" if="desktop" />
 	</section>

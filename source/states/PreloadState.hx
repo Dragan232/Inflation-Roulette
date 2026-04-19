@@ -8,7 +8,7 @@ import openfl.utils.Assets.Assets.getBitmapData;
 import openfl.utils.Assets;
 
 class PreloadState extends SuffState {
-	#if desktop
+	#if !html5
 	var bg:FlxSprite;
 	var preloadTxt:FlxText;
 	#end
@@ -25,7 +25,7 @@ class PreloadState extends SuffState {
 		#end
 		Language.initialize();
 
-		#if desktop
+		#if !html5
 		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/preload/loadingArt'));
 		bg.alpha = 0;
 		preloadTxt = new FlxText(0, 0, FlxG.width, '', 32);
@@ -50,13 +50,13 @@ class PreloadState extends SuffState {
 
 	function loadShit() {
 		loadingProgress++;
-		#if desktop
+		#if !html5
 		preloadTxt.text = Language.getPhrase('preloadMenu.progress.' + loadingTexts[loadingProgress]);
 		#end
-		new FlxTimer().start(#if desktop FlxG.elapsed #else 0 #end, function(_) {
+		new FlxTimer().start(#if !html5 FlxG.elapsed #else 0 #end, function(_) {
 			switch (loadingProgress) {
 				case 0:
-					CharacterManager.initialize(#if !desktop false #end);
+					CharacterManager.initialize(#if html false #end);
 				case 1:
 					GameplayManager.initialize();
 				case 2:
@@ -75,7 +75,7 @@ class PreloadState extends SuffState {
 					Tooltip.initialize();
 				case 6:
 					CustomCursorHandler.initialize();
-					#if desktop
+					#if !html5
 					FlxG.mouse.visible = true;
 					#end
 				case 7:
@@ -89,7 +89,7 @@ class PreloadState extends SuffState {
 	}
 
 	function finishLoadingShit() {
-		#if desktop
+		#if !html5
 		/*
 		SCRAM YOU FUCKER GET THE FUCK OUTTA HERE
 		

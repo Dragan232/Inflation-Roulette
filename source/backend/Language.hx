@@ -27,6 +27,7 @@ class Language {
 			// For some reason, Haxe does not recognize \n as a newline character when reading from a text file
 			// Also replace \s with whitespace
 		}
+		trace(lePhrases);
 		return lePhrases;
 	}
 

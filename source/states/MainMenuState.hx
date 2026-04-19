@@ -86,7 +86,7 @@ class MainMenuState extends SuffState {
 		add(grid);
 
 		overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
-		overlay.x = -overlay.width / 2 - 40;
+		overlay.x = -FlxG.width / 2 - 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF105060;
 		overlay.alpha = 0.75;
@@ -312,6 +312,8 @@ class MainMenuState extends SuffState {
 			#if _ALLOW_ADDONS
 			case 'addons':
 				SuffState.switchState(new AddonsMenuState());
+			#end
+			#if _ALLOW_UTILITIES
 			case 'utilities':
 				SuffState.switchState(new UtilitiesMainMenuState());
 			#end

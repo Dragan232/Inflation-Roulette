@@ -20,7 +20,7 @@ import flixel.FlxG;
 
 class WebPreloadState extends FlxBasePreloader {
 	public function new(MinDisplayTime:Float = 0, ?AllowedURLs:Array<String>) {
-		#if !desktop
+		#if html5
 		super(3, AllowedURLs);
 		#else
 		super(MinDisplayTime, AllowedURLs);
