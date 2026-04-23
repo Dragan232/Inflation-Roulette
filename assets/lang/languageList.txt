@@ -1,2 +1,3 @@
 ru-ru
 zh-hk
+ca-ad
