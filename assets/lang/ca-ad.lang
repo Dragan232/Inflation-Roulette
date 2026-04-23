@@ -1,0 +1,595 @@
+// Translation File
+// Language: Catalan
+
+// Comments are prefixed with two slashes (//) before each LINE, and will not be recognized by the game.
+// Comments are reserved for translation notes, either to clarify context or give instructions.
+// There's no need to translate comments.
+
+// Empty lines will also be ignored as well.
+
+// For the majority of the text in the game UI, a technical tone is used.
+// Unless specified otherwise, most lengthy prompts uses a witty/humorous tone.
+// Some jokes may be regional and lose its punchline. In this case, try come up with a similar joke
+// that works in your country's region. If all else fails, just make an entirely different joke.
+
+// In all cases, try your best to capture the original tone of the locale strings.
+// But if the language you're translating is inherently unserious (e.g. LOLCAT, Pirate Speak), ehh just get the message across.
+// Ultimately, the message that came across should remain unchanged to avoid any confusion.
+
+// For names of people and places, they should remain untranslated.
+// If your language uses another script other than Latin, make sure they phonetically
+// sound similar to its English counterpart.
+// In a nutshell, transliterate names.
+
+// Valid Escape Sequences:
+// \n: New line
+// \s: Whitespace
+// The positions of escape sequences in-between sentences should be left AS IS.
+
+game.title = Ruleta d'Inflament: Recarregant
+game.titleShort = Ruleta d'Inflament
+game.acronym = RIR
+
+// Version Formatting
+// For example, if the version is 2.3.1 in an Linux environment,
+// it will be formatted in the following way in the bottom info text of the Main Menu:
+
+// Inflation Roulette: Reloaded
+// Patch of Creativity (Pitstop 3 Amendment 1)
+// Version 2.3.1
+// Linux Build
+
+game.version.numeral.format = Versió %1
+game.version.numeralModded.format = Versió modificada %1
+// yeah we dont have a pitstop metaphor, hopefully this works
+game.version.name.minor.format = Taverna %1
+game.version.name.hotfix.format = Correcció %1
+// %1 is the platform in which the executable is dedicated.
+// For example, if the game is on Windows, "Windows Build" will be displayed.
+// Note that platform names will remain untranslated.
+game.build.format = Compilació de %1
+
+game.version.name.major.0 = En desenvolupament
+// Version 1: Initial Release
+game.version.name.major.1 = Llançament inicial
+// Version 2: Added Achievements, Modding Tools, More Characters, Gallery & Jukebox and Results Screen
+// The Version Name has two interpretations. One being it being a update that introduces creative-related content (e.g. Modding Tools, Extras).
+// Another way to interpret this is the update being a piece of cloth, which is usually associated with creativity, suiting the update content.
+// If applicable, try to come up with some clever word-play or multi-interpreting phrases.
+game.version.name.major.2 = Pegat de Creativitat
+// Yes. I'm using Greek letters for stylistic purposes (even tho it looks kinda offensive lmao)
+game.version.name.state.a = Alfα pública %1
+game.version.name.state.b = βeta pública %1
+game.version.name.state.c = Candidat a publicació %1
+
+// These are the button texts in the Main Menu.
+mainMenu.play = Juga
+mainMenu.achievements = Assoliments
+mainMenu.options = Opcions
+mainMenu.language = Idioma
+mainMenu.addons = Complements
+// Utilities means Modding Utilities
+mainMenu.utilities = Utilitats
+mainMenu.extras = Extres
+mainMenu.donate = Dona
+
+// Tooltips for buttons in the Main Menu.
+mainMenu.donate.tooltip = Teves generoses donacions ajuden a donar suport a desenvolupament d'aquest joc!
+mainMenu.donate.tooltip.disabled = Actualment, donacions estan desactivades a causa de circumstàncies de desenvolupador.\nSi vols donar suport a aquest joc, comparteix-lo amb altres!
+
+// When clicking on the Main Menu icon, a tally counter will be incremented. Get 10000 results in an achievement.
+mainMenu.dongs = Has acumulat:\n%1 dongs
+mainMenu.dongs.comment.10 = d'acord pots deixar de far aixo
+mainMenu.dongs.comment.20 = no tens res millor a fer
+mainMenu.dongs.comment.50 = ves-te'n ara, juga al joc estupid
+mainMenu.dongs.comment.100 = tio estas be? estas boig?
+mainMenu.dongs.comment.200 = dos-cents tio. trobar feina o alguna cosa
+mainMenu.dongs.comment.300 = saps, hi ha una persona que va fer aixo
+mainMenu.dongs.comment.320 = escrivint el codi, depurant com un dimoni
+mainMenu.dongs.comment.340 = acuradament dibuixant tots els personatges
+mainMenu.dongs.comment.360 = dissenyant la iu estupida
+mainMenu.dongs.comment.380 = ... m'estas escoltant
+mainMenu.dongs.comment.400 = deixa de perdent teua energia
+mainMenu.dongs.comment.500 = d'acord, prou, com, seriosament
+mainMenu.dongs.comment.600 = soci només clica “juga” no es tan dificil
+mainMenu.dongs.comment.700 = posa teu ratoli alla, juca al joc estupid
+mainMenu.dongs.comment.800 = es tan dificil jugar al joc estupid
+mainMenu.dongs.comment.900 = saps que ja no et parlare mes
+mainMenu.dongs.comment.1000 = ...encara clicant sobre aixo?
+mainMenu.dongs.comment.1100 = saps que aixo no et porta, oi
+mainMenu.dongs.comment.1200 = deixa de perdent teu temps, no ho recuperaras
+mainMenu.dongs.comment.1300 = saps que aquest joc registra teva latitud i longitud exactes oi
+mainMenu.dongs.comment.1400 = si no t'atures, teva ubicacio exacts s'enviara a nostres servidos
+mainMenu.dongs.comment.1500 = els devs estan vigilant teva ubicacio actualment
+mainMenu.dongs.comment.2000 = oh deu meu no et atures
+mainMenu.dongs.comment.3000 = nomes estas avorrit oi
+mainMenu.dongs.comment.5000 = als 10.000 dongs, dades desades s'esborraran i el joc s'esborrara sol
+mainMenu.dongs.comment.10000 = d'acord doncs aqui tens teu assoliment. ara ves-te'n a fer punyetes.
+
+extrasMenu.title = CONTINGUT EXTRA
+extrasMenu.gallery = Galeria
+extrasMenu.jukebox = Tocadiscs
+
+debugText.framerate = FPS
+debugText.memory = RAM
+debugText.memoryPeak = Pic de RAM
+debugText.state = Estat
+// %1: Debug Text
+debugText.format = %1: %2
+
+// Please make sure that this is written in a formal tone.
+warningMenu.title = ADVERTÈNCIA
+warningMenu.content = Aquest joc només és per a públic adult major de 18 ANYS.\nAquest és un joc fetitxista, principalment amb contingut de INFLAMENT DE FURROS, i potser no sigui adequat per a alguns. Complements externs fets per tercers no estan moderats i poden contenir material que pot causar molèsties a alguns jugadors. Es desaconsella fermament enregistrament i transmissió d'aquest joc a plataformes de xarxes socials on hi hagi una àmplia presència de menors.\nAquest joc també presenta imatges intermitents i tremolors de pantalla que poden desencadenar símptomes de fotosensibilitat en algunes persones. Aquests efectes es poden mitigar mitjançant el menú Opcions.\nEn prémer ‘Accepta’, acceptes aquests avisos i assumeixes completament qualsevol conseqüència negativa causada per aquest joc.
+warningMenu.accept = Accepta
+
+optionsMenu.heading.gameplay = Joc
+optionsMenu.heading.preferences = Preferències
+optionsMenu.heading.visuals = Visuals
+optionsMenu.heading.audio = Àudio
+optionsMenu.heading.accessibility = Accessibilitat
+optionsMenu.heading.cursor = Cursor
+optionsMenu.heading.technical = Tècniques
+optionsMenu.heading.debugText = Text de depuració
+
+option.ignoreEliminatedPlayers.name = Omet eliminats
+option.ignoreEliminatedPlayers.description = Jugadors derrotats no reproduiran cap animació quan sigui seu torn.
+// This option is a button.
+option.controls.name = Controls
+option.controls.description = Configura assignacions de tecles.
+
+option.controls.gameplay = Joc
+option.controls.keybind.shoot = Dispara pistola
+option.controls.keybind.exit = Canceŀla acció
+option.controls.keybind.camera = Commuta cinematogràfic
+option.controls.keybind.skill1 = Utilitza habilitat 1
+option.controls.keybind.skill2 = Utilitza habilitat 2
+option.controls.keybind.skill3 = Utilitza habilitat 3
+option.controls.keybind.pause = Pausa joc
+option.controls.ui = IU
+option.controls.keybind.up = Amunt
+option.controls.keybind.left = Esquerra
+option.controls.keybind.down = Avall
+option.controls.keybind.right = Dreta
+option.controls.debug = Depuració
+option.controls.keybind.debug1 = Tecla de depuració 1
+option.controls.keybind.debug2 = Tecla de depuració 2
+
+// 1: Keybind Name, 2: Key Orientation (Primary/Secondary)
+option.controls.bindingKey.title = Configurant %1\nTecla %2
+option.controls.bindingKey.bindType.0 = primària
+option.controls.bindingKey.bindType.1 = secundària
+option.controls.bindingKey.subtitle = Prema qualsevol tecla
+option.controls.bindingKey.bind = Assigna
+option.controls.bindingKey.remove = Elimina
+
+// These are not necessary to translate, but they may be helpful for regional keyboards.
+// English names, Castilian ones in brackets
+keybind.ALT = Alt
+keybind.BACKSLASH = \ (Ç)
+keybind.BACKSPACE = Backspace
+keybind.BREAK = Pause/Break (Pausa/Inter)
+keybind.CAPSLOCK = CapsLk (BloqMayús)
+keybind.COMMA = ,
+keybind.CONTROL = Ctrl
+keybind.DELETE = Del (Supr)
+keybind.EIGHT = 8
+keybind.END = End (Fin)
+keybind.FIVE = 5
+keybind.FOUR = 4
+keybind.GRAVEACCENT = ` (º)
+keybind.HOME = Home (Inicio)
+keybind.INSERT = Insert
+keybind.LBRACKET = [ (`)
+keybind.NINE = 9
+keybind.NONE = [---]
+keybind.NUMLOCK = NumLk (BloqNum)
+keybind.NUMPADEIGHT = Num 8
+keybind.NUMPADFIVE = Num 5
+keybind.NUMPADFOUR = Num 4
+keybind.NUMPADMINUS = Num -
+keybind.NUMPADMULTIPLY = Num *
+keybind.NUMPADNINE = Num 9
+keybind.NUMPADONE = Num 1
+keybind.NUMPADPERIOD = Num .
+keybind.NUMPADPLUS = Num +
+keybind.NUMPADSEVEN = Num 7
+keybind.NUMPADSIX = Num 6
+keybind.NUMPADSLASH = Num /
+keybind.NUMPADTHREE = Num 3
+keybind.NUMPADTWO = Num 2
+keybind.NUMPADZERO = Num 0
+keybind.ONE = 1
+keybind.PAGEDOWN = PgDn (AvPág)
+keybind.PAGEUP = PgUp (RePág)
+keybind.PERIOD = .
+keybind.PRINTSCREEN = PrtSc (ImprPant)
+keybind.QUOTE = ' (´)
+keybind.RBRACKET = ] (+)
+keybind.SCROLL_LOCK = ScrLk (BloqDespl)
+keybind.SEMICOLON = ; (Ñ)
+keybind.SEVEN = 7
+keybind.SIX = 6
+keybind.SLASH = / (-)
+keybind.SPACE = Espai
+keybind.THREE = 3
+keybind.TWO = 2
+keybind.ZERO = 0
+
+option.enablePopping.name = Rebentament
+option.enablePopping.description = Jugadors exploten de manera no fatal quan són derrotats.\nSi està desactivat, personatges apareixeran sobreinflats.\nTé efecte a la següent partida.
+option.enableBellyGurgles.name = Borborigmes
+option.enableBellyGurgles.description = Jugadors reprodueixen sons de gorgoteig de panxa en ralentí quan estan inflats.
+option.enableBellyCreaks.name = Cruiximent
+option.enableBellyCreaks.description = Jugadors reprodueixen sons d'sobrestirament de globus en repòs quan estan inflats.
+option.enableFullscreen.name = Pantalla completa
+option.enableFullscreen.description = S'explica per si mateix, però estàs tan boig?
+option.hideHUD.name = Amaga indicador en pantalla
+option.hideHUD.description = Amaga pantalla en pantalla del joc durant partida. Útil per enregistrar de joc.
+// Yes. This DOES mean Forced Aliasing as in like forcing to turn off anti-aliasing
+option.enableForcedAliasing.name = Aliàsing forçat
+option.enableForcedAliasing.description = Desactiva antialiàsing de tots sprites fins i tot quan està habilitat. Pot fer que alguns gràfics semblin oscats.
+option.enableGLSL.name = Shaders
+option.enableGLSL.description = Enables GLSL shaders for some menu elements. Disabling this can reduce load on low-end GPUs.
+option.alwaysPlayMainMenuAnims.name = Entertaining Main Menu
+option.alwaysPlayMainMenuAnims.description = Always play startup animations in the Main Menu.
+option.showMusicToast.name = Music Toast
+option.showMusicToast.description = A notification containing the current background music name and its author will be shown whenever a music track is played.
+option.enableLetterbox.name = Letterboxing
+option.enableLetterbox.description = Show black bars on top and bottom sides of the screen during player animations and cutscenes.
+option.musicVolume.name = Music Volume
+option.musicVolume.description = The volume percentage of background music.
+option.gameSoundVolume.name = Game Sound Volume
+option.gameSoundVolume.description = The volume percentage of game sound effects.
+option.uiSoundVolume.name = UI Sound Volume
+option.uiSoundVolume.description = The volume percentage of UI sound effects.
+option.enablePhotosensitiveMode.name = Photosensitive Mode
+option.enablePhotosensitiveMode.description = Dampen screen flashes and other flashing effects.\nStrongly recommended for people with photosensitive epilepsy.
+option.cameraSpeed.name = Camera Speed
+option.cameraSpeed.description = How quick the camera panning speed should be.
+option.cameraEffectIntensity.name = Camera Intensity
+option.cameraEffectIntensity.description = How strong screen shaking and other disorienting effects should be.
+option.useBuiltInCursor.name = Built-In Cursor
+option.useBuiltInCursor.description = Uses the custom in-game cursor instead of the default system mouse cursor.
+option.playCursorSounds.name = Cursor Sounds
+option.playCursorSounds.description = Plays a click sound whenever the mouse cursor clicks something.
+option.maxFramerate.name = Maximum Framerate
+option.maxFramerate.description = How many screen refreshes and game updates should the game do in one second.
+option.pauseOnUnfocus.name = Unfocus Pausing
+option.pauseOnUnfocus.description = Automatically pauses the game when out of focus.
+option.cacheOnGPU.name = VRAM Caching
+option.cacheOnGPU.description = Allows the GPU to be used for storing textures using VRAM for lower RAM usage.\nMay not work correctly with lower-end graphics cards.
+option.enableDebugKeybinds.name = Debug Keybinds
+option.enableDebugKeybinds.description = Enable debug keybinds on PC.\n(Disables in-game achievements on press)
+option.showDebugText.name = Debug Text
+option.showDebugText.description = Displays debug information on the top-left corner of the screen.
+option.showFramerateOnDebugText.name = Framerate
+option.showFramerateOnDebugText.description = Displays the current framerate on the Debug Text.
+option.showMemoryUsageOnDebugText.name = Memory Usage
+option.showMemoryUsageOnDebugText.description = Displays the current amount of memory used on the Debug Text.
+option.showCurrentStateOnDebugText.name = Current State
+option.showCurrentStateOnDebugText.description = Displays the current menu being navigated on the Debug Text.
+
+addonsMenu.authors = Authors:
+addonsMenu.noAddonsDetected.title = No Add-Ons Detected
+addonsMenu.noAddonsDetected.content = No addons are detected within the addons folder. Please check whether you have included a metadata.json in the metadata folder in the addons.\nIf you think this is a mistake, please report your issue to our GitHub repository.
+
+languageMenu.title = SELECT LANGUAGE
+languageMenu.description = Note: Translations may not be 100% accurate, and may contain mistranslations or untranslated text. If you want to help improve the translations, please consider contributing to our GitHub repository.
+languageMenu.contributors = Contributors
+
+gamemodeSelect.title = SELECT GAMEMODE
+gamemode.quickPlay.name = Quick Play
+gamemode.quickPlay.description = Random characters.\nStraight ahead. No fuzz.
+gamemode.reloaded.name = Reloaded
+gamemode.reloaded.description = A brand new way to play Inflation Roulette.\nBalanced as the developer intended.
+gamemode.inequality.name = Inequality
+gamemode.inequality.description = Players are given random skills on each live shot.\n"All players are equal, but some players are more equal than others." - Animal Farm, probably
+gamemode.classic.name = Classic
+gamemode.classic.description = True randomness and sabotage endlessly.\nThe original way of playing the game.
+gamemode.charge.name = Charge
+gamemode.charge.description = Damage increases with each blank shot.\nRisky and rewarding gameplay.
+gamemode.1v1.name = Stand-Off
+// Context: A classmate of mine suggested this.
+gamemode.1v1.description = Two players; one gun.\nSuggested by a lard ass.
+gamemode.sixPlayers.name = Mayhem
+gamemode.sixPlayers.description = Hextuple havoc!\nFight against five other players at a time!
+
+// Select Character: This phrase is meant to be "epic". Try to make your translation mysterious/archaic.
+characterSelect.selectCharacter = CHOOSE YOUR VESSELS
+characterSelect.holdCardsToSeeInfo = Hold Cards To See Info
+// Select Stage: This however, does not need to be in the same tone as Select Character.
+characterSelect.selectStage = CHOOSE YOUR STAGE
+
+// Player Settings
+characterSelect.option.cpuControlled = CPU
+characterSelect.option.skillLevel = CPU Skill
+// Easy mode. Only shoots and does nothing else.
+characterSelect.option.skillLevel.1 = Aimless
+// Normal mode. Same as Easy mode. Can use Skills periodically... at random.
+characterSelect.option.skillLevel.2 = Competent
+// Hard mode. Estimate chances and acts accordingly.
+characterSelect.option.skillLevel.3 = Strategic
+// This text appears when more than 1 player-controlled characters are present.
+// Prevents player from cheating
+characterSelect.cantEarnAchievements = You cannot earn achievements with these settings.
+
+// Goober: A character species present in the original Inflation Roulette.
+// Looks like a feline, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao
+// Skills: Reload, Sabotage
+character.goober.name = Goober
+character.goober.name.short = Goober
+character.goober.description = A sentient and dominant species found in urban areas. Proficient at tinkering with guns.
+// Shib: Character created by NicklySuffer. Non-binary, and designed to look like one of those simplistic white cat anons.
+// Screams "city boy" vibes.
+// Skills: Sabotage, Amnesia
+character.shibanou.name = Shibanou
+character.shibanou.name.short = Shib
+character.shibanou.description = Extraterrestrial, cunning and loves lemon tea. Can cast temporary memory loss.
+// Chester: Character created by NicklySuffer. Works in a coffee shop, and also looks like one of those simplistic white cat anons,
+// but wears a cap too I guess. Screams "overworked minimum wagie" vibes.
+// Designed with no offensive skills, but has one more pressure point lmao.
+// Skills: Reveal, Reload
+character.chester.name = Chester
+character.chester.name.short = Chester
+character.chester.description = An unfortunate barista forced to play this game for a company. His work trains his endurance.
+// Option to choose a random character.
+character.random.name = ???
+character.random.name.short = ???
+character.random.description = Not sure who to choose? Let the game decide!
+
+// Classic Room: The original stage from the original game redrawn.
+stage.classic = Classic Room
+stage.classic.description = The room we all know nice and well.
+// Manager's Lounge: The context is that four people, either motivated by a better life or forced by their higher-ups, are
+// offered a place as a game participant to satisfy the manager's desires.
+stage.reloaded = Manager's Lounge
+stage.reloaded.description = This scene looks like a porn set. That's because it kinda is, and it's being recorded.
+// Shitfucks Café: Named Shitfucks. The exact coffee shop that Chester works at.
+// Sells coffee that inflates people, and agreed to host horrible shit like this. Disgusting.
+// Again, transliterate Shitfucks.
+stage.shitfucks = Shitfucks Café
+stage.shitfucks.description = Specializes in selling beverages. Definitely nothing wrong going on here.
+// White Void: Literally just a white void with a glass table.
+stage.void = White Void
+stage.void.description = Household name as a place for all activities, featured in countless art pieces and animations.
+stage.random = ?????
+stage.random.description = Not sure where to choose? Let the game decide!
+
+// Splash text that is displayed
+gameOn.text = GAME ON!
+
+skill.reload.name = Reload
+skill.reload.description = Reload the cylinder to reset your chance of being shot with a live round.
+skill.sabotage.name = Sabotage
+skill.sabotage.description = The next player will have a guaranteed chance of being shot with a live round.
+skill.pressurize.name = Pressurize
+skill.pressurize.description = The live round will deal 2x the Pressure.
+skill.polarize.name = Polarize
+skill.polarize.description = Invert the state of the current round.
+skill.deflate.name = Deflate
+skill.deflate.description = Deplete one bar of Pressure.
+skill.reveal.name = Reveal
+skill.reveal.description = Take a peek at the cylinder's contents.
+skill.amnesia.name = Amnesia
+skill.amnesia.description = Disable an opponent's skills for one turn.
+skill.assault.name = Assault
+skill.assault.description = Shoot an opponent. Gives victim 2 confidence on blank.
+
+pauseMenu.title = GAME PAUSED
+pauseMenu.resume = Resume
+pauseMenu.restart = Restart
+pauseMenu.options = Options
+pauseMenu.exit = Exit
+
+stats.pressure = Pressure
+stats.confidence = Confidence
+stats.skill = Skill
+stats.skills = Skills
+stats.modifier = Modifier
+stats.modifiers = Modifiers
+
+// Be the last player standing in a match.
+achievement.firstWin.name = First Victory
+achievement.firstWin.description = Your life will be bound by chains from now on.
+// Be the last player standing, and with your Pressure value = 0.
+achievement.noPressureWin.name = Improbability
+achievement.noPressureWin.description = Treading with luck on your side, you managed to evade damage with your body unscathed.
+// Be the last player standing, and with your Pressure value at its max.
+achievement.fullPressureWin.name = Edging Triumphs All
+achievement.fullPressureWin.description = Even at your highest peaks of pressure, you persisted till the end.
+// Sabotage ten times in your lifetime.
+achievement.sabotages.name = Experienced Saboteur
+achievement.sabotages.description = You must really like Goober, huh. Use its ability fifty times.
+// Pressurize twice in a row without shooting a live round.
+achievement.doublePressurize.name = Quadratic Equation
+achievement.doublePressurize.description = As you overload the device twice, the next player accepts its fate.
+// Pressurize, then shoot yourself with the live round afterwards.
+achievement.pressurizeYourself.name = Backfire
+achievement.pressurizeYourself.description = Get a taste of your own Pressurized medicine. Intentional or mere misfortune?
+// Get a P Rank, AKA the maximum score.
+achievement.maximumScore.name = Pain of Perfectionism
+achievement.maximumScore.description = Well done. You have played a perfect game, and what did that cost you.
+// Get the lowest score possible.
+achievement.minimumScore.name = Strategized Loss
+achievement.minimumScore.description = It's like you didn't even try, but in a closer glance it looks like you did - to LOSE?
+// Win in all game modes at least once.
+achievement.allGameModeWins.name = Full Tour
+achievement.allGameModeWins.description = A badge of dedication and unproductivity.
+// Win as all vanilla characters at least once.
+achievement.allCharacterWins.name = All My Fellas
+achievement.allCharacterWins.description = Looks like you really have no special preference for these vessels.
+// Find all Easter Egg Startups.
+achievement.allEasterEggs.name = Attention Deficit
+achievement.allEasterEggs.description = The archaic glyphs lie veiled, save by file digging, or code scouring.
+// Accumulate 10000 Dongs in the Main Menu.
+achievement.noLife.name = Absolutely Jobless
+achievement.noLife.description = Waste your life away for no reason. You have been branded, marked permanently.
+
+achievementsMenu.title = Your achievements
+achievementsMenu.description = Select an achievement to view its details and completion status.
+achievementsMenu.resetProgress = Reset Progress
+
+achievementToast.title = Achievement Unlocked!
+
+resetAchievementMenu.prompt = Confirm your reset of\n%1?\nThis action is irreversible.
+
+// If the language's script can be written vertically, set this string to false
+galleryMainMenu.envelope.rotateText = true
+// Context: According to Snowyboi, there are different versions of Goobers, one being Slime Goobers, and one labelled "???".
+// The way I interpret this is like, them having races or something
+galleryMainMenu.envelope.goober.description = First seen in the original game, the Goobers jump into action with a new coat of paint! They have become the go-to character to be featured in countless remakes and fanart alike.\n\nAs for why and how they joined the game, no one knows! Actors? Hostages? Sell-outs? Lots of theories are out there! Not much is known about their biology, but it has been confirmed that they have been classified into several races, ranging from Goobers composed entirely out of slime to R»EDA©±ED§²½\n\nGoober is a species created by Snowyboi.
+// Context: Literally no lore implication. He's just here for the sake of being here lol
+galleryMainMenu.envelope.asimo.description = Harnessing his electric powers, Asimo jolts into Inflation Roulette claiming to "have some fun".\n\nWe don't know how he got here, and we totally have no connections with him, other than he's a wolf, he's the Manager's playtester for his stupid Friday Night Funkin' mod, and he's the winner of an art raffle to be added to the game as a character for the Example Addon.\n\nAsimo is a guest character owned by WolfKylis.
+// Context: You can say the reason they're here is nepotism? They're just a partner with the Manager's lab-grown assistant
+// that agrees to join that's it.
+galleryMainMenu.envelope.shibanou.description = Last name Nou; first name Shiba. Hailing from a mysterious planet, this cat-like creature is ready to blast someone. Their Chinese name can be interpreted as "Zero Ten Eight", derived from the nuclear site they landed on in Beijing.\n\nSpending the first few years of their life scouring to different places to live, they eventually founded themself inside of The Manager's garage. The man adopted them as his secondary assistant and soon found themself in love with the primary assistant (lab-grown btw, ew). With no apparent reason other than to show-off in front of their boyfriend, they joined the game to show off their hidden abilities.\n\nShibanou is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.
+// Context: The Manager and Shitfucks partnered, and selected Chester as their ambassador or something.
+galleryMainMenu.envelope.chester.description = As the lead barista of a coffee shop, he was forced to play this game as an ambassador for the company. With his poor academic results and his uncharismatic personality, his dream of prosperity and wealth is yet to be in reach.\n\nHis daily work involves making oversweetened beverages for horny customers. Some say the drinks have an "expansive" effect, which has grabbed the attention of several food safety agents. However, due to some capitalist bullshit, warnings from the food department went nowhere.\n\nChester is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.
+galleryMainMenu.envelope.dev = Developer Art
+galleryMainMenu.envelope.dev.description = A collection of concept art, sketches, and unused assets made by the developers and other artists.\n\nangry           bird
+galleryMainMenu.envelope.community = Community Art
+galleryMainMenu.envelope.community.description = A collection of fanart drawn by the developers' friends and the community.
+galleryEntryMenu.viewFullImage = View Full Image
+
+// These will be button text that will be in the Utilities Main Menu.
+utilitiesMenu.characterCreator = Character Creator
+utilitiesMenu.stageEditor = Stage Viewer
+utilitiesMenu.loadFile = Load File
+utilitiesMenu.newFile = New File
+utilitiesMenu.loadDirectory = Load Folder
+utilitiesMenu.newDirectory = New Folder
+utilitiesMenu.browseImage = Browse Image
+utilitiesMenu.browseImage.downloadTemplate = Download Template
+// %1: Width, %2: Height
+
+// Subtext for the button
+utilitiesMenu.browseImage.recommendedSize = Recommended size: %1px × %2px
+
+// A screen which tells the user to adjust the image's offset if it doesn't make the recommended size.
+utilitiesMenu.browseImage.adjustOffsets.title = Adjust Offsets
+utilitiesMenu.browseImage.adjustOffsets.description = Arrow Keys to Move Image\nHold SHIFT/CTRL to Increase Rate\nMake Sure Image Aligns with Bottom Center of Silhouette
+utilitiesMenu.error.prompt = An error occurred.
+utilitiesMenu.firstStartup.prompt = Warning: Very Unstable\n\nThe following tools are not intended to serve as Development Tools, and are only created as a means for casual artists to make their own characters. At any time, anywhere, the tools will at some point crash out and die. The tools do not have an autosave feature; MANUAL SAVING is highly recommend.\n\nIf you wish to complain about the features, learn JSON and Flash goddamnit
+// Dummy text. Used as the default name for newly created Sprite Projects.
+utilitiesMenu.placeholder = Placeholder
+
+characterCreator.dataType.metadata = Metadata
+characterCreator.dataType.spriteData = Sprite Data
+characterCreator.parameter.name = Character Name
+characterCreator.parameter.description = Character Description
+characterCreator.parameter.author = Author
+characterCreator.parameter.framerate = Framerate
+characterCreator.parameter.defaultFramerate = Default Framerate
+characterCreator.parameter.defaultDimensions = Frame Size
+characterCreator.parameter.maxPressure = Max Pressure
+characterCreator.parameter.maxConfidence = Max Confidence
+characterCreator.parameter.skills = Skills
+characterCreator.parameter.skills.description = (Separated by Commas: ,)
+characterCreator.explorer.description.root = Root folder of the project.
+characterCreator.explorer.description.idle = Idle animation.
+characterCreator.explorer.description.prepareShoot = Looping animation during turn.
+characterCreator.explorer.description.preShoot = Animation for preparing to shoot themself.
+characterCreator.explorer.description.shootBlank = Animation for shooting a blank shot.
+characterCreator.explorer.description.shootLive = Animation for shooting a live shot.
+characterCreator.explorer.description.pass = Animation for passing the gun to another player.
+characterCreator.explorer.description.skill = Default animation for activating a Skill.
+characterCreator.explorer.description.shocked = Animation for reacting to confetti or targeted by Assault.
+characterCreator.explorer.description.win = Animation for winning pose.
+characterCreator.explorer.description.helpless = Animation for unable to play a turn after defeat.
+characterCreator.explorer.description.popped = Looping animation when launched into the air by popping.
+characterCreator.explorer.description.introPartOne = Animation for interacting with other players.
+characterCreator.explorer.description.introPartTwo = Animation for when pump gun falls onto the table.
+characterCreator.explorer.description.scraps = Scrap particles spawned when popping.
+characterCreator.explorer.description.cardBG = The background of Character Select Card.
+characterCreator.explorer.description.cardCharIdle = The character in the Character Select Card when idle.
+characterCreator.explorer.description.cardCharSelected = The character in the Character Select Card when selected.
+characterCreator.explorer.description.bannerAppear = The character appearing after being selected.
+characterCreator.explorer.description.bannerBlink = The character blinking after being selected.
+characterCreator.saveSuccessful.prompt = Sprite Project saved successfully.
+characterCreator.save = Save Project
+characterCreator.exit = Exit Editor
+characterCreator.reloadSkills = Reload Skills
+characterCreator.exit.prompt = Are you sure you want to exit the Character Creator?\nAny unsaved progress will be LOST.
+characterCreator.newCharacter.title = NEW CHARACTER
+characterCreator.newCharacter.unchangeableParameter = This parameter cannot be changed and should not be changed after creation.
+characterCreator.newCharacter.create = Create Character!
+characterCreator.newCharacter.alreadyExists.prompt = There is already a Sprite Project with the same name.
+characterCreator.export = Export Project!
+characterCreator.confirmExport.prompt = The game will export your Sprite Project metadata, sprites, and animation data into a game-usable format. Depending on your hardware specifications, exporting will take from mere seconds to a VERY LONG TIME. Closing background programs can aid in accelerating the export rate.\n\nAfter the completion, all exported file assets will be stored in the exports folder in the game's root folder. Please keep this application open at all times during the export to prevent data corruption.\n\nAre you sure you want to export the project?
+characterCreator.exporting = Exporting Animation:\n%1
+characterCreator.exporting.generatingCharacterData = Generating JSON Files...
+characterCreator.exporting.finalizing = Finalizing...
+characterCreator.exporting.missingAnimations = Project is missing these animations:\n%1
+characterCreator.exporting.missingAnimations.extend = and many more...
+characterCreator.exporting.description = Please keep this program open.
+characterCreator.exportSuccessful.prompt = Project exported successfully. You might want to tweak the variables in the JSON files.\n\nExported as:\n%1
+
+animationCreator.save = Save Animation
+animationCreator.exit = Exit Editor
+animationCreator.exit.prompt = Are you sure you want to exit the Animation Editor?\nAny unsaved progress will be LOST.
+animationCreator.saveSuccessful.prompt = Animation saved successfully.
+
+stageEditor.stage = Stage
+stageEditor.stage.description = This menu is only used for previewing stages and offers NO editing functions. Use this with a JSON editor for the best experience.
+stageEditor.objectList = Object List
+stageEditor.reload = Reload Stage
+stageEditor.screenshot = Screenshot Mode
+stageEditor.exit = Exit Viewer
+stageEditor.exit.prompt = Are you sure you want to exit the Stage Viewer?
+
+resultsMenu.title = THE SCORES ARE IN!
+resultsMenu.instructions = Press Any Key To Exit
+// Score bonus for last standing players
+resultsMenu.winBonus = Winning Bonus
+// Score bonus for Pressure percentage.
+resultsMenu.edgingBonus = Pressure Bonus
+// Replaces Edging Bonus when player somehow hasn't inflated once.
+resultsMenu.edgingBonus.alt = Luck Bonus
+// Score bonus for using Skills.
+resultsMenu.skillBonus = Skill Bonus
+resultsMenu.bestPlayer = VICTORIOUS
+resultsMenu.bestPlayers = VICTORIOUS
+resultsMenu.badPlayer = DISAPPOINTMENT
+resultsMenu.badPlayers = DISAPPOINTMENTS
+// $1: Player Type, %2: Character Name, %3: Player No. (If applicable)
+resultsMenu.leaderboard.playerFormat = %1%2
+resultsMenu.leaderboard.playerDuplicateFormat = %1%2 #%3
+// Unless you want to be really specific, it is recommended to leave this string empty
+resultsMenu.leaderboard.playerType.human = 
+// If the string is not empty, it is recommended to put a whitespace after it.
+resultsMenu.leaderboard.playerType.cpu = CPU\s
+// %1: Rank, %2: Player Format, %3: Score, %4: Grade
+// Left Alignment
+resultsMenu.leaderboard.format = %1 | %2 · %3 (%4)
+// Right Alignment
+resultsMenu.leaderboard.format.reversed = %2 · %3 (%4) | %1
+
+// Menu Options. Used in button text.
+menu.yes = Yes
+menu.no = No
+menu.ok = OK
+menu.confirm = Confirm
+menu.cancel = Cancel
+menu.exit = Exit
+
+// Prompt after activating an offensive skill (e.g. Assault, Amnesia)
+gameUI.selectTarget = SELECT TARGET
+
+preloadMenu.progress.characters = Loading Characters...
+preloadMenu.progress.gameplay = Loading Game Modes...
+preloadMenu.progress.language = Fetching Locale Texts...
+preloadMenu.progress.achievements = Tracking Achievements...
+preloadMenu.progress.toasts = Constructing Notifs...
+preloadMenu.progress.tooltip = Building Tooltips...
+preloadMenu.progress.cursor = Decorating Mouse Cursor...
+preloadMenu.progress.splashes = Writing Splashes...
+preloadMenu.progress.music = Finding Music Discs...
+preloadMenu.finished = All Set!
+
+// Fallback for HTML build
+gamemode.fiftyFifty.name = Fifty-Fifty
+gamemode.fiftyFifty.description = Purely a coin flip chance with replacement.\nQuick and risky gameplay.
+
+character.asimo.name = Asimo
+character.asimo.name.short = Asimo
+character.asimo.description = This wolf just wants to have some fun. His experience in electrical occult allows him to overload weapons.
