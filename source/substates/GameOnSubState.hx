@@ -23,7 +23,7 @@ class GameOnSubState extends SuffSubState {
 		slashBG.frames = Paths.sparrowAtlas('ui/menus/characterSelect/slashBG');
 		slashBG.animation.addByPrefix('idle', 'idle', 24, false);
 		slashBG.screenCenter();
-		slashBG.scale.set(1, 0.75);
+		slashBG.scale.set(FlxG.width / Constants.ORIGINAL_FLXG_WIDTH, 0.75);
 		slashBG.alpha = 0;
 		add(slashBG);
 

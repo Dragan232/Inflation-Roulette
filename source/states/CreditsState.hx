@@ -7,6 +7,7 @@ import states.MainMenuState;
 import ui.objects.CreditsSketch;
 import ui.objects.GameLogo;
 import ui.objects.SuffIconButton;
+import ui.objects.SuffScrollBar;
 
 class CreditsState extends SuffState {
 	var creditsTxt:Array<Array<Dynamic>> = [
@@ -46,9 +47,7 @@ class CreditsState extends SuffState {
 	var leLineSpace:Int = 0;
 	var imageList:Array<String> = [];
 
-	var creditScrollValueUpperLimit:Float = FlxG.height;
-	var creditScrollValue:Float = 0;
-	var creditScrollValueLowerLimit:Int = 0;
+	var scrollBar:SuffScrollBar;
 
 	override public function create():Void {
 		super.create();
@@ -61,7 +60,7 @@ class CreditsState extends SuffState {
 		add(grid);
 
 		var overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
-		overlay.x = -overlay.width / 2 + 80;
+		overlay.x = -overlay.width / 2 + (FlxG.width - overlay.width) / 2 + 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF0000FF;
 		overlay.alpha = 0.25;
@@ -95,7 +94,6 @@ class CreditsState extends SuffState {
 				}
 				if (line[2] == 'GAME_LOGO') {
 					leLogo = new GameLogo(leCharSpace, 0);
-					creditScrollValueUpperLimit = Std.int((FlxG.height - leLogo.height) / 2);
 				} else {
 					leLogo.loadGraphic(Paths.image(texturePath));
 					leLogo.updateHitbox();
@@ -128,12 +126,24 @@ class CreditsState extends SuffState {
 
 			creditsTxtGroup.add(leText);
 		}
-		creditScrollValueLowerLimit = Std.int(-(leLineSpace - creditsTxtGroup.members[creditsTxtGroup.members.length - 1].height * 1.5));
-		creditScrollValue = creditScrollValueUpperLimit;
+		creditsTxtGroup.x += ScreenSafeZone.X;
+
+		var creditsUpperLimit = creditsTxtGroup.members[0].height / 2;
+		var creditsLowerLimit = creditsTxtGroup.members[creditsTxtGroup.members.length - 1].height / 2;
+		var creditsBounds = creditsTxtGroup.height - creditsUpperLimit + creditsLowerLimit;
+		scrollBar = new SuffScrollBar(0, 0, function(percent:Float) {
+			creditsTxtGroup.y = FlxMath.lerp(creditsUpperLimit, FlxG.height - (creditsTxtGroup.height + FlxG.height / 2), percent);
+		}, FlxG.width / 2, creditsBounds);
+		scrollBar.scrollInBG = true;
+		scrollBar.scrollMultiplier = -FlxG.height / creditsBounds;
+		scrollBar.autoScrollVelocity = 10;
+		scrollBar.visible = false;
+		add(scrollBar);
+
 		add(creditsTxtGroup);
 
-		var exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		var exitButton = new SuffIconButton(20, 20 - ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.onClick = function() {
 			exitMenu();
 		};
@@ -148,7 +158,6 @@ class CreditsState extends SuffState {
 	}
 
 	var spawnSketchTime:Float = 0;
-	var creditScrollSpeed:Float = 1;
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
@@ -159,23 +168,6 @@ class CreditsState extends SuffState {
 		} else {
 			spawnSketchTime -= elapsed;
 		}
-
-		if (FlxG.mouse.wheel != 0) {
-			creditScrollSpeed = FlxG.mouse.wheel * -40;
-		} else if (FlxG.mouse.pressed && FlxG.mouse.x < FlxG.width / 2) {
-			creditScrollValue = creditScrollValue + FlxG.mouse.deltaY;
-		} else if (FlxG.mouse.justReleased) {
-			creditScrollSpeed = FlxG.mouse.deltaY / -2;
-		} else {
-			creditScrollValue -= elapsed * 30 * creditScrollSpeed;
-		}
-		creditScrollSpeed = FlxMath.lerp(creditScrollSpeed, 1, elapsed * 5);
-		if (creditScrollValue > creditScrollValueUpperLimit) {
-			creditScrollValue = creditScrollValueUpperLimit;
-		} else if (creditScrollValue < creditScrollValueLowerLimit) {
-			creditScrollValue = creditScrollValueLowerLimit;
-		}
-		creditsTxtGroup.y = creditScrollValue;
 
 		if (Controls.justPressed('exit')) {
 			exitMenu();

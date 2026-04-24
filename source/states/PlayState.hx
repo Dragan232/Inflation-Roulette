@@ -40,8 +40,8 @@ class PlayState extends SuffState {
 	var skillsIcon:GameIcon;
 	var skillCardsGroup:FlxTypedSpriteGroup<SkillCard> = new FlxTypedSpriteGroup<SkillCard>();
 
-	static final skillCardsGroupPaddingX:Int = 10;
-	static final skillCardsGroupPaddingY:Int = 50;
+	static var skillCardsGroupPaddingX:Float = 10;
+	static var skillCardsGroupPaddingY:Float = 50;
 
 	var selectTargetText:FlxText;
 
@@ -111,6 +111,8 @@ class PlayState extends SuffState {
 		camHUD.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
 
+		skillCardsGroupPaddingX = 10 + ScreenSafeZone.X;
+
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
@@ -143,7 +145,7 @@ class PlayState extends SuffState {
 		add(characterGroup);
 		for (i in 0...CharacterManager.selectedCharacterList.length) {
 			pressurizeStreak.push(0);
-			var leX:Int = Std.int(FlxMath.lerp(stage.data.characterX[0], stage.data.characterX[1], i / (CharacterManager.selectedCharacterList.length - 1)));
+			var leX:Int = Std.int(FlxMath.lerp(FlxG.width / 2 + stage.data.characterX[0], FlxG.width / 2 + stage.data.characterX[1], i / (CharacterManager.selectedCharacterList.length - 1)));
 			var char:Character = new Character(CharacterManager.selectedCharacterList[i], leX, stage.data.characterY);
 			if (i >= Std.int(CharacterManager.selectedCharacterList.length / 2)) {
 				char.flipX = true;
@@ -186,11 +188,13 @@ class PlayState extends SuffState {
 			cobalt.animation.onFinish.add(function(_) {
 				cobalt.destroy();
 				new FlxTimer().start(0.1, function(timer) {
+					var defaultCamX = camFollow.x;
+					var defaultCamY = camFollow.y;
 					camFollow.x += FlxG.random.int(-1, 1) * 2;
 					camFollow.y -= FlxG.random.int(-1, 1) * 2;
 					if (timer.loopsLeft == 0) {
-						camFollow.x = FlxG.width / 2;
-						camFollow.y = FlxG.height / 2;
+						camFollow.x = defaultCamX;
+						camFollow.y = defaultCamY;
 					}
 				}, 10);
 			});
@@ -216,7 +220,7 @@ class PlayState extends SuffState {
 		ambientSound.play();
 
 		// UI Stuff//
-		letterboxTop = new FlxSprite().makeGraphic(FlxG.width + 50, Std.int((FlxG.height - FlxG.width / 20 * 9) / 2), FlxColor.BLACK);
+		letterboxTop = new FlxSprite().makeGraphic(FlxG.width + 50, Std.int((FlxG.height - FlxG.width * Constants.LETTERBOX_RATIO) / 2), FlxColor.BLACK);
 		letterboxTop.camera = camOther;
 		letterboxTop.y = -letterboxTop.height;
 		add(letterboxTop);
@@ -238,7 +242,7 @@ class PlayState extends SuffState {
 		uiRevealGroup.camera = camHUD;
 		add(uiRevealGroup);
 
-		uiBGTop = new FlxSprite().makeGraphic(500, FlxG.height, FlxColor.BLACK);
+		uiBGTop = new FlxSprite().makeGraphic(Std.int(skillCardsGroupPaddingX + 480 + 10), FlxG.height, FlxColor.BLACK);
 		uiBGTop.alpha = 0.25;
 		uiBGGroup.add(uiBGTop);
 
@@ -256,26 +260,26 @@ class PlayState extends SuffState {
 		skillsIcon.y = skillsText.y + (skillsText.height - skillsIcon.height) / 2;
 		uiBGGroup.add(skillsIcon);
 
-		pressureIcon = new GameIcon(0, 0, 'stats/pressure', 32);
-		uiBGGroup.add(pressureIcon);
+		pressureIcon = new GameIcon(ScreenSafeZone.X, 0, 'stats/pressure', 32);
 
-		pressureText = new FlxText(pressureIcon.width + 4, 0, 0, '');
+		pressureText = new FlxText(pressureIcon.x + pressureIcon.width + 4, 0, 0, '');
 		pressureText.setFormat(Paths.font('default'), 32, pressureBarColors[0]);
+		uiBGGroup.add(pressureIcon);
 		uiBGGroup.add(pressureText);
 
 		pressureIcon.color = pressureText.color;
 
-		pressureBar = new SuffBar(0, 0, function() return 0, 0, 1, 500, 20, 4, 1, pressureBarColors[0], pressureBarColors[1]);
+		pressureBar = new SuffBar(0, 0, function() return 0, 0, 1, Std.int(uiBGTop.width), 20, 4, 1, pressureBarColors[0], pressureBarColors[1]);
 		uiBGGroup.add(pressureBar);
 
-		confidenceBar = new SuffBar(0, 0, function() return 0, 0, 1, 500, 20, 4, 1, confidenceBarColors[0], confidenceBarColors[1]);
+		confidenceBar = new SuffBar(0, 0, function() return 0, 0, 1, Std.int(uiBGTop.width), 20, 4, 1, confidenceBarColors[0], confidenceBarColors[1]);
 		uiBGGroup.add(confidenceBar);
 
-		confidenceIcon = new GameIcon(0, 0, 'stats/confidence', 32);
-		uiBGGroup.add(confidenceIcon);
+		confidenceIcon = new GameIcon(ScreenSafeZone.X, 0, 'stats/confidence', 32);
 
-		confidenceText = new FlxText(confidenceIcon.width + 4, 0, 0, '');
+		confidenceText = new FlxText(confidenceIcon.x + confidenceIcon.width + 4, 0, 0, '');
 		confidenceText.setFormat(Paths.font('default'), 32, confidenceBarColors[0]);
+		uiBGGroup.add(confidenceIcon);
 		uiBGGroup.add(confidenceText);
 
 		confidenceIcon.color = confidenceText.color;
@@ -287,15 +291,15 @@ class PlayState extends SuffState {
 		var shootButtonImage = Paths.image('ui/icons/buttons/shoot');
 		var shootButtonHighlightedImage = Paths.image('ui/icons/buttons/shootHighlighted');
 		shootButton = new SuffButton(0, 0, null, shootButtonImage, shootButtonHighlightedImage, shootButtonImage.width, shootButtonImage.height, false);
-		shootButton.y = FlxG.height - shootButton.height;
+		shootButton.y = FlxG.height - shootButton.height - ScreenSafeZone.Y;
 		shootButton.camera = camHUD;
 		shootButton.onClick = function() {
 			deployGun(currentTurnIndex, function() return getPlayer(currentTurnIndex).getPressurePercentage());
 		}
 		add(shootButton);
 
-		pauseButton = new SuffIconButton(20, 20, 'buttons/pause', null, 2);
-		pauseButton.x = FlxG.width - pauseButton.width - 20;
+		pauseButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/pause', null, 2);
+		pauseButton.x = FlxG.width - pauseButton.width - 20 - ScreenSafeZone.X;
 		pauseButton.camera = camHUD;
 		pauseButton.onClick = function() {
 			pauseGame();
@@ -303,8 +307,8 @@ class PlayState extends SuffState {
 		add(pauseButton);
 
 		cameraFocusButton = new SuffIconButton(20, 20, 'buttons/camera', null, 2);
-		cameraFocusButton.x = FlxG.width - cameraFocusButton.width - 20;
-		cameraFocusButton.y = FlxG.height - cameraFocusButton.height - 20;
+		cameraFocusButton.x = FlxG.width - cameraFocusButton.width - 20 - ScreenSafeZone.X;
+		cameraFocusButton.y = FlxG.height - cameraFocusButton.height - 20 - ScreenSafeZone.Y;
 		cameraFocusButton.camera = camHUD;
 		cameraFocusButton.onClick = function() {
 			toggleCameraFocus();
@@ -384,7 +388,7 @@ class PlayState extends SuffState {
 		skillsText.visible = skillsIcon.visible = (skills.length > 0);
 		for (i in 0...skills.length) {
 			var leSkill = skills[i];
-			var skillCard:SkillCard = new SkillCard(0, i * (100 + skillCardsGroupPaddingX), leSkill);
+			var skillCard:SkillCard = new SkillCard(0, i * 110, leSkill);
 			skillCard.onClick = function() {
 				activateSkill(currentTurnIndex, i);
 			}
@@ -392,7 +396,7 @@ class PlayState extends SuffState {
 		}
 		updateSkillAvailability(playerIndex);
 
-		uiBGTop.setGraphicSize(Std.int(skillCardsGroupPaddingX + 480 + skillCardsGroupPaddingX), Std.int(skillCardsGroupPaddingY + skillCardsGroup.height + skillCardsGroupPaddingX));
+		uiBGTop.setGraphicSize(Std.int(uiBGTop.width), Std.int(skillCardsGroupPaddingY + skillCardsGroup.height + 10));
 		uiBGTop.updateHitbox();
 		uiBGBottom.y = pressureIcon.y = uiBGTop.height;
 		pressureText.y = pressureIcon.y + (pressureIcon.height - pressureText.height) / 2;
@@ -1166,7 +1170,7 @@ class PlayState extends SuffState {
 		if (reallyMoveIn) {
 			doTween('letterboxTopTween', FlxTween.tween(letterboxTop, {y: 0}, 1, {
 				ease: FlxEase.cubeOut, onUpdate: function(_:FlxTween) {
-					pauseButton.y = letterboxTop.y + letterboxTop.height + 20;
+					pauseButton.y = letterboxTop.y + letterboxTop.height + 20 + ScreenSafeZone.Y;
 				}
 			}));
 			doTween('letterboxBottomTween', FlxTween.tween(letterboxBottom, {y: FlxG.height - letterboxBottom.height}, 1, {
@@ -1177,7 +1181,7 @@ class PlayState extends SuffState {
 		} else {
 			doTween('letterboxTopTween', FlxTween.tween(letterboxTop, {y: -letterboxTop.height}, 1, {
 				ease: FlxEase.cubeOut, onUpdate: function(_:FlxTween) {
-					pauseButton.y = letterboxTop.y + letterboxTop.height + 20;
+					pauseButton.y = letterboxTop.y + letterboxTop.height + 20 + ScreenSafeZone.Y;
 				}
 			}));
 			doTween('letterboxBottomTween', FlxTween.tween(letterboxBottom, {y: FlxG.height}, 1, {
@@ -1197,10 +1201,10 @@ class PlayState extends SuffState {
 		}
 		reloadRevealUI();
 		if (moveIn) {
-			doTween('shootButtonMoveTween', FlxTween.tween(shootButton, {x: 0}, 0.5, {ease: FlxEase.cubeOut}));
+			doTween('shootButtonMoveTween', FlxTween.tween(shootButton, {x: ScreenSafeZone.X}, 0.5, {ease: FlxEase.cubeOut}));
 			doTween('skillCardsGroupMoveTween', FlxTween.tween(skillCardsGroup, {x: skillCardsGroupPaddingX}, 0.5, {ease: FlxEase.cubeOut}));
 			doTween('uiBGGroupMoveTween', FlxTween.tween(uiBGGroup, {x: 0}, 0.25, {ease: FlxEase.cubeOut}));
-			doTween('uiRevealGroupMoveTween', FlxTween.tween(uiRevealGroup, {x: shootButton.width}, 0.325, {ease: FlxEase.cubeOut}));
+			doTween('uiRevealGroupMoveTween', FlxTween.tween(uiRevealGroup, {x: ScreenSafeZone.X + shootButton.width}, 0.325, {ease: FlxEase.cubeOut}));
 		} else {
 			doTween('shootButtonMoveTween', FlxTween.tween(shootButton, {x: -shootButton.width}, 0.5, {ease: FlxEase.cubeOut}));
 			doTween('skillCardsGroupMoveTween', FlxTween.tween(skillCardsGroup, {x: -skillCardsGroup.width}, 0.5, {ease: FlxEase.cubeOut}));

@@ -58,8 +58,8 @@ class GalleryMainMenuState extends SuffState {
 			envelopes.add(envelope);
 		}
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.onClick = function() {
 			exitMenu();
 		};

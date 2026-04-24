@@ -45,7 +45,7 @@ class PreloadState extends SuffState {
 		#else
 		loadShit();
 		#end
-		FlxG.mouse.visible = false;
+		CursorHandler.cursorVisible = false;
 	}
 
 	function loadShit() {
@@ -54,31 +54,33 @@ class PreloadState extends SuffState {
 		preloadTxt.text = Language.getPhrase('preloadMenu.progress.' + loadingTexts[loadingProgress]);
 		#end
 		new FlxTimer().start(#if !html5 FlxG.elapsed #else 0 #end, function(_) {
-			switch (loadingProgress) {
-				case 0:
+			switch (loadingTexts[loadingProgress]) {
+				case 'characters':
 					CharacterManager.initialize(#if html false #end);
-				case 1:
+				case 'gameplay':
 					GameplayManager.initialize();
-				case 2:
+				case 'music':
 					#if desktop
 					var musicList = Utilities.textFileToArray('data/extras/jukebox/musicList.txt', true);
 					for (music in musicList) {
 						Paths.music(music);
 					}
 					#end
-				case 3:
+				case 'achievements':
 					Achievements.initialize();
-				case 4:
+				case 'toasts':
 					MusicToast.initialize();
 					AchievementToast.initialize();
-				case 5:
+				case 'tooltip':
 					Tooltip.initialize();
-				case 6:
-					CustomCursorHandler.initialize();
+					// shhhhh
+					ScreenSafeZone.recalculateConstants();
+				case 'cursor':
+					CursorHandler.initialize();
 					#if !html5
-					FlxG.mouse.visible = true;
+					CursorHandler.cursorVisible = true;
 					#end
-				case 7:
+				case 'splashes':
 					SplashManager.parseSplashes();
 			}
 			if (loadingProgress >= loadingTexts.length - 1)
@@ -117,6 +119,7 @@ class PreloadState extends SuffState {
 		
 		ya know what whatever
 		 */
+		#if _ALLOW_EASTER_EGGS
 		if ((Date.now().getHours() == 21 && Date.now().getMinutes() == 21)) {
 			var originalDimensions:Array<Float> = [bg.width, bg.height];
 			bg.loadGraphic(Paths.image('ui/menus/preload/nextUpdateLeakBroTrustMeBroImNotCappingBro'));
@@ -124,13 +127,15 @@ class PreloadState extends SuffState {
 			bg.updateHitbox();
 			preloadTxt.visible = false;
 			SuffState.playUISound(Paths.sound('void'));
-			new FlxTimer().start(0.5, function(_) {
+			new FlxTimer().start(1, function(_) {
 				FlxG.camera.fade(0xFF000000, 0, false);
 				new FlxTimer().start(4.0, function(_) {
 					SuffState.switchState(new InitStartupState());
 				});
 			});
-		} else {
+		} else
+		#end
+		{
 			preloadTxt.text = Language.getPhrase('preloadMenu.finished');
 			FlxG.camera.fade(0xFF000000, 1, false, function() {
 				SuffState.switchState(new InitStartupState());

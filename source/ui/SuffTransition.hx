@@ -83,8 +83,8 @@ class SuffTransition extends SuffSubState {
 			case TILES:
 				var imageList = Paths.readDirectories('images/ui/transitions/tiles', 'images/ui/transitions/tiles/tileList.txt', 'png');
 
-				for (h in 0...Math.ceil(FlxG.height / blockSize)) {
-					for (w in 0...Math.ceil(FlxG.width / blockSize)) {
+				for (h in 0...Math.ceil(FlxG.height / blockSize) + 1) {
+					for (w in 0...Math.ceil(FlxG.width / blockSize) + 1) {
 						var tran:SuffTransitionBlock = new SuffTransitionBlock(w * blockSize - (FlxG.width % blockSize) / 2,
 							h * blockSize - (FlxG.height % blockSize) / 2, imageList[FlxG.random.int(0, imageList.length - 1)], blockSize,
 							(w + h) % 2 == 0 ? 0xFF000000 : 0xFF202020);
@@ -226,7 +226,7 @@ class SuffTransition extends SuffSubState {
 	}
 
 	function startLoading(showText:Bool = true) {
-		FlxG.mouse.visible = false;
+		CursorHandler.cursorVisible = false;
 		if (finishCallback != null) {
 			loadingTxt.visible = showText;
 			finishCallback();
@@ -234,7 +234,7 @@ class SuffTransition extends SuffSubState {
 	}
 
 	function endLoading() {
-		FlxG.mouse.visible = true;
+		CursorHandler.cursorVisible = true;
 		loadingTxt.visible = false;
 	}
 

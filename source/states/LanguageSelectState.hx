@@ -46,6 +46,9 @@ class LanguageSelectState extends SuffState {
 		bgOverlay.alpha = 0.2;
 		bgOverlay.visible = false;
 		bgOverlay.antialiasing = !Preferences.data.enableForcedAliasing;
+		bgOverlay.setGraphicSize(FlxG.width, FlxG.height);
+		bgOverlay.updateHitbox();
+		bgOverlay.screenCenter();
 		add(bgOverlay);
 
 		ajuniga = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/ajuniga'));
@@ -119,7 +122,9 @@ class LanguageSelectState extends SuffState {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
 					FlxG.resetState();
-					Main.debugText.reloadFont();
+					if (Main.debugText != null) {
+						Main.debugText.reloadFont();
+					}
 				} else {
 					SuffState.playUISound(Paths.sound('ui/invalid'));
 				}
@@ -135,7 +140,7 @@ class LanguageSelectState extends SuffState {
 		add(selectorLeft);
 		add(selectorRight);
 
-		title = new FlxText(0, 64, (FlxG.width - languageOverlay.width) / 2 - 64, Language.getPhrase('languageMenu.title'));
+		title = new FlxText(0, 64 + ScreenSafeZone.Y, (FlxG.width - languageOverlay.width) / 2 - 64, Language.getPhrase('languageMenu.title'));
 		title.setFormat(Paths.font('default'), 48, textColor);
 		title.x = -title.width;
 		add(title);
@@ -150,8 +155,8 @@ class LanguageSelectState extends SuffState {
 		githubButton.x = -githubButton.width;
 		add(githubButton);
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.btnTextColor = exitButton.btnTextColorHovered = exitButton.btnTextColorClicked = textColor;
 		exitButton.btnOutlineColor = exitButton.btnOutlineColorHovered = exitButton.btnOutlineColorClicked = textColor;
 		exitButton.btnBGColor = exitButton.btnBGColorHovered = exitButton.btnBGColorClicked = leBGColor;
@@ -201,7 +206,7 @@ class LanguageSelectState extends SuffState {
 			else
 				text.font = Paths.font('default');
 			text.x = -text.width;
-			text.y = FlxG.height - 32 - text.height * (num + 1);
+			text.y = FlxG.height - 32 - text.height * (num + 1) - ScreenSafeZone.Y;
 			titleTextY = text.y;
 			FlxTween.tween(text, {x: 32}, 0.75, {
 				ease: FlxEase.quintOut,
@@ -213,7 +218,7 @@ class LanguageSelectState extends SuffState {
 		titleText.color = textColor;
 		titleText.x = -titleText.width;
 		titleText.y = titleTextY - titleText.height;
-		FlxTween.tween(titleText, {x: 32}, 0.75, {
+		FlxTween.tween(titleText, {x: 32 + ScreenSafeZone.X}, 0.75, {
 			ease: FlxEase.quintOut
 		});
 		contributorText.add(titleText);
@@ -306,15 +311,15 @@ class LanguageSelectState extends SuffState {
 				ease: FlxEase.quintOut
 			});
 
-			FlxTween.tween(title, {x: 32}, 0.75, {
+			FlxTween.tween(title, {x: 32 + ScreenSafeZone.X}, 0.75, {
 				ease: FlxEase.quintOut,
 				startDelay: 0
 			});
-			FlxTween.tween(description, {x: 32}, 0.75, {
+			FlxTween.tween(description, {x: 32 + ScreenSafeZone.X}, 0.75, {
 				ease: FlxEase.quintOut,
 				startDelay: 0.25
 			});
-			FlxTween.tween(githubButton, {x: 32}, 0.75, {
+			FlxTween.tween(githubButton, {x: 32 + ScreenSafeZone.X}, 0.75, {
 				ease: FlxEase.quintOut,
 				startDelay: 0.5
 			});
@@ -329,7 +334,7 @@ class LanguageSelectState extends SuffState {
 			}
 			ajuniga.setPosition(FlxG.width * 0.6, FlxG.height * 0.4);
 			ajuniga.scale.set(1.5, 1.5);
-			title.x = description.x = githubButton.x = 32;
+			title.x = description.x = githubButton.x = 32 + ScreenSafeZone.X;
 		}
 		if (!atWarningState)
 			SuffState.playMusic('language');

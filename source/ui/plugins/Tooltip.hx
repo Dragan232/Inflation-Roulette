@@ -51,6 +51,9 @@ class Tooltip extends FlxSpriteGroup {
 			return value;
 		instance.visible = false;
 
+		if (Preferences.data.hideTooltip)
+			return value;
+
 		instance.tooltipText.font = Paths.font('default');
 		instance.tooltipText.text = text;
 		var experimental = new FlxText(0, 0, 0, text);
@@ -63,7 +66,7 @@ class Tooltip extends FlxSpriteGroup {
 		instance.bg.updateHitbox();
 
 		instance.bgOutline.loadGraphic(Utilities.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF));
-		instance.visible = (FlxG.mouse.visible) && (text.length > 0);
+		instance.visible = (CursorHandler.cursorVisible) && (text.length > 0);
 		return value;
 	}
 
@@ -72,9 +75,14 @@ class Tooltip extends FlxSpriteGroup {
 			return;
 		}
 		instance.camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
+		#if !mobile
 		var leMousePos = FlxG.mouse.getScreenPosition(this.camera);
 		instance.x = FlxMath.bound(leMousePos.x + position.x, 0, FlxG.width - instance.bg.width);
 		instance.y = FlxMath.bound(leMousePos.y + position.y, 0, FlxG.height - instance.bg.height);
+		#else
+		instance.x = FlxG.width - instance.bg.width - ScreenSafeZone.X;
+		instance.y = FlxG.height - instance.bg.height - ScreenSafeZone.Y;
+		#end
 
 		super.update(elapsed);
 	}

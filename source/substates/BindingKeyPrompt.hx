@@ -18,10 +18,10 @@ class BindingKeyPrompt extends SuffSubState {
 		bg.alpha = 0.625;
 		add(bg);
 
-		var promptBG = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/controls/prompt'));
+		var promptBG = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/box'));
 		promptBG.color = 0x606060;
 		promptBG.alpha = 0.75;
-		promptBG.setGraphicSize(800, 500);
+		promptBG.setGraphicSize(FlxG.width / 1280 * 800, FlxG.height / 720 * 500);
 		promptBG.updateHitbox();
 		promptBG.antialiasing = !Preferences.data.enableForcedAliasing;
 		promptBG.screenCenter();

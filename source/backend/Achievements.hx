@@ -50,6 +50,7 @@ class Achievements {
 			hideFromMenu: true,
 			resettable: false
 		});
+		#if (_ALLOW_EASTER_EGGS && !mobile)
 		createAchievement('allEasterEggs', {
 			tier: GOOD,
 			type: LIST,
@@ -61,6 +62,7 @@ class Achievements {
 			// This might not be a good idea.
 			hideItems: true
 		});
+		#end
 
 		for (id => data in achievementsList) {
 			switch (data.type) {

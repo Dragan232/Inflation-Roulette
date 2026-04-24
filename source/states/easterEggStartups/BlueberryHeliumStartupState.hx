@@ -20,7 +20,7 @@ class BlueberryHeliumStartupState extends SuffState {
 		" - src/__boot__.cpp",
 		" - src/ui/objects/AddonMenuBG.cpp",
 		" - src/ui/objects/GameLogo.cpp",
-		" - src/ui/plugins/CustomCursorHandler.cpp",
+		" - src/ui/plugins/CursorHandler.hx.cpp",
 		" - src/backend/Constants.cpp",
 		" - src/objects/particles/ConfettiEmitter.cpp",
 		" - src/ui/plugins/MusicToast.cpp",

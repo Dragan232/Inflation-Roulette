@@ -15,10 +15,12 @@ class SaveVariables {
 	public var alwaysPlayMainMenuAnims:Bool = false;
 	public var cameraSpeed:Float = 0.75;
 	public var cameraEffectIntensity:Float = 1;
+	public var screenSafeZone:Float = 0;
 	public var enableLetterbox:Bool = true;
 	public var showMusicToast:Bool = false;
 	public var useBuiltInCursor:Bool = true;
 	public var hideHUD:Bool = false;
+	public var hideTooltip:Bool = false;
 	public var musicVolume:Float = 0.25;
 	public var gameSoundVolume:Float = 1;
 	public var uiSoundVolume:Float = 0.5;

@@ -1,30 +1,34 @@
 package ui.objects;
 
-class SuffBooleanOption extends FlxSpriteGroup {
+class SuffBooleanOption extends SuffButton {
 	public var currentValue(default, set):Bool;
 	public var onChangeCallback:Bool->Void;
 	public var name:String = '';
-	public var hovered:Bool = false;
 
 	var outline:FlxSprite;
 	var parent:FlxSprite;
 
-	public var tooltipText:String = '';
-
 	public function new(x:Float, y:Float, callback:Bool->Void, defaultValue:Bool = false) {
-		super(x, y);
 		onChangeCallback = callback;
 
 		outline = new FlxSprite();
 		outline.frames = Paths.sparrowAtlas('ui/menus/options/boolean/outline');
 		outline.animation.addByPrefix('true', 'on', 24, false);
 		outline.animation.addByPrefix('false', 'off', 24, false);
-		add(outline);
+		outline.animation.play('true');
+		outline.updateHitbox();
+		super(x, y, outline.width, outline.height, false);
+		this.onClick = function() {
+			this.currentValue = !this.currentValue;
+			onChangeCallback(this.currentValue);
+		}
 
 		parent = new FlxSprite();
 		parent.frames = Paths.sparrowAtlas('ui/menus/options/boolean/base');
 		parent.animation.addByPrefix('true', 'on', 24, false);
 		parent.animation.addByPrefix('false', 'off', 24, false);
+
+		add(outline);
 		add(parent);
 
 		this.currentValue = defaultValue;
@@ -36,24 +40,8 @@ class SuffBooleanOption extends FlxSpriteGroup {
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		if (FlxG.mouse.overlaps(parent, this.camera) && visible) {
-			if (!hovered) {
-				SuffState.playUISound(Paths.sound('ui/buttonHover'));
-				Tooltip.text = tooltipText;
-				outline.visible = true;
-				hovered = true;
-			}
-			if (FlxG.mouse.justPressed) {
-				currentValue = !currentValue;
-				SuffState.playUISound(Paths.sound('ui/toggle' + Utilities.capitalize(currentValue + '')));
-				onChangeCallback(currentValue);
-			}
-		} else {
-			if (hovered)
-				Tooltip.text = '';
-			outline.visible = false;
-			hovered = false;
-		}
+
+		outline.visible = this.hovered;
 	}
 
 	private function set_currentValue(value:Bool):Bool {

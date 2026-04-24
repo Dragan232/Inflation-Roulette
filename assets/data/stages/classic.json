@@ -1,5 +1,5 @@
 {
-	"stageCameraZoom": 0.8,
+	"stageCameraZoom": 0.9,
 	"characterCameraZoom": 1.2,
 	"cameraBounds": [-640, -240, 2560, 1080],
 	"backgroundObjects": [
@@ -22,7 +22,7 @@
 			"scrollFactor": [0.5, 0.8]
 		}
 	],
-	"characterX": [217, 1062],
+	"characterX": [-420, 420],
 	"characterY": 690,
 	"gunY": 520,
 	"gunScrollFactor": [1.25, 1.15],

@@ -3,6 +3,7 @@ package ui.objects;
 class SuffSliderOption extends FlxSpriteGroup {
 	public var currentValue:Float;
 	public var onChangeCallback:Float->Void;
+	public var onScrollCallback:Float->Void;
 	public var displayFunction:Float->String;
 	public var name:String = '';
 	public var hovered:Bool = false;
@@ -21,9 +22,11 @@ class SuffSliderOption extends FlxSpriteGroup {
 	var parentActualX:Float = 0;
 
 	public function new(x:Float, y:Float, callback:Float->Void, rangeMin:Null<Float> = null, rangeMax:Null<Float> = null, step:Float = 0.05,
-			displayFunction:Float->String = null, defaultValue:Float = 0) {
+			displayFunction:Float->String = null, defaultValue:Float = 0, scrollCallback:Float->Void = null) {
 		super(x, y);
 		onChangeCallback = callback;
+		if (scrollCallback != null)
+			onScrollCallback = scrollCallback;
 		this.displayFunction = function(value:Float):String {
 			return Math.round(value * 100) + '%';
 		}
@@ -38,22 +41,23 @@ class SuffSliderOption extends FlxSpriteGroup {
 		// trace(range);
 
 		outline = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/slider/bar'));
-		add(outline);
 
 		parent = new FlxSprite();
 		parent.frames = Paths.sparrowAtlas('ui/menus/options/slider/switch');
 		parent.animation.addByPrefix('idle', 'idle', 24, true);
 		parent.animation.addByPrefix('hovered', 'hovered', 24, true);
-		add(parent);
 
 		displayText = new FlxText(0, outline.height, outline.width, '');
 		displayText.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER);
-		add(displayText);
 
 		minX = outline.x;
 		maxX = outline.x + outline.width - parent.width;
 		parent.x = FlxMath.lerp(minX, maxX, Utilities.invLerp(range[0], range[1], defaultValue));
 		parentActualX = parent.x;
+
+		add(outline);
+		add(parent);
+		add(displayText);
 
 		recalculateValue(false);
 
@@ -65,7 +69,7 @@ class SuffSliderOption extends FlxSpriteGroup {
 	}
 
 	function recalculateValue(callback:Bool = true) {
-		currentValue = FlxMath.lerp(range[0], range[1], Utilities.invLerp(minX, maxX, parent.x));
+		currentValue = FlxMath.lerp(range[0], range[1], Utilities.invLerp(minX, maxX, parent.x - this.x));
 		if (callback)
 			onChangeCallback(currentValue);
 		setDisplayTextText(currentValue);
@@ -78,8 +82,11 @@ class SuffSliderOption extends FlxSpriteGroup {
 		var leStep = step;
 		var leSnappedValue = Math.round(leActualValue / leStep) * leStep;
 		var leSnappedPercent = Utilities.invLerp(range[0], range[1], leSnappedValue);
-		parent.x = FlxMath.lerp(minX, maxX, leSnappedPercent);
+		parent.x = this.x + FlxMath.lerp(minX, maxX, leSnappedPercent);
 
+		if (onScrollCallback != null) {
+			onScrollCallback(leSnappedValue);
+		}
 		setDisplayTextText(leSnappedValue);
 	}
 
@@ -95,6 +102,13 @@ class SuffSliderOption extends FlxSpriteGroup {
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+		if (pressed) {
+			updateSlider();
+			if (FlxG.mouse.justReleased) {
+				pressed = false;
+				recalculateValue();
+			}
+		}
 		if (FlxG.mouse.overlaps(parent, this.camera) && visible) {
 			if (!hovered) {
 				SuffState.playUISound(Paths.sound('ui/buttonHover'));
@@ -110,13 +124,6 @@ class SuffSliderOption extends FlxSpriteGroup {
 			if (hovered)
 				Tooltip.text = '';
 			hovered = false;
-		}
-		if (pressed) {
-			updateSlider();
-			if (FlxG.mouse.justReleased) {
-				pressed = false;
-				recalculateValue();
-			}
 		}
 	}
 }
