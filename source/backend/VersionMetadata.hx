@@ -2,9 +2,8 @@ package backend;
 
 class VersionMetadata {
 	public static function getVersionName(curVersion:String) {
-		var version = curVersion.split('-');
-		var arr = version[0].split('.');
-		var state:String = version[1];
+		var arr = curVersion.split('.');
+		var state:Array<String> = haxe.macro.Compiler.getDefine('versionState').split('.');
 		var text = Language.getPhrase('game.version.name.major.' + arr[0]);
 		appendices = [];
 		if (arr[1] != null && Std.parseInt(arr[1]) > 0) {
@@ -16,7 +15,7 @@ class VersionMetadata {
 			}
 		}
 		if (state != null) {
-			addAppendix(Language.getPhrase('game.version.name.state.' + state.charAt(0), [state.substr(1, state.length - 1)]));
+			addAppendix(Language.getPhrase('game.version.name.state.' + state[0], [state[1]]));
 		}
 		if (appendices.length > 0) {
 			appendices.push(')');

@@ -60,7 +60,7 @@ class GamemodeSelectSubState extends SuffSubState {
 		}
 
 		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('gamemodeSelect.title'), 48);
-		var headingTextTargetY:Int = 4;
+		var headingTextTargetY:Float = 4;
 		headingText.alpha = 0;
 		headingText.x = (FlxG.width - headingText.width) / 2;
 		headingText.y = -headingText.height;
@@ -69,8 +69,8 @@ class GamemodeSelectSubState extends SuffSubState {
 		});
 		add(headingText);
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.onClick = function() {
 			exitMenu();
 		};

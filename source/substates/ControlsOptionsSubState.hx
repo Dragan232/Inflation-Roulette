@@ -2,17 +2,20 @@ package substates;
 
 import ui.objects.SuffIconButton;
 import flixel.group.FlxSpriteContainer;
+import ui.objects.SuffScrollBar;
 
 class ControlsOptionsSubState extends SuffSubState {
 	var bg:FlxSprite;
 	var controlsGroup:FlxSpriteContainer = new FlxSpriteContainer();
 	public static var keyBindButtons:Array<Map<String, SuffButton>> = [];
-	var scrollBar:FlxSprite;
+	var scrollBar:SuffScrollBar;
 	public function new() {
 		super();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/controls/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/bg'));
 		bg.color = 0x303030;
+		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.updateHitbox();
 		add(bg);
 
 		add(controlsGroup);
@@ -25,21 +28,18 @@ class ControlsOptionsSubState extends SuffSubState {
 			exitOptionsMenu();
 		};
 		add(exitButton);
-		
-		var scrollBarBG = new FlxSprite().makeGraphic(30, FlxG.height, 0xFFFFFFFF);
-		scrollBarBG.x = FlxG.width - scrollBarBG.width;
-		scrollBarBG.alpha = 0.125;
-		add(scrollBarBG);
 
-		scrollBar = new FlxSprite(scrollBarBG.x, scrollBarBG.y).makeGraphic(Std.int(scrollBarBG.width), Std.int(FlxG.height * FlxG.height / controlsGroup.height), 0xFFFFFFFF);
-		scrollBar.alpha = 0.25;
-		scrollBar.active = false;
+		scrollBar = new SuffScrollBar(0, 0, function(percent:Float) {
+			controlsGroup.y = FlxMath.lerp(0, FlxG.height - (controlsGroup.height + 64), percent);
+		}, 32, controlsGroup.height + 64);
+		scrollBar.x = FlxG.width - scrollBar.width;
 		add(scrollBar);
 
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
 	}
 
 	function generateOptions() {
+		controlsY = 32;
 		controlsGroup.clear();
 		keyBindButtons = [
 			new Map<String, SuffButton>(),
@@ -119,21 +119,6 @@ class ControlsOptionsSubState extends SuffSubState {
 
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
-		
-		if (FlxG.mouse.wheel != 0) {
-			controlMenuY = FlxMath.bound(controlMenuY - FlxG.mouse.wheel * 64, 0, controlMenuMax);
-			scrollBar.y = controlMenuY / controlMenuMax * (FlxG.height - scrollBar.height);
-		} else if (FlxG.mouse.justPressed && FlxG.mouse.getPositionInCameraView(this.camera).x >= scrollBar.x) {
-			scrollBar.active = true;
-		}
-		if (scrollBar.active) {
-			var deltaY = FlxG.mouse.deltaScreenY;
-			scrollBar.y = FlxMath.bound(scrollBar.y + deltaY, 0, FlxG.height - scrollBar.height);
-			controlMenuY = scrollBar.y / (FlxG.height - scrollBar.height) * controlMenuMax;
-		}
-		if (FlxG.mouse.justReleased)
-			scrollBar.active = false;
-		controlsGroup.y = FlxMath.lerp(controlsGroup.y, -controlMenuY, elapsed * 8);
 
 		if (Controls.justPressed('exit')) {
 			exitOptionsMenu();

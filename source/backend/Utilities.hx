@@ -1,11 +1,10 @@
 package backend;
 
 import flixel.graphics.FlxGraphic;
-import flixel.util.FlxSort;
 import flixel.util.FlxSpriteUtil;
-import openfl.display.BitmapData;
 import openfl.Lib;
-import openfl.utils.Assets;
+import lime.utils.Assets;
+import openfl.utils.Assets as OpenFlAssets;
 
 /**
  * Utilities for various functions.
@@ -31,10 +30,9 @@ class Utilities {
 			}
 		}
 		#end
-		#else
-		if (Assets.exists(lePath))
-			daList = Assets.getText(lePath);
 		#end
+		if (daList == null && OpenFlAssets.exists(lePath, TEXT))
+			daList = Assets.getText(lePath);
 		var leList:Array<String> = listFromString(daList);
 		while (leList.remove('') == true) {
 			leList.remove('');

@@ -65,8 +65,8 @@ class GalleryArtworkViewState extends SuffState {
 		infoText.camera = camHUD;
 		add(infoText);
 
-		zoomIn = new SuffIconButton(20, 20, 'buttons/zoomIn', null, 1);
-		zoomIn.y = FlxG.height - zoomIn.height - 20;
+		zoomIn = new SuffIconButton(20 + ScreenSafeZone.X, 20, 'buttons/zoomIn', null, 1);
+		zoomIn.y = FlxG.height - zoomIn.height - 20 - ScreenSafeZone.Y;
 		zoomIn.camera = camHUD;
 		zoomIn.onClick = function() {
 			changeZoom(0.1);
@@ -74,7 +74,7 @@ class GalleryArtworkViewState extends SuffState {
 		add(zoomIn);
 
 		zoomOut = new SuffIconButton(zoomIn.x + zoomIn.width + 10, 20, 'buttons/zoomOut', null, 1);
-		zoomOut.y = FlxG.height - zoomOut.height - 20;
+		zoomOut.y = zoomIn.y;
 		zoomOut.camera = camHUD;
 		zoomOut.onClick = function() {
 			changeZoom(-0.1);
@@ -82,7 +82,7 @@ class GalleryArtworkViewState extends SuffState {
 		add(zoomOut);
 
 		zoomReset = new SuffIconButton(zoomOut.x + zoomOut.width + 10, 20, 'buttons/zoomReset', null, 1);
-		zoomReset.y = FlxG.height - zoomReset.height - 20;
+		zoomReset.y = zoomOut.y;
 		zoomReset.camera = camHUD;
 		zoomReset.onClick = function() {
 			cameraPos.x = FlxG.width / 2;
@@ -94,8 +94,8 @@ class GalleryArtworkViewState extends SuffState {
 		};
 		add(zoomReset);
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.camera = camHUD;
 		exitButton.onClick = function() {
 			exitMenu();
@@ -114,18 +114,27 @@ class GalleryArtworkViewState extends SuffState {
 		if (Controls.justPressed('exit')) {
 			exitMenu();
 		}
-		if (FlxG.mouse.pressed) {
-			var deltaX:Float = FlxG.mouse.deltaScreenX;
-			var deltaY:Float = FlxG.mouse.deltaScreenY;
-			cameraPos.x = Std.int(cameraPos.x - deltaX);
-			cameraPos.y = Std.int(cameraPos.y - deltaY);
-			updateCameraPos();
-			updateInfoText();
+		if (panning) {
+			if (FlxG.mouse.pressed) {
+				var deltaX:Float = FlxG.mouse.deltaScreenX;
+				var deltaY:Float = FlxG.mouse.deltaScreenY;
+				cameraPos.x = Std.int(cameraPos.x - deltaX);
+				cameraPos.y = Std.int(cameraPos.y - deltaY);
+				updateCameraPos();
+				updateInfoText();
+			}
+			if (FlxG.mouse.released)
+				panning = false;
+		} else {
+			if (FlxG.mouse.justPressed)
+				panning = true;
 		}
 		if (FlxG.mouse.wheel != 0) {
 			changeZoom(FlxG.mouse.wheel * 0.1);
 		}
 	}
+
+	var panning:Bool = false;
 
 	function updateCameraPos() {
 		cameraPos.x = FlxMath.bound(cameraPos.x, (FlxG.width - art.width) / 2, (FlxG.width + art.width) / 2);
@@ -136,8 +145,8 @@ class GalleryArtworkViewState extends SuffState {
 		var camX = Std.int(FlxMath.lerp(0, art.width - 1, (cameraPos.x - (FlxG.width - art.width) / 2) / art.width));
 		var camY = Std.int(FlxMath.lerp(0, art.height - 1, (cameraPos.y - (FlxG.height - art.height) / 2) / art.height));
 		infoText.text = '[${camX}, ${camY}]\n${Std.int(FlxG.camera.zoom * 100)}%';
-		infoText.x = FlxG.width - infoText.width;
-		infoText.y = FlxG.height - infoText.height;
+		infoText.x = FlxG.width - infoText.width - 20 - ScreenSafeZone.X;
+		infoText.y = FlxG.height - infoText.height - 20 - ScreenSafeZone.Y;
 	}
 
 	function changeZoom(delta:Float = 0) {

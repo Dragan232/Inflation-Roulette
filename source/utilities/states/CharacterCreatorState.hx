@@ -22,7 +22,7 @@ import flixel.addons.ui.FlxUINumericStepper;
 import ui.addons.SuffUITabMenu;
 
 class CharacterCreatorState extends UtilitiesBaseMenuState {
-	public static final version:String = '1.0.0';
+	public static final version:String = '1.1.0';
 
 	public static var metadata:SpriteProjectMetadata;
 	public static var spriteData:SpriteProjectSpritedata;

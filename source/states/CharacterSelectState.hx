@@ -80,12 +80,12 @@ class CharacterSelectState extends SuffState {
 			characterList.push('random');
 		}
 
-		/*
-			for (i in 0...20) { // For debug purposes only
-				characterList.push('goober');
-				characterList.push('random');
-			}
-		 */
+		for (i in 0...20) {
+			characterList.push('goober');
+			characterList.push('shibanou');
+			characterList.push('chester');
+			characterList.push('asimo');
+		}
 
 		stageGroup = new FlxSpriteGroup();
 		add(stageGroup);
@@ -142,7 +142,7 @@ class CharacterSelectState extends SuffState {
 			Std.int(FlxG.height * cardOccupicationHeight), 0xFF000000);
 
 		var innerMarginRight = new FlxSprite(fadeWidth,
-			0).makeGraphic(Std.int((FlxG.width - maxNumberInRow * calculatedWidth) / 2 - fadeWidth), Std.int(FlxG.height * cardOccupicationHeight), 0xFF000000);
+			0).makeGraphic(Std.int((FlxG.width - maxNumberInRow * calculatedWidth) / 2 - fadeWidth), Std.int(FlxG.height * cardOccupicationHeight + 100), 0xFF000000);
 
 		description = new CharacterSelectText(0, 0, null);
 		description.y = FlxG.height - description.height;
@@ -282,8 +282,8 @@ class CharacterSelectState extends SuffState {
 		}
 
 		leftButton = new SuffButton(0, 0, null, Paths.image('ui/icons/buttons/left'), null, 100, 100);
-		leftButton.x = marginLeft.x + (marginLeft.width - leftButton.width) / 2;
-		leftButton.y = marginLeft.y + (marginLeft.height - leftButton.height) / 2;
+		leftButton.x = marginLeft.x + marginLeft.width - leftButton.width - 32;
+		leftButton.y = marginLeft.y + (FlxG.height * cardOccupicationHeight - leftButton.height) / 2;
 		leftButton.onClick = function() {
 			changePage(-1);
 		};
@@ -291,13 +291,22 @@ class CharacterSelectState extends SuffState {
 		add(leftButton);
 
 		rightButton = new SuffButton(0, 0, null, Paths.image('ui/icons/buttons/right'), null, 100, 100);
-		rightButton.x = marginRight.x + (marginRight.width - rightButton.width) / 2;
-		rightButton.y = marginRight.y + (marginRight.height - rightButton.height) / 2;
+		rightButton.x = marginRight.x + 32;
+		rightButton.y = leftButton.y;
 		rightButton.onClick = function() {
 			changePage(1);
 		};
 		rightButton.visible = lastPage > 0;
 		add(rightButton);
+
+		var exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
+		exitButton.y = FlxG.height - exitButton.height - 20 - ScreenSafeZone.Y;
+		exitButton.scrollFactor.set();
+		exitButton.onClick = function() {
+			exitFunction();
+		};
+		add(exitButton);
 
 		readySign = new ReadySign();
 		readySign.onClick = function() {
@@ -418,6 +427,19 @@ class CharacterSelectState extends SuffState {
 		});
 	}
 
+	function exitFunction() {
+		if (status == PLAYER_SETTINGS)
+			moveOnToStageSelect();
+		else if (status == STAGE_SELECT) {
+			for (banner in bannerGroup) {
+				banner.undissolve();
+			}
+			changePlayer();
+		}
+		else
+			backToMainMenu();
+	}
+
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
@@ -430,16 +452,7 @@ class CharacterSelectState extends SuffState {
 				}
 			}
 			if (Controls.justPressed('exit')) {
-				if (status == PLAYER_SETTINGS)
-					moveOnToStageSelect();
-				else if (status == STAGE_SELECT) {
-					for (banner in bannerGroup) {
-						banner.undissolve();
-					}
-					changePlayer();
-				}
-				else
-					backToMainMenu();
+				exitFunction();
 			}
 		}
 
@@ -703,7 +716,7 @@ class CharacterSelectState extends SuffState {
 	}
 
 	function findMaximumCardsPerRow(leScale:Float = 1) {
-		return Std.int((FlxG.width - margin * 2) / (Constants.CHARACTER_CARD_DIMENSIONS[0] * leScale));
+		return Std.int(FlxMath.bound((FlxG.width - margin * 2) / (Constants.CHARACTER_CARD_DIMENSIONS[0] * leScale), 1, 6));
 	}
 
 	function proceedToPlayState() {

@@ -150,7 +150,7 @@ class StageEditorState extends UtilitiesBaseMenuState {
 			addObject(object.id, obj);
 		}
 		for (num => char in characterGroup) {
-			char.x = Std.int(FlxMath.lerp(stageData.characterX[0], stageData.characterX[1], num / 3));
+			char.x = Std.int(FlxMath.lerp(FlxG.width / 2 + stageData.characterX[0], FlxG.width / 2 + stageData.characterX[1], num / 3));
 			char.y = stageData.characterY;
 		}
 		pumpGun.x = characterGroup.members[0].x - pumpGun.width / 2;
@@ -217,7 +217,7 @@ class StageEditorState extends UtilitiesBaseMenuState {
 
 		stageUI.visible = objectListUI.visible = cameraTxt.visible = characterGroup.visible = pumpGun.visible = false;
 		Main.debugText.alpha = 0;
-		FlxG.mouse.visible = false;
+		CursorHandler.cursorVisible = false;
 	}
 
 	var inScreenshotMode:Bool = false;
@@ -251,7 +251,7 @@ class StageEditorState extends UtilitiesBaseMenuState {
 	function exitScreenshotMode() {
 		inScreenshotMode = false;
 		Main.debugText.alpha = 0.5;
-		FlxG.mouse.visible = true;
+		CursorHandler.cursorVisible = true;
 		moveCamera();
 		zoomCamera();
 		stageUI.visible = objectListUI.visible = cameraTxt.visible = characterGroup.visible = pumpGun.visible = true;

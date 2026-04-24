@@ -113,8 +113,8 @@ class GalleryEntryState extends SuffState {
 		add(description);
 
 		artworkButton = new SuffIconButton(20, 20, 'buttons/artwork', null, 2);
-		artworkButton.x = FlxG.width - artworkButton.width - 20;
-		artworkButton.y = FlxG.height - artworkButton.height - 20;
+		artworkButton.x = FlxG.width - artworkButton.width - 20 - ScreenSafeZone.X;
+		artworkButton.y = FlxG.height - artworkButton.height - 20 - ScreenSafeZone.Y;
 		artworkButton.onClick = function() {
 			openSubState(new GalleryArtworkSubState(envelopeData.id, envelopeData.artwork));
 		};
@@ -137,15 +137,15 @@ class GalleryEntryState extends SuffState {
 
 			characterButton = new SuffIconButton(20, 20, 'buttons/character', null, 2);
 			characterButton.x = artworkButton.x - artworkButton.width - 20;
-			characterButton.y = FlxG.height - characterButton.height - 20;
+			characterButton.y = artworkButton.y;
 			characterButton.onClick = function() {
 				toggleCharacter();
 			}
 			add(characterButton);
 		}
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.onClick = function() {
 			exitMenu();
 		};

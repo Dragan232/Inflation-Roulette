@@ -34,7 +34,7 @@
 			"scrollFactor": [0.6, 0.8]
 		}
 	],
-	"characterX": [217, 1062],
+	"characterX": [-420, 420],
 	"characterY": 690,
 	"gunY": 520,
 	"gunScrollFactor": [1.25, 1.15],

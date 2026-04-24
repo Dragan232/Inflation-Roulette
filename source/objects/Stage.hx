@@ -37,7 +37,7 @@ class Stage extends FlxBasic {
 		}
 	}
 
-	public static function parsePosition(object:StageObject, pos:Array<String>):Array<Float> {
+	public static function parsePosition(object:FlxSprite, pos:Array<String>):Array<Float> {
 		var x:Float = 0;
 		var y:Float = 0;
 		if (pos[0].startsWith('c')) {

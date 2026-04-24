@@ -86,7 +86,7 @@ class MainMenuState extends SuffState {
 		add(grid);
 
 		overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
-		overlay.x = -FlxG.width / 2 - 40;
+		overlay.x = -overlay.width / 2 + (FlxG.width - overlay.width) / 2 + 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF105060;
 		overlay.alpha = 0.75;
@@ -128,8 +128,8 @@ class MainMenuState extends SuffState {
 		for (i in 0...topInfoTextList.length) {
 			var infoText = new FlxText(0, 0, 0, topInfoTextList[i]);
 			infoText.setFormat(Paths.font((i == 0) ? 'default' : 'unicode'), 16, FlxColor.WHITE);
-			infoText.x = FlxG.width - infoText.width;
-			infoText.y = infoText.height * i;
+			infoText.x = FlxG.width - infoText.width - ScreenSafeZone.X;
+			infoText.y = infoText.height * i + ScreenSafeZone.Y;
 			topInfoTextGroup.add(infoText);
 		}
 
@@ -147,16 +147,16 @@ class MainMenuState extends SuffState {
 		for (i in 0...bottomInfoTextList.length) {
 			var infoText = new FlxText(0, 0, 0, bottomInfoTextList[i]);
 			infoText.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
-			infoText.x = FlxG.width - infoText.width;
-			infoText.y = FlxG.height - infoText.height * (bottomInfoTextList.length - i);
+			infoText.x = FlxG.width - infoText.width - ScreenSafeZone.X;
+			infoText.y = FlxG.height - infoText.height * (bottomInfoTextList.length - i) - ScreenSafeZone.Y;
 			bottomInfoTextGroup.add(infoText);
 		}
 
 		var creditImage = Paths.image('ui/menus/nicklySufferLogo');
 		var creditImageHovered = Paths.image('ui/menus/nicklySufferLogoHighlighted');
-		creditsButton = new SuffButton(10, 0, '', creditImage, creditImageHovered, creditImage.width * 2, creditImage.height * 2, false);
+		creditsButton = new SuffButton(10 + ScreenSafeZone.X, 0, '', creditImage, creditImageHovered, creditImage.width * 2, creditImage.height * 2, false);
 		creditsButton.btnTextColorHovered = 0xFFFFFF00;
-		creditsButton.y = FlxG.height - creditsButton.height - 10;
+		creditsButton.y = FlxG.height - creditsButton.height - 10 - ScreenSafeZone.Y;
 		creditsButton.onClick = function() {
 			menuButtonFunctions('credits');
 		}
@@ -174,8 +174,8 @@ class MainMenuState extends SuffState {
 					button.disabled = true;
 					button.tooltipText = Language.getPhrase('mainMenu.$item.tooltip.disabled');
 				}
-				button.x = ((FlxG.width / 2 - 40) - menuItemSize.x) / 2 + (curMenuItemSize.x + menuItemPadding.x) * iIndex;
-				button.y = ((FlxG.height - (FlxG.height - creditsButton.y)) - menuItemSize.y) / 2 + (curMenuItemSize.y + menuItemPadding.y) * jIndex;
+				button.x = (((FlxG.width - ScreenSafeZone.X * 2) / 2 - 40) - menuItemSize.x) / 2 + (curMenuItemSize.x + menuItemPadding.x) * iIndex;
+				button.y = (((FlxG.height - ScreenSafeZone.Y * 2) - ((FlxG.height - ScreenSafeZone.Y * 2) - creditsButton.y)) - menuItemSize.y) / 2 + (curMenuItemSize.y + menuItemPadding.y) * jIndex;
 				button.onClick = function() {
 					menuButtonFunctions(item);
 				};
@@ -421,7 +421,7 @@ class MainMenuState extends SuffState {
 			}
 		}
 
-		#if _ALLOW_EASTER_EGGS
+		#if (_ALLOW_EASTER_EGGS && !mobile)
 		if (FlxG.keys.firstJustPressed() != FlxKey.NONE) {
 			var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 			var keyName:String = Std.string(keyPressed);

@@ -50,7 +50,9 @@ class AchievementsState extends SuffState {
 		FlxG.camera.follow(cameraPosLerped, LOCKON);
 
 		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/bg'));
-		bg.scale.set(1.2, 1.2);
+		bg.screenCenter();
+		var ratio = Math.max(FlxG.width / Constants.ORIGINAL_FLXG_WIDTH, FlxG.height / Constants.ORIGINAL_FLXG_HEIGHT);
+		bg.scale.set(ratio + 0.2, ratio + 0.2);
 		bg.scrollFactor.set(0.8, 0);
 		add(bg);
 
@@ -123,7 +125,7 @@ class AchievementsState extends SuffState {
 		achievementProgress.scrollFactor.set();
 		add(achievementProgress);
 
-		exitButton = new SuffIconButton(10, 10, 'buttons/exit', null, 2);
+		exitButton = new SuffIconButton(20 + ScreenSafeZone.X, 20, 'buttons/exit', null, 2);
 		exitButton.y = -exitButton.height;
 		exitButton.scrollFactor.set();
 		exitButton.onClick = function() {
@@ -282,7 +284,7 @@ class AchievementsState extends SuffState {
 	function showUI() {
 		if (!Preferences.data.enablePhotosensitiveMode)
 			FlxG.camera.flash(0xFFFFFFFF, 0.5);
-		FlxTween.tween(exitButton, {y: 10}, 1, {
+		FlxTween.tween(exitButton, {y: 20 + ScreenSafeZone.Y}, 1, {
 			ease: FlxEase.backOut
 		});
 		FlxTween.tween(overlay, {x: FlxG.width - overlay.width}, 0.75, {
@@ -311,8 +313,8 @@ class AchievementsState extends SuffState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		cameraPos.x = FlxG.width / 2 + (FlxG.mouse.getScreenPosition().x - FlxG.width / 2) / 64;
-		cameraPos.y = FlxG.height / 2 + (FlxG.mouse.getScreenPosition().y - FlxG.height / 2) / 32;
+		cameraPos.x = FlxG.width / 2 + (FlxG.mouse.getScreenPosition().x - FlxG.width / 2) / 32;
+		cameraPos.y = FlxG.height / 2 + (FlxG.mouse.getScreenPosition().y - FlxG.height / 2) / 16;
 
 		cameraPosLerped.x = FlxMath.lerp(cameraPosLerped.x, cameraPos.x - cameraPosOffset.x, elapsed * 8);
 		cameraPosLerped.y = FlxMath.lerp(cameraPosLerped.y, cameraPos.y - cameraPosOffset.y, elapsed * 8);

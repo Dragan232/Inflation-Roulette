@@ -1,9 +1,14 @@
 package ui.plugins;
 
-class CustomCursorHandler extends FlxBasic {
-	public static var instance:Null<CustomCursorHandler> = null;
+class CursorHandler extends FlxBasic {
+	public static var instance:Null<CursorHandler> = null;
+	public static var cursorVisible(default, set):Bool = false;
 
-	public static var enabled:Bool = true;
+	private static function set_cursorVisible(value:Bool):Bool {
+		cursorVisible = value;
+		FlxG.mouse.visible = #if !mobile cursorVisible #else false #end;
+		return value;
+	}
 
 	public function new() {
 		super();
@@ -11,12 +16,13 @@ class CustomCursorHandler extends FlxBasic {
 
 	public static function initialize() {
 		FlxG.plugins.drawOnTop = true;
-		instance = new CustomCursorHandler();
+		instance = new CursorHandler();
 		FlxG.plugins.add(instance);
+		cursorVisible = true;
 	}
 
 	override function update(elapsed:Float) {
-		if (!(instance != null && FlxG.mouse.visible))
+		if (instance == null || !cursorVisible)
 			return;
 		if (Preferences.data.useBuiltInCursor)
             Utilities.changeCursorImage('default', FlxG.mouse.pressed);

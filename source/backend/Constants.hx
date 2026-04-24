@@ -64,13 +64,18 @@ class Constants {
 
 	public static final DEFAULT_SPLASH_TEXT_COLORS:Array<FlxColor> = [0xFFFFFF00];
 
+	public static final ORIGINAL_FLXG_WIDTH:Float = 1280;
+	public static final ORIGINAL_FLXG_HEIGHT:Float = 720;
+
+	public static final LETTERBOX_RATIO:Float = #if desktop 9 / 20 #else 1 / 2.75 #end;
+
 	/**
 	 * The size of CharacterSelectCards.
 	 * 1st value is width, 2nd value is height
 	 */
 	public static final CHARACTER_CARD_DIMENSIONS:Array<Int> = [150, 200];
 
-	#if _ALLOW_EASTER_EGGS
+	#if (_ALLOW_EASTER_EGGS && !mobile)
 	public static final EASTER_EGG_INPUTS:Array<String> = ['imhighoncrack', 'blueberryhelium', 'roomoneohone', 'ibeesbees'];
 	#end
 	public static final ALPHABET_UPPERCASE:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

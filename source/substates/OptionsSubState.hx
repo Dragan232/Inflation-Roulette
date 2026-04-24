@@ -4,31 +4,29 @@ import ui.objects.SuffBooleanOption;
 import ui.objects.SuffIconButton;
 import ui.objects.SuffSliderOption;
 import states.PlayState;
+import ui.objects.SuffScrollBar;
+#if mobile
+import substates.ScreenSafeZoneSubState;
+#end
 
 class OptionsSubState extends SuffSubState {
 	public static var notInGame:Bool = true;
 
 	var bg:FlxSprite;
 	var bg2:FlxSprite;
-	var scrollBar:FlxSprite;
 	var exitButton:SuffIconButton;
+
+	var scrollBar:SuffScrollBar;
 
 	var optionsGroup:FlxSpriteGroup = new FlxSpriteGroup();
 
-	static final optionsXPadding:Float = 32;
+	static var optionsXPadding:Float = 32;
 	static final optionsYPadding:Float = 32;
-	static final scrollBarWidth:Int = 30;
 
 	var optionsMaxWidth:Float = 0;
 	var optionsY:Float = 0;
 	var optionsScrollUpperLimit:Float = 0;
 	var optionsScrollLowerLimit:Float = 0;
-	var scrollBarTween:FlxTween;
-
-	var optionsScroll:Float = 0;
-	var optionsScrollLerped:Float = 0;
-
-	static final scrollLerpFactor:Float = 10;
 
 	var touchedMusicOption:Bool = false;
 
@@ -46,23 +44,17 @@ class OptionsSubState extends SuffSubState {
 			SuffState.playMusic('options');
 		}
 
-		scrollBar = new FlxSprite();
-		add(scrollBar);
-
-		optionsY = optionsYPadding;
-		optionsScrollUpperLimit = optionsY;
-		optionsScrollLowerLimit = optionsY;
-
 		add(optionsGroup);
 		optionsGroup.camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
 		generateOptions();
 
-		bg2.makeGraphic(Std.int(optionsXPadding + optionsMaxWidth + optionsXPadding + scrollBarWidth), FlxG.height, FlxColor.BLACK);
+		bg2.makeGraphic(Std.int(optionsXPadding + optionsMaxWidth + optionsXPadding), FlxG.height, FlxColor.BLACK);
 		bg2.alpha = 0.375;
 
-		scrollBar.makeGraphic(scrollBarWidth, Std.int(FlxG.height * (FlxG.height / (Math.abs(optionsScrollLowerLimit) + FlxG.height))), FlxColor.WHITE);
-		scrollBar.x = bg2.width - scrollBar.width;
-		updateScrollBar();
+		scrollBar = new SuffScrollBar(bg2.width, 0, function(percent:Float) {
+			optionsGroup.y = FlxMath.lerp(0, FlxG.height - (optionsGroup.height + 64), percent);
+		}, 32, optionsGroup.height + 64);
+		add(scrollBar);
 
 		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
 		exitButton.x = FlxG.width - exitButton.width - 20;
@@ -75,13 +67,20 @@ class OptionsSubState extends SuffSubState {
 	}
 
 	function generateOptions() {
+		optionsXPadding = 32 + ScreenSafeZone.X;
+		optionsY = optionsYPadding + ScreenSafeZone.Y;
+		optionsScrollUpperLimit = optionsY;
+		optionsScrollLowerLimit = optionsY;
+
 		optionsGroup.clear();
 
 		createHeading('gameplay');
 
+		#if !mobile
 		createButtonOption('controls', function() {
 			openSubState(new ControlsOptionsSubState());
 		});
+		#end
 
 		createBooleanOption("ignoreEliminatedPlayers",
 			function(value:Bool) {
@@ -109,6 +108,18 @@ class OptionsSubState extends SuffSubState {
 		createBooleanOption('hideHUD', function(value:Bool) {
 			Preferences.data.hideHUD = value;
 		}, Preferences.data.hideHUD);
+
+		createBooleanOption('hideTooltip', function(value:Bool) {
+			Preferences.data.hideTooltip = value;
+		}, Preferences.data.hideTooltip);
+
+		#if mobile
+		if (notInGame) {
+			createButtonOption('screenSafeZone', function() {
+				openSubState(new ScreenSafeZoneSubState());
+			});
+		}
+		#end
 
 		#if desktop
 		createBooleanOption('enableFullscreen', function(value:Bool) {
@@ -182,6 +193,8 @@ class OptionsSubState extends SuffSubState {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.cameraEffectIntensity);
 
+		#if !mobile
+
 		createHeading('cursor');
 
 		createBooleanOption('useBuiltInCursor', function(value:Bool) {
@@ -193,17 +206,20 @@ class OptionsSubState extends SuffSubState {
 			Preferences.data.playCursorSounds = value;
 		}, Preferences.data.playCursorSounds);
 
+		#end
+
 		// TECHNICAL SETTINGS
 		createHeading('technical');
 
 		createSliderOption('maxFramerate', function(value:Float) {
 			Preferences.data.maxFramerate = Math.round(value);
 			PauseSubState.usedFollowLerp = 60 / FlxG.updateFramerate * 0.1 * Preferences.data.cameraSpeed;
-		}, 30, 300, 10, function(value:Float) {
+		}, 30, #if !mobile 300 #else 90 #end, 10, function(value:Float) {
 			return '' + Math.round(value);
 		}, Preferences.data.maxFramerate);
+		// Mobile framerate is capped at 90 to avoid device heating up
 
-		#if !html5
+		#if (!html5 && !mobile)
 		createBooleanOption('pauseOnUnfocus', function(value:Bool) {
 			Preferences.data.pauseOnUnfocus = value;
 		}, Preferences.data.pauseOnUnfocus);
@@ -216,10 +232,13 @@ class OptionsSubState extends SuffSubState {
 			}, Preferences.data.cacheOnGPU);
 		#end
 
+		#if !mobile
 		createBooleanOption("enableDebugKeybinds", function(value:Bool) {
 			Preferences.data.enableDebugKeybinds = value;
 		}, Preferences.data.enableDebugKeybinds);
+		#end
 
+		#if !mobile
 		// DEBUG TEXT SETTINGS
 		createHeading('debugText');
 
@@ -244,6 +263,7 @@ class OptionsSubState extends SuffSubState {
 			Preferences.data.showCurrentStateOnDebugText = value;
 			Main.debugText.updateText();
 		}, Preferences.data.showCurrentStateOnDebugText);
+		#end
 
 		var lastItem = optionsGroup.members[optionsGroup.members.length - 1];
 		optionsScrollLowerLimit = -(lastItem.y + lastItem.height + optionsYPadding);
@@ -255,7 +275,7 @@ class OptionsSubState extends SuffSubState {
 	function createHeading(name:String) {
 		if (optionsGroup.members.length > 0)
 			optionsY += 32;
-		var text:FlxText = new FlxText(32, optionsY, 0, Language.getPhrase('optionsMenu.heading.$name'));
+		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('optionsMenu.heading.$name'));
 		text.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 		optionsY += 48;
@@ -312,16 +332,6 @@ class OptionsSubState extends SuffSubState {
 		optionsY += button.height + 16;
 	}
 
-	function updateScrollBar() {
-		scrollBar.alpha = 0.375;
-
-		if (scrollBarTween != null)
-			scrollBarTween.cancel();
-		scrollBarTween = FlxTween.tween(scrollBar, {alpha: 0.15}, 4, {
-			startDelay: 1
-		});
-	}
-
 	function exitOptionsMenu() {
 		Preferences.savePrefs();
 		Preferences.loadPrefs();
@@ -337,14 +347,6 @@ class OptionsSubState extends SuffSubState {
 		}
 	}
 
-	function boundOptionMenuScroll() {
-		if (optionsScroll > 0) {
-			optionsScroll = 0;
-		} else if (optionsScroll < optionsScrollLowerLimit) {
-			optionsScroll = optionsScrollLowerLimit;
-		}
-	}
-
 	var allowMouseScrolling:Bool = true;
 
 	override public function update(elapsed:Float):Void {
@@ -353,20 +355,6 @@ class OptionsSubState extends SuffSubState {
 		if (Controls.justPressed('exit')) {
 			exitOptionsMenu();
 		}
-		if (FlxG.mouse.wheel != 0) {
-			optionsScroll += FlxG.mouse.wheel * 128;
-			boundOptionMenuScroll();
-			updateScrollBar();
-		}
-		if (allowMouseScrolling && FlxG.mouse.pressed && FlxG.mouse.getPositionInCameraView(this.camera).x >= scrollBar.x) {
-			optionsScroll = optionsScroll - (FlxG.mouse.deltaScreenY) * (FlxG.height / scrollBar.height);
-			boundOptionMenuScroll();
-			updateScrollBar();
-		}
-
-		optionsScrollLerped = FlxMath.lerp(optionsScrollLerped, optionsScroll, elapsed * scrollLerpFactor);
-		optionsGroup.y = optionsScrollLerped;
-		scrollBar.y = optionsScrollLerped / optionsScrollLowerLimit * (FlxG.height - scrollBar.height);
 
 		allowMouseScrolling = true;
 		for (opt in optionsGroup) {
