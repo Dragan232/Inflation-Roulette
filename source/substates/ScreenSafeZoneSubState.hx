@@ -97,7 +97,6 @@ class ScreenSafeZoneSubState extends SuffSubState {
 
 	function exit() {
 		Preferences.data.screenSafeZone = slider.currentValue;
-		ScreenSafeZone.recalculateConstants();
 		close();
 	}
 }

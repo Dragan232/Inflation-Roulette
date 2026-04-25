@@ -73,7 +73,10 @@ class Preferences {
 
 		for (key in Reflect.fields(data)) {
 			if (manuallyProcessedKeys.contains(key)) continue;
-			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
+			if (Reflect.getProperty(FlxG.save.data, key) == null)
+				Reflect.setField(FlxG.save.data, key, Reflect.field(defaultData, key));
+			else
+				Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
 		}
 
 		FlxG.save.bind('controls', Utilities.getSavePath());
@@ -109,6 +112,7 @@ class Preferences {
 			FlxG.save.data.keybinds = new Map<String, Array<FlxKey>>();
 		}
 		Controls.reloadKeybinds();
+		ScreenSafeZone.recalculateConstants();
 
 		FlxG.save.bind('game', Utilities.getSavePath());
 

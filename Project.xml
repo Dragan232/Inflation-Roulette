@@ -4,7 +4,6 @@
 	<app file="Inflation-Roulette" title="Inflation Roulette: Reloaded" version="3.0.0" package="com.nicklysuffer.inflationroulette" packageName="com.nicklysuffer.inflationroulette" main="Main" company="NicklySuffer" />
 
 	<set name="versionState" value="b.1" />
-
 	<haxedef name="versionState" value="${versionState}" />
 
 	<!--The HaxeFlixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
@@ -138,7 +137,7 @@
 
 	<section if="android">
 		<template path="templates"/>
-		<config:android>
+		<config:android permission="android.permission.READ_EXTERNAL_STORAGE android.permission.WRITE_EXTERNAL_STORAGE">
 			<application android:icon="@mipmap/ic_launcher"/>
 			<activity android:label="IRR"/>
 		</config:android>

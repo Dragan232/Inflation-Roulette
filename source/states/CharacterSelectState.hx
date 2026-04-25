@@ -46,6 +46,8 @@ class CharacterSelectState extends SuffState {
 	var status:CharacterSelectStatus = CHARACTER_SELECT;
 	var isExiting:Bool = false;
 
+	var fillerLeft:FlxBackdrop;
+	var fillerRight:FlxBackdrop;
 	var grid:FlxBackdrop;
 	var stageGroup:FlxSpriteGroup;
 	var stageShaderMap:Array<DissolveShader> = [];
@@ -76,20 +78,14 @@ class CharacterSelectState extends SuffState {
 		super.create();
 
 		var characterList = CharacterManager.globalCharacterList.copy();
-		if (characterList.length > 1) {
+		if (characterList.length >= 3) {
 			characterList.push('random');
-		}
-
-		for (i in 0...20) {
-			characterList.push('goober');
-			characterList.push('shibanou');
-			characterList.push('chester');
-			characterList.push('asimo');
 		}
 
 		stageGroup = new FlxSpriteGroup();
 		add(stageGroup);
 		add(bannerGroup);
+		CharacterSelectBanner.precacheBanners();
 		for (i in 0...CharacterManager.selectedCharacterList.length) {
 			var banner = new CharacterSelectBanner(i);
 			banner.onClick = function() {
@@ -102,11 +98,29 @@ class CharacterSelectState extends SuffState {
 
 			playerPages.push(curPage);
 		}
-		CharacterSelectBanner.precacheBanners();
+		bannerGroup.x = (FlxG.width - bannerGroup.width) / 2;
 
 		grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x20FFFFFF, 0x0));
 		grid.velocity.set(160, 160);
 		add(grid);
+
+		if (bannerGroup.x > 0) {
+			fillerLeft = new FlxBackdrop(Paths.image('ui/menus/filler'), Y);
+			var leScale = Math.max(1, (FlxG.width - bannerGroup.width) / 2 / fillerLeft.width);
+			fillerLeft.scale.set(leScale, leScale);
+			fillerLeft.updateHitbox();
+			fillerLeft.x = bannerGroup.x - fillerLeft.width;
+			fillerLeft.velocity.y = 40;
+			add(fillerLeft);
+
+			fillerRight = new FlxBackdrop(Paths.image('ui/menus/filler'), Y);
+			var leScale = Math.max(1, (FlxG.width - bannerGroup.width) / 2 / fillerRight.width);
+			fillerRight.scale.set(leScale, leScale);
+			fillerRight.updateHitbox();
+			fillerRight.x = bannerGroup.x + bannerGroup.width;
+			fillerRight.velocity.y = -40;
+			add(fillerRight);
+		}
 
 		selectCharacterTxt = new FlxText(0, 0, 0, Language.getPhrase('characterSelect.selectCharacter'));
 		selectCharacterTxt.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
@@ -117,8 +131,10 @@ class CharacterSelectState extends SuffState {
 
 		add(playerOutlineShadows);
 
-		playerOutline = new FlxSprite().loadGraphic(Utilities.makeBorder(Std.int(sectionWidth), Std.int(FlxG.height * (1 - cardOccupicationHeight)), 10,
+		var firstBanner = bannerGroup.members[0];
+		playerOutline = new FlxSprite().loadGraphic(Utilities.makeBorder(Std.int(firstBanner.width), Std.int(firstBanner.height), 10,
 			0xFFFFFFFF));
+		playerOutline.x = firstBanner.x;
 		add(playerOutline);
 
 		for (i in 0...shadowCount) {
@@ -171,7 +187,7 @@ class CharacterSelectState extends SuffState {
 		add(stageSelectGroup);
 		stages = GameplayManager.globalStageList.copy();
 		stages.push('random');
-		trace(stages);
+		// trace(stages);
 		for (num => i in stages) {
 			var stage:CharacterSelectStage = new CharacterSelectStage(0, 0, i);
 			stage.onClick = function() {
@@ -299,6 +315,7 @@ class CharacterSelectState extends SuffState {
 		rightButton.visible = lastPage > 0;
 		add(rightButton);
 
+		#if mobile
 		var exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
 		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.y = FlxG.height - exitButton.height - 20 - ScreenSafeZone.Y;
@@ -307,6 +324,7 @@ class CharacterSelectState extends SuffState {
 			exitFunction();
 		};
 		add(exitButton);
+		#end
 
 		readySign = new ReadySign();
 		readySign.onClick = function() {
@@ -543,6 +561,14 @@ class CharacterSelectState extends SuffState {
 		selectCharacterTxt.visible = true;
 		selectCharacterTxt.text = Language.getPhrase('characterSelect.selectStage');
 		selectCharacterTxt.screenCenter(X);
+		if (fillerLeft != null) {
+			FlxTween.cancelTweensOf(fillerLeft, ['x']);
+			FlxTween.tween(fillerLeft, {x: -fillerLeft.width}, 1, {ease: FlxEase.cubeInOut});
+		}
+		if (fillerRight != null) {
+			FlxTween.cancelTweensOf(fillerRight, ['x']);
+			FlxTween.tween(fillerRight, {x: FlxG.width}, 1, {ease: FlxEase.cubeInOut});
+		}
 		for (outline in playerOutlineShadows) {
 			outline.visible = false;
 		}
@@ -675,6 +701,14 @@ class CharacterSelectState extends SuffState {
 				var wha:CharacterSelectStage = cast stage;
 				wha.disabled = true;
 			}
+		}
+		if (fillerLeft != null) {
+			FlxTween.cancelTweensOf(fillerLeft, ['x']);
+			FlxTween.tween(fillerLeft, {x: bannerGroup.x - fillerLeft.width}, 1, {ease: FlxEase.cubeInOut});
+		}
+		if (fillerRight != null) {
+			FlxTween.cancelTweensOf(fillerRight, ['x']);
+			FlxTween.tween(fillerRight, {x: bannerGroup.x + bannerGroup.width}, 1, {ease: FlxEase.cubeInOut});
 		}
 
 		curPlayer += change;
