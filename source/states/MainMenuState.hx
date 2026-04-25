@@ -72,7 +72,6 @@ class MainMenuState extends SuffState {
 	var currentEasterEggInput:String = '';
 
 	override public function create():Void {
-		// Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
 		if (FlxG.sound.music == null || SuffState.currentMusicName == 'null') { // idk lmao

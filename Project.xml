@@ -52,7 +52,7 @@
 
 	<assets path="assets" preload="true"/>
     <section if="_ALLOW_ADDONS">
-		<assets path='addons'/>
+		<assets path='addons' unless="_BUILD_IN_ADDONS"/>
     </section>
     <section if="_ALLOW_UTILITIES">
 		<assets path='projects'/>
@@ -136,8 +136,9 @@
 	<assets path='dev/iconLinux.png' if="linux" unless="mobile" id="iconLinux" preload="true" embed="true"/>
 
 	<section if="android">
-		<template path="templates"/>
-		<config:android permission="android.permission.READ_EXTERNAL_STORAGE android.permission.WRITE_EXTERNAL_STORAGE">
+		<certificate path="dev/key.keystore" alias="com.nicklysuffer.inflation-roulette-reloaded"/>
+		<template path="dev/templates"/>
+		<config:android>
 			<application android:icon="@mipmap/ic_launcher"/>
 			<activity android:label="IRR"/>
 		</config:android>

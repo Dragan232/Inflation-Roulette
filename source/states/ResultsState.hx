@@ -124,7 +124,7 @@ class ResultsState extends SuffState {
 		}
 		trace(ranks);
 		barLeaderboard = new FlxSprite().makeGraphic(FlxG.width, 192, 0xFF000000);
-		barLeaderboard.alpha = 0.04;
+		barLeaderboard.alpha = 0.25;
 		barLeaderboard.y = barUp.height - barLeaderboard.height;
 		add(barLeaderboard);
 		for (rank => playerNum in ranks) {
@@ -499,13 +499,15 @@ class ResultsState extends SuffState {
 		FlxTween.tween(goodPlayersText, {alpha: 0.4}, 1);
 		FlxTween.tween(badPlayersText, {alpha: 0.4}, 1);
 		FlxTween.tween(grid, {alpha: 0.4}, 2);
-		FlxTween.tween(barLeaderboard, {y: barUp.height}, 1, {ease: FlxEase.cubeInOut});
-		for (num => txt in leaderboardGroup.members) {
-			FlxTween.tween(txt, {x: txt.mass}, 1, {ease: FlxEase.cubeOut, startDelay: 0.2 * (num + 1)});
-		}
 		for (txt in resultsDescGroup) {
 			txt.velocity.x = -160;
 		}
+		new FlxTimer().start(1, function(_) {
+			FlxTween.tween(barLeaderboard, {y: barUp.height}, 2, {ease: FlxEase.cubeInOut});
+			for (num => txt in leaderboardGroup.members) {
+				FlxTween.tween(txt, {x: txt.mass}, 2, {ease: FlxEase.cubeOut, startDelay: 0.2 * (num + 1)});
+			}
+		});
 	}
 
 	public static var allowSkip:Bool = true;

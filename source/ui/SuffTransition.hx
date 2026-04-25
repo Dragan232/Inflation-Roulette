@@ -85,9 +85,11 @@ class SuffTransition extends SuffSubState {
 
 				for (h in 0...Math.ceil(FlxG.height / blockSize) + 1) {
 					for (w in 0...Math.ceil(FlxG.width / blockSize) + 1) {
-						var tran:SuffTransitionBlock = new SuffTransitionBlock(w * blockSize - (FlxG.width % blockSize) / 2,
-							h * blockSize - (FlxG.height % blockSize) / 2, imageList[FlxG.random.int(0, imageList.length - 1)], blockSize,
-							(w + h) % 2 == 0 ? 0xFF000000 : 0xFF202020);
+						var tran:SuffTransitionBlock = new SuffTransitionBlock(w * blockSize,
+							h * blockSize, imageList[FlxG.random.int(0, imageList.length - 1)], blockSize,
+							(w + h) % 2 == 0 ? 0xFF202020 : 0xFF404040);
+						tran.x += (FlxG.width - blockSize * Math.ceil(FlxG.width / blockSize)) / 2;
+						tran.y += (FlxG.height - blockSize * Math.ceil(FlxG.height / blockSize)) / 2;
 						tran.visible = isTransIn;
 						trans.add(tran);
 					}
@@ -227,6 +229,7 @@ class SuffTransition extends SuffSubState {
 
 	function startLoading(showText:Bool = true) {
 		CursorHandler.cursorVisible = false;
+		Paths.clearUnusedMemory();
 		if (finishCallback != null) {
 			loadingTxt.visible = showText;
 			finishCallback();

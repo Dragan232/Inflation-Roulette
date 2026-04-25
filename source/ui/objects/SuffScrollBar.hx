@@ -61,16 +61,17 @@ class SuffScrollBar extends FlxSpriteGroup {
                 scrollingUsingMouse = false;
             }
         }
+        var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(this.camera);
         if (!scrollingUsingMouse) {
             updateScrollBar(elapsed * autoScrollVelocity);
-            if (FlxG.mouse.x >= bar.x + scrollWidth[0] && FlxG.mouse.x <= bar.x + bar.width + scrollWidth[1]) {
-                if ((FlxG.mouse.y >= bar.y && FlxG.mouse.y <= bar.y + bar.height) || scrollInBG) {
+            if (mousePos.x >= bar.x + scrollWidth[0] && mousePos.x <= bar.x + bar.width + scrollWidth[1]) {
+                if ((mousePos.y >= bar.y && mousePos.y <= bar.y + bar.height) || scrollInBG) {
                     if (FlxG.mouse.justPressed)
                         scrollingUsingMouse = true;
                 }
             }
             if (FlxG.mouse.wheel != 0) {
-                if (FlxG.mouse.x >= bar.x + mouseScrollWidth[0] && FlxG.mouse.x <= bar.x + bar.width + mouseScrollWidth[1]) {
+                if (mousePos.x >= bar.x + mouseScrollWidth[0] && mousePos.x <= bar.x + bar.width + mouseScrollWidth[1]) {
                     FlxTween.cancelTweensOf(bar, ['y']);
                     FlxTween.tween(bar, {'y': this.y + FlxMath.bound(bar.y - FlxG.mouse.wheel * 48, this.y, this.y + bg.height - bar.height)}, 0.5, {
                         ease: FlxEase.quintOut,

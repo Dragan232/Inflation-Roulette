@@ -85,20 +85,20 @@ class Constants {
 	/**
 	 * How many gurgling sound samples to use.
 	 */
-	public static final GURGLES_SAMPLE_COUNT:Int = 20;
+	public static final GURGLES_SAMPLE_COUNT:Int = #if !mobile 20 #else 10 #end;
 
 	/**
 	 * How many creaking sound samples to use.
 	 */
-	public static final CREAKS_SAMPLE_COUNT:Int = 9;
+	public static final CREAKS_SAMPLE_COUNT:Int = #if !mobile 9 #else 5 #end;
 
 	/**
 	 * How many fwoomping sound samples to use.
 	 */
-	public static final FWOOMPS_SAMPLE_COUNT:Int = 4;
+	public static final FWOOMPS_SAMPLE_COUNT:Int = #if !mobile 4 #else 2 #end;
 
 	/**
 	 * How many belching sound samples to use.
 	 */
-	public static final BELCHES_SAMPLE_COUNT:Int = 5;
+	public static final BELCHES_SAMPLE_COUNT:Int = #if !mobile 5 #else 3 #end;
 }
