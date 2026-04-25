@@ -57,6 +57,7 @@ game.version.name.major.1 = Llançament inicial
 // Another way to interpret this is the update being a piece of cloth, which is usually associated with creativity, suiting the update content.
 // If applicable, try to come up with some clever word-play or multi-interpreting phrases.
 game.version.name.major.2 = Pegat de Creativitat
+game.version.name.major.3 = Pintures Lleugeres
 // Yes. I'm using Greek letters for stylistic purposes (even tho it looks kinda offensive lmao)
 game.version.name.state.a = Alfα pública %1
 game.version.name.state.b = βeta pública %1
@@ -76,6 +77,7 @@ mainMenu.donate = Dona
 // Tooltips for buttons in the Main Menu.
 mainMenu.donate.tooltip = Teves generoses donacions ajuden a donar suport a desenvolupament d'aquest joc!
 mainMenu.donate.tooltip.disabled = Actualment, donacions estan desactivades a causa de circumstàncies de desenvolupador.\nSi vols donar suport a aquest joc, comparteix-lo amb altres!
+mainMenu.addons.tooltip.disabled = Actualment, la compilació d'Android encara no admet complements. S'implementarà en el futur.\nEstiga atents!
 
 // When clicking on the Main Menu icon, a tally counter will be incremented. Get 10000 results in an achievement.
 mainMenu.dongs = Has acumulat:\n%1 dongs
@@ -132,7 +134,7 @@ optionsMenu.heading.technical = Tècniques
 optionsMenu.heading.debugText = Text de depuració
 
 option.ignoreEliminatedPlayers.name = Omet eliminats
-option.ignoreEliminatedPlayers.description = Jugadors derrotats no reproduiran cap animació quan sigui seu torn.
+option.ignoreEliminatedPlayers.description = Jugadors derrotats no reproduiran animació quan sigui seu torn.
 // This option is a button.
 option.controls.name = Controls
 option.controls.description = Configura assignacions de tecles.
@@ -225,6 +227,11 @@ option.enableFullscreen.name = Pantalla completa
 option.enableFullscreen.description = S'explica per si mateix, però estàs tan boig?
 option.hideHUD.name = Amaga indicador en pantalla
 option.hideHUD.description = Amaga pantalla en pantalla del joc durant partida. Útil per enregistrar de joc.
+option.screenSafeZone.name = Zona segura de pantalla
+option.screenSafeZone.description = Ajusta el control lliscant fins que l'àrea blanca cobreixi totes àrees visibles de pantalla.\n(Canvis a IU s'actualitzaran després de sortir)
+option.hideTooltip.name = Amaga descripció emergent
+option.hideTooltip.description = Amaga descripcions emergents de botons en passar cursor.
+option.controls.description = Configura assignacions.
 // Yes. This DOES mean Forced Aliasing as in like forcing to turn off anti-aliasing
 option.enableForcedAliasing.name = Aliàsing forçat
 option.enableForcedAliasing.description = Desactiva antialiàsing de tots sprites fins i tot quan està habilitat. Pot fer que alguns gràfics semblin oscats.
@@ -298,158 +305,159 @@ gamemode.sixPlayers.description = Un hextuple estrall!\nLluita contra cinc jugad
 characterSelect.selectCharacter = ESCOLLIR VOSTRES MÈDIUMS
 characterSelect.holdCardsToSeeInfo = Subjecta targetes per veure informació
 // Select Stage: This however, does not need to be in the same tone as Select Character.
-characterSelect.selectStage = TRIA TEU ESCENARI
+characterSelect.selectStage = TRIA ESCENARI
 
 // Player Settings
 characterSelect.option.cpuControlled = CPU
-characterSelect.option.skillLevel = CPU Skill
+characterSelect.option.skillLevel = Habilitat de CPU
 // Easy mode. Only shoots and does nothing else.
-characterSelect.option.skillLevel.1 = Aimless
+characterSelect.option.skillLevel.1 = Sense objecte
 // Normal mode. Same as Easy mode. Can use Skills periodically... at random.
 characterSelect.option.skillLevel.2 = Competent
 // Hard mode. Estimate chances and acts accordingly.
-characterSelect.option.skillLevel.3 = Strategic
+characterSelect.option.skillLevel.3 = Estratègic
 // This text appears when more than 1 player-controlled characters are present.
 // Prevents player from cheating
-characterSelect.cantEarnAchievements = You cannot earn achievements with these settings.
+characterSelect.cantEarnAchievements = No pots obtenir assoliments amb aquesta configuració.
 
 // Goober: A character species present in the original Inflation Roulette.
 // Looks like a feline, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao
 // Skills: Reload, Sabotage
 character.goober.name = Goober
 character.goober.name.short = Goober
-character.goober.description = A sentient and dominant species found in urban areas. Proficient at tinkering with guns.
+character.goober.description = Una espècie sensible i dominant que es troba a zones urbanes. Perit per feinejar amb pistoles.
 // Shib: Character created by NicklySuffer. Non-binary, and designed to look like one of those simplistic white cat anons.
 // Screams "city boy" vibes.
 // Skills: Sabotage, Amnesia
 character.shibanou.name = Shibanou
 character.shibanou.name.short = Shib
-character.shibanou.description = Extraterrestrial, cunning and loves lemon tea. Can cast temporary memory loss.
+character.shibanou.description = Extraterrestre, astut i li encanta te de llimona. Pot provocar pèrdua de memòria temporal.
 // Chester: Character created by NicklySuffer. Works in a coffee shop, and also looks like one of those simplistic white cat anons,
 // but wears a cap too I guess. Screams "overworked minimum wagie" vibes.
 // Designed with no offensive skills, but has one more pressure point lmao.
 // Skills: Reveal, Reload
 character.chester.name = Chester
 character.chester.name.short = Chester
-character.chester.description = An unfortunate barista forced to play this game for a company. His work trains his endurance.
+character.chester.description = Un barista desafortunat obligat a jugar a aquest joc per a una empresa. Seva feina entrena seva resistència.
 // Option to choose a random character.
 character.random.name = ???
 character.random.name.short = ???
-character.random.description = Not sure who to choose? Let the game decide!
+character.random.description = No saps qui triar? Deixa que el joc decideixi!
 
 // Classic Room: The original stage from the original game redrawn.
-stage.classic = Classic Room
-stage.classic.description = The room we all know nice and well.
+stage.classic = Cambra clàssica
+stage.classic.description = La cambra que tots coneixem bé.
 // Manager's Lounge: The context is that four people, either motivated by a better life or forced by their higher-ups, are
 // offered a place as a game participant to satisfy the manager's desires.
-stage.reloaded = Manager's Lounge
-stage.reloaded.description = This scene looks like a porn set. That's because it kinda is, and it's being recorded.
+stage.reloaded = Saló del gerent
+stage.reloaded.description = Aquesta escena sembla un plató porno. Això és perquè en certa manera ho és, i s'està gravant.
 // Shitfucks Café: Named Shitfucks. The exact coffee shop that Chester works at.
 // Sells coffee that inflates people, and agreed to host horrible shit like this. Disgusting.
 // Again, transliterate Shitfucks.
-stage.shitfucks = Shitfucks Café
-stage.shitfucks.description = Specializes in selling beverages. Definitely nothing wrong going on here.
+// Honestly I'd translate it as Merdcarall, but I guess it's some in-universe brand name
+stage.shitfucks = Cafè Shitfucks
+stage.shitfucks.description = S'especialitza en venda de begudes. Definitivament no hi ha res de dolent aquí.
 // White Void: Literally just a white void with a glass table.
-stage.void = White Void
-stage.void.description = Household name as a place for all activities, featured in countless art pieces and animations.
+stage.void = Buit blanc
+stage.void.description = Nom conegut com a lloc per a totes activitats, que apareix en innombrables obres d'art i animacions.
 stage.random = ?????
-stage.random.description = Not sure where to choose? Let the game decide!
+stage.random.description = No saps on triar? Deixa que el joc decideixi!
 
 // Splash text that is displayed
-gameOn.text = GAME ON!
+gameOn.text = SOM-HI!
 
-skill.reload.name = Reload
-skill.reload.description = Reload the cylinder to reset your chance of being shot with a live round.
-skill.sabotage.name = Sabotage
-skill.sabotage.description = The next player will have a guaranteed chance of being shot with a live round.
-skill.pressurize.name = Pressurize
-skill.pressurize.description = The live round will deal 2x the Pressure.
-skill.polarize.name = Polarize
-skill.polarize.description = Invert the state of the current round.
-skill.deflate.name = Deflate
-skill.deflate.description = Deplete one bar of Pressure.
-skill.reveal.name = Reveal
-skill.reveal.description = Take a peek at the cylinder's contents.
-skill.amnesia.name = Amnesia
-skill.amnesia.description = Disable an opponent's skills for one turn.
-skill.assault.name = Assault
-skill.assault.description = Shoot an opponent. Gives victim 2 confidence on blank.
+skill.reload.name = Recarrega
+skill.reload.description = Recarrega el cilindre per restablir tevas possibilitats de rebre un tret amb bala.
+skill.sabotage.name = Sabotatge
+skill.sabotage.description = El següent jugador tindrà una possibilitat garantida de rebre un tret amb bala.
+skill.pressurize.name = Pressuritza
+skill.pressurize.description = El tret amb bala infligirà 2x de Pressió.
+skill.polarize.name = Polaritza
+skill.polarize.description = Inverteix l'estat de tret actual.
+skill.deflate.name = Desinfla
+skill.deflate.description = Esgotar una barra de Pressió.
+skill.reveal.name = Revela
+skill.reveal.description = Fes una ullada al contingut de cilindre.
+skill.amnesia.name = Amnèsia
+skill.amnesia.description = Desactiva habilitats d'un oponent durant un torn.
+skill.assault.name = Assalt
+skill.assault.description = Dispara a un oponent. Dóna víctima 2 Confiança si sense bala.
 
-pauseMenu.title = GAME PAUSED
-pauseMenu.resume = Resume
-pauseMenu.restart = Restart
-pauseMenu.options = Options
-pauseMenu.exit = Exit
+pauseMenu.title = JOC EN PAUSA
+pauseMenu.resume = Reprèn
+pauseMenu.restart = Reinicia
+pauseMenu.options = Opcions
+pauseMenu.exit = Surt
 
-stats.pressure = Pressure
-stats.confidence = Confidence
-stats.skill = Skill
-stats.skills = Skills
-stats.modifier = Modifier
-stats.modifiers = Modifiers
+stats.pressure = Pressió
+stats.confidence = Confiança
+stats.skill = Habilitat
+stats.skills = Habilitats
+stats.modifier = Modificador
+stats.modifiers = Modificadors
 
 // Be the last player standing in a match.
-achievement.firstWin.name = First Victory
-achievement.firstWin.description = Your life will be bound by chains from now on.
+achievement.firstWin.name = Primera victòria
+achievement.firstWin.description = Teva vida estarà lligada per cadenes a partir d'ara.
 // Be the last player standing, and with your Pressure value = 0.
-achievement.noPressureWin.name = Improbability
-achievement.noPressureWin.description = Treading with luck on your side, you managed to evade damage with your body unscathed.
+achievement.noPressureWin.name = Improbabilitat
+achievement.noPressureWin.description = Caminant amb sort a favor teu, vas aconseguir evitar danys amb teu cos iŀlès.
 // Be the last player standing, and with your Pressure value at its max.
-achievement.fullPressureWin.name = Edging Triumphs All
-achievement.fullPressureWin.description = Even at your highest peaks of pressure, you persisted till the end.
+achievement.fullPressureWin.name = Acostament triomfa tot
+achievement.fullPressureWin.description = Fins i tot en teus moments més àlgids, vas persistir fins al final.
 // Sabotage ten times in your lifetime.
-achievement.sabotages.name = Experienced Saboteur
-achievement.sabotages.description = You must really like Goober, huh. Use its ability fifty times.
+achievement.sabotages.name = Sabotejador experimentat
+achievement.sabotages.description = Teu agradar-te molt Goober, oi. Fes servir seva habilitat cinquanta vegades.
 // Pressurize twice in a row without shooting a live round.
-achievement.doublePressurize.name = Quadratic Equation
-achievement.doublePressurize.description = As you overload the device twice, the next player accepts its fate.
+achievement.doublePressurize.name = Equació quadràtica
+achievement.doublePressurize.description = Si sobrecarregues el dispositiu dues vegades, el següent jugador accepta seu destí.
 // Pressurize, then shoot yourself with the live round afterwards.
-achievement.pressurizeYourself.name = Backfire
-achievement.pressurizeYourself.description = Get a taste of your own Pressurized medicine. Intentional or mere misfortune?
+achievement.pressurizeYourself.name = Surt el tret per la culata
+achievement.pressurizeYourself.description = Sofreix-te tevas pròpias conseqüències pressuritzadas. Intencionada o mera desgràcia?
 // Get a P Rank, AKA the maximum score.
-achievement.maximumScore.name = Pain of Perfectionism
-achievement.maximumScore.description = Well done. You have played a perfect game, and what did that cost you.
+achievement.maximumScore.name = Dolor de perfeccionisme
+achievement.maximumScore.description = Ben fet. Has jugat un partit perfecte, i què t'ha costat això.
 // Get the lowest score possible.
-achievement.minimumScore.name = Strategized Loss
-achievement.minimumScore.description = It's like you didn't even try, but in a closer glance it looks like you did - to LOSE?
+achievement.minimumScore.name = Pèrdua estratègica
+achievement.minimumScore.description = És com si ni tan sols ho haguessis intentat, però mirant-ho de més a prop sembla que ho has fet - PERDRE?
 // Win in all game modes at least once.
-achievement.allGameModeWins.name = Full Tour
-achievement.allGameModeWins.description = A badge of dedication and unproductivity.
+achievement.allGameModeWins.name = Visita completa
+achievement.allGameModeWins.description = Un símbol de dedicació i improductivitat.
 // Win as all vanilla characters at least once.
-achievement.allCharacterWins.name = All My Fellas
-achievement.allCharacterWins.description = Looks like you really have no special preference for these vessels.
+achievement.allCharacterWins.name = Els Amics de les Arts
+achievement.allCharacterWins.description = Sembla que no tens preferència especial per aquestes mèdiums.
 // Find all Easter Egg Startups.
-achievement.allEasterEggs.name = Attention Deficit
-achievement.allEasterEggs.description = The archaic glyphs lie veiled, save by file digging, or code scouring.
+achievement.allEasterEggs.name = Dèficit d'atenció
+achievement.allEasterEggs.description = Els glifs arcaics romanen velats, excepte per excavació d'arxius o revisió de codi.
 // Accumulate 10000 Dongs in the Main Menu.
-achievement.noLife.name = Absolutely Jobless
-achievement.noLife.description = Waste your life away for no reason. You have been branded, marked permanently.
+achievement.noLife.name = Absolutament a l'atur
+achievement.noLife.description = Malgasta teva vida sense motiu. Has estat empremtat, marcat permanentment.
 
-achievementsMenu.title = Your achievements
-achievementsMenu.description = Select an achievement to view its details and completion status.
-achievementsMenu.resetProgress = Reset Progress
+achievementsMenu.title = Teus assoliments
+achievementsMenu.description = Selecciona un assoliment per veure'n detalls i estat de finalització.
+achievementsMenu.resetProgress = Restableix progrés
 
-achievementToast.title = Achievement Unlocked!
+achievementToast.title = Assoliment desbloquejat!
 
-resetAchievementMenu.prompt = Confirm your reset of\n%1?\nThis action is irreversible.
+resetAchievementMenu.prompt = Confirmeu reinici de\n%1?\nAquesta acció és irreversible.
 
 // If the language's script can be written vertically, set this string to false
 galleryMainMenu.envelope.rotateText = true
 // Context: According to Snowyboi, there are different versions of Goobers, one being Slime Goobers, and one labelled "???".
 // The way I interpret this is like, them having races or something
-galleryMainMenu.envelope.goober.description = First seen in the original game, the Goobers jump into action with a new coat of paint! They have become the go-to character to be featured in countless remakes and fanart alike.\n\nAs for why and how they joined the game, no one knows! Actors? Hostages? Sell-outs? Lots of theories are out there! Not much is known about their biology, but it has been confirmed that they have been classified into several races, ranging from Goobers composed entirely out of slime to R»EDA©±ED§²½\n\nGoober is a species created by Snowyboi.
+galleryMainMenu.envelope.goober.description = Vistos per primera vegada al joc original, els Goobers entren en acció amb una nova capa de pintura! S'han convertit en el personatge de referència que apareix en innombrables remakes i fanarts.\n\nQuant a per què i com es van unir al joc, ningú ho sap! Actors? Ostatges? Venuts? Hi ha moltes teories! No se sap gaire sobre seva biologia, però s'ha confirmat que s'han classificat en diverses races, que van des dels Goobers compostos completament de llim fins a R»EDA©±AT§²½\n\nGoober és una espècie creada per Snowyboi.
 // Context: Literally no lore implication. He's just here for the sake of being here lol
-galleryMainMenu.envelope.asimo.description = Harnessing his electric powers, Asimo jolts into Inflation Roulette claiming to "have some fun".\n\nWe don't know how he got here, and we totally have no connections with him, other than he's a wolf, he's the Manager's playtester for his stupid Friday Night Funkin' mod, and he's the winner of an art raffle to be added to the game as a character for the Example Addon.\n\nAsimo is a guest character owned by WolfKylis.
+galleryMainMenu.envelope.asimo.description = Aprofitant seus poders elèctrics, Asimo es espanta per Ruleta d'Inflament dient que "s'ho està passant bé".\n\nNo sabem com ha arribat aquí, i no tenim cap connexió amb ell, a part que és un llop, és el tester del Gerent per a seu estúpid mod Friday Night Funkin', i és el guanyador d'un sorteig d'art per afegir-lo al joc com a personatge per al complement d'exemple.\n\nAsimo és un personatge convidat propietat de WolfKylis.
 // Context: You can say the reason they're here is nepotism? They're just a partner with the Manager's lab-grown assistant
 // that agrees to join that's it.
-galleryMainMenu.envelope.shibanou.description = Last name Nou; first name Shiba. Hailing from a mysterious planet, this cat-like creature is ready to blast someone. Their Chinese name can be interpreted as "Zero Ten Eight", derived from the nuclear site they landed on in Beijing.\n\nSpending the first few years of their life scouring to different places to live, they eventually founded themself inside of The Manager's garage. The man adopted them as his secondary assistant and soon found themself in love with the primary assistant (lab-grown btw, ew). With no apparent reason other than to show-off in front of their boyfriend, they joined the game to show off their hidden abilities.\n\nShibanou is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.
+galleryMainMenu.envelope.shibanou.description = Cognom Nou; prenom Shiba. Procedent d'un planeta misteriós, aquesta criatura felina està a punt de fer explotar algú. El seu nom xinès es pot interpretar com a "Zero Deu Vuit", derivat del lloc nuclear on van aterrar a Pequín.\n\nVan passar els primers anys de la seva vida buscant per diferents llocs on viure, i finalment es van establir a garatge del Gerent. L'home els va adoptar com a ajudants secundaris i aviat es va enamorar de l'ajudant principal (crescuda a laboratori per cert, ecs). Sense raó aparent més enllà de presumir davant de seu xicot, es van unir al joc per mostrar seves habilitats ocultes.\n\nShibanou és un personatge propietat de NicklySuffer, creat abans del desenvolupament de Ruleta d'Inflament.
 // Context: The Manager and Shitfucks partnered, and selected Chester as their ambassador or something.
-galleryMainMenu.envelope.chester.description = As the lead barista of a coffee shop, he was forced to play this game as an ambassador for the company. With his poor academic results and his uncharismatic personality, his dream of prosperity and wealth is yet to be in reach.\n\nHis daily work involves making oversweetened beverages for horny customers. Some say the drinks have an "expansive" effect, which has grabbed the attention of several food safety agents. However, due to some capitalist bullshit, warnings from the food department went nowhere.\n\nChester is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.
-galleryMainMenu.envelope.dev = Developer Art
-galleryMainMenu.envelope.dev.description = A collection of concept art, sketches, and unused assets made by the developers and other artists.\n\nangry           bird
-galleryMainMenu.envelope.community = Community Art
-galleryMainMenu.envelope.community.description = A collection of fanart drawn by the developers' friends and the community.
-galleryEntryMenu.viewFullImage = View Full Image
+galleryMainMenu.envelope.chester.description = Com a barista principal d'una cafeteria, es va veure obligat a jugar a aquest joc com a ambaixador de l'empresa. Amb seus mals resultats acadèmics i seva personalitat poc carismàtica, seu somni de prosperitat i riquesa encara no ha estat a l'abast.\n\nSeva feina diària consisteix a preparar begudes massa ensucrades per a clients calentes. Alguns diuen que les begudes tenen un efecte "expansiu", que ha cridat l'atenció de diversos agents de seguretat alimentària. Tanmateix, a causa d'algunes collonades capitalistes, avisos del departament d'alimentació no van servir de res.\n\nChester és un personatge propietat de NicklySuffer, creat abans del desenvolupament de Ruleta d'Inflament.
+galleryMainMenu.envelope.dev = Art del desenvolupador
+galleryMainMenu.envelope.dev.description = Una coŀlecció d'art conceptual, esbossos i recursos no utilitzats fets pels desenvolupadors i altres artistes.\n\nocell           enfadat
+galleryMainMenu.envelope.community = Art comunitari
+galleryMainMenu.envelope.community.description = Una coŀlecció de fanart dibuixats pels amics dels desenvolupadors i la comunitat.
+galleryEntryMenu.viewFullImage = Veges imatge completa
 
 // These will be button text that will be in the Utilities Main Menu.
 utilitiesMenu.characterCreator = Character Creator
