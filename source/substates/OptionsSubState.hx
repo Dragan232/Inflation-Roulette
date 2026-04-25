@@ -54,10 +54,11 @@ class OptionsSubState extends SuffSubState {
 		scrollBar = new SuffScrollBar(bg2.width, 0, function(percent:Float) {
 			optionsGroup.y = FlxMath.lerp(0, FlxG.height - (optionsGroup.height + 64), percent);
 		}, 32, optionsGroup.height + 64);
+		scrollBar.camera = this.camera;
 		add(scrollBar);
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeZone.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeZone.X;
 		exitButton.onClick = function() {
 			exitOptionsMenu();
 		};

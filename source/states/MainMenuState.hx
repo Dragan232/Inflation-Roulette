@@ -65,13 +65,13 @@ class MainMenuState extends SuffState {
 
 	static final disabledMenuItems:Array<String> = [
 		// Name
+		#if mobile 'addons', #end
 		'donate'
 	];
 
 	var currentEasterEggInput:String = '';
 
 	override public function create():Void {
-		// Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
 		if (FlxG.sound.music == null || SuffState.currentMusicName == 'null') { // idk lmao

@@ -12,15 +12,18 @@ game.version.numeral.format = 版本編號 %1
 game.version.numeralModded.format = 模組版本編號 %1
 game.version.name.minor.format = 次版 %1
 game.version.name.hotfix.format = 修訂 %1
-game.version.name.alpha = 預覽版本
-game.version.name.beta = 公開測試
-game.version.name.releaseCandidate = 最終測試
 
 game.version.name.major.0 = 開發版本
 // Version 1: Initial Release
 game.version.name.major.1 = 初始版本
 // Version 2: Added Achievements, Modding Tools, More Characters, Gallery & Jukebox and Results Screen
 game.version.name.major.2 = 創意包裹
+// What
+game.version.name.major.3 = 手提釉面
+
+game.version.name.state.a = 預覽版本
+game.version.name.state.b = 公開測試
+game.version.name.state.c = 最終測試
 
 game.build.format = %1 版本
 

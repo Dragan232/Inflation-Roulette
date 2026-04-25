@@ -18,6 +18,7 @@ class ControlsOptionsSubState extends SuffSubState {
 		bg.updateHitbox();
 		add(bg);
 
+		controlsGroup.camera = this.camera;
 		add(controlsGroup);
 
 		generateOptions();
@@ -27,12 +28,14 @@ class ControlsOptionsSubState extends SuffSubState {
 		exitButton.onClick = function() {
 			exitOptionsMenu();
 		};
+		exitButton.camera = this.camera;
 		add(exitButton);
 
 		scrollBar = new SuffScrollBar(0, 0, function(percent:Float) {
 			controlsGroup.y = FlxMath.lerp(0, FlxG.height - (controlsGroup.height + 64), percent);
 		}, 32, controlsGroup.height + 64);
 		scrollBar.x = FlxG.width - scrollBar.width;
+		scrollBar.camera = this.camera;
 		add(scrollBar);
 
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];

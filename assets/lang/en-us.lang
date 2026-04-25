@@ -76,6 +76,7 @@ mainMenu.donate = Donate
 // Tooltips for buttons in the Main Menu.
 mainMenu.donate.tooltip = Your generous donations help support the development of this game!
 mainMenu.donate.tooltip.disabled = Currently, donations are disabled due to developer circumstances.\nIf you want to support this game, please consider sharing it with others!
+mainMenu.addons.tooltip.disabled = Currently the Android build does not support add-ons yet. It will be implemented in the future.\nStay tuned!
 
 // When clicking on the Main Menu icon, a tally counter will be incremented. Get 10000 results in an achievement.
 mainMenu.dongs = You have accumulated:\n%1 Dongs

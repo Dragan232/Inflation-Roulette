@@ -53,14 +53,17 @@ class PreloadState extends SuffState {
 		#if !html5
 		preloadTxt.text = Language.getPhrase('preloadMenu.progress.' + loadingTexts[loadingProgress]);
 		#end
-		new FlxTimer().start(#if !html5 FlxG.elapsed #else 0 #end, function(_) {
+		new FlxTimer().start(FlxG.elapsed, function(_) {
 			switch (loadingTexts[loadingProgress]) {
 				case 'characters':
-					CharacterManager.initialize(#if html false #end);
+					CharacterManager.initialize();
+					#if (!html && !mobile)
+					CharacterManager.precacheSprites();
+					#end
 				case 'gameplay':
 					GameplayManager.initialize();
 				case 'music':
-					#if desktop
+					#if (!html && !mobile)
 					var musicList = Utilities.textFileToArray('data/extras/jukebox/musicList.txt', true);
 					for (music in musicList) {
 						Paths.music(music);
@@ -77,9 +80,7 @@ class PreloadState extends SuffState {
 					ScreenSafeZone.recalculateConstants();
 				case 'cursor':
 					CursorHandler.initialize();
-					#if !html5
 					CursorHandler.cursorVisible = true;
-					#end
 				case 'splashes':
 					SplashManager.parseSplashes();
 			}

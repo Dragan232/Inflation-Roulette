@@ -176,8 +176,7 @@ class PlayState extends SuffState {
 		pumpGun.scrollFactor.set(stage.data.gunScrollFactor[0], stage.data.gunScrollFactor[1]);
 		add(pumpGun);
 
-		var showCameramanChance:Float = stage.data.showCameramanChance != null ? stage.data.showCameramanChance : 1 / 16;
-		if (!hasSeenStartCutscene && (FlxG.random.bool(showCameramanChance * 100))) {
+		if (!hasSeenStartCutscene && FlxG.random.bool(12.5)) {
 			var cobalt:FlxSprite = new FlxSprite();
 			cobalt.frames = Paths.sparrowAtlas('game/cobalt');
 			cobalt.animation.addByPrefix('appear', 'appear', 24, false);

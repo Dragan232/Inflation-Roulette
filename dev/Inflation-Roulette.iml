@@ -24,6 +24,7 @@
     <orderEntry type="library" scope="PROVIDED" name="openfl" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="openfl" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="openfl" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="openfl" level="project" />
     <orderEntry type="module-library" scope="PROVIDED">
       <library name="Haxelib: lime:8.3.1">
         <CLASSES>
