@@ -217,7 +217,7 @@ keybind.THREE = 3
 keybind.TWO = 2
 keybind.ZERO = 0
 
-option.enablePopping.name = Rebentament
+option.enablePopping.name = Explosió
 option.enablePopping.description = Jugadors exploten de manera no fatal quan són derrotats.\nSi està desactivat, personatges apareixeran sobreinflats.\nTé efecte a la següent partida.
 option.enableBellyGurgles.name = Borborigmes
 option.enableBellyGurgles.description = Jugadors reprodueixen sons de gorgoteig de panxa en ralentí quan estan inflats.
@@ -460,105 +460,105 @@ galleryMainMenu.envelope.community.description = Una coŀlecció de fanart dibui
 galleryEntryMenu.viewFullImage = Veges imatge completa
 
 // These will be button text that will be in the Utilities Main Menu.
-utilitiesMenu.characterCreator = Character Creator
-utilitiesMenu.stageEditor = Stage Viewer
-utilitiesMenu.loadFile = Load File
-utilitiesMenu.newFile = New File
-utilitiesMenu.loadDirectory = Load Folder
-utilitiesMenu.newDirectory = New Folder
-utilitiesMenu.browseImage = Browse Image
-utilitiesMenu.browseImage.downloadTemplate = Download Template
+utilitiesMenu.characterCreator = Creador de personatges
+utilitiesMenu.stageEditor = Visor d'escenari
+utilitiesMenu.loadFile = Carrega fitxer
+utilitiesMenu.newFile = Nou fitxer
+utilitiesMenu.loadDirectory = Carrega carpeta
+utilitiesMenu.newDirectory = Nova carpeta
+utilitiesMenu.browseImage = Navega per imatge
+utilitiesMenu.browseImage.downloadTemplate = Baixa plantilla
 // %1: Width, %2: Height
 
 // Subtext for the button
-utilitiesMenu.browseImage.recommendedSize = Recommended size: %1px × %2px
+utilitiesMenu.browseImage.recommendedSize = Mida recomanada: %1px × %2px
 
 // A screen which tells the user to adjust the image's offset if it doesn't make the recommended size.
-utilitiesMenu.browseImage.adjustOffsets.title = Adjust Offsets
-utilitiesMenu.browseImage.adjustOffsets.description = Arrow Keys to Move Image\nHold SHIFT/CTRL to Increase Rate\nMake Sure Image Aligns with Bottom Center of Silhouette
-utilitiesMenu.error.prompt = An error occurred.
-utilitiesMenu.firstStartup.prompt = Warning: Very Unstable\n\nThe following tools are not intended to serve as Development Tools, and are only created as a means for casual artists to make their own characters. At any time, anywhere, the tools will at some point crash out and die. The tools do not have an autosave feature; MANUAL SAVING is highly recommend.\n\nIf you wish to complain about the features, learn JSON and Flash goddamnit
+utilitiesMenu.browseImage.adjustOffsets.title = Ajusta desplaçaments
+utilitiesMenu.browseImage.adjustOffsets.description = Tecles de fletxa per moure la imatge\nMantén premut SHIFT/CTRL per augmentar velocitat\nAssegura-te que imatge s'alineï amb part inferior central de silueta
+utilitiesMenu.error.prompt = S'ha produït un error.
+utilitiesMenu.firstStartup.prompt = Avís: Molt inestable\n\nLes eines següents no estan pensades per servir com a eines de desenvolupament i només es creen com a mitjà perquè artistes casuals creïn seus propis personatges. En qualsevol moment i en qualsevol lloc, les eines es bloquejaran i moriran. Les eines no tenen una funció de desament automàtic; es recomana molt DESAMENT MANUAL.\n\nSi vols queixar-te de les funcions, aprèn JSON i Flash collons
 // Dummy text. Used as the default name for newly created Sprite Projects.
-utilitiesMenu.placeholder = Placeholder
+utilitiesMenu.placeholder = Marcador
 
-characterCreator.dataType.metadata = Metadata
-characterCreator.dataType.spriteData = Sprite Data
-characterCreator.parameter.name = Character Name
-characterCreator.parameter.description = Character Description
-characterCreator.parameter.author = Author
-characterCreator.parameter.framerate = Framerate
-characterCreator.parameter.defaultFramerate = Default Framerate
-characterCreator.parameter.defaultDimensions = Frame Size
-characterCreator.parameter.maxPressure = Max Pressure
-characterCreator.parameter.maxConfidence = Max Confidence
-characterCreator.parameter.skills = Skills
-characterCreator.parameter.skills.description = (Separated by Commas: ,)
-characterCreator.explorer.description.root = Root folder of the project.
-characterCreator.explorer.description.idle = Idle animation.
-characterCreator.explorer.description.prepareShoot = Looping animation during turn.
-characterCreator.explorer.description.preShoot = Animation for preparing to shoot themself.
-characterCreator.explorer.description.shootBlank = Animation for shooting a blank shot.
-characterCreator.explorer.description.shootLive = Animation for shooting a live shot.
-characterCreator.explorer.description.pass = Animation for passing the gun to another player.
-characterCreator.explorer.description.skill = Default animation for activating a Skill.
-characterCreator.explorer.description.shocked = Animation for reacting to confetti or targeted by Assault.
-characterCreator.explorer.description.win = Animation for winning pose.
-characterCreator.explorer.description.helpless = Animation for unable to play a turn after defeat.
-characterCreator.explorer.description.popped = Looping animation when launched into the air by popping.
-characterCreator.explorer.description.introPartOne = Animation for interacting with other players.
-characterCreator.explorer.description.introPartTwo = Animation for when pump gun falls onto the table.
-characterCreator.explorer.description.scraps = Scrap particles spawned when popping.
-characterCreator.explorer.description.cardBG = The background of Character Select Card.
-characterCreator.explorer.description.cardCharIdle = The character in the Character Select Card when idle.
-characterCreator.explorer.description.cardCharSelected = The character in the Character Select Card when selected.
-characterCreator.explorer.description.bannerAppear = The character appearing after being selected.
-characterCreator.explorer.description.bannerBlink = The character blinking after being selected.
-characterCreator.saveSuccessful.prompt = Sprite Project saved successfully.
-characterCreator.save = Save Project
-characterCreator.exit = Exit Editor
-characterCreator.reloadSkills = Reload Skills
-characterCreator.exit.prompt = Are you sure you want to exit the Character Creator?\nAny unsaved progress will be LOST.
-characterCreator.newCharacter.title = NEW CHARACTER
-characterCreator.newCharacter.unchangeableParameter = This parameter cannot be changed and should not be changed after creation.
-characterCreator.newCharacter.create = Create Character!
-characterCreator.newCharacter.alreadyExists.prompt = There is already a Sprite Project with the same name.
-characterCreator.export = Export Project!
-characterCreator.confirmExport.prompt = The game will export your Sprite Project metadata, sprites, and animation data into a game-usable format. Depending on your hardware specifications, exporting will take from mere seconds to a VERY LONG TIME. Closing background programs can aid in accelerating the export rate.\n\nAfter the completion, all exported file assets will be stored in the exports folder in the game's root folder. Please keep this application open at all times during the export to prevent data corruption.\n\nAre you sure you want to export the project?
-characterCreator.exporting = Exporting Animation:\n%1
-characterCreator.exporting.generatingCharacterData = Generating JSON Files...
-characterCreator.exporting.finalizing = Finalizing...
-characterCreator.exporting.missingAnimations = Project is missing these animations:\n%1
-characterCreator.exporting.missingAnimations.extend = and many more...
-characterCreator.exporting.description = Please keep this program open.
-characterCreator.exportSuccessful.prompt = Project exported successfully. You might want to tweak the variables in the JSON files.\n\nExported as:\n%1
+characterCreator.dataType.metadata = Metadades
+characterCreator.dataType.spriteData = Dades de sprites
+characterCreator.parameter.name = Nom de personatge
+characterCreator.parameter.description = Descripció de personatge
+characterCreator.parameter.author = Autor
+characterCreator.parameter.framerate = FPS
+characterCreator.parameter.defaultFramerate = FPS per defecte
+characterCreator.parameter.defaultDimensions = Mida de fotograma
+characterCreator.parameter.maxPressure = Pressió màxima
+characterCreator.parameter.maxConfidence = Confiança màxima
+characterCreator.parameter.skills = Habilitats
+characterCreator.parameter.skills.description = (Separats per comes: ,)
+characterCreator.explorer.description.root = Carpeta arrel del projecte.
+characterCreator.explorer.description.idle = Animació ociosa.
+characterCreator.explorer.description.prepareShoot = Animació en bucle durant gir.
+characterCreator.explorer.description.preShoot = Animació per preparació per disparar-se a si mateixos.
+characterCreator.explorer.description.shootBlank = Animació per disparar un tret sense bala.
+characterCreator.explorer.description.shootLive = Animació per disparar un tret amb bala.
+characterCreator.explorer.description.pass = Animació per passar la pistola a un altre jugador.
+characterCreator.explorer.description.skill = Animació predeterminada per activar una habilitat.
+characterCreator.explorer.description.shocked = Animació per reaccionar a confeti o a ser objectiu d'un Assalt.
+characterCreator.explorer.description.win = Animació per a postura guanyadora.
+characterCreator.explorer.description.helpless = Animació per no poder jugar un torn després d'una derrota.
+characterCreator.explorer.description.popped = Animació en bucle quan es llança a l'aire fent un explosió.
+characterCreator.explorer.description.introPartOne = Animació per interactuar amb altres jugadors.
+characterCreator.explorer.description.introPartTwo = Animació de quan pistola cau sobre la taula.
+characterCreator.explorer.description.scraps = Partícules de ferralla generades en explotar.
+characterCreator.explorer.description.cardBG = El fons de Carta de selecció de personatge.
+characterCreator.explorer.description.cardCharIdle = El personatge de la Carta de selecció de personatge quan està ociós.
+characterCreator.explorer.description.cardCharSelected = El personatge de la Carta de selecció de personatge quan està seleccionat.
+characterCreator.explorer.description.bannerAppear = El personatge que apareix després de ser seleccionat.
+characterCreator.explorer.description.bannerBlink = El personatge parpelleja després de ser seleccionat.
+characterCreator.saveSuccessful.prompt = Projecte sprite s'ha desat correctament.
+characterCreator.save = Desa projecte
+characterCreator.exit = Surt d'editor
+characterCreator.reloadSkills = Recarregar habilitats
+characterCreator.exit.prompt = Esta segur que vols sortir del Creador de personatges?\nQualsevol progrés no desat es PERDRÀ.
+characterCreator.newCharacter.title = NOU PERSONATGE
+characterCreator.newCharacter.unchangeableParameter = Aquest paràmetre no es pot canviar i no s'ha de canviar després de seva creació.
+characterCreator.newCharacter.create = Crea un personatge!
+characterCreator.newCharacter.alreadyExists.prompt = Ja hi ha un projecte sprite amb el mateix nom.
+characterCreator.export = Exporta projecte!
+characterCreator.confirmExport.prompt = El joc exportarà metadades, sprites i dades d'animació de teu projecte sprite a un format que es pugui utilitzar amb joc. Depenent de especificacions del maquinari, exportació trigarà des de pocs segons fins a MOLT LLARG. Tancar programes en segon pla pot ajudar a accelerar la velocitat d'exportació.\n\nDesprés de la finalització, tots fitxers exportats s'emmagatzemaran a la carpeta exports de la carpeta arrel de joc. Mantén aquesta aplicació oberta en tot moment durant l'exportació per evitar que dades es corrompin.\n\nEsta segur que vols exportar el projecte?
+characterCreator.exporting = Exportant d'animació:\n%1
+characterCreator.exporting.generatingCharacterData = Generant fitxers JSON...
+characterCreator.exporting.finalizing = Finalitzant...
+characterCreator.exporting.missingAnimations = A projecte li falten aquestes animacions:\n%1
+characterCreator.exporting.missingAnimations.extend = i molts més...
+characterCreator.exporting.description = Mantén aquest programa obert.
+characterCreator.exportSuccessful.prompt = Projecte s'ha exportat correctament. És possible que vulgues modificar les variables dels fitxers JSON.\n\nExportat com a:\n%1
 
-animationCreator.save = Save Animation
-animationCreator.exit = Exit Editor
-animationCreator.exit.prompt = Are you sure you want to exit the Animation Editor?\nAny unsaved progress will be LOST.
-animationCreator.saveSuccessful.prompt = Animation saved successfully.
+animationCreator.save = Desa animació
+animationCreator.exit = Surt editor
+animationCreator.exit.prompt = Esta segur que vols sortir de l'Editor d'animacions?\nQualsevol progrés no desat es PERDRÀ.
+animationCreator.saveSuccessful.prompt = Animació s'ha desat correctament.
 
-stageEditor.stage = Stage
-stageEditor.stage.description = This menu is only used for previewing stages and offers NO editing functions. Use this with a JSON editor for the best experience.
-stageEditor.objectList = Object List
-stageEditor.reload = Reload Stage
-stageEditor.screenshot = Screenshot Mode
-stageEditor.exit = Exit Viewer
-stageEditor.exit.prompt = Are you sure you want to exit the Stage Viewer?
+stageEditor.stage = Escenari
+stageEditor.stage.description = Aquest menú només s'utilitza per previsualitzar etapes i NO ofereix funcions d'edició. Fes-lo servir amb un editor JSON per obtenir la millor experiència.
+stageEditor.objectList = Llista d'objectes
+stageEditor.reload = Recarregar escenari
+stageEditor.screenshot = Mode de captura de pantalla
+stageEditor.exit = Sortir de visor
+stageEditor.exit.prompt = Esta segur que vols sortir del Visor d'escenari?
 
-resultsMenu.title = THE SCORES ARE IN!
-resultsMenu.instructions = Press Any Key To Exit
+resultsMenu.title = LES RESULTATS SÓN A!
+resultsMenu.instructions = Prema qualsevol tecla per sortir
 // Score bonus for last standing players
-resultsMenu.winBonus = Winning Bonus
+resultsMenu.winBonus = Bonus Guanyador
 // Score bonus for Pressure percentage.
-resultsMenu.edgingBonus = Pressure Bonus
+resultsMenu.edgingBonus = Bonus de Pressió
 // Replaces Edging Bonus when player somehow hasn't inflated once.
-resultsMenu.edgingBonus.alt = Luck Bonus
+resultsMenu.edgingBonus.alt = Bonus de Sort
 // Score bonus for using Skills.
-resultsMenu.skillBonus = Skill Bonus
-resultsMenu.bestPlayer = VICTORIOUS
-resultsMenu.bestPlayers = VICTORIOUS
-resultsMenu.badPlayer = DISAPPOINTMENT
-resultsMenu.badPlayers = DISAPPOINTMENTS
+resultsMenu.skillBonus = Bonus d'Habilitat
+resultsMenu.bestPlayer = VICTORIÓS
+resultsMenu.bestPlayers = VICTORIOSOS
+resultsMenu.badPlayer = DECEPCIÓ
+resultsMenu.badPlayers = DECEPCIONS
 // $1: Player Type, %2: Character Name, %3: Player No. (If applicable)
 resultsMenu.leaderboard.playerFormat = %1%2
 resultsMenu.leaderboard.playerDuplicateFormat = %1%2 #%3
@@ -573,31 +573,31 @@ resultsMenu.leaderboard.format = %1 | %2 · %3 (%4)
 resultsMenu.leaderboard.format.reversed = %2 · %3 (%4) | %1
 
 // Menu Options. Used in button text.
-menu.yes = Yes
+menu.yes = Sí
 menu.no = No
-menu.ok = OK
-menu.confirm = Confirm
-menu.cancel = Cancel
-menu.exit = Exit
+menu.ok = D'acord
+menu.confirm = Confirma
+menu.cancel = Canceŀla
+menu.exit = Surt
 
 // Prompt after activating an offensive skill (e.g. Assault, Amnesia)
-gameUI.selectTarget = SELECT TARGET
+gameUI.selectTarget = SELECCIONA OBJECTIU
 
-preloadMenu.progress.characters = Loading Characters...
-preloadMenu.progress.gameplay = Loading Game Modes...
-preloadMenu.progress.language = Fetching Locale Texts...
-preloadMenu.progress.achievements = Tracking Achievements...
-preloadMenu.progress.toasts = Constructing Notifs...
-preloadMenu.progress.tooltip = Building Tooltips...
-preloadMenu.progress.cursor = Decorating Mouse Cursor...
-preloadMenu.progress.splashes = Writing Splashes...
-preloadMenu.progress.music = Finding Music Discs...
-preloadMenu.finished = All Set!
+preloadMenu.progress.characters = Carregant caràcters...
+preloadMenu.progress.gameplay = Carregant modes de joc...
+preloadMenu.progress.language = Obtenint textos de idiomes...
+preloadMenu.progress.achievements = Seguint d'assoliments...
+preloadMenu.progress.toasts = Creant notificacions...
+preloadMenu.progress.tooltip = Creant descripcions emergent...
+preloadMenu.progress.cursor = Decorant cursor de ratolí...
+preloadMenu.progress.splashes = Escrivint text d'inici...
+preloadMenu.progress.music = Cercant discos de música...
+preloadMenu.finished = Tot a punt!
 
 // Fallback for HTML build
-gamemode.fiftyFifty.name = Fifty-Fifty
-gamemode.fiftyFifty.description = Purely a coin flip chance with replacement.\nQuick and risky gameplay.
+gamemode.fiftyFifty.name = A mitges
+gamemode.fiftyFifty.description = Purament una casualitat de llançament de moneda amb reemplaçament.\nJoc ràpid i arriscat.
 
 character.asimo.name = Asimo
 character.asimo.name.short = Asimo
-character.asimo.description = This wolf just wants to have some fun. His experience in electrical occult allows him to overload weapons.
+character.asimo.description = Aquest llop només vol divertir-se una mica. Seva experiència en ocultisme elèctric li permet sobrecarregar armes.
