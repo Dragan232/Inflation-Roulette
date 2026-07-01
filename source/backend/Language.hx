@@ -146,11 +146,16 @@ class Language {
 
 	public static function getPhrase(key:String, parameters:Array<Dynamic> = null, placeholder:String = null):String {
 		var phrase:String = phrases.get(key);
-		if (phrase == null) // Fallback to the default language if the phrase does not exist in the current language
+		if (phrase == null) { // Fallback to the default language if the phrase does not exist in the current language
 			phrase = fallbackPhrases.get(key);
+			// trace('$key not yet translated in current language. Using English phrase');
+		}
 		if (phrase == null) { // If the phrase does not exist in the fallback language
-			if (placeholder != null) // Empty if phrase is not found and placeholder is empty
+			if (placeholder != null) { // Empty if phrase is not found and placeholder is empty
+				// trace('$key does not exist. Using placeholder value');
 				return placeholder;
+			}
+			// trace('$key does not exist.');
 			return key;
 		}
 		if (parameters == null) // If no parameters are given, just

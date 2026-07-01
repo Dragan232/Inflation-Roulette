@@ -448,8 +448,8 @@
 			"loop": false
 		},
 		{
-			"name": "win2-loop",
-			"prefix": "win2-loop",
+			"name": "win-loop2",
+			"prefix": "win-loop2",
 			"fps": 24,
 
 			"indices": [],
@@ -464,8 +464,8 @@
 			"loop": false
 		},
 		{
-			"name": "win3-loop",
-			"prefix": "win3-loop",
+			"name": "win-loop3",
+			"prefix": "win-loop3",
 			"fps": 24,
 
 			"indices": [],

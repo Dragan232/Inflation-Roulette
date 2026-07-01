@@ -30,8 +30,8 @@ class Gamemode {
 	public var scoreSkillBonusRequirement:Int = 5;
 	public var scoreSkillBonusMultiplier:Float = 1;
 
-	public var cpuMinLevel:Int = 1;
-	public var cpuMaxLevel:Int = 1;
+	public var cpuMinLevel:Int = Constants.CPU_SKILL_LIMIT[0];
+	public var cpuMaxLevel:Int = Constants.CPU_SKILL_LIMIT[1];
 
 	public function new(id:String) {
 		this.id = id;

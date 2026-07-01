@@ -79,7 +79,7 @@ class Utilities {
 	 * @param pressed Whether to use the pressed version of the cursor.
 	 */
 	public static function changeCursorImage(tag:String, pressed:Bool = false):Void {
-		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/cursor/${tag}' + (pressed ? 'Held' : '')));
+		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/plugins/cursor/${tag}' + (pressed ? 'Held' : '')));
 		FlxG.mouse.load(spr.pixels, 1, -7, -6);
 	}
 

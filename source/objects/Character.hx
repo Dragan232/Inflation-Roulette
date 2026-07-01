@@ -88,6 +88,7 @@ class Character extends FlxSprite {
 	public var rubDuration:Float = 0;
 	public var rubbedComfortably:Bool = false;
 	public var forceExpulsionTimer:Float = 0;
+	var rubSoundTimer:Float = 0;
 
 	static var timerMultiplier:Float = 1;
 
@@ -97,7 +98,7 @@ class Character extends FlxSprite {
 		'belch' => 'shocked',
 		'leak' => 'shocked'
 	];
-	static final idleAnimations:Array<String> = ['idle', 'rubbed'];
+	static final idleAnimations:Array<String> = ['idle', 'rubbed', 'win'];
 
 	public function new(character:String, x:Float = 0, y:Float = 0) {
 		this.id = character;
@@ -197,8 +198,9 @@ class Character extends FlxSprite {
 		}
 		trace(rubHitboxes);
 
-		if (Preferences.data.enableBellyRubbing)
+		if (Preferences.data.enableBellyRubbing) {
 			rubHitbox = new FlxSprite();
+		}
 
 		var skillsArray:Array<SkillData> = json.skills;
 		if (skillsArray != null && skillsArray.length > 0) {
@@ -266,10 +268,12 @@ class Character extends FlxSprite {
 
 		boundingBox = new FlxRect((width - 200) / 2, 70, 200, 500);
 		animation.onFinish.add(function(animName:String) {
-			if (idleAfterAnimation && !animName.startsWith('idle'))
-				playAnim('idle' + parseAnimationSuffix());
-			else if (animExists(animName + '-loop') && !idleAfterAnimation)
-				playAnim(animName + '-loop', false, false);
+			var trimmed = trimAnimationName(animName);
+			// trace(trimmed + '-loop' + parseAnimationSuffix());
+			if (idleAfterAnimation && !trimmed.startsWith('idle'))
+				playAnim('idle');
+			else if ((animExists(trimmed + '-loop') || animExists(trimmed + '-loop' + parseAnimationSuffix())) && !idleAfterAnimation)
+				playAnim(trimmed + '-loop', false, false);
 		});
 		
 		trace(animSoundPaths);
@@ -278,12 +282,20 @@ class Character extends FlxSprite {
 			FlxG.state.add(rubHitbox);
 	}
 
+	public var discolorationStrength(default, set):Float = 0;
+
+	function set_discolorationStrength(value:Float):Float {
+		return discolorationStrength = FlxMath.bound(value, 0, 1);
+	}
+
 	public override function update(elapsed:Float) {
 		if (discoloration != null) {
 			discoloration.setMask(mask.frame.parent.bitmap);
 			if (currentPressure > 0 && currentPressure <= maxPressure) {
 				// trace(discoloration.strength);
-				discoloration.strength += 0.02 * elapsed * getPressurePercentage();
+				discolorationStrength += 0.02 * elapsed * getPressurePercentage();
+				discolorationStrength = FlxMath.bound(discolorationStrength, 0, 1);
+				discoloration.strength = FlxMath.lerp(discoloration.strength, discolorationStrength, elapsed * 2);
 			}
 		}
 
@@ -319,7 +331,7 @@ class Character extends FlxSprite {
 					navelLeakTimer -= elapsed;
 					if (navelLeakTimer < 0) {
 						var intensity = Math.min(1, (currentPressure - navelLeakThreshold + 1) / (maxPressure - navelLeakThreshold + 1));
-						navelLeakTimer = 0.05 / intensity;
+						navelLeakTimer = 0.1 / intensity;
 
 						var liquidVelocity = getParticleVelocity(64 * intensity, 0, 64);
 						var position = getParticleOffset('navel').add(x, y);
@@ -407,14 +419,15 @@ class Character extends FlxSprite {
 
 		if (rubHitbox != null) {
 			updateRubHitbox();
-			if (onIdle && currentPressure > 0 && animation.curAnim.name.endsWith('Null')) {
-				cursorOnBelly = mouseOverlapsRubHitbox();
+			cursorOnBelly = mouseOverlapsRubHitbox() && onIdle && currentPressure > 0;
+			if (onIdle && currentPressure > 0) {
 				if (cursorOnBelly) {
 					if (FlxG.mouse.pressed) {
 						rubDuration += elapsed;
 						var mouseVel = Math.sqrt(FlxG.mouse.deltaX * FlxG.mouse.deltaX + FlxG.mouse.deltaY * FlxG.mouse.deltaY);
-						if (mouseVel > 10) {
-							SuffState.playSound(Paths.soundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 2 * (mouseVel / 10), 0.75);
+						if (mouseVel > 10 && rubSoundTimer <= 0) {
+							SuffState.playSound(Paths.soundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 4 * (mouseVel / 10), 0.75);
+							rubSoundTimer = !Preferences.data.decreaseSounds ? 0.25 : 0.5;
 						}
 						// You have to be gentle with it
 						var strength = FlxMath.roundDecimal(1 / (1 + 0.002 * Math.pow(mouseVel - 10, 4)) * 10, 1);
@@ -423,7 +436,7 @@ class Character extends FlxSprite {
 						if (rubValue > 3) {
 							if (!rubbedComfortably)
 								rubbedComfortably = true;
-							if (!animation.curAnim.name.startsWith('rubbed') && !animation.curAnim.name.startsWith(missingAnimReplace.get('rubbed')))
+							if (!animation.curAnim.name.startsWith(substituteAnim('rubbed')))
 								playAnim('rubbed', false);
 						}
 					} else if (FlxG.mouse.justReleased && forceExpulsionTimer <= 0 && rubDuration <= 0.1) {
@@ -440,15 +453,17 @@ class Character extends FlxSprite {
 				if (!cursorOnBelly || !FlxG.mouse.pressed) {
 					rubDuration = 0;
 					if (rubValue > 0)
-						rubValue -= elapsed;
+						rubValue -= elapsed * 2;
 					if (rubValue <= 0 && rubbedComfortably) {
 						rubbedComfortably = false;
-						playAnim('idle', true);
+						playAnim('idle', true, true);
 					}
 				}
 			}
 			if (forceExpulsionTimer > 0)
 				forceExpulsionTimer -= elapsed;
+			if (rubSoundTimer > 0)
+				rubSoundTimer -= elapsed;
 		}
 	}
 
@@ -472,6 +487,10 @@ class Character extends FlxSprite {
 		rubHitbox.alpha = 1 / 255;
 	}
 
+	function substituteAnim(key:String):String {
+		return missingAnimReplace.get(key) ?? key;
+	}
+
 	public function getParticleVelocity(x:Float, y:Float, random:Int = 0):FlxPoint {
 		var vel = FlxPoint.get(x, y);
 		if (flipX)
@@ -485,9 +504,7 @@ class Character extends FlxSprite {
 
 	function trimAnimationName(AnimName:String) {
 		var leAnim = AnimName;
-		for (i in 0...maxPressure + 1) {
-			leAnim = leAnim.replace('' + i, '');
-		}
+		leAnim = leAnim.replace('' + currentPressure, '');
 		leAnim = leAnim.replace('Null', '');
 		leAnim = leAnim.replace('Overinflated', '');
 		return leAnim;
@@ -513,14 +530,15 @@ class Character extends FlxSprite {
 		var trimmedAnimName:String = trimAnimationName(AnimName);
 		if (!animExists(usedAnimName)) {
 			if (missingAnimReplace.exists(trimmedAnimName)) {
-				usedAnimName = joinAnimationName(missingAnimReplace.get(AnimName));
+				usedAnimName = joinAnimationName(substituteAnim(AnimName));
 				trace('Animation [${AnimName}] for $id does not exist, using [$usedAnimName] instead');
 			} else {
 				trace('Animation [${usedAnimName}] for $id does not exist, no replacements exist');
 				return;
 			}
 		}
-		this.onIdle = idleAnimations.contains(trimmedAnimName);
+		this.onIdle = idleAnimations.contains(trimmedAnimName.replace('-loop', '')) && !usedAnimName.endsWith('Null');
+		// trace('$id, trimmed: $trimmedAnimName, used: $usedAnimName');
 		animation.getByName(usedAnimName).flipX = flipX;
 		animation.play(usedAnimName, Force, Reversed, Frame);
 

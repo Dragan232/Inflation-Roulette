@@ -287,6 +287,9 @@
 	"characterSelect.option.skillLevel.1": "張宗昌",
 	"characterSelect.option.skillLevel.2": "諸葛亮",
 	"characterSelect.option.skillLevel.3": "孫子",
+	"characterSelect.option.skillLevel.format.inBounds": "%1",
+	"characterSelect.option.skillLevel.format.levelDown": "← %1 ←",
+	"characterSelect.option.skillLevel.format.levelUp": "→ %1 →",
 	"characterSelect.cantEarnAchievements": "這設定下無法獲得大多數成就。",
 	
 	"character.goober.name": "古伯",
@@ -517,12 +520,17 @@
 
 	"offsetEditor.title": "修改偏移",
 	"offsetEditor.description": "用方向鍵調整偏移\n按住 SHIFT/CTRL 鍵提高移動速度\n確保十字準星對準目標位置",
+	"offsetEditor.offsetType.origin": "原點",
+	"offsetEditor.offsetType.cameraOffset": "相機",
+	"offsetEditor.offsetType.poppedCameraOffset": "相機（已爆）",
+	"offsetEditor.offsetType.particle": "粒子",
 	"offsetEditor.particleType.origin": "原點",
 	"offsetEditor.particleType.overhead": "頭上",
 	"offsetEditor.particleType.mouth": "嘴巴",
 	"offsetEditor.particleType.navel": "肚臍",
 	"offsetEditor.particleType.gunShoot": "槍膛（射擊）",
 	"offsetEditor.particleType.gunSkill": "槍膛（技能）",
+	"offsetEditor.exit.prompt": "確定要退出偏移編輯器嗎？",
 
 	"langConverter.successPrompt": "JSON檔案已導出至：\n%1",
 
@@ -592,9 +600,9 @@
 	"filler.air.name": "空氣",
 	"filler.air.description": "預設選項。子彈內裝滿了壓縮二氧化碳。",
 	"filler.water.name": "開水",
-	"filler.water.description": "力不能支，波濤潺潺。過量飲用可能導致口漏。",
+	"filler.water.description": "過量飲用可能導致口漏。",
 	"filler.soda.name": "汽水",
-	"filler.soda.description": "甘甜和有氣的飲料品牌。具有空氣和開水的特性。",
+	"filler.soda.description": "甘甜和有氣的飲料品牌。",
 	"filler.slime.name": "史萊姆",
 	"filler.slime.description": "發光的藻類，在腸道內進行繁殖。會在宿主體內蠕動，吸取宿主的DNA。",
 	"filler.berry.name": "藍莓",
@@ -602,6 +610,7 @@
 	"filler.random.name": "隨機",
 	"filler.random.description": "讓遊戲決定吧！",
 
+	"loading.windowDisplay": "載入中⋯",
 	"loading.message.format": "%1⋯",
 	"loading.messages": [
 		"正在載上",
@@ -634,7 +643,7 @@
 	"gamemode.fiftyFifty.name": "五十五十",
 	"gamemode.fiftyFifty.description": "純粹靠50/50決定勝負。\n快速而高風險。",
 	
-	"character.asimo.name": "阿西冒・德拉科莫",
-	"character.asimo.name.short": "阿西冒",
+	"character.asimo.name": "阿西莫・德拉科莫",
+	"character.asimo.name.short": "阿西莫",
 	"character.asimo.description": "這隻狼只想找點樂。他精通電力武技，能讓武器過載。"
 }

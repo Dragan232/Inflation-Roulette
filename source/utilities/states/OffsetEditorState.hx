@@ -28,6 +28,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		'gunShoot' => 'shootBlank',
 		'gunSkill' => 'skill',
 	];
+	var currentOrigin:FlxPoint = FlxPoint.get(0, 0);
 	var currentOffsetType:String = 'origin';
 	var currentParticleOffsetType:String = 'overhead';
 	var currentPressure:Int = 0;
@@ -57,8 +58,11 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		var lePath = UtilitiesBaseMenuState.loadedPath.split('/');
 		var charId = lePath[lePath.length - 1];
 		trace(charId);
-		sprite = new Character(charId, FlxG.width / 2);
-		sprite.y = (FlxG.height - sprite.height) / 2 + sprite.offset.y;
+		sprite = new Character(charId);
+		currentOrigin = FlxPoint.get(sprite.originPosition[0], sprite.originPosition[1]);
+		sprite.originPosition = [0, 0];
+		sprite.offset.set(sprite.originPosition[0], sprite.originPosition[1]);
+		sprite.screenCenter();
 		add(sprite);
 
 		var leftBorder:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width / 2 - sprite.width / 2), FlxG.height, 0xFF000000);
@@ -77,20 +81,20 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		downBorder.alpha = 0.5;
 		downBorder.camera = camHUD;
 
-		var marker = new SuffMarker(sprite.x, sprite.y, 0xFFFFFFFF);
+		var marker = new SuffMarker(sprite.x + currentOrigin.x, sprite.y + currentOrigin.y, 0xFFFFFFFF);
 		add(marker);
 		markers.set('origin', marker);
 
-		var marker = new SuffMarker(sprite.x + sprite.cameraOffset[0], sprite.y + sprite.cameraOffset[1], 0xFF00FFFF);
+		var marker = new SuffMarker(getMarker('origin').x + sprite.cameraOffset[0], getMarker('origin').y + sprite.cameraOffset[1], 0xFF00FFFF);
 		add(marker);
 		markers.set('cameraOffset', marker);
 
-		var marker = new SuffMarker(sprite.x + sprite.poppedCameraOffset[0], sprite.y + sprite.poppedCameraOffset[1], 0xFFFF00FF);
+		var marker = new SuffMarker(getMarker('origin').x + sprite.poppedCameraOffset[0], getMarker('origin').y + sprite.poppedCameraOffset[1], 0xFFFF00FF);
 		add(marker);
 		markers.set('poppedCameraOffset', marker);
 
 		var what = getParticleOffset(currentParticleOffsetType);
-		var marker = new SuffMarker(sprite.x + what.x, sprite.y + what.y, 0xFFFFFF00);
+		var marker = new SuffMarker(getMarker('origin').x + what.x, getMarker('origin').y + what.y, 0xFFFFFF00);
 		add(marker);
 		markers.set('particle', marker);
 
@@ -114,7 +118,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		saveButton.onClick = function() {
 			var fileDialog = new FileDialogHandler();
 			var offsetData:CharacterOffsetsData = {
-				originPosition: sprite.originPosition,
+				originPosition: [currentOrigin.x, currentOrigin.y],
 				poppedCameraOffset: sprite.poppedCameraOffset,
 				cameraOffset: sprite.cameraOffset,
 				particleOffsets: {
@@ -135,7 +139,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 				currentParticleOffsetType = offset;
 				reloadSprite();
 				var what = getParticleOffset(currentParticleOffsetType);
-				getMarker('particle').setPosition(sprite.x + what.x, sprite.y + what.y);
+				getMarker('particle').setPosition(sprite.x + currentOrigin.x + what.x, sprite.y + currentOrigin.y + what.y);
 				updateValues();
 			}
 			button.camera = camHUD;
@@ -207,6 +211,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		if (!sprite.animation.exists(animName))
 			animName = 'idle' + parseAnimationSuffix(currentPressure);
 		sprite.playAnim(animName, false, true);
+		sprite.offset.set(0, 0);
 		sprite.animation.pause();
 	}
 
@@ -250,8 +255,8 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 
 	function updateValues() {
 		var offset:FlxPoint = FlxPoint.get(
-			getMarker(currentOffsetType).x - sprite.x,
-			getMarker(currentOffsetType).y - sprite.y
+			getMarker(currentOffsetType).x - sprite.x - currentOrigin.x,
+			getMarker(currentOffsetType).y - sprite.y - currentOrigin.y
 		);
 		if (currentOffsetType == 'cameraOffset' || currentOffsetType == 'poppedCameraOffset') {
 			camFollow.setPosition(getMarker(currentOffsetType).x, getMarker(currentOffsetType).y);
@@ -260,12 +265,11 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 		}
 		switch (currentOffsetType) {
 			case 'origin':
-				offset.set(
-					getMarker(currentOffsetType).x - (sprite.x - sprite.offset.x),
-					getMarker(currentOffsetType).y - (sprite.y - sprite.offset.y)
+				offset = FlxPoint.get(
+					getMarker(currentOffsetType).x - sprite.x,
+					getMarker(currentOffsetType).y - sprite.y
 				);
-				sprite.originPosition = [offset.x, offset.y];
-				sprite.offset.set(offset.x, offset.y);
+				currentOrigin.set(offset.x, offset.y);
 			case 'cameraOffset':
 				sprite.cameraOffset = [offset.x, offset.y];
 			case 'poppedCameraOffset':

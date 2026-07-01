@@ -58,13 +58,14 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 
 		musicToast.add(record);
 
-		recordBG = new FlxSprite().loadGraphic(Paths.image('ui/musicToast/record'));
+		recordBG = new FlxSprite().loadGraphic(Paths.image('ui/plugins/musicToast/record'));
 
-		bg.makeGraphic(Std.int(songTitleText.width + recordBG.width / 2 + paddingX), 50, FlxColor.BLACK);
+		bg.scale.set(songTitleText.width + recordBG.width / 2 + paddingX, 1);
+		bg.updateHitbox();
 		recordBG.scrollFactor.set();
 		record.add(recordBG);
 
-		recordCover = new FlxSprite().loadGraphic(Paths.image('ui/musicToast/covers/nicklysuffer'));
+		recordCover = new FlxSprite().loadGraphic(Paths.image('ui/plugins/musicToast/covers/nicklysuffer'));
 		recordCover.scrollFactor.set();
 		record.add(recordCover);
 
@@ -87,12 +88,15 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		var songAuthor = songMetadata.author;
 		instance.songBPM = songMetadata.bpm;
 
+		FlxGraphic.defaultPersist = true;
 		instance.songTitleText.text = '$songTitle - $songAuthor';
 
-		instance.recordBG.loadGraphic(Paths.image('ui/musicToast/record'));
-		instance.recordCover.loadGraphic(Paths.image('ui/musicToast/covers/${songAuthor.toLowerCase().replace(' ', '_')}'));
+		instance.recordBG.loadGraphic(Paths.image('ui/plugins/musicToast/record'));
+		instance.recordCover.loadGraphic(Paths.image('ui/plugins/musicToast/covers/${songAuthor.toLowerCase().replace(' ', '_')}'));
+		FlxGraphic.defaultPersist = false;
 
-		instance.bg.makeGraphic(Std.int(instance.songTitleText.width + paddingX + instance.recordBG.width / 2 + paddingX), 50, FlxColor.BLACK);
+		instance.bg.scale.set(instance.songTitleText.width + paddingX + instance.recordBG.width / 2 + paddingX, 1);
+		instance.bg.updateHitbox();
 
 		instance.record.angle = 0;
 		instance.record.x = instance.musicToast.x + instance.bg.width - instance.record.width / 2;
@@ -131,7 +135,7 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		if (FlxG.mouse.overlaps(instance.record, instance.musicToast.camera) && FlxG.mouse.justPressed) {
 			instance.leScale += 0.2;
 			SuffState.playUISound(Paths.sound('ui/dong'));
-			instance.totalElasped = Math.max(startDelay + moveInDuration, instance.totalElasped - 0.25);
+			instance.totalElasped = startDelay + moveInDuration;
 		}
 		instance.record.scale.set(instance.leScale, instance.leScale);
 		instance.leScale = FlxMath.lerp(leScale, 1, elapsed * 14);

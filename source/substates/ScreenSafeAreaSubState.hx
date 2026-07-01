@@ -2,6 +2,7 @@ package substates;
 import ui.objects.SuffSlider;
 import ui.objects.SuffIconButton;
 import backend.ScreenSafeArea;
+import openfl.display.Screen;
 
 class ScreenSafeAreaSubState extends SuffSubState {
 	var bounds:FlxSprite;
@@ -19,8 +20,9 @@ class ScreenSafeAreaSubState extends SuffSubState {
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/bg'));
 		bg.color = 0x303030;
-		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.setGraphicSize(FlxG.width);
 		bg.updateHitbox();
+		bg.screenCenter();
 		add(bg);
 
 		bounds = new FlxSprite().makeGraphic(FlxG.width, FlxG.height);
@@ -70,8 +72,8 @@ class ScreenSafeAreaSubState extends SuffSubState {
 
 		updateSafeZone(Preferences.data.screenSafeArea);
 
-		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
-		exitButton.x = FlxG.width - exitButton.width - 60;
+		exitButton = new SuffIconButton(20, 20 + ScreenSafeArea.Y, 'buttons/exit', null, 2);
+		exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeArea.X;
 		exitButton.onClick = function() {
 			exit();
 		};
@@ -86,6 +88,8 @@ class ScreenSafeAreaSubState extends SuffSubState {
 	}
 
 	function updateSafeZone(value:Float) {
+		Preferences.data.screenSafeArea = value;
+
 		var scale = 1 - value * 0.2;
 		bounds.scale.set(scale, scale);
 		bounds.updateHitbox();
@@ -95,6 +99,12 @@ class ScreenSafeAreaSubState extends SuffSubState {
 		cornerTopRight.setPosition(bounds.x + bounds.width - cornerTopRight.width, bounds.y);
 		cornerBottomLeft.setPosition(bounds.x, bounds.y + bounds.height - cornerBottomLeft.height);
 		cornerBottomRight.setPosition(bounds.x + bounds.width - cornerBottomRight.width, bounds.y + bounds.height - cornerBottomLeft.height);
+
+		ScreenSafeArea.recalculateConstants();
+		if (exitButton != null) {
+			exitButton.x = FlxG.width - exitButton.width - 20 - ScreenSafeArea.X;
+			exitButton.y = 20 + ScreenSafeArea.Y;
+		}
 	}
 
 	function exit() {

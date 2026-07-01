@@ -4,3 +4,4 @@ private/
 .idea/
 .haxelib/
 *.keystore
+**/*_private.fla

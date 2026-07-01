@@ -259,7 +259,19 @@ class CharacterSelectState extends SuffState {
 			addSliderOption(i, Language.getPhrase('characterSelect.option.skillLevel'), function(val:Float) {
 				Gameplay.cpuLevel[i] = Std.int(val);
 			}, Constants.CPU_SKILL_LIMIT[0], Constants.CPU_SKILL_LIMIT[1], 1, function(val:Float) {
-				return Language.getPhrase('characterSelect.option.skillLevel.' + Std.int(val), [], '${Std.int(val)}');
+				var skill = Std.int(val);
+				var boundType = FlxMath.inBounds(skill, Gameplay.currentGamemode.cpuMinLevel, Gameplay.currentGamemode.cpuMaxLevel) ? 'inBounds' : 'level';
+				if (boundType == 'level') {
+					if (skill > Gameplay.currentGamemode.cpuMaxLevel) {
+						boundType += 'Down';
+						skill = Gameplay.currentGamemode.cpuMaxLevel;
+					} else {
+						boundType += 'Up';
+						skill = Gameplay.currentGamemode.cpuMinLevel;
+					}
+				}
+				var name = Language.getPhrase('characterSelect.option.skillLevel.' + skill);
+				return Language.getPhrase('characterSelect.option.skillLevel.format.$boundType', [name], '$skill');
 			}, Gameplay.cpuLevel[i]);
 		}
 		cantEarnAchievementsTxt = new FlxText(Language.getPhrase('characterSelect.cantEarnAchievements'), 32);
@@ -617,6 +629,14 @@ class CharacterSelectState extends SuffState {
 		}}));
 		cardTweens.set('playerSettingGroup', FlxTween.tween(playerSettingGroup, {y: FlxG.height}, 0.75, {ease: FlxEase.quintOut}));
 		cardTweens.set('description', FlxTween.tween(description, {alpha: 1}, 0.75, {ease: FlxEase.quintOut}));
+		if (fillerLeft != null) {
+			FlxTween.cancelTweensOf(fillerLeft, ['x']);
+			FlxTween.tween(fillerLeft, {x: bannerGroup.x - fillerLeft.width}, 1, {ease: FlxEase.cubeInOut});
+		}
+		if (fillerRight != null) {
+			FlxTween.cancelTweensOf(fillerRight, ['x']);
+			FlxTween.tween(fillerRight, {x: bannerGroup.x + bannerGroup.width}, 1, {ease: FlxEase.cubeInOut});
+		}
 		leftButton.disabled = false;
 		rightButton.disabled = false;
 
@@ -738,14 +758,6 @@ class CharacterSelectState extends SuffState {
 			Gameplay.currentFiller = new Filler(fillerID);
 		else
 			Gameplay.currentFiller = new Filler(FlxG.random.getObject(Gameplay.globalFillerList));
-		if (fillerLeft != null) {
-			FlxTween.cancelTweensOf(fillerLeft, ['x']);
-			FlxTween.tween(fillerLeft, {x: bannerGroup.x - fillerLeft.width}, 1, {ease: FlxEase.cubeInOut});
-		}
-		if (fillerRight != null) {
-			FlxTween.cancelTweensOf(fillerRight, ['x']);
-			FlxTween.tween(fillerRight, {x: bannerGroup.x + bannerGroup.width}, 1, {ease: FlxEase.cubeInOut});
-		}
 		leftButton.disabled = true;
 		rightButton.disabled = true;
 		cardTweens.set('leftStageButton', FlxTween.tween(leftButton, {y: FlxG.height}, 0.75, {ease: FlxEase.quintOut}));
@@ -862,8 +874,9 @@ class CharacterSelectState extends SuffState {
 		save.bind('preferences', Utilities.getSavePath());
 		save.data.characterCPUControlled = characterCPUControlled;
 		var characterSkillLevel = '';
-		for (i in Gameplay.cpuLevel) {
+		for (num => i in Gameplay.cpuLevel) {
 			characterSkillLevel += i;
+			Gameplay.cpuLevel[num] = Std.int(FlxMath.bound(i, Gameplay.currentGamemode.cpuMinLevel, Gameplay.currentGamemode.cpuMaxLevel));
 		}
 		if (Gameplay.currentStage == 'random') {
 			Gameplay.currentStage = FlxG.random.getObject(Gameplay.globalStageList);

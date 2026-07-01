@@ -314,8 +314,9 @@
 	"characterSelect.option.skillLevel.2": "Competent",
 	// Hard mode. Estimate chances and acts accordingly.
 	"characterSelect.option.skillLevel.3": "Estratègic",
-	// This text appears when more than 1 player-controlled characters are present.
-	// Prevents player from cheating
+	"characterSelect.option.skillLevel.format.inBounds": "%1",
+	"characterSelect.option.skillLevel.format.levelDown": "< %1 <",
+	"characterSelect.option.skillLevel.format.levelUp": "> %1 >",
 	
 	// Goober: A character species present in the original Inflation Roulette.
 	// Looks like a feline, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao

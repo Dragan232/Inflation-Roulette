@@ -345,6 +345,9 @@
 	"characterSelect.option.skillLevel.2": "Competent",
 	// Hard mode. Estimate chances and acts accordingly.
 	"characterSelect.option.skillLevel.3": "Strategic",
+	"characterSelect.option.skillLevel.format.inBounds": "%1",
+	"characterSelect.option.skillLevel.format.levelDown": "< %1 <",
+	"characterSelect.option.skillLevel.format.levelUp": "> %1 >",
 	// This text appears when more than 1 player-controlled characters are present.
 	// Prevents player from cheating
 	"characterSelect.cantEarnAchievements": "You cannot earn most achievements with these settings.",
@@ -712,16 +715,17 @@
 	"filler.air.name": "Air",
 	"filler.air.description": "The default pick. Bullets full of compressed carbon dioxide.",
 	"filler.water.name": "Water",
-	"filler.water.description": "Hefty and sloshy. Overconsumption may cause involuntary oral leakages.",
+	"filler.water.description": "Overconsumption may cause involuntary oral leakages.",
 	"filler.soda.name": "Soda",
-	"filler.soda.description": "A sweet and carbonated drink. Has the characteristics of both air and water.",
+	"filler.soda.description": "A sweet and carbonated drink.",
 	"filler.slime.name": "Slime",
 	"filler.slime.description": "Bioluminescent algae that reproduces inside of gut. Squirms inside hosts and siphons their DNA.",
 	"filler.berry.name": "Berry",
-	"filler.berry.description": "Radioactive blueberry juice. Causes skin discoloration and leakages from several orifices.",
+	"filler.berry.description": "Irradiated blueberry juice. Causes skin discoloration and leakages from several orifices.",
 	"filler.random.name": "Random",
 	"filler.random.description": "Not sure which to choose? Let the game decide!",
 
+	"loading.windowDisplay": "Loading...",
 	"loading.message.format": "%1...",
 	"loading.messages": [
 		"Loading",

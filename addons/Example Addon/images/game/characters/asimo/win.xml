@@ -59,18 +59,18 @@
 	<SubTexture name="win20006" x="0" y="1280" width="640" height="640"/>
 	<SubTexture name="win20007" x="0" y="1280" width="640" height="640"/>
 	<SubTexture name="win20008" x="0" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0000" x="0" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0001" x="0" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0002" x="0" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0003" x="640" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0004" x="640" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0005" x="640" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0006" x="1280" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0007" x="1280" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0008" x="1280" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0009" x="640" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0010" x="640" y="1280" width="640" height="640"/>
-	<SubTexture name="win2-loop0011" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20000" x="0" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20001" x="0" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20002" x="0" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20003" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20004" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20005" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20006" x="1280" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20007" x="1280" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20008" x="1280" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20009" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20010" x="640" y="1280" width="640" height="640"/>
+	<SubTexture name="win-loop20011" x="640" y="1280" width="640" height="640"/>
 	<SubTexture name="win30000" x="1920" y="1280" width="640" height="640"/>
 	<SubTexture name="win30001" x="1920" y="1280" width="640" height="640"/>
 	<SubTexture name="win30002" x="1920" y="1280" width="640" height="640"/>
@@ -80,16 +80,16 @@
 	<SubTexture name="win30006" x="3200" y="1280" width="640" height="640"/>
 	<SubTexture name="win30007" x="0" y="1920" width="640" height="640"/>
 	<SubTexture name="win30008" x="0" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0000" x="0" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0001" x="0" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0002" x="0" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0003" x="640" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0004" x="640" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0005" x="640" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0006" x="1280" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0007" x="1280" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0008" x="1280" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0009" x="1920" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0010" x="1920" y="1920" width="640" height="640"/>
-	<SubTexture name="win3-loop0011" x="1920" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30000" x="0" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30001" x="0" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30002" x="0" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30003" x="640" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30004" x="640" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30005" x="640" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30006" x="1280" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30007" x="1280" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30008" x="1280" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30009" x="1920" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30010" x="1920" y="1920" width="640" height="640"/>
+	<SubTexture name="win-loop30011" x="1920" y="1920" width="640" height="640"/>
 </TextureAtlas>

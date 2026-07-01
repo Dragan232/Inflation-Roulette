@@ -564,6 +564,7 @@ class PlayState extends SuffState {
 		// I am sorry future me
 		animAllCharacters('introPartOne', 1, false); // All characters play their first intro animation
 		new FlxTimer().start(1.5 + getMaximumAnimLength('introPartOne'), function(_:FlxTimer) { // First intro animation delay + 1.5 seconds
+			pumpGun.visible = true;
 			FlxTween.tween(pumpGun, {y: pumpGunY}, 0.5, { // Gun lands on table
 				onComplete: function(_:FlxTween) {
 					animAllCharacters('introPartTwo', 0.5, true); // All characters play their second intro animation
@@ -877,6 +878,7 @@ class PlayState extends SuffState {
 				Achievements.advanceProgress('liveShots', [1]);
 			SuffState.playSound(Paths.sound('game/shootLive'));
 			getPlayer(playerIndex).currentPressure += 1;
+			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
 			if (liveRoundDamage > 1) {
 				liveRoundDamage = Std.int(liveRoundDamage);
@@ -1076,36 +1078,19 @@ class PlayState extends SuffState {
 
 		var allHumanPlayers:Bool = true;
 		var humansThatUsedSkills:Int = 0;
-		var allCpuAtHighestLevel:Bool = true;
+		var cpuLowestLevel:Int = Constants.CPU_SKILL_LIMIT[1];
+		var winningIndex:Int = -1;
 		for (num => char in characterGroup) {
 			if (char.cpuControlled) {
 				allHumanPlayers = false;
-				if (char.cpuSkillLevel < Constants.CPU_SKILL_LIMIT[1])
-					allCpuAtHighestLevel = false;
+				if (char.cpuSkillLevel < cpuLowestLevel)
+					cpuLowestLevel = char.cpuSkillLevel;
 				continue;
 			}
 			if (char.skillUseCount > 0)
 				humansThatUsedSkills++;
-			if (char.getPressurePercentage() > 1) {
-				continue;
-			}
-
-			Achievements.advanceProgress('firstWin', [true]);
-			Achievements.advanceProgress('allGameModeWins', [Gameplay.currentGamemode.id]);
-			Achievements.advanceProgress('allCharacterWins', [char.id]);
-			Achievements.advanceProgress('allFillerWins', [Gameplay.currentFiller.id]);
-			if (char.getPressurePercentage() <= 0)
-				Achievements.advanceProgress('noPressureWin', [true]); else if (char.getPressurePercentage() == 1)
-				Achievements.advanceProgress('fullPressureWin', [true]);
-			if (allCpuAtHighestLevel)
-				Achievements.advanceProgress('winAgainstStrategicCPUs', [true]);
-			if (characterGroup.members.length == 2)
-				Achievements.advanceProgress('twoPlayers', [true]);
-			else if (characterGroup.members.length == 6)
-				Achievements.advanceProgress('sixPlayers', [true]);
-
-			if (allHumanPlayers && humansThatUsedSkills == 1) {
-				Achievements.advanceProgress('winByYourself', [true]);
+			if (char.getPressurePercentage() <= 1) {
+				winningIndex = num;
 			}
 		}
 
@@ -1122,6 +1107,28 @@ class PlayState extends SuffState {
 				}));
 			}));
 		}));
+
+		var winningPlayer = getPlayer(winningIndex);
+		if (winningPlayer.cpuControlled)
+			return;
+		Achievements.advanceProgress('firstWin', [true]);
+		Achievements.advanceProgress('allGameModeWins', [Gameplay.currentGamemode.id]);
+		Achievements.advanceProgress('allCharacterWins', [winningPlayer.id]);
+		Achievements.advanceProgress('allFillerWins', [Gameplay.currentFiller.id]);
+		if (winningPlayer.getPressurePercentage() <= 0)
+			Achievements.advanceProgress('noPressureWin', [true]);
+		else if (winningPlayer.getPressurePercentage() == 1)
+			Achievements.advanceProgress('fullPressureWin', [true]);
+		if (cpuLowestLevel >= Constants.CPU_SKILL_LIMIT[1])
+			Achievements.advanceProgress('winAgainstStrategicCPUs', [true]);
+		if (characterGroup.members.length == 2)
+			Achievements.advanceProgress('twoPlayers', [true]);
+		else if (characterGroup.members.length == 6)
+			Achievements.advanceProgress('sixPlayers', [true]);
+
+		if (allHumanPlayers && humansThatUsedSkills == 1) {
+			Achievements.advanceProgress('winByYourself', [true]);
+		}
 	}
 
 	function finishEndCutscene() {
@@ -1219,11 +1226,12 @@ class PlayState extends SuffState {
 			var wantSkillChance:Float = Math.pow(char.getPressurePercentage(false), 0.5);
 			if (char.cpuSkillLevel >= 3) {
 				wantSkillChance += 1 / cylinderContent.length;
-			} else if (char.cpuSkillLevel >= 2) {
+				if (!skill.offensive)
+					wantSkillChance *= 1.25;
+			} else if (char.cpuSkillLevel == 2) {
 				wantSkillChance += 1 / cylinderContent.length * 0.5;
+				wantSkillChance *= 0.75;
 			}
-			if (!skill.offensive)
-				wantSkillChance *= 1.25;
 			if (char.cpuKnowsCylinderContents || char.cpuSabotageVictim) {
 				if (currentRoundIsLive) {
 					if (skill.id == 'sabotage' || skill.id == 'polarize' || skill.id == 'reload' || skill.id == 'assault')
@@ -1362,7 +1370,7 @@ class PlayState extends SuffState {
 			}));
 			doTween('letterboxBottomTween', FlxTween.tween(letterboxBottom, {y: FlxG.height - letterboxBottom.height}, 1, {
 				ease: FlxEase.cubeOut, onUpdate: function(_) {
-					cameraFocusButton.y = letterboxBottom.y - cameraFocusButton.height - 20;
+					cameraFocusButton.y = letterboxBottom.y - cameraFocusButton.height - 20 - ScreenSafeArea.Y;
 				}
 			}));
 		} else {
@@ -1373,7 +1381,7 @@ class PlayState extends SuffState {
 			}));
 			doTween('letterboxBottomTween', FlxTween.tween(letterboxBottom, {y: FlxG.height}, 1, {
 				ease: FlxEase.cubeOut, onUpdate: function(_) {
-					cameraFocusButton.y = letterboxBottom.y - cameraFocusButton.height - 20;
+					cameraFocusButton.y = letterboxBottom.y - cameraFocusButton.height - 20 - ScreenSafeArea.Y;
 				}
 			}));
 		}
@@ -1470,7 +1478,7 @@ class PlayState extends SuffState {
 		super.closeSubState();
 	}
 
-	public function restartGame() {
+	public function restartGame(restartCutscene:Bool = false) {
 		persistentUpdate = true;
 		isPaused = false;
 		toggleMonochrome(false);
@@ -1482,6 +1490,7 @@ class PlayState extends SuffState {
 		setWindowTitle();
 
 		currentTurnIndex = 0;
+		liveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
 		reloadCylinder(Gameplay.currentGamemode.cylinderLiveCount);
 		currentSessionEnablePopping = Preferences.data.enablePopping;
 
@@ -1518,11 +1527,20 @@ class PlayState extends SuffState {
 			giveSkillsToAllPlayers(1);
 		}
 
+		isManuallyFocusingStage = false;
+		isSelectingPlayer = false;
 		toggleCameraFocusButton(!getPlayer(currentTurnIndex).cpuControlled);
 		reloadRevealUI();
 		focusCameraOnPlayer(currentTurnIndex);
 
-		finishStartCutscene();
+		hasSeenStartCutscene = !restartCutscene;
+		if (restartCutscene) {
+			playStartCutscene();
+			hasSeenStartCutscene = true;
+		} else
+			finishStartCutscene();
+
+		Paths.clearUnusedMemory();
 	}
 
 	override function update(elapsed:Float) {
@@ -1594,7 +1612,7 @@ class PlayState extends SuffState {
 			var switchCursor:Bool = false;
 			for (player in characterGroup) {
 				if (player.cursorOnBelly)
-					switchCursor = false;
+					switchCursor = true;
 				if (player.velocity.x != 0 && player.velocity.y != 0) {
 					if (player.x + player.velocity.x * elapsed < stage.data.cameraBounds[0] || player.x + player.velocity.x * elapsed > stage.data.cameraBounds[2] - Math.abs(stage.data.cameraBounds[0])) {
 						player.velocity.x *= -1;

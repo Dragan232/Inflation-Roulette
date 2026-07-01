@@ -57,6 +57,7 @@ class Tooltip extends FlxSpriteGroup {
 		if (Preferences.data.hideTooltip)
 			return value;
 
+		FlxGraphic.defaultPersist = true;
 		instance.tooltipText.font = Paths.font('default');
 		instance.tooltipText.text = text;
 		var experimental = new FlxText(0, 0, 0, text);
@@ -71,6 +72,7 @@ class Tooltip extends FlxSpriteGroup {
 		Paths.destroyGraphic(FlxG.bitmap.get('plugins/tooltip/outline'));
 		instance.bgOutline.loadGraphic(Utilities.makeBorder(leWidth, leHeight, 4, 0xFFFFFFFF, 'plugins/tooltip/outline'));
 		instance.visible = (CursorHandler.cursorVisible) && (text.length > 0);
+		FlxGraphic.defaultPersist = false;
 		return value;
 	}
 

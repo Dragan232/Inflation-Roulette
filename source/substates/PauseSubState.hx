@@ -103,7 +103,7 @@ class PauseSubState extends SuffSubState {
 					SuffState.playMusic(PlayState.instance.stage.data.music);
 				}
 			case 'restart':
-				restartGame();
+				restartGame(FlxG.keys.pressed.SHIFT);
 				close();
 			case 'options':
 				OptionsSubState.notInGame = false;
@@ -124,9 +124,9 @@ class PauseSubState extends SuffSubState {
 		}
 	}
 
-	public static function restartGame() {
+	public static function restartGame(restartCutscene:Bool = false) {
 		PlayState.instance.isPaused = false;
-		PlayState.instance.restartGame();
+		PlayState.instance.restartGame(restartCutscene);
 		FlxG.camera.followLerp = usedFollowLerp;
 		FlxG.sound.music.volume = Preferences.data.musicVolume;
 		SuffState.playMusic(PlayState.instance.stage.data.music, true);

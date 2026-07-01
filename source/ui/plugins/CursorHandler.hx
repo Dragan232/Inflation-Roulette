@@ -25,7 +25,7 @@ class CursorHandler extends FlxBasic {
 	public static var currentCursorStyle:String = 'default';
 
 	public static final cursorStylePriority:Array<String> = ['rub', 'default'];
-	public static function setCursorStyle(value:String) {
+	inline public static function setCursorStyle(value:String) {
 		if (value == currentCursorStyle)
 			return;
 		currentCursorStyle = value;

@@ -56,7 +56,7 @@ class GamemodeSelectSubState extends SuffSubState {
 		}, 4);
 
 		playerCountSlider.x = box.x + (box.width - playerCountSlider.width) / 2;
-		playerCountSlider.y = FlxG.height - playerCountSlider.height - 20;
+		playerCountSlider.y = FlxG.height - playerCountSlider.height - 20 - ScreenSafeArea.Y;
 
 		add(playerCountSlider);
 

@@ -13,11 +13,11 @@ class ScrapEmitter extends FlxObject {
 
 		for (i in 0...scrapCount) {
 			var scrap = new Scrap(x, y, characterID);
-			velocity.set(
+			scrap.velocity.set(
 				FlxG.random.int(-1440 * 2, 1440 * 2),
 				FlxG.random.int(-480 * 4, 360 * 3)
 			);
-			acceleration.y = 150;
+			scrap.acceleration.y = 150;
 			if (PlayState.instance != null)
 				PlayState.instance.particleGroup.add(scrap);
 			else

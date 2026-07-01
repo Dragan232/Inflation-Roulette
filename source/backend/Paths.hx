@@ -29,6 +29,7 @@ class Paths {
 	public static var dumpExclusions:Array<String> = [
 		'assets/music/',
 		'text',
+		'assets/images/ui/plugins/',
 		'plugins/'
 	];
 	
@@ -67,7 +68,7 @@ class Paths {
 		// clear anything not in the tracked assets list
 		for (key in FlxG.bitmap._cache.keys()) {
 			// trace(key);
-			if (!currentTrackedTextures.exists(key) && !isDumpExcluded(key))
+			if (!currentTrackedTextures.exists(key) && !isDumpExcluded(key) && !FlxG.bitmap.get(key).persist)
 				destroyGraphic(FlxG.bitmap.get(key));
 		}
 
