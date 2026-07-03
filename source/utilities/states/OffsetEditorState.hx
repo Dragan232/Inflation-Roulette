@@ -139,6 +139,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 				currentParticleOffsetType = offset;
 				reloadSprite();
 				var what = getParticleOffset(currentParticleOffsetType);
+				trace(what);
 				getMarker('particle').setPosition(sprite.x + currentOrigin.x + what.x, sprite.y + currentOrigin.y + what.y);
 				updateValues();
 			}
@@ -158,7 +159,7 @@ class OffsetEditorState extends UtilitiesBaseMenuState {
 			currentPressure = Std.int(val);
 			reloadSprite();
 			var what = getParticleOffset(currentParticleOffsetType);
-			getMarker('particle').setPosition(sprite.x + what.x, sprite.y + what.y);
+			getMarker('particle').setPosition(sprite.x + currentOrigin.x + what.x, sprite.y + currentOrigin.y + what.y);
 			updateValues();
 		}, 0, sprite.maxPressure + 2, 1, function(val:Float) {
 			return Language.getPhrase("stats.pressure." + parseAnimationSuffix(Std.int(val)), [], Std.int(val) + '');

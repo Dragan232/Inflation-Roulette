@@ -20,7 +20,7 @@ class Gameplay {
 	public static var currentGamemode:Gamemode;
 
 	public static var currentFiller:Filler;
-	public static var globalFillerList:Array<String> = ['reloaded'];
+	public static var globalFillerList:Array<String> = ['air'];
 
 	public function new() {
 		// ass

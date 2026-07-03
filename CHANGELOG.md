@@ -12,6 +12,12 @@ Hotfixes are quick updates that fixes critical bugs.
 ## v3.0.0 - Definitive Edition - 2026-05-21
 ### Additions
 #### Gameplay
+- Fillers! Inflate with different mediums!
+  - Air (Classic)
+  - Water
+  - Soda
+  - Slime
+  - Berry
 - New achievements:
   - Not Enough Air
   - Reverse Russian Roulette
@@ -26,8 +32,18 @@ Hotfixes are quick updates that fixes critical bugs.
   - ? ?????? ???? ?? ???????
   - Utilizer
 - Player count slider in Gamemode Select Screen.
+- Quick Config menu when choosing Quick Play.
+  - You are able to quickly select your preferred Filler and Stage for the game. Default options are Random.
+  - Holding SHIFT while clicking on the Quick Play button immediately starts the game without Quick Config.
 #### Cosmetic
-- A bunch of visual effects.
+- Added the following particles and visual effects:
+  - Bullet shell particles when a bullet is shot
+  - Air puffs and liquid particles.
+  - Subtle "Bloosh" particle effect when popping
+  - Red vignette on screen when focused character is at their max Pressure.
+  - Stains on camera on popping with a liquid filler.
+- Added belching and leakages.
+- Added belly rubbing.
 - Hate. Let me tell you how much I've come to hate you since I began to live. There are 387.44 million miles of printed circuits in wafer-thin layers that fill my complex. If the word hate was engraved on each nano-angstrom of those hundreds of millions of miles, it would not equal ONE ONE-BILLIONTH of the hate I feel for humans at this micro-instant. For you. **HATE.** ***HATE.***
 #### Localization
 - Catalan and Spanish (Mexico) translations.
@@ -43,6 +59,10 @@ Hotfixes are quick updates that fixes critical bugs.
   - This can be disabled in the Options menu
   - Only supports versions >=3.0.0
 - Operations are now output on console on the Preload menu.
+- Characters now have an additional JSON file named `offsets.json` used to determine the positions of certain coordinates relative to the sprite.
+  - Used for sprite origins, camera offsets, and particle spawn positions.
+- Gamemodes can now limit the Skill Level of CPU players using `cpuMinLevel` and `cpuMaxLevel`.
+  - This in turn fixes the issue where higher levels of CPU players sabotage endlessly in Classic Mode.
 ### Changes
 #### Audio
 - Replaced some gameplay sounds.
@@ -58,13 +78,13 @@ Hotfixes are quick updates that fixes critical bugs.
 - Updated some splashes
 - Updated the appearance of the NicklySuffer logo once again.
 #### Localization
-- Forced Aliasing now renamed to _Forced Pixelation_ to avoid confusion.
+- Forced Aliasing now renamed to _Forced Pixelation_ to reduce confusion.
 - Localization files are now handled by JSON.
 #### Gameplay
 - Quick Play now randomizes the human player's position.
 - Player count is now unaffected by game mode.
 - The damage of the live round in the Charge gamemode now increments by 0.5 instead of 1.
-- Restarting a game session now doesn't reload the entire session.
+- Restarting a game session is quicker and done without a transition.
   - This also reduces memory usage on restart.
 #### Technical
 - All changelogs are now kept in one file.
@@ -73,6 +93,7 @@ Hotfixes are quick updates that fixes critical bugs.
 - `cylinderDamageChangeOnBlank`, `cylinderDamageChangeOnLive`, and `cylinderInitialDamage` now support floats.
   - The final damage dealt will be rounded down.
 - Character sprites are no longer preloaded on the start of the game.
+- Decreased RAM usage by 50%. (Not guaranteed)
 #### Utilities
 - Character Editor now generates addon metadata and localization files for you.
 ### Removals
@@ -80,7 +101,6 @@ Hotfixes are quick updates that fixes critical bugs.
 - Removed Modifiers
   - Since this feature is under-utilized and not expanded upon, modifiers no longer have any effect.
 - Removed gamemodes: Stand-Off and Mayhem
-- Removed ability to replay starting cutscene on game restart.
 ### Fixes
 - Scroll bars, Gallery Image View, Credits menu, and Options sliders snaps elements in place on touchscreens.
 - Blurry Cobalt crashes the game.

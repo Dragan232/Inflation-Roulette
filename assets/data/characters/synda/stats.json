@@ -1,0 +1,15 @@
+{
+	"cardDisplayedKey": "character.synda.name.short",
+	"maxPressure": 4,
+	"maxConfidence": 7,
+	"skills": [
+		{
+			"id": "reload",
+			"cost": 2
+		},
+		{
+			"id": "assault",
+			"cost": 5
+		}
+	]
+}

@@ -398,7 +398,9 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 						fps: animData.framerate,
 						indices: [],
 						loop: false,
-						soundPaths: []
+						soundPaths: [],
+						bouncy: false,
+						autoPitch: false
 					};
 					animationDataArray.push(exportedAnimData);
 				}

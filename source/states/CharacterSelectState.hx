@@ -565,12 +565,12 @@ class CharacterSelectState extends SuffState {
 			card.disabled = true;
 			var leIndex:Int = cardGroup.members.indexOf(card);
 			if (leIndex != index) {
-				cardTweens.set(leIndex + '', FlxTween.tween(card, {y: FlxG.height}, 0.5, {
+				cardTweens.set(leIndex + '', FlxTween.tween(card, {y: FlxG.height}, 0.25, {
 					ease: FlxEase.quintOut
 				}));
 			} else {
 				// Technically disable flickering if photosensitive mode is on
-				FlxFlicker.flicker(card, 1, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), true, true, function(_) {
+				FlxFlicker.flicker(card, 0.5, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), true, true, function(_) {
 					var index:Int = curPlayer;
 					for (i in 0...Gameplay.selectedCharacterList.length) {
 						index = (index + 1) % Gameplay.selectedCharacterList.length;
@@ -739,7 +739,7 @@ class CharacterSelectState extends SuffState {
 		cardTweens.set('description', FlxTween.tween(description, {alpha: 0}, 0.25, {ease: FlxEase.quintOut}));
 		selectCharacterTxt.visible = false;
 		if (!Preferences.data.enablePhotosensitiveMode) {
-			FlxFlicker.flicker(stageSelectGroup, 1, 1 / 30, function(_) {
+			FlxFlicker.flicker(stageSelectGroup, 0.5, 1 / 30, function(_) {
 				moveOnToPlayerSettings();
 			});
 		} else {
@@ -767,12 +767,12 @@ class CharacterSelectState extends SuffState {
 		for (leIndex => filler in fillerGroup.members) {
 			filler.disabled = true;
 			if (leIndex != fillerIndex) {
-				cardTweens.set(leIndex + '', FlxTween.tween(filler, {y: FlxG.height}, 0.5, {
+				cardTweens.set(leIndex + '', FlxTween.tween(filler, {y: FlxG.height}, 0.25, {
 					ease: FlxEase.quintOut
 				}));
 			} else {
 				// Technically disable flickering if photosensitive mode is on
-				FlxFlicker.flicker(filler, 1, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), false, true, function(_) {
+				FlxFlicker.flicker(filler, 0.5, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), false, true, function(_) {
 					moveOnToStageSelect();
 				});
 			}

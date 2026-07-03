@@ -258,6 +258,7 @@ class PlayState extends SuffState {
 		if (FlxG.random.bool(1 / 128 * 100))
 			selectLight.loadGraphic(Paths.image('game/selectLightAlt'));
 		#end
+		selectLight.color = FlxColor.fromString(stage.data.selectLightColor ?? '#FFFFFF');
 		selectLight.visible = false;
 		members.insert(members.indexOf(characterGroup), selectLight);
 
@@ -267,7 +268,7 @@ class PlayState extends SuffState {
 			dangerVignette.setGraphicSize(FlxG.width + 20, FlxG.height + 20);
 			dangerVignette.updateHitbox();
 			dangerVignette.screenCenter();
-			dangerVignette.color = 0xC00060;
+			dangerVignette.color = 0xC00040;
 			dangerVignette.alpha = 0;
 			dangerVignette.camera = camHUD;
 			add(dangerVignette);
@@ -785,11 +786,13 @@ class PlayState extends SuffState {
 						if (getPlayer(victimIndex).currentPressure + liveRoundDamage > getPlayer(victimIndex).maxConfidence)
 							Achievements.advanceProgress('eliminateByAssault', [true]);
 					}
+					var attackerFlipX:Bool = (attackerIndex - victimIndex) < 0;
+					getPlayer(attackerIndex).playAnim('skillAssault' + (cylinderContent[0] ? 'Success' : 'Fail'), true, true, attackerFlipX);
 					shoot(victimIndex, false);
 					pumpGun.visible = false;
-					var flipX:Bool = (attackerIndex - victimIndex) < 0;
-					if (getPlayer(victimIndex).flipX) flipX = !flipX;
-					getPlayer(victimIndex).playAnim('shocked', true, true, flipX);
+					var victimFlipX:Bool = (attackerIndex - victimIndex) < 0;
+					if (getPlayer(victimIndex).flipX) victimFlipX = !victimFlipX;
+					getPlayer(victimIndex).playAnim('shocked', true, true, victimFlipX);
 				case 'amnesia':
 					getPlayer(victimIndex).playAnim('amnesic', true, true);
 					getPlayer(victimIndex).canUseSkills = false;
@@ -876,7 +879,7 @@ class PlayState extends SuffState {
 		if (dealDamage) {
 			if (!getPlayer(playerIndex).cpuControlled)
 				Achievements.advanceProgress('liveShots', [1]);
-			SuffState.playSound(Paths.sound('game/shootLive'));
+			SuffState.playSound(Paths.sound('game/inflate'));
 			getPlayer(playerIndex).currentPressure += 1;
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;

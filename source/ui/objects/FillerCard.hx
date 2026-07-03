@@ -10,6 +10,8 @@ class FillerCard extends SuffButton {
 	var outline:FlxSprite;
 	var charNameText:FlxText;
 
+	public var alwaysHighlighted:Bool = false;
+
 	public function new(x:Float, y:Float, filler:Filler) {
 		super(x, y, null, null, null, Constants.CHARACTER_CARD_DIMENSIONS[0], Constants.CHARACTER_CARD_DIMENSIONS[1], false);
 
@@ -23,6 +25,7 @@ class FillerCard extends SuffButton {
 
 		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('filler.${filler.id}.name').toUpperCase());
 		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
+		charNameText.blend = INVERT;
 		add(charNameText);
 	}
 
@@ -38,7 +41,8 @@ class FillerCard extends SuffButton {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		outline.visible = this.hovered;
+		outline.visible = this.hovered || alwaysHighlighted;
+		outline.color = !alwaysHighlighted ? 0xFFFFFFFF : 0xFFFF00FF;
 
 		btnBG.visible = false;
 		btnOutline.visible = false;

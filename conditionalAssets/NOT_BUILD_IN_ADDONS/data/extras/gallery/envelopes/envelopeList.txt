@@ -1,3 +1,5 @@
 goober
 shib
 chester
+asimo
+synda

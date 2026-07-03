@@ -1,4 +1,5 @@
 {
+	"selectLightColor": "#FFFF00",
 	"stageCameraZoom": 0.9,
 	"characterCameraZoom": 1.2,
 	"cameraBounds": [-640, -240, 2560, 1080],

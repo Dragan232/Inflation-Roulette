@@ -101,6 +101,12 @@ class GalleryArtworkSubState extends SuffSubState {
 		artworkGroup.y = (title.height + description.height) / -4;
 		var originalArtworkGroup = artworkGroup.y;
 		title.y = Std.int(artworkGroup.members[curSelected].y + artworkGroup.members[curSelected].height);
+		artworkGroup.members[curSelected].tooltipText = Language.getPhrase('galleryEntryMenu.viewFullImage');
+		if (artworkData.warnings != null && artworkData.warnings.length > 0) {
+			var translatedWarnings = artworkData.warnings.map(function(f:String) return Language.getPhrase('galleryEntryMenu.warning.' + f));
+			artworkGroup.members[curSelected].tooltipText = Language.getPhrase('galleryEntryMenu.viewFullImageWarned', [translatedWarnings.join(', ')]);
+			artworkGroup.members[curSelected].color = 0xFF000000;
+		}
 		// description.updateHitbox();
 		description.alignment = description.height <= 32 ? CENTER : JUSTIFY;
 		description.y = title.y + title.height;

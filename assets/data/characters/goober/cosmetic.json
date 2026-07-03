@@ -1,8 +1,8 @@
 {
 	"spriteSheets": [
-		"actions",
-		"cutscenes",
-		"shooting"
+		"0",
+		"1",
+		"2"
 	],
 	"animations": [
 		{
@@ -361,7 +361,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "shocked1",
@@ -369,7 +370,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "shocked2",
@@ -377,7 +379,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "shocked3",
@@ -385,7 +388,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "shocked4",
@@ -393,7 +397,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "win0",
@@ -401,7 +406,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "win1",
@@ -409,7 +415,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "win2",
@@ -417,7 +424,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "win3",
@@ -425,7 +433,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		},
 		{
 			"name": "win4",
@@ -433,7 +442,8 @@
 			"fps": 24,
 
 			"indices": [],
-			"loop": false
+			"loop": false,
+			"bouncy": true
 		}
 	],
 

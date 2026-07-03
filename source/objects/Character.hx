@@ -39,6 +39,8 @@ class Character extends FlxSprite {
 	public var poppingGravityMultiplier:Float = 1.0;
 	public var poppingVelocityMultiplier:Array<Float> = [1, 1];
 	public var disablePopping:Bool = false;
+	public var bounceScale:Float = 0.02;
+	public var bounceFrames:Int = 3;
 
 	// Gameplay Variables //
 	public var currentPressure:Int = 0;
@@ -71,6 +73,9 @@ class Character extends FlxSprite {
 	public var disableBellySounds:Bool = false;
 	public var mask:FlxSprite;
 	public var rubHitbox:FlxSprite;
+	public var bouncyAnims:Map<String, Bool> = [];
+	public var autoPitchAnims:Map<String, Bool> = [];
+	public var animBounceTween:FlxTween;
 
 	public var discoloration:DiscolorationMaskedShader;
 	// VORE IN IRR REAL??
@@ -184,6 +189,8 @@ class Character extends FlxSprite {
 			poppingVelocityMultiplier = spriteJson.poppingVelocityMultiplier;
 		disablePopping = !(!spriteJson.disablePopping);
 		poppingGravityMultiplier = spriteJson.poppingGravityMultiplier;
+		bounceScale = spriteJson.bounceScale ?? 0.02;
+		bounceFrames = spriteJson.bounceFrames ?? 3;
 
 		var hitboxes:Array<CharacterHitboxData> = cast spriteJson.rubHitboxes;
 		for (hitboxData in hitboxes) {
@@ -214,15 +221,6 @@ class Character extends FlxSprite {
 			}
 		}
 
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
-		var combinedMaskAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[0]}');
-		for (i in 1...spriteJson.spriteSheets.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
-			combinedAtlas.addAtlas(atlas, false);
-			var maskAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[i]}');
-			combinedMaskAtlas.addAtlas(maskAtlas, false);
-		}
-
 		if (Preferences.data.enableDiscoloration && Preferences.data.enableGLSL && Gameplay.currentFiller.tintColor != null) {
 			var leColor = Gameplay.currentFiller.tintColor;
 			var leDestabilization:Array<Float> = Gameplay.currentFiller.destabilizationFactor;
@@ -232,8 +230,25 @@ class Character extends FlxSprite {
 			trace('Discoloration shader created for $id with color $leColor');
 		}
 
-		mask = new FlxSprite();
-		mask.frames = combinedMaskAtlas;
+
+		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
+		var combinedMaskAtlas:FlxAtlasFrames = null;
+		if (!Preferences.data.decreaseDetail && discoloration != null) {
+			combinedMaskAtlas = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[0]}');
+		}
+		for (i in 1...spriteJson.spriteSheets.length) {
+			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
+			combinedAtlas.addAtlas(atlas, false);
+			if (combinedMaskAtlas != null) {
+				var maskAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[i]}');
+				combinedMaskAtlas.addAtlas(maskAtlas, false);
+			}
+		}
+
+		if (combinedMaskAtlas != null) {
+			mask = new FlxSprite();
+			mask.frames = combinedMaskAtlas;
+		}
 
 		super(x, y);
 		frames = combinedAtlas;
@@ -246,22 +261,26 @@ class Character extends FlxSprite {
 			for (anim in animationsArray) {
 				var animName:String = '' + anim.name;
 				var animPrefix:String = '' + anim.prefix + '0'; // Prevent wocky shit from happening
-				var animFps:Int = anim.fps;
-				var animLoop:Bool = !(!anim.loop);
-				var animIndices:Array<Int> = anim.indices;
+				var animFps:Int = anim.fps ?? 24;
+				var animLoop:Bool = anim.loop ?? true;
+				var animIndices:Array<Int> = anim.indices ?? [];
 				if (animIndices != null && animIndices.length > 0) {
 					animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
-					mask.animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
+					if (mask != null)
+						mask.animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
 				} else {
 					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
-					mask.animation.addByPrefix(animName, animPrefix, animFps, animLoop);
+					if (mask != null)
+						mask.animation.addByPrefix(animName, animPrefix, animFps, animLoop);
 				}
 				if (anim.soundPaths != null && anim.soundPaths.length > 0)
-					addSoundPath(animName, anim.soundPaths);
+					addSoundPath(animName, anim.soundPaths, anim.autoPitch ?? true);
+				bouncyAnims.set(animName, anim.bouncy ?? false);
 			}
 		} else {
 			trace('Character $id has no animations');
 			animation.addByPrefix('idle0', 'idle0', 24);
+			bouncyAnims.set('idle0', false);
 		}
 		playAnim('idle');
 		currentPressure = 0;
@@ -290,7 +309,8 @@ class Character extends FlxSprite {
 
 	public override function update(elapsed:Float) {
 		if (discoloration != null) {
-			discoloration.setMask(mask.frame.parent.bitmap);
+			if (mask != null)
+				discoloration.setMask(mask.frame.parent.bitmap);
 			if (currentPressure > 0 && currentPressure <= maxPressure) {
 				// trace(discoloration.strength);
 				discolorationStrength += 0.02 * elapsed * getPressurePercentage();
@@ -488,6 +508,8 @@ class Character extends FlxSprite {
 	}
 
 	function substituteAnim(key:String):String {
+		if (animExists(key + parseAnimationSuffix()) || animExists(key))
+			return key;
 		return missingAnimReplace.get(key) ?? key;
 	}
 
@@ -510,7 +532,7 @@ class Character extends FlxSprite {
 		return leAnim;
 	}
 
-	public function addSoundPath(name:String, pathArray:Array<String>) {
+	public function addSoundPath(name:String, pathArray:Array<String>, autoPitch:Bool = true) {
 		if (pathArray == null || pathArray.length <= 0)
 			return;
 		if (!animSoundPaths.exists(name))
@@ -518,6 +540,7 @@ class Character extends FlxSprite {
 		for (path in pathArray) {
 			animSoundPaths[name].push(path);
 		}
+		autoPitchAnims.set(name, autoPitch);
 	}
 
 	public function animExists(AnimName:String):Bool {
@@ -551,8 +574,20 @@ class Character extends FlxSprite {
 			if (animSoundPaths.exists(usedAnimName)) {
 				var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
 				var daSound = daSoundList[FlxG.random.int(0, daSoundList.length - 1)];
-				SuffState.playSound(Paths.sound(daSound), 1, voicePitch + FlxG.random.float(-0.1, 0.1));
+				var pitch = autoPitchAnims.get(usedAnimName) ? voicePitch + FlxG.random.float(-0.1, 0.1) : 1;
+				SuffState.playSound(Paths.sound(daSound), 1, pitch);
 			}
+		}
+
+		if (bouncyAnims.get(usedAnimName) == true) {
+			if (animBounceTween != null) animBounceTween.cancel();
+			origin.set(originPosition[0], originPosition[1]);
+			scale.set(1 + bounceScale * 2, 1 - bounceScale);
+			animBounceTween = FlxTween.tween(this, {'scale.x': 1, 'scale.y': 1}, bounceFrames / animation.curAnim.frameRate, {
+				ease: function(f:Float) {
+					return Std.int(f);
+				}
+			});
 		}
 		
 		// trace(id, usedAnimName);

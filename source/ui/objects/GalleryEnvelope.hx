@@ -73,7 +73,7 @@ class GalleryEnvelope extends SuffButton {
 	function randomNum(min:Float = 0, max:Float = 1):Float {
 		// Linear Congruential Generator
 		this.seed = (this.seed * 25 + 102803) % 236196;
-		return min + this.seed / 236196 * (max - min);
+		return min + this.seed / 236195 * (max - min);
 	}
 
 	override function update(elapsed:Float) {

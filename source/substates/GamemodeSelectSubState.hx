@@ -126,34 +126,13 @@ class GamemodeSelectSubState extends SuffSubState {
 	}
 
 	function goGoGadgetGamemode(gamemode:Gamemode) {
-		leaving = true;
 		Gameplay.setPlayerCount(Std.int(playerCountSlider.currentValue));
 		switch (gamemode.id) {
 			case 'quickPlay':
-				Gameplay.currentGamemode = Gameplay.defaultGamemode;
-				Gameplay.currentStage = FlxG.random.getObject(Gameplay.globalStageList);
-				Gameplay.currentFiller = new Filler(FlxG.random.getObject(Gameplay.globalFillerList));
-				// Gameplay.setPlayerCount(Gameplay.currentGamemode.playerCount);
-				var leRandom = [];
-				var leCPUControl = [];
-				for (num => i in Gameplay.selectedCharacterList) {
-					leRandom.push('random');
-					leCPUControl.push(true);
-					Gameplay.cpuLevel[num] = FlxG.random.int(Constants.CPU_SKILL_LIMIT[0], Constants.CPU_SKILL_LIMIT[1]);
-				}
-				leCPUControl[FlxG.random.int(0, leCPUControl.length - 1)] = false;
-				Gameplay.selectedCharacterList = leRandom;
-				Gameplay.cpuControlled = leCPUControl;
-				PlayState.hasSeenStartCutscene = false;
-				Gameplay.parseRandomCharacters();
-				trace('Current characters: ', Gameplay.selectedCharacterList);
-				trace('Current CPU level: ', Gameplay.cpuLevel);
-				trace('Current stage: ', Gameplay.currentStage);
-				trace('Current filler: ', Gameplay.currentFiller.id);
-				openSubState(new GameOnSubState(new PlayState()));
+				openSubState(new QuickConfigSubState(FlxG.keys.pressed.SHIFT));
 			default:
+				leaving = true;
 				Gameplay.currentGamemode = gamemode;
-				// Gameplay.setPlayerCount(Gameplay.currentGamemode.playerCount);
 				SuffState.switchState(new CharacterSelectState());
 		}
 		trace('Current gamemode: ', Gameplay.currentGamemode);

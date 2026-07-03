@@ -106,7 +106,17 @@ class DebugText extends TextField {
 			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.memoryPeak'), Utilities.formatBytes(memPeak, 1)]) + '\n';
 		}
 		#end
-		if (Preferences.data.showCurrentStateOnDebugText)
-			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.state'), Type.getClassName(Main.mainClassState)]) + '\n';
+		if (Preferences.data.showCurrentStateOnDebugText) {
+			var stateName = Type.getClassName(Main.mainClassState);
+			var subState = FlxG.state.subState;
+			if (subState != null) {
+				while (subState.subState != null) {
+					subState = subState.subState;
+				}
+				if (Type.getClassName(Type.getClass(subState)) != 'ui.SuffTransition')
+					stateName = Type.getClassName(Type.getClass(subState));
+			}
+			text += Language.getPhrase('debugText.format', [Language.getPhrase('debugText.state'), stateName]) + '\n';
+		}
 	}
 }

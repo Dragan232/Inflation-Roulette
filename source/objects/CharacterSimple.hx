@@ -20,11 +20,17 @@ class CharacterSimple extends FlxSprite {
 
 	public var gurgleThreshold:Int = 2;
 	public var creakThreshold:Int = 4;
+	public var bounceScale:Float = 0.02;
+	public var bounceFrames:Int = 3;
+	public var voicePitch:Float = 1;
 
 	// Cosmetic Variables //
 	public var idleAfterAnimation:Bool = true;
 	public var disableBellySounds:Bool = false;
 	public var popped:Bool = false;
+	public var bouncyAnims:Map<String, Bool> = [];
+	public var autoPitchAnims:Map<String, Bool> = [];
+	public var animBounceTween:FlxTween;
 
 	var gurgleTimer:Float = 0;
 	var creakTimer:Float = 0;
@@ -47,6 +53,9 @@ class CharacterSimple extends FlxSprite {
 			originPosition = offsetsJson.originPosition;
 		gurgleThreshold = spriteJson.gurgleThreshold;
 		creakThreshold = spriteJson.creakThreshold;
+		bounceScale = spriteJson.bounceScale ?? 0.02;
+		bounceFrames = spriteJson.bounceFrames ?? 3;
+		voicePitch = spriteJson.voicePitch ?? 1;
 
 		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
 		for (i in 1...spriteJson.spriteSheets.length) {
@@ -71,7 +80,7 @@ class CharacterSimple extends FlxSprite {
 					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
 				}
 				if (anim.soundPaths != null && anim.soundPaths.length > 0)
-					addSoundPath(animName, anim.soundPaths);
+					addSoundPath(animName, anim.soundPaths, anim.autoPitch);
 			}
 		} else {
 			trace('Character $id has no animations');
@@ -113,7 +122,7 @@ class CharacterSimple extends FlxSprite {
 		return (animation.getByName(AnimName) != null);
 	}
 
-	public function addSoundPath(name:String, pathArray:Array<String>) {
+	public function addSoundPath(name:String, pathArray:Array<String>, autoPitch:Bool = true) {
 		if (pathArray == null || pathArray.length <= 0)
 			return;
 		if (!animSoundPaths.exists(name))
@@ -121,6 +130,7 @@ class CharacterSimple extends FlxSprite {
 		for (path in pathArray) {
 			animSoundPaths[name].push(path);
 		}
+		autoPitchAnims.set(name, autoPitch);
 	}
 
 	public function playAnim(AnimName:String, Force:Bool = true, flipX:Bool = false, playSound:Bool = true, Reversed:Bool = false, Frame:Int = 0):Void {
@@ -135,11 +145,23 @@ class CharacterSimple extends FlxSprite {
 		offset.set(originPosition[0], originPosition[1]);
 
 		if (playSound) {
-			var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
 			if (animSoundPaths.exists(usedAnimName)) {
+				var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
 				var daSound = daSoundList[FlxG.random.int(0, daSoundList.length - 1)];
-				SuffState.playSound(Paths.sound(daSound));
+				var pitch = autoPitchAnims.get(usedAnimName) ? voicePitch + FlxG.random.float(-0.1, 0.1) : 1;
+				SuffState.playSound(Paths.sound(daSound), 1, pitch);
 			}
+		}
+
+		if (bouncyAnims.get(usedAnimName) == true) {
+			if (animBounceTween != null) animBounceTween.cancel();
+			origin.set(originPosition[0], originPosition[1]);
+			scale.set(1 + bounceScale * 2, 1 - bounceScale);
+			animBounceTween = FlxTween.tween(this, {'scale.x': 1, 'scale.y': 1}, bounceFrames / animation.curAnim.frameRate, {
+				ease: function(f:Float) {
+					return Std.int(f);
+				}
+			});
 		}
 	}
 

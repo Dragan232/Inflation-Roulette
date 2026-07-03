@@ -22,7 +22,7 @@ class DiscolorationTestState extends SuffState {
 		rubText = new FlxText(0, 0, 0, '', 32);
 		add(rubText);
 
-		character = new Character('chester', FlxG.width / 2, FlxG.height * 0.825);
+		character = new Character('synda', FlxG.width / 2, FlxG.height * 0.825);
 		add(character);
 
 		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);

@@ -1,0 +1,18 @@
+{
+	"titleTranslationKey": "character.synda.name",
+	"hasCharacter": true,
+	"artwork": [
+		"syndaRender",
+		"syndaSticker",
+		"syndaRenderSketch",
+		"syndaReferenceOld",
+		"syndaSprite"
+	],
+	"color": "#A040FF",
+	"quotes": [
+		"MAGNUM",
+		"CALAMARI",
+		"COFFEE",
+		"SHARKMATE"
+	]
+}
