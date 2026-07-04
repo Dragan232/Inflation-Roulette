@@ -129,7 +129,10 @@ class PauseSubState extends SuffSubState {
 		PlayState.instance.restartGame(restartCutscene);
 		FlxG.camera.followLerp = usedFollowLerp;
 		FlxG.sound.music.volume = Preferences.data.musicVolume;
-		SuffState.playMusic(PlayState.instance.stage.data.music, true);
+		if (!restartCutscene)
+			SuffState.playMusic(PlayState.instance.stage.data.music, true);
+		else
+			SuffState.playMusic('cutscene');
 	}
 
 	override function destroy() {

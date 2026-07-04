@@ -434,7 +434,7 @@
 
 	"galleryEntryMenu.viewFullImage": "觀看完整圖片",
 	"galleryEntryMenu.viewFullImageWarned": "內容警告：%1\n觀看完整圖片以顯示",
-	"galleryEntryMenu.warning.inflation": "膨脹",
+	// "galleryEntryMenu.warning.inflation": "膨脹",
 	"galleryEntryMenu.warning.changed": "Changed",
 
 	"jukeboxMenu.windowDisplay": "點唱單",

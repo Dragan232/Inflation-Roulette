@@ -81,10 +81,12 @@ class CharacterSimple extends FlxSprite {
 				}
 				if (anim.soundPaths != null && anim.soundPaths.length > 0)
 					addSoundPath(animName, anim.soundPaths, anim.autoPitch);
+				bouncyAnims.set(animName, anim.bouncy ?? false);
 			}
 		} else {
 			trace('Character $id has no animations');
 			animation.addByPrefix('idle0', 'idle0', 24);
+			bouncyAnims.set('idle0', false);
 		}
 		
 		trace(animSoundPaths);

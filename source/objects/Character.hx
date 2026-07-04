@@ -87,6 +87,9 @@ class Character extends FlxSprite {
 	public var creakTimer:Float = 0;
 	var navelLeakTimer:Float = 0;
 	var swirlSpawnTimer:Float = 0;
+	var stumbleTimer:Float = 0;
+	var ejectTimer:Float = 10;
+	var originalPosition:FlxPoint;
 
 	public var cursorOnBelly:Bool = false;
 	public var rubValue:Float = 0;
@@ -297,6 +300,8 @@ class Character extends FlxSprite {
 		
 		trace(animSoundPaths);
 
+		originalPosition = FlxPoint.get(this.x, this.y);
+
 		if (rubHitbox != null)
 			FlxG.state.add(rubHitbox);
 	}
@@ -417,6 +422,36 @@ class Character extends FlxSprite {
 						}
 					}
 				}
+			}
+		}
+		if (stomachNpcContents.length > 0 && Gameplay.currentFiller.stumbleForce != 0 && !isEliminated()) {
+			if (stumbleTimer < 0) {
+				var intensity = Math.min(1, Math.pow(stomachNpcContents.length / maxPressure, 2));
+				stumbleTimer = FlxG.random.float(0.2, 0.5) / intensity;
+				this.velocity.x = Gameplay.currentFiller.stumbleForce * 20 * intensity * FlxG.random.int(-1, 1, [0]);
+				if (this.x + this.velocity.x * 0.1 > originalPosition.x + 40 || this.x + this.velocity.x * 0.1 < originalPosition.x - 40)
+					this.velocity.x *= -1;
+				FlxTween.tween(this.velocity, {x: 0}, 0.1);
+			} else {
+				stumbleTimer -= elapsed;
+			}
+		}
+		if (isEliminated() && stomachNpcContents.length > 0) {
+			if (ejectTimer < 0) {
+				ejectTimer = 10;
+				var npcID:String = stomachNpcContents.shift();
+				if (npcID != null) {
+					var particleOffset = getParticleOffset(Gameplay.currentFiller.npcSpawnLocationOnOverinflate).add(this.x, this.y);
+					var npc = new NPC(npcID, particleOffset.x, particleOffset.y, this.id);
+					npc.velocity.set(FlxG.random.float(-160, 160), FlxG.random.float(-80, 0));
+					npc.transmutateThreshold = maxPressure;
+					if (PlayState.instance != null)
+						PlayState.instance.npcGroup.add(npc);
+					else
+						FlxG.state.add(npc);
+				}
+			} else {
+				ejectTimer -= elapsed;
 			}
 		}
 		if (!canUseSkills) {
@@ -608,6 +643,7 @@ class Character extends FlxSprite {
 			vel.x *= -1;
 		if (animation.curAnim.flipX)
 			vel.x *= -1;
+		trace('id: $id, offsets: $vel');
 		return vel;
 	}
 

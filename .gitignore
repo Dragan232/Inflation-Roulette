@@ -3,5 +3,5 @@ private/
 **/*.zip
 .idea/
 .haxelib/
+Inflation-Roulette-Reloaded.iml
 *.keystore
-**/*_private.fla

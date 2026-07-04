@@ -29,6 +29,7 @@ class Filler {
 	public var navelLeaks:Bool = false;
 	public var npcOnPop:String = '';
 	public var npcCountOnPop:Array<Int> = [0, 0];
+	public var npcSpawnLocationOnOverinflate:String = 'mouth';
 
 	public function new(id:String) {
 		this.id = id;
@@ -86,6 +87,8 @@ class Filler {
 			this.npcOnPop = rawData.npcOnPop;
 		if (rawData.npcCountOnPop != null)
 			this.npcCountOnPop = rawData.npcCountOnPop;
+		if (rawData.npcSpawnLocationOnOverinflate != null)
+			this.npcSpawnLocationOnOverinflate = rawData.npcSpawnLocationOnOverinflate;
 	}
 
 	public function determineSamples(samples:Int):Int {

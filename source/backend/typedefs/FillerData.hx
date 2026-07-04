@@ -19,6 +19,7 @@ typedef FillerData = {
 	?navelLeaks:Bool, // false
 	?npcOnPop:String, // ""
 	?npcCountOnPop:Array<Int>,
+	?npcSpawnLocationOnOverinflate:String,
 
 	?particleType:String,
 }

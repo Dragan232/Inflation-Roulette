@@ -540,7 +540,7 @@
 	// %1 - Envelope Name
 	"galleryEntryMenu.viewFullImage": "View Full Image",
 	"galleryEntryMenu.viewFullImageWarned": "WARNING: %1\nView Full Image To Reveal",
-	"galleryEntryMenu.warning.inflation": "Inflation",
+	// "galleryEntryMenu.warning.inflation": "Inflation",
 	"galleryEntryMenu.warning.changed": "Changed",
 
 	"jukeboxMenu.windowDisplay": "Jukebox",

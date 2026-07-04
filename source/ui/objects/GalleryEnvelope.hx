@@ -57,10 +57,14 @@ class GalleryEnvelope extends SuffButton {
 			text.angle = 90;
 		} else {
 			text.fieldWidth = text.size;
+			if (text.height > (base.height - text.y - 64)) {
+				text.scale.y = (base.height - text.y - 64) / text.height;
+				text.updateHitbox();
+			}
 			text.offset.x -= text.size * 0.25;
 			text.offset.y -= text.size * 0.25;
 		}
-		text.angle += randomNum(-5, 5);
+		text.angle += randomNum(-3, 3);
 		text.color = 0xFF000000;
 		text.alpha = 0.375;
 		add(text);

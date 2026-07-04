@@ -883,6 +883,9 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).currentPressure += 1;
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
+			if (Gameplay.currentFiller.npcOnPop != '')
+				getPlayer(playerIndex).stomachNpcContents.push(Gameplay.currentFiller.npcOnPop);
+			// trace(getPlayer(playerIndex).stomachNpcContents);
 			if (liveRoundDamage > 1) {
 				liveRoundDamage = Std.int(liveRoundDamage);
 				liveRoundDamage -= 1;
@@ -1518,6 +1521,7 @@ class PlayState extends SuffState {
 			char.y = stage.data.characterY;
 			char.currentPressure = 0;
 			char.currentConfidence = 0;
+			char.stomachNpcContents = [];
 			char.playAnim('idle' + char.currentPressure);
 		}
 
