@@ -85,7 +85,7 @@ class Achievements {
 		createAchievement('allCharacterWins', {
 			tier: GOOD,
 			type: LIST,
-			items: ['goober', 'shib', 'chester', 'asimo', 'synda'],
+			items: ['goober', 'shib', 'chester', 'asimo', 'synda', 'jacob'],
 			itemTranslationKey: 'character.%.name.short'
 		});
 		createAchievement('allFillerWins', {
