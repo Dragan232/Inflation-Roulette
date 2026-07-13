@@ -9,7 +9,7 @@ class Scrap extends FlxSprite {
 
 	public function new(x, y, characterID:String = 'goober') {
 		super(x, y);
-		var leImage:FlxGraphic = Paths.image('game/particles/scraps/$characterID');
+		var leImage:FlxGraphic = Paths.image('game/particles/scraps/$characterID') ?? Paths.image('game/particles/scraps/placeholder');
 		loadGraphic(leImage, true, leImage.height, leImage.height);
 		animation.add('idle', [FlxG.random.int(0, Std.int(leImage.width / leImage.height) - 1)]);
 		animation.play('idle');
