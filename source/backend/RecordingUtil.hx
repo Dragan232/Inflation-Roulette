@@ -3,8 +3,10 @@ package backend;
 class RecordingUtil {
 	public static var isRecording:Bool = false;
 
+	public static var recordingFunc:Bool->Void = null;
+
 	public static function checkIfRecording() {
-		#if !_ALLOW_RECORDING
+		#if _CHECK_RECORDING
 		var process:Process;
 		var command:String;
 		var args:Array<String>;
@@ -45,5 +47,7 @@ class RecordingUtil {
 		#else
 		isRecording = false;
 		#end
+		if (recordingFunc != null)
+			recordingFunc(isRecording);
 	}
 }

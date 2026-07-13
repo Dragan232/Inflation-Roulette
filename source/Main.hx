@@ -17,7 +17,7 @@ import sys.FileSystem;
 import sys.io.File;
 import openfl.utils.Assets;
 import backend.VersionUtil;
-
+import backend.RecordingUtil;
 #end
 
 #if linux

@@ -13,6 +13,9 @@ typedef NPCData = {
 	?sizeMultiplier:Array<Float>,
 	?originPosition:Array<Float>,
 	?tauntChance:Float,
+	?gravityMultiplier:Float,
+	?restitution:Float,
+	?friction:Float,
 	?hitboxSize:Array<Float>,
 	?animations:Array<AnimationData>
 }

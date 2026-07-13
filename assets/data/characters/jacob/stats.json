@@ -1,0 +1,15 @@
+{
+	"cardDisplayedKey": "character.jacob.name.short",
+	"maxPressure": 4,
+	"maxConfidence": 4,
+	"skills": [
+		{
+			"id": "reload",
+			"cost": 2
+		},
+		{
+			"id": "denial",
+			"cost": 4
+		}
+	]
+}

@@ -570,7 +570,7 @@ class CharacterSelectState extends SuffState {
 				}));
 			} else {
 				// Technically disable flickering if photosensitive mode is on
-				FlxFlicker.flicker(card, 0.5, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), true, true, function(_) {
+				FlxFlicker.flicker(card, 0.75, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), true, true, function(_) {
 					var index:Int = curPlayer;
 					for (i in 0...Gameplay.selectedCharacterList.length) {
 						index = (index + 1) % Gameplay.selectedCharacterList.length;
@@ -739,11 +739,11 @@ class CharacterSelectState extends SuffState {
 		cardTweens.set('description', FlxTween.tween(description, {alpha: 0}, 0.25, {ease: FlxEase.quintOut}));
 		selectCharacterTxt.visible = false;
 		if (!Preferences.data.enablePhotosensitiveMode) {
-			FlxFlicker.flicker(stageSelectGroup, 0.5, 1 / 30, function(_) {
+			FlxFlicker.flicker(stageSelectGroup, 0.75, 1 / 30, function(_) {
 				moveOnToPlayerSettings();
 			});
 		} else {
-			new FlxTimer().start(1, function(_) {
+			new FlxTimer().start(0.75, function(_) {
 				moveOnToPlayerSettings();
 			});
 		}
@@ -772,7 +772,7 @@ class CharacterSelectState extends SuffState {
 				}));
 			} else {
 				// Technically disable flickering if photosensitive mode is on
-				FlxFlicker.flicker(filler, 0.5, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), false, true, function(_) {
+				FlxFlicker.flicker(filler, 0.75, (!Preferences.data.enablePhotosensitiveMode ? 1 / 30 : 1), false, true, function(_) {
 					moveOnToStageSelect();
 				});
 			}

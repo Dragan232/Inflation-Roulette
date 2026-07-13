@@ -1,7 +1,5 @@
 export/
 private/
 **/*.zip
-.idea/
 .haxelib/
-Inflation-Roulette-Reloaded.iml
 *.keystore

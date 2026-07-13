@@ -25,6 +25,7 @@ import backend.RecordingUtil;
 import objects.particles.Liquid;
 import objects.particles.Stain;
 import objects.NPC;
+import objects.particles.DenialShield;
 
 class PlayState extends SuffState {
 	public var characterGroup:FlxTypedContainer<Character> = new FlxTypedContainer<Character>();
@@ -78,7 +79,7 @@ class PlayState extends SuffState {
 	public var canUseSkillKeybinds:Bool = false;
 
 	var cylinderContent:Array<Bool> = []; // True: Live, False: Blank
-	var liveRoundDamage:Float = 1;
+	var currentLiveRoundDamage:Float = 1;
 	// This array is only used when cylinderTrueRandomness is true.
 	var roundRandomStatuses:Array<RoundRandomStatus> = [POSSIBLE];
 
@@ -118,7 +119,7 @@ class PlayState extends SuffState {
 
 		Paths.clearStoredMemory();
 
-		liveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
+		currentLiveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
 
 		camGame = new FlxCamera();
 		camEffects = new FlxCamera();
@@ -702,7 +703,7 @@ class PlayState extends SuffState {
 					}
 				}
 			case 'pressurize':
-				liveRoundDamage *= 2;
+				currentLiveRoundDamage *= 2;
 				lastPressurizeUserIndex = playerIndex;
 				pressurizeStreak[playerIndex]++;
 				if (pressurizeStreak[playerIndex] >= 2 && !Gameplay.cpuControlled[playerIndex])
@@ -722,6 +723,15 @@ class PlayState extends SuffState {
 			case 'reveal':
 				getPlayer(playerIndex).cpuKnowsCylinderContents = true;
 				revealCylinderContents = true;
+			case 'unload':
+				var count = Std.int(Math.min(4, Gameplay.currentGamemode.cylinderSize));
+				for (i in 0...count) {
+					cylinderContent.pop();
+					cylinderContent.unshift(false);
+				}
+				cylinderContent[FlxG.random.int(0, count - 1)];
+			case 'denial':
+				getPlayer(playerIndex).isInDenial = true;
 		}
 
 		getPlayer(playerIndex).currentConfidence -= skill.cost;
@@ -783,7 +793,7 @@ class PlayState extends SuffState {
 					}
 					if (!getPlayer(attackerIndex).cpuControlled) {
 						Achievements.advanceProgress('liveShots', [1]);
-						if (getPlayer(victimIndex).currentPressure + liveRoundDamage > getPlayer(victimIndex).maxConfidence)
+						if (getPlayer(victimIndex).currentPressure + currentLiveRoundDamage > getPlayer(victimIndex).maxConfidence)
 							Achievements.advanceProgress('eliminateByAssault', [true]);
 					}
 					var attackerFlipX:Bool = (attackerIndex - victimIndex) < 0;
@@ -800,6 +810,9 @@ class PlayState extends SuffState {
 						changeTurn();
 						canUseSkillKeybinds = !getPlayer(attackerIndex).cpuControlled;
 					}));
+				case 'hosebound':
+					getPlayer(attackerIndex).hoseboundIndices.push(victimIndex);
+					getPlayer(victimIndex).hoseboundIndices.push(attackerIndex);
 			}
 			focusCameraOnPlayer(victimIndex);
 		}));
@@ -867,6 +880,18 @@ class PlayState extends SuffState {
 		var playerAnimName:String = 'idle';
 
 		SuffState.playSound(Paths.sound('game/shoot'));
+		if (getPlayer(playerIndex).isInDenial && cylinderContent[0]) {
+			SuffState.playSound(Paths.sound('game/denialActivate'));
+			var particleOffset = getPlayer(playerIndex).getParticleOffset('navel');
+			var denialShield = new DenialShield(getPlayer(playerIndex).x + particleOffset.x, getPlayer(playerIndex).y + particleOffset.y);
+			particleGroup.add(denialShield);
+			screenShake(0.01, 0.1);
+			if (currentLiveRoundDamage > 1)
+				currentLiveRoundDamage = 1;
+			else
+				dealDamage = false;
+			getPlayer(playerIndex).isInDenial = false;
+		}
 		if (dealDamage) {
 			playerAnimName = 'shootLive';
 		} else {
@@ -883,12 +908,20 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).currentPressure += 1;
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
+			var hoseboundIndices = getPlayer(playerIndex).hoseboundIndices;
+			if (hoseboundIndices.length > 1) {
+				for (index in hoseboundIndices) {
+					getPlayer(index).currentPressure += 1;
+					getPlayer(index).discolorationStrength += 1 / getPlayer(index).maxPressure * 0.75;
+					getPlayer(index).currentConfidence += getPlayer(index).confidenceChangeOnLiveShot;
+					getPlayer(index).playAnim('shocked');
+				}
+			}
 			if (Gameplay.currentFiller.npcOnPop != '')
 				getPlayer(playerIndex).stomachNpcContents.push(Gameplay.currentFiller.npcOnPop);
-			// trace(getPlayer(playerIndex).stomachNpcContents);
-			if (liveRoundDamage > 1) {
-				liveRoundDamage = Std.int(liveRoundDamage);
-				liveRoundDamage -= 1;
+			if (currentLiveRoundDamage > 1) {
+				currentLiveRoundDamage = Std.int(currentLiveRoundDamage);
+				currentLiveRoundDamage --;
 				if (!getPlayer(playerIndex).isEliminated()) {
 					doTimer('morePressure', new FlxTimer().start(0.75, function(_) {
 						for (i in 0...pressurizeStreak.length)
@@ -898,12 +931,13 @@ class PlayState extends SuffState {
 						shoot(playerIndex, passToPlayer);
 					}));
 				} else {
-					liveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
+					currentLiveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
 					cylinderContent.shift();
 					checkToReloadCylinder();
 					if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 						giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 					}
+					getPlayer(playerIndex).hoseboundIndices = [];
 				}
 			} else {
 				cylinderContent.shift();
@@ -911,9 +945,8 @@ class PlayState extends SuffState {
 				if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 					giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 				}
+				getPlayer(playerIndex).hoseboundIndices = [];
 			}
-
-			liveRoundDamage += Gameplay.currentGamemode.cylinderDamageChangeOnLive;
 
 			var percent = getPlayer(playerIndex).getPressurePercentage();
 			var fwoompSuffix:String = percent >= 0.5 ? 'Large' : 'Small';
@@ -930,7 +963,7 @@ class PlayState extends SuffState {
 			if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 				giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnBlank);
 			}
-			liveRoundDamage += Gameplay.currentGamemode.cylinderDamageChangeOnBlank;
+			currentLiveRoundDamage += Gameplay.currentGamemode.cylinderDamageChangeOnBlank;
 		}
 		trace(cylinderContent);
 
@@ -1027,6 +1060,7 @@ class PlayState extends SuffState {
 					particleMultiplier = 3;
 				}
 				particleGroup.add(new PopEmitter(character.x, character.y - character.height / 2, stage.data.characterY, Gameplay.currentFiller.particleType, particleMultiplier, Gameplay.currentFiller.particleColor));
+				character.stomachNpcContents = [];
 				if (!Preferences.data.decreaseDetail) {
 					var npcCount = FlxG.random.int(Gameplay.currentFiller.npcCountOnPop[0], Gameplay.currentFiller.npcCountOnPop[1]);
 					for (i in 0...npcCount) {
@@ -1496,7 +1530,7 @@ class PlayState extends SuffState {
 		setWindowTitle();
 
 		currentTurnIndex = 0;
-		liveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
+		currentLiveRoundDamage = Gameplay.currentGamemode.cylinderInitialDamage;
 		reloadCylinder(Gameplay.currentGamemode.cylinderLiveCount);
 		currentSessionEnablePopping = Preferences.data.enablePopping;
 

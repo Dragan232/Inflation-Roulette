@@ -75,10 +75,11 @@
 	<section if="_OFFICIAL_BUILD">
 		<define name="_CHECK_FOR_UPDATES" if="desktop"/>
 		<define name="_ALLOW_ADDONS" unless="web" />
+		<define name="_ALLOW_EASTER_EGGS"/>
+		<define name="_ALLOW_SAVE_EXPORTING" if="mobile" />
 		<define name="_ALLOW_UTILITIES" if="desktop" />
 		<define name="_ALLOW_FILE_CREATION" if="_ALLOW_UTILITIES" />
-		<define name="_ALLOW_SAVE_EXPORTING" if="mobile" />
-		<define name="_ALLOW_EASTER_EGGS"/>
+		<define name="_CHECK_RECORDING" if="desktop" />
 	</section>
 	<define name="_USE_MP3" if="web"/>
 	<define name="_BUILD_IN_ADDONS" unless="desktop" />

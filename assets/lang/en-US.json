@@ -1,7 +1,7 @@
 {
-	// !!     DO NOT DELETE THE COMMENTS    !!
-	// !! COMMENTS WILL NOT BE READ BY GAME !!
-	// Translation File
+	// ! DO NOT DELETE THE COMMENTS        !
+	// ! COMMENTS WILL NOT BE READ BY GAME !
+	// *** Translation File ***
 	// Language: English (US)
 	
 	// Comments are prefixed with two slashes (//) before each LINE, and will not be recognized by the game.
@@ -378,6 +378,12 @@
 	"character.synda.name": "Synthia D'Arcy",
 	"character.synda.name.short": "Synda",
 	"character.synda.description": "A desperate lady seeking funds for body enhancements. Can shoot others with enough confidence.",
+	// Jacob: Guest character. A dorky fox tricked into playing the game.
+	// Designed as a low-risk character.
+	// Skills: Reload, Cowardice
+	"character.jacob.name": "Jacob Goatington",
+	"character.jacob.name.short": "Jacob",
+	"character.jacob.description": "A timid fox tricked into playing. Despite this, he can swiftly avoid confrontation.",
 	// Option to choose a random character.
 	"character.random.name": "Random",
 	"character.random.name.short": "Random",
@@ -420,6 +426,12 @@
 	"skill.amnesia.description": "Disable an opponent's skills for one turn.",
 	"skill.assault.name": "Assault",
 	"skill.assault.description": "Shoot an opponent. Gives victim 2 confidence on blank.",
+	"skill.unload.name": "Unload",
+	"skill.unload.description": "Shifts 4 bullets into cylinder with 1 being live.",
+	"skill.denial.name": "Denial",
+	"skill.denial.description": "Protect against live bullets and nullify pressurization.",
+	"skill.hosebound.name": "Hosebound",
+	"skill.hosebound.description": "Share incoming damage with target for 1 turn.",
 
 	"pauseMenu.windowDisplay": "Paused",
 	"pauseMenu.title": "GAME PAUSED",

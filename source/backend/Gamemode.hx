@@ -13,7 +13,7 @@ class Gamemode {
 	public var cylinderLiveCount:Int = Constants.LIVE_ROUND_COUNT;
 	public var cylinderReloadOnNoLives:Bool = true;
 	public var cylinderInitialDamage:Float = 1;
-	public var cylinderDamageChangeOnLive:Float = 0;
+	// public var cylinderDamageChangeOnLive:Float = 0;
 	public var cylinderDamageChangeOnBlank:Float = 0;
 	public var cylinderTrueRandomness:Bool = false;
 
@@ -52,8 +52,8 @@ class Gamemode {
 			this.cylinderReloadOnNoLives = rawData.cylinderReloadOnNoLives;
 		if (rawData.cylinderInitialDamage != null)
 			this.cylinderInitialDamage = rawData.cylinderInitialDamage;
-		if (rawData.cylinderDamageChangeOnLive != null)
-			this.cylinderDamageChangeOnLive = rawData.cylinderDamageChangeOnLive;
+		// if (rawData.cylinderDamageChangeOnLive != null)
+			 // this.cylinderDamageChangeOnLive = rawData.cylinderDamageChangeOnLive;
 		if (rawData.cylinderDamageChangeOnBlank != null)
 			this.cylinderDamageChangeOnBlank = rawData.cylinderDamageChangeOnBlank;
 		if (rawData.cylinderTrueRandomness != null)

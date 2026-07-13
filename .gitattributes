@@ -5,11 +5,10 @@
 *.txt eol=lf
 *.lang eol=lf
 *.bat eol=lf
+*.md eol=lf
 
 *.png binary
 *.mp3 binary
 *.ogg binary
 *.flac binary
-*.zip binary
-*.7z binary
 *.ttf binary

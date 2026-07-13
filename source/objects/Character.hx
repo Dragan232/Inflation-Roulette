@@ -50,6 +50,8 @@ class Character extends FlxSprite {
 	public var currentSkills:Array<Skill> = [];
 	public var skillUseCount:Int = 0;
 	public var canUseSkills:Bool = true;
+	public var isInDenial:Bool = false;
+	public var hoseboundIndices:Array<Int> = [];
 
 	public var skills:Array<Skill> = [];
 
@@ -190,7 +192,7 @@ class Character extends FlxSprite {
 		particleOffsets.set('gunSkill', offsetsJson.particleOffsets.gunSkill);
 		if (spriteJson.poppingVelocityMultiplier != null)
 			poppingVelocityMultiplier = spriteJson.poppingVelocityMultiplier;
-		disablePopping = !(!spriteJson.disablePopping);
+		disablePopping = spriteJson.disablePopping ?? false;
 		poppingGravityMultiplier = spriteJson.poppingGravityMultiplier;
 		bounceScale = spriteJson.bounceScale ?? 0.02;
 		bounceFrames = spriteJson.bounceFrames ?? 3;
@@ -318,9 +320,9 @@ class Character extends FlxSprite {
 				discoloration.setMask(mask.frame.parent.bitmap);
 			if (currentPressure > 0 && currentPressure <= maxPressure) {
 				// trace(discoloration.strength);
-				discolorationStrength += 0.02 * elapsed * getPressurePercentage();
+				discolorationStrength += 0.01 * elapsed * getPressurePercentage();
 				discolorationStrength = FlxMath.bound(discolorationStrength, 0, 1);
-				discoloration.strength = FlxMath.lerp(discoloration.strength, discolorationStrength, elapsed * 2);
+				discoloration.strength = FlxMath.lerp(discoloration.strength, discolorationStrength, elapsed / 4);
 			}
 		}
 
@@ -436,15 +438,20 @@ class Character extends FlxSprite {
 				stumbleTimer -= elapsed;
 			}
 		}
-		if (isEliminated() && stomachNpcContents.length > 0) {
+		if (isEliminated() && stomachNpcContents.length > 0 && !Preferences.data.decreaseDetail) {
 			if (ejectTimer < 0) {
-				ejectTimer = 10;
+				ejectTimer = FlxG.random.float(8, 16);
 				var npcID:String = stomachNpcContents.shift();
 				if (npcID != null) {
 					var particleOffset = getParticleOffset(Gameplay.currentFiller.npcSpawnLocationOnOverinflate).add(this.x, this.y);
+					SuffState.playSound(Paths.soundRandom('game/inflation/universal/hiccups/hiccup', 1, 5), 0.5,
+					voicePitch + FlxG.random.float(-0.025, 0.025));
+					playAnim('helpless', true, true, false, false);
 					var npc = new NPC(npcID, particleOffset.x, particleOffset.y, this.id);
-					npc.velocity.set(FlxG.random.float(-160, 160), FlxG.random.float(-80, 0));
-					npc.transmutateThreshold = maxPressure;
+					npc.velocity.set(FlxG.random.float(160, 320), FlxG.random.float(-160, 0));
+					if (flipX)
+						npc.velocity.x *= -1;
+					npc.transmutateThreshold = maxPressure + 1;
 					if (PlayState.instance != null)
 						PlayState.instance.npcGroup.add(npc);
 					else
@@ -481,7 +488,7 @@ class Character extends FlxSprite {
 						rubDuration += elapsed;
 						var mouseVel = Math.sqrt(FlxG.mouse.deltaX * FlxG.mouse.deltaX + FlxG.mouse.deltaY * FlxG.mouse.deltaY);
 						if (mouseVel > 10 && rubSoundTimer <= 0) {
-							SuffState.playSound(Paths.soundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 4 * (mouseVel / 10), 0.75);
+							SuffState.playSound(Paths.soundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 6 * (mouseVel / 10), 0.75);
 							rubSoundTimer = !Preferences.data.decreaseSounds ? 0.25 : 0.5;
 						}
 						// You have to be gentle with it
@@ -633,8 +640,10 @@ class Character extends FlxSprite {
 		if (!particleOffsets.exists(position))
 			return vel;
 		var offsetArray = particleOffsets.get(position);
-		if (currentPressure > maxPressure) {
-			var index = (PlayState.currentSessionEnablePopping && !disablePopping) ? (offsetArray.length - 1) : (offsetArray.length - 2);
+		if (isEliminated()) {
+			var index = offsetArray.length - 1;
+			if (PlayState.currentSessionEnablePopping && !disablePopping)
+				index = offsetArray.length - 2;
 			vel.set(offsetArray[index][0], offsetArray[index][1]);
 		} else {
 			vel.set(offsetArray[currentPressure][0], offsetArray[currentPressure][1]);
@@ -643,7 +652,6 @@ class Character extends FlxSprite {
 			vel.x *= -1;
 		if (animation.curAnim.flipX)
 			vel.x *= -1;
-		trace('id: $id, offsets: $vel');
 		return vel;
 	}
 

@@ -95,7 +95,7 @@ class Paths {
 	/**
 	 * Convert a relative directory to a directory in the `assets` folder.
 	 * 
-	 * @param file
+	 * @param file The path.
 	 */
 	public static function getPath(file:String):String {
 		return 'assets/$file';
@@ -104,7 +104,7 @@ class Paths {
 	/**
 	 * Convert a relative image directory to a directory in the `assets/images` folder.
 	 * 
-	 * @param file
+	 * @param file The image path.
 	 */
 	public static function getImagePath(file:String, suffix:Bool = true):String {
 		#if _ALLOW_ADDONS

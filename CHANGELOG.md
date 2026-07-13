@@ -90,7 +90,7 @@ Hotfixes are quick updates that fixes critical bugs.
 - All changelogs are now kept in one file.
 - Skill Cards now only uses one file
 - VRAM Caching is now off by default.
-- `cylinderDamageChangeOnBlank`, `cylinderDamageChangeOnLive`, and `cylinderInitialDamage` now support floats.
+- `cylinderDamageChangeOnBlank`, and `cylinderInitialDamage` now support floats.
   - The final damage dealt will be rounded down.
 - Character sprites are no longer preloaded on the start of the game.
 - Decreased RAM usage by 50%. (Not guaranteed)

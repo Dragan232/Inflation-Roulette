@@ -1,0 +1,18 @@
+{
+	"titleTranslationKey": "character.jacob.name",
+	"hasCharacter": true,
+	"artwork": [
+		"jacobRender",
+		"jacobSticker",
+		"jacobOriginalAppearance",
+		"jacobConcept1",
+		"jacobConcept2"
+	],
+	"color": "#FF8000",
+	"quotes": [
+		"GET AWAY",
+		"WARNING",
+		"XWX",
+		"HI ARI"
+	]
+}

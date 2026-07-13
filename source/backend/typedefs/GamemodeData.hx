@@ -9,7 +9,7 @@ typedef GamemodeData = {
 	?cylinderLiveCount:Int,
 	?cylinderReloadOnNoLives:Bool,
 	?cylinderInitialDamage:Int,
-	?cylinderDamageChangeOnLive:Int,
+	// ?cylinderDamageChangeOnLive:Int,
 	?cylinderDamageChangeOnBlank:Int,
 	?cylinderTrueRandomness:Bool,
 

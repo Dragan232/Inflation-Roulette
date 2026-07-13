@@ -6,3 +6,6 @@ pressurize
 polarize
 deflate
 amnesia
+unload
+cowardice
+hosebound

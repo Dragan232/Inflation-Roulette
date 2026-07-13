@@ -33,6 +33,10 @@ class NPC extends FlxSprite {
 	public var currentAction:NPCAction = IDLE;
 	public var moveRange:Array<Float> = [0, 1280];
 
+	public var gravityMultiplier:Float = 1;
+	public var restitution:Float = 0.2;
+	public var friction:Float = 0.5;
+
 	public var transmutateValue:Int = 1;
 	public var transmutateThreshold:Int = -1;
 	public var targetScale:Float = 0;
@@ -54,6 +58,9 @@ class NPC extends FlxSprite {
 		this.hitboxSize = rawJson.hitboxSize ?? [80, 80];
 		this.sizeMultiplier = rawJson.sizeMultiplier ?? [1, 1];
 		this.originPosition = rawJson.originPosition ?? [80, 160];
+		this.gravityMultiplier = rawJson.gravityMultiplier ?? 1;
+		this.restitution = rawJson.restitution ?? 0.2;
+		this.friction = rawJson.friction ?? 0.5;
 
 		var start = (FlxG.width - FlxG.width / PlayState?.instance?.stage?.data?.stageCameraZoom) / 2 ?? 0;
 		this.moveRange = [
@@ -85,7 +92,7 @@ class NPC extends FlxSprite {
 		this.targetScale = FlxG.random.float(sizeMultiplier[0], sizeMultiplier[1]);
 		this.scaleLerped = this.targetScale / 4;
 
-		this.acceleration.y = 4800;
+		this.acceleration.y = 4800 * gravityMultiplier;
 
 		determineIdle();
 
@@ -199,10 +206,14 @@ class NPC extends FlxSprite {
 			this.velocity.x = this.movement.x;
 			this.velocity.y = this.movement.y;
 		}
-		if (this.y >= PlayState.instance.stage.data.characterY) {
-			this.acceleration.y = 0;
+		if (this.y > PlayState.instance.stage.data.characterY) {
+			this.velocity.y = this.velocity.y * -restitution;
+			if (Math.abs(this.velocity.y) <= 32) {
+				this.acceleration.y = 0;
+				this.velocity.y = 0;
+			}
 			this.y = PlayState.instance.stage.data.characterY;
-			this.velocity.x *= (1 - elapsed * 10);
+			this.velocity.x *= Math.max(0, 1 - elapsed * 20 * friction);
 		}
 	}
 }

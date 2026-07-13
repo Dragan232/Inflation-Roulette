@@ -1,0 +1,3 @@
+rmdir /S /Q "%~dp0export\release\html5\bin\assets\"
+lime update html5
+lime test html5 -D_OFFICIAL_BUILD
