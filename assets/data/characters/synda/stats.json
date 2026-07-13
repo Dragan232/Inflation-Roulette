@@ -8,8 +8,12 @@
 			"cost": 2
 		},
 		{
+			"id": "polarize",
+			"cost": 3
+		},
+		{
 			"id": "assault",
-			"cost": 5
+			"cost": 4
 		}
 	]
 }

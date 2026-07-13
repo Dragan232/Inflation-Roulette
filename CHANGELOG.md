@@ -79,6 +79,7 @@ Hotfixes are quick updates that fixes critical bugs.
 - Updated the appearance of the NicklySuffer logo once again.
 #### Localization
 - Forced Aliasing now renamed to _Forced Pixelation_ to reduce confusion.
+- Some Preferences Options are now renamed to be less scientific. 
 - Localization files are now handled by JSON.
 #### Gameplay
 - Quick Play now randomizes the human player's position.

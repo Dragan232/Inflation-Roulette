@@ -47,7 +47,7 @@ class Constants {
 	public static final PLAYER_COLORS:Array<FlxColor> = [
 		0xFFFF0000, // Red
 		0xFFFFD000, // Yellow
-		0xFF00C000, // Green
+		0xFF00E040, // Green
 		0xFF0060FF, // Blue
 		0xFF8000C0, // Purple
 		0xFFFF8000, // Orange
@@ -83,24 +83,8 @@ class Constants {
 	public static final ALPHABET_UPPERCASE:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 	// AUDIO CONSTANTS
-
-	/**
-	 * How many gurgling sound samples to use.
-	 */
-	public static final GURGLES_SAMPLE_COUNT:Int = #if !mobile 17 #else 10 #end;
-
-	/**
-	 * How many creaking sound samples to use.
-	 */
-	public static final CREAKS_SAMPLE_COUNT:Int = #if !mobile 9 #else 5 #end;
-
 	/**
 	 * How many fwoomping sound samples to use.
 	 */
 	public static final FWOOMPS_SAMPLE_COUNT:Int = #if !mobile 4 #else 2 #end;
-
-	/**
-	 * How many belching sound samples to use.
-	 */
-	public static final BELCHES_SAMPLE_COUNT:Int = #if !mobile 12 #else 3 #end;
 }

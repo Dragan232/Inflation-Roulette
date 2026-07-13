@@ -477,6 +477,45 @@
 			"indices": [],
 			"loop": false,
 			"bouncy": true
+		},
+		{
+			"name": "rubbed1",
+			"prefix": "win1",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed2",
+			"prefix": "win2",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed3",
+			"prefix": "win3",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed4",
+			"prefix": "win4",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbedOverinflated",
+			"prefix": "idleOverinflated",
+			"fps": 24,
+			"loop": false,
+			"bouncy": false
 		}
 	],
 

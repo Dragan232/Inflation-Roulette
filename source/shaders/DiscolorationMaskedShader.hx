@@ -15,7 +15,7 @@ class DiscolorationMaskedShader extends FlxShader {
 
         void main() {
             vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
-            vec4 excludeMaskColor = flixel_texture2D(excludeMaskTexture, openfl_TextureCoordv);
+            vec4 excludeMaskColor = vec4(0.0);
 
             // Skip math entirely if base pixel is already transparent
             if (color.a == 0.0) {
@@ -23,9 +23,13 @@ class DiscolorationMaskedShader extends FlxShader {
                 return;
             }
 
-            color.r *= pow((tintColor.r / 255.) * (1. + destabilizeIntensity.r), intensity * (1.0 - excludeMaskColor.a));
-			color.g *= pow((tintColor.g / 255.) * (1. + destabilizeIntensity.g), intensity * (1.0 - excludeMaskColor.a));
-			color.b *= pow((tintColor.b / 255.) * (1. + destabilizeIntensity.b), intensity * (1.0 - excludeMaskColor.a));
+			if (useMask) {
+				excludeMaskColor = flixel_texture2D(excludeMaskTexture, openfl_TextureCoordv);
+			}
+			float alphaMask = 1.0 - excludeMaskColor.a;
+            color.r *= pow((tintColor.r / 255.) * (1. + destabilizeIntensity.r), intensity * alphaMask);
+			color.g *= pow((tintColor.g / 255.) * (1. + destabilizeIntensity.g), intensity * alphaMask);
+			color.b *= pow((tintColor.b / 255.) * (1. + destabilizeIntensity.b), intensity * alphaMask);
 
 			gl_FragColor = vec4(color.rgb, color.a);
 		}

@@ -7,5 +7,5 @@ polarize
 deflate
 amnesia
 unload
-cowardice
+denial
 hosebound

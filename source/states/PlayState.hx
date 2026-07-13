@@ -724,14 +724,14 @@ class PlayState extends SuffState {
 				getPlayer(playerIndex).cpuKnowsCylinderContents = true;
 				revealCylinderContents = true;
 			case 'unload':
-				var count = Std.int(Math.min(4, Gameplay.currentGamemode.cylinderSize));
+				var count = Std.int(Math.min(3, Gameplay.currentGamemode.cylinderSize));
 				for (i in 0...count) {
 					cylinderContent.pop();
 					cylinderContent.unshift(false);
 				}
-				cylinderContent[FlxG.random.int(0, count - 1)];
+				cylinderContent[FlxG.random.int(0, count - 1)] = true;
 			case 'denial':
-				getPlayer(playerIndex).isInDenial = true;
+				getPlayer(playerIndex).denialCount = characterGroup.members.length + 1;
 		}
 
 		getPlayer(playerIndex).currentConfidence -= skill.cost;
@@ -796,7 +796,7 @@ class PlayState extends SuffState {
 						if (getPlayer(victimIndex).currentPressure + currentLiveRoundDamage > getPlayer(victimIndex).maxConfidence)
 							Achievements.advanceProgress('eliminateByAssault', [true]);
 					}
-					var attackerFlipX:Bool = (attackerIndex - victimIndex) < 0;
+					var attackerFlipX = getPlayer(attackerIndex).animation.curAnim.flipX;
 					getPlayer(attackerIndex).playAnim('skillAssault' + (cylinderContent[0] ? 'Success' : 'Fail'), true, true, attackerFlipX);
 					shoot(victimIndex, false);
 					pumpGun.visible = false;
@@ -880,7 +880,7 @@ class PlayState extends SuffState {
 		var playerAnimName:String = 'idle';
 
 		SuffState.playSound(Paths.sound('game/shoot'));
-		if (getPlayer(playerIndex).isInDenial && cylinderContent[0]) {
+		if (getPlayer(playerIndex).denialCount > 0 && cylinderContent[0]) {
 			SuffState.playSound(Paths.sound('game/denialActivate'));
 			var particleOffset = getPlayer(playerIndex).getParticleOffset('navel');
 			var denialShield = new DenialShield(getPlayer(playerIndex).x + particleOffset.x, getPlayer(playerIndex).y + particleOffset.y);
@@ -890,8 +890,10 @@ class PlayState extends SuffState {
 				currentLiveRoundDamage = 1;
 			else
 				dealDamage = false;
-			getPlayer(playerIndex).isInDenial = false;
+			getPlayer(playerIndex).denialCount = 0;
 		}
+		if (getPlayer(playerIndex).denialCount > 0)
+			getPlayer(playerIndex).denialCount--;
 		if (dealDamage) {
 			playerAnimName = 'shootLive';
 		} else {
@@ -937,7 +939,9 @@ class PlayState extends SuffState {
 					if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 						giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 					}
-					getPlayer(playerIndex).hoseboundIndices = [];
+					for (index in hoseboundIndices) {
+						getPlayer(index).hoseboundIndices.remove(playerIndex);
+					}
 				}
 			} else {
 				cylinderContent.shift();
@@ -945,7 +949,9 @@ class PlayState extends SuffState {
 				if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 					giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 				}
-				getPlayer(playerIndex).hoseboundIndices = [];
+				for (index in hoseboundIndices) {
+					getPlayer(index).hoseboundIndices.remove(playerIndex);
+				}
 			}
 
 			var percent = getPlayer(playerIndex).getPressurePercentage();
@@ -1121,6 +1127,9 @@ class PlayState extends SuffState {
 		var cpuLowestLevel:Int = Constants.CPU_SKILL_LIMIT[1];
 		var winningIndex:Int = -1;
 		for (num => char in characterGroup) {
+			if (char.getPressurePercentage() <= 1) {
+				winningIndex = num;
+			}
 			if (char.cpuControlled) {
 				allHumanPlayers = false;
 				if (char.cpuSkillLevel < cpuLowestLevel)
@@ -1129,9 +1138,6 @@ class PlayState extends SuffState {
 			}
 			if (char.skillUseCount > 0)
 				humansThatUsedSkills++;
-			if (char.getPressurePercentage() <= 1) {
-				winningIndex = num;
-			}
 		}
 
 		doTimer('confettiTimer', new FlxTimer().start(0.5, function(_:FlxTimer) {
@@ -1554,8 +1560,17 @@ class PlayState extends SuffState {
 			char.x = leX;
 			char.y = stage.data.characterY;
 			char.currentPressure = 0;
+			char.skillUseCount = 0;
 			char.currentConfidence = 0;
 			char.stomachNpcContents = [];
+			char.denialCount = 0;
+			char.hoseboundIndices = [];
+			char.cpuKnowsCylinderContents = false;
+			char.cpuSabotageVictim = false;
+			char.cpuSkillMemories = [];
+			char.discolorationStrength = 0;
+			if (char.discoloration != null)
+				char.discoloration.strength = 0;
 			char.playAnim('idle' + char.currentPressure);
 		}
 

@@ -50,7 +50,7 @@ class Character extends FlxSprite {
 	public var currentSkills:Array<Skill> = [];
 	public var skillUseCount:Int = 0;
 	public var canUseSkills:Bool = true;
-	public var isInDenial:Bool = false;
+	public var denialCount:Int = 0;
 	public var hoseboundIndices:Array<Int> = [];
 
 	public var skills:Array<Skill> = [];
@@ -316,8 +316,7 @@ class Character extends FlxSprite {
 
 	public override function update(elapsed:Float) {
 		if (discoloration != null) {
-			if (mask != null)
-				discoloration.setMask(mask.frame.parent.bitmap);
+			discoloration.setMask(mask?.frame?.parent?.bitmap);
 			if (currentPressure > 0 && currentPressure <= maxPressure) {
 				// trace(discoloration.strength);
 				discolorationStrength += 0.01 * elapsed * getPressurePercentage();
@@ -596,15 +595,20 @@ class Character extends FlxSprite {
 		if (!animExists(usedAnimName)) {
 			if (missingAnimReplace.exists(trimmedAnimName)) {
 				usedAnimName = joinAnimationName(substituteAnim(AnimName));
+				if (!animExists(usedAnimName)) {
+					trace('Animation [${usedAnimName}] for $id does not exist, no replacements exist, skipping');
+					return;
+				}
 				trace('Animation [${AnimName}] for $id does not exist, using [$usedAnimName] instead');
 			} else {
-				trace('Animation [${usedAnimName}] for $id does not exist, no replacements exist');
+				trace('Animation [${usedAnimName}] for $id does not exist, no replacements exist, skipping');
 				return;
 			}
 		}
 		this.onIdle = idleAnimations.contains(trimmedAnimName.replace('-loop', '')) && !usedAnimName.endsWith('Null');
 		// trace('$id, trimmed: $trimmedAnimName, used: $usedAnimName');
-		animation.getByName(usedAnimName).flipX = flipX;
+		if (animation.getByName(usedAnimName) != null)
+			animation.getByName(usedAnimName).flipX = flipX;
 		animation.play(usedAnimName, Force, Reversed, Frame);
 
 		if (Force)

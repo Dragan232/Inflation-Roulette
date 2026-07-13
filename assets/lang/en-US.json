@@ -228,13 +228,13 @@
 	
 	"option.enablePopping.name": "Popping",
 	"option.enablePopping.description": "Players non-fatally bursts when defeated.\nIf turned off, characters will be overinflated instead.\nTakes effect in the next game.",
-	"option.enableBellyGurgles.name": "Borborygmi",
+	"option.enableBellyGurgles.name": "Gurgling",
 	"option.enableBellyGurgles.description": "Players play belly gurgle sounds on idle when inflated.",
 	"option.enableBellyCreaks.name": "Creaking",
 	"option.enableBellyCreaks.description": "Players play balloon overstretching sounds on idle when inflated.",
-	"option.enableBelching.name": "Eructation",
+	"option.enableBelching.name": "Belching",
 	"option.enableBelching.description": "Players burp when inflated.",
-	"option.enableDiscoloration.name": "Discoloration",
+	"option.enableDiscoloration.name": "Tinting",
 	"option.enableDiscoloration.description": "Players' skin shifts color when inflated with certain mediums. (GLSL Shaders must also be enabled)",
 	"option.enableOralLeaking.name": "Leaking (Oral)",
 	"option.enableOralLeaking.description": "Players leak fluids from their mouth when inflated with certain mediums.",
@@ -380,7 +380,7 @@
 	"character.synda.description": "A desperate lady seeking funds for body enhancements. Can shoot others with enough confidence.",
 	// Jacob: Guest character. A dorky fox tricked into playing the game.
 	// Designed as a low-risk character.
-	// Skills: Reload, Cowardice
+	// Skills: Reload, Denial
 	"character.jacob.name": "Jacob Goatington",
 	"character.jacob.name.short": "Jacob",
 	"character.jacob.description": "A timid fox tricked into playing. Despite this, he can swiftly avoid confrontation.",
@@ -544,7 +544,7 @@
 	"galleryMainMenu.envelope.shib.description": "Last name Nou; first name Shiba. Hailing from a mysterious planet, this cat-like creature joins the roster! Their Chinese name can be interpreted as \"Zero Ten Eight\", derived from the nuclear site they landed on in Beijing.\n\nSpending the first few years of their life scouring to different places to live, they eventually founded themself inside of The Manager's garage. The man adopted them as his secondary assistant and soon found themself in love with the primary assistant (lab-grown btw, ew). With no apparent reason other than to show-off in front of their boyfriend, they joined the game to show off their hidden abilities.\n\nShib is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.",
 	"galleryMainMenu.envelope.chester.description": "As the lead barista of a coffee shop, he was forced to play this game as an ambassador for the company. With his poor academic results and his uncharismatic personality, his dream of prosperity and wealth is yet to be in reach.\n\nHis daily work involves making oversweetened beverages for horny customers. Some say the drinks have an \"expansive\" effect, which has grabbed the attention of several food safety agents. However, due to some capitalist bullshit, warnings from the food department went nowhere.\n\nChester is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.",
 	"galleryMainMenu.envelope.synda.description": "Looking for a life quality upgrade, Synda shoots into the arena ready to blast someone! Her peers always describe her as an arrogant and irrational person to deal with - not that she cares anyway.\n\nAs a [REDACTED], she spends most of her time as a high-end security guard for a laboratory, until a horrifying accident resulted in the lost of her left eye and her back appendages. Looking for a replacement, she found an experimental procedure which can grant her cybernetic tentacles, only problem is that a pair is hell expensive, so now she's promised a fortune by The Manager, if she's willing to sacrifice her entire lower body for it...\n\nSynda is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.",
-	"galleryMainMenu.envelope.jacob.description": "Jacob steps into the arena! Not much is known about Jacob, looking seemingly like a rando in the group, well, you're right, cuz he's literally just a rando.\n\nNot long ago, he and his beloved partner stumbled across a poster promising a role for seemingly a game show. With his poor reading comprehension, he signed ONLY his boyfriend up for the game, not knowing what the game's about, where the game takes place, and how disgusting it is. Now stuck here in the middle of somewhere, he is forced to play this excruciating game as long as the contract lasts...\n\nJacob is a character owned by robuxator66.",
+	"galleryMainMenu.envelope.jacob.description": "Jacob steps into the arena! Not much is known about Jacob, looking seemingly like a rando in the group, well, you're right, cuz he's literally just a rando.\n\nNot long ago, he and his beloved partner stumbled across a poster promising a role for seemingly a game show. With his poor reading comprehension, he signed ONLY his boyfriend up for the game, not knowing what the game's about, where the game takes place, and how disgusting it is. Now stuck here in the middle of somewhere, he is forced to play this excruciating game as long as the contract lasts...\n\nJacob is a character owned by a friend.",
 	"galleryMainMenu.envelope.dev": "Developer Art",
 	"galleryMainMenu.envelope.dev.description": "A collection of concept art, sketches, and unused assets made by the developers and other artists.\n\nangry           bird",
 	"galleryMainMenu.envelope.community": "Community Art",
