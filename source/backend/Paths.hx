@@ -67,9 +67,10 @@ class Paths {
 	public static function clearStoredMemory() {
 		// clear anything not in the tracked assets list
 		for (key in FlxG.bitmap._cache.keys()) {
-			// trace(key);
-			if (!currentTrackedTextures.exists(key) && !isDumpExcluded(key) && !FlxG.bitmap.get(key).persist)
+			if (!currentTrackedTextures.exists(key) && !isDumpExcluded(key) && !FlxG.bitmap.get(key).persist) {
 				destroyGraphic(FlxG.bitmap.get(key));
+				currentTrackedTextures.remove(key);
+			}
 		}
 
 		// clear all sounds that are cached
@@ -89,6 +90,8 @@ class Paths {
 		if (graphic != null && graphic.bitmap != null && graphic.bitmap.__texture != null)
 			graphic.bitmap.__texture.dispose();
 		FlxG.bitmap.remove(graphic);
+		graphic.persist = false;
+		graphic.destroy();
 	}
 
 

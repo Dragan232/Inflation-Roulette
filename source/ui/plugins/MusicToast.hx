@@ -54,6 +54,7 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		songTitleText.y = Std.int((bg.height - songTitleText.height) / 2);
 		songTitleText.setFormat(Paths.font('default', false), 16, FlxColor.WHITE, LEFT);
 		songTitleText.scrollFactor.set();
+
 		musicToast.add(songTitleText);
 
 		musicToast.add(record);

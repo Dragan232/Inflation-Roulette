@@ -18,6 +18,7 @@ import flixel.input.mouse.FlxMouseEvent;
 import flixel.util.FlxSpriteUtil;
 import ui.plugins.CursorHandler;
 import ui.plugins.CursorHandler;
+import objects.particles.HoseboundChain;
 
 class Character extends FlxSprite {
 	// Metadata //
@@ -460,13 +461,19 @@ class Character extends FlxSprite {
 				ejectTimer -= elapsed;
 			}
 		}
-		if (!canUseSkills) {
+		if (!canUseSkills || hoseboundIndices.length > 0) {
 			swirlSpawnTimer -= elapsed;
-			if (swirlSpawnTimer <= 0) {
-				var offsets = getParticleOffset('overhead');
-				FlxG.state.add(new Swirl(this.x + offsets.x + FlxG.random.float(-1, 1) * this.width / 5, this.y + offsets.y + FlxG.random.float() * this.height / 5, 0xFFC040FF));
-				swirlSpawnTimer = FlxG.random.float();
+		}
+		if (swirlSpawnTimer < 0) {
+			var offsets = getParticleOffset('overhead');
+			var particleX = this.x + offsets.x + FlxG.random.float(-1, 1) * this.width / 5;
+			var particleY = this.y + offsets.y + FlxG.random.float() * this.height / 5;
+			if (!canUseSkills) {
+				PlayState.instance.particleGroup.add(new Swirl(particleX, particleY, 0xFFC040FF));
+			} else if (hoseboundIndices.length > 0) {
+				PlayState.instance.particleGroup.add(new HoseboundChain(particleX, particleY, FlxG.random.getObject(hoseboundIndices)));
 			}
+			swirlSpawnTimer = FlxG.random.float();
 		}
 		if (mask != null) {
 			mask.animation.play(

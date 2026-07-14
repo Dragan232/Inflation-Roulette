@@ -11,7 +11,12 @@ class SuffSubState extends FlxSubState {
 		camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
 	}
 
-	override function update(elapsed:Float) {
+	public override function close() {
+		Tooltip.text = '';
+		super.close();
+	}
+
+	public override function update(elapsed:Float) {
 		if (persistentUpdate)
 			SuffState.timePassedOnState += elapsed;
 

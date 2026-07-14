@@ -259,7 +259,6 @@ class PlayState extends SuffState {
 		if (FlxG.random.bool(1 / 128 * 100))
 			selectLight.loadGraphic(Paths.image('game/selectLightAlt'));
 		#end
-		selectLight.color = FlxColor.fromString(stage.data.selectLightColor ?? '#FFFFFF');
 		selectLight.visible = false;
 		members.insert(members.indexOf(characterGroup), selectLight);
 
@@ -813,6 +812,10 @@ class PlayState extends SuffState {
 				case 'hosebound':
 					getPlayer(attackerIndex).hoseboundIndices.push(victimIndex);
 					getPlayer(victimIndex).hoseboundIndices.push(attackerIndex);
+					doTimer('reenablePlayerUI', new FlxTimer().start(1.5, function(_:FlxTimer) {
+						changeTurn();
+						canUseSkillKeybinds = !getPlayer(attackerIndex).cpuControlled;
+					}));
 			}
 			focusCameraOnPlayer(victimIndex);
 		}));
@@ -911,13 +914,12 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
 			var hoseboundIndices = getPlayer(playerIndex).hoseboundIndices;
-			if (hoseboundIndices.length > 1) {
-				for (index in hoseboundIndices) {
-					getPlayer(index).currentPressure += 1;
-					getPlayer(index).discolorationStrength += 1 / getPlayer(index).maxPressure * 0.75;
-					getPlayer(index).currentConfidence += getPlayer(index).confidenceChangeOnLiveShot;
-					getPlayer(index).playAnim('shocked');
-				}
+			for (index in hoseboundIndices) {
+				getPlayer(index).currentPressure += 1;
+				getPlayer(index).discolorationStrength += 1 / getPlayer(index).maxPressure * 0.75;
+				// getPlayer(index).currentConfidence += getPlayer(index).confidenceChangeOnLiveShot;
+				// Disabled for balancing reasons
+				getPlayer(index).playAnim('shocked');
 			}
 			if (Gameplay.currentFiller.npcOnPop != '')
 				getPlayer(playerIndex).stomachNpcContents.push(Gameplay.currentFiller.npcOnPop);
@@ -939,9 +941,7 @@ class PlayState extends SuffState {
 					if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 						giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 					}
-					for (index in hoseboundIndices) {
-						getPlayer(index).hoseboundIndices.remove(playerIndex);
-					}
+					getPlayer(playerIndex).hoseboundIndices = [];
 				}
 			} else {
 				cylinderContent.shift();
@@ -949,9 +949,7 @@ class PlayState extends SuffState {
 				if (Gameplay.currentGamemode.skillsFixedPool.length + Gameplay.currentGamemode.skillsRandomPool.length > 0) {
 					giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnLive);
 				}
-				for (index in hoseboundIndices) {
-					getPlayer(index).hoseboundIndices.remove(playerIndex);
-				}
+				getPlayer(playerIndex).hoseboundIndices = [];
 			}
 
 			var percent = getPlayer(playerIndex).getPressurePercentage();
@@ -970,6 +968,7 @@ class PlayState extends SuffState {
 				giveSkillsToAllPlayers(Gameplay.currentGamemode.skillsReplenishCountOnBlank);
 			}
 			currentLiveRoundDamage += Gameplay.currentGamemode.cylinderDamageChangeOnBlank;
+			getPlayer(playerIndex).hoseboundIndices = [];
 		}
 		trace(cylinderContent);
 
@@ -1646,6 +1645,7 @@ class PlayState extends SuffState {
 							selectLight.scale.x = 1 / selectLight.width;
 							selectLight.y = player.y - selectLight.height;
 							selectLight.visible = true;
+							selectLight.color = Constants.PLAYER_COLORS[num];
 							doTween('selectLight', FlxTween.tween(selectLight, {'scale.x': player.width * 0.4 / selectLight.width}, 0.5, {ease: FlxEase.cubeOut}));
 						}
 						if (FlxG.mouse.justPressed && player.hovered) {

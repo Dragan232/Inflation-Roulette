@@ -17,6 +17,7 @@ import shaders.GrayscaleShader;
 class SuffState extends FlxUIState {
 	public static var currentMusicName:String = '';
 	public static var timePassedOnState:Float = 0;
+	public static var capTimePassed:Bool = true;
 	public static var currentMusicBPM:Float = 0;
 
 	override function create() {
@@ -76,6 +77,8 @@ class SuffState extends FlxUIState {
 
 	override function update(elapsed:Float) {
 		timePassedOnState += elapsed;
+		if (capTimePassed && timePassedOnState > 360)
+			timePassedOnState = 0;
 
 		super.update(elapsed);
 	}

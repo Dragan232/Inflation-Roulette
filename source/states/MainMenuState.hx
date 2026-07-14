@@ -382,17 +382,17 @@ class MainMenuState extends SuffState {
 			});
 		}
 
-		dongsPerSecond *= (1 - elapsed);
+		dongsPerSecond = FlxMath.roundDecimal(dongsPerSecond * (1 - elapsed), 1);
 		splashText.offset.x = -Math.pow(Math.max(0, dongsPerSecond - 5) * 6, 2);
 		dongCommentText.alpha = FlxMath.bound(splashText.offset.x / -2000, 0, 1);
 
-		logo.angle = splashText.angle = Math.sin(SuffState.timePassedOnState / 2) * 3;
+		logo.angle = splashText.angle = Math.sin(SuffState.timePassedOnState * Constants.TO_RADIANS * 45 / 2) * 2;
 		displayedLogoScale = FlxMath.lerp(displayedLogoScale, GameLogo.logoScale, elapsed * 10);
-		var leScale = displayedLogoScale - Math.pow(Math.sin(SuffState.timePassedOnState / 4), 2) * 0.05;
+		var leScale = displayedLogoScale - Math.pow(Math.sin(SuffState.timePassedOnState * Constants.TO_RADIANS * 45 / 4), 2) * 0.05;
 		logo.scale.set(leScale, leScale);
 
 		splashText.x = logo.x + (logo.width - splashText.width) / 2;
-		var splashTextScale = 1 + Math.abs(Math.sin(SuffState.timePassedOnState * Math.PI * 2)) * 0.05;
+		var splashTextScale = 1 + Math.abs(Math.sin(SuffState.timePassedOnState * Constants.TO_RADIANS * 360)) * 0.05;
 		splashText.scale.set(splashTextScale, splashTextScale);
 		if (finishedAnimation) {
 			if (FlxG.mouse.overlaps(logo) && FlxG.mouse.justPressed) {
@@ -439,13 +439,5 @@ class MainMenuState extends SuffState {
 			}
 		}
 		#end
-
-		if (Preferences.data.enableDebugKeybinds) {
-			if (FlxG.keys.justPressed.C) {
-				SuffState.switchState(new DiscolorationTestState());
-			} else if (FlxG.keys.justPressed.L) {
-				SuffState.switchState(new LiquidTestState());
-			}
-		}
 	}
 }

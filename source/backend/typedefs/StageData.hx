@@ -5,7 +5,6 @@ typedef StageData = {
 	music:String,
 	stageCameraZoom:Float,
 	characterCameraZoom:Float,
-	?selectLightColor:String,
 	cameraBounds:Array<Float>,
 	backgroundObjects:Array<StageObjectData>,
 	tableObjects:Array<StageObjectData>,

@@ -470,17 +470,31 @@ class CharacterSelectState extends SuffState {
 		} else if (curPage > lastPage) {
 			curPage = 0;
 		}
-		for (card in cardGroup.members) {
-			card.disabled = true;
+		if (status == CHARACTER_SELECT) {
+			for (card in cardGroup.members)
+				card.disabled = true;
+			cardTweens.set('cardGroupTween', FlxTween.tween(cardGroup, {x: -curPage * (FlxG.width - marginRight.width - marginLeft.width)}, 0.5, {ease: FlxEase.quintOut}));
+			if (allowSelectionTimer != null)
+				allowSelectionTimer.cancel();
+			allowSelectionTimer = new FlxTimer().start(FlxG.elapsed * 10, function(_) {
+				for (card in cardGroup.members) {
+					var leIndex:Int = cardGroup.members.indexOf(card);
+					card.disabled = !(leIndex >= curPage * maxNumberInRow && leIndex < (curPage + 1) * maxNumberInRow);
+				}
+			});
+		} else if (status == FILLER_SELECT) {
+			for (card in fillerGroup.members)
+				card.disabled = true;
+			cardTweens.set('cardGroupTween', FlxTween.tween(fillerGroup, {x: -curPage * (FlxG.width - marginRight.width - marginLeft.width)}, 0.5, {ease: FlxEase.quintOut}));
+			if (allowSelectionTimer != null)
+				allowSelectionTimer.cancel();
+			allowSelectionTimer = new FlxTimer().start(FlxG.elapsed * 10, function(_) {
+				for (card in fillerGroup.members) {
+					var leIndex:Int = fillerGroup.members.indexOf(card);
+					card.disabled = !(leIndex >= curPage * maxNumberInRow && leIndex < (curPage + 1) * maxNumberInRow);
+				}
+			});
 		}
-		if (allowSelectionTimer != null)
-			allowSelectionTimer.cancel();
-		allowSelectionTimer = new FlxTimer().start(FlxG.elapsed * 10, function(_) {
-			for (card in cardGroup.members) {
-				var leIndex:Int = cardGroup.members.indexOf(card);
-				card.disabled = !(leIndex >= curPage * maxNumberInRow && leIndex < (curPage + 1) * maxNumberInRow);
-			}
-		});
 	}
 
 	function exitFunction() {
@@ -510,8 +524,7 @@ class CharacterSelectState extends SuffState {
 				exitFunction();
 			}
 		}
-
-		cardGroup.x = FlxMath.lerp(cardGroup.x, -curPage * (FlxG.width - marginRight.width - marginLeft.width), elapsed * 10);
+		// fillerGroup.x = FlxMath.lerp(fillerGroup.x, -curPage * (FlxG.width - marginRight.width - marginLeft.width), elapsed * 10);
 
 		if (allowMoveDescription) {
 			var predictedX = description.x + descriptionVel * elapsed;
@@ -593,6 +606,8 @@ class CharacterSelectState extends SuffState {
 		playerOutline.visible = false;
 		selectCharacterTxt.text = Language.getPhrase('characterSelect.selectFiller');
 		selectCharacterTxt.screenCenter(X);
+		lastPage = Std.int((fillerGroup.width - 1) / (FlxG.width - marginLeft.width - marginRight.width));
+		leftButton.visible = rightButton.visible = (lastPage > 0);
 		for (outline in playerOutlineShadows) {
 			outline.visible = false;
 		}
@@ -812,6 +827,9 @@ class CharacterSelectState extends SuffState {
 		playerOutline.visible = true;
 		selectCharacterTxt.text = Language.getPhrase('characterSelect.selectCharacter');
 		selectCharacterTxt.screenCenter(X);
+
+		lastPage = Std.int((cardGroup.width - 1) / (FlxG.width - marginLeft.width - marginRight.width));
+		leftButton.visible = rightButton.visible = (lastPage > 0);
 
 		for (outline in playerOutlineShadows) {
 			outline.visible = true;
