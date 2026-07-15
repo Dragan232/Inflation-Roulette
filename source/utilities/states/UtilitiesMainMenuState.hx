@@ -16,6 +16,7 @@ class UtilitiesMainMenuState extends UtilitiesBaseMenuState {
 		'characterCreator',
 		'stagePreviewer',
 		'offsetEditor',
+		'rubHitboxEditor',
 		'langConverter'
 	];
 	final disabledButtons:Array<String> = [];
@@ -106,6 +107,13 @@ class UtilitiesMainMenuState extends UtilitiesBaseMenuState {
 				LoadDirectoryPrompt.loadFileFunction = function(path:String) {
 					UtilitiesBaseMenuState.loadedPath = path;
 					SuffState.switchState(new OffsetEditorState());
+				}
+				LoadDirectoryPrompt.newFileFunction = null;
+				openSubState(new LoadDirectoryPrompt('${Utilities.getExecutablePath()}\\assets\\data\\characters\\goober\\'));
+			case 'rubHitboxEditor':
+				LoadDirectoryPrompt.loadFileFunction = function(path:String) {
+					UtilitiesBaseMenuState.loadedPath = path;
+					SuffState.switchState(new RubHitboxEditorState());
 				}
 				LoadDirectoryPrompt.newFileFunction = null;
 				openSubState(new LoadDirectoryPrompt('${Utilities.getExecutablePath()}\\assets\\data\\characters\\goober\\'));

@@ -499,9 +499,9 @@
 	"achievement.findCameraman.name": "Lights, Camera, Action!",
 	"achievement.findCameraman.description": "Have you seen the cameraman?",
 	// Meet Cobalt. (1/128 probability)
-	"achievement.winByYourself.name": "Forever Alone",
-	"achievement.winByYourself.description": "\"If you know yourself, you need not fear the result of a hundred battles.\" - The Art of War, probably.",
-	// Win a game against yourself (All players are human and only one player uses a skill)
+	"achievement.playLocalMultiplayer.name": "Family Fun",
+	"achievement.playLocalMultiplayer.description": "Somehow get someone to play with you... or you can just control everyone. Don't worry; we won't know.",
+	// Win a game in Local Multiplayer.
 	"achievement.winAgainstStrategicCPUs.name": "Mind Games",
 	"achievement.winAgainstStrategicCPUs.description": "Not gonna lie the bots aren't very smart either, but seeing everyone raging over these freaks, nice job.",
 	// Win a game with every CPU set to their highest skill level.
@@ -563,6 +563,7 @@
 	"utilitiesMenu.characterCreator": "Character Creator",
 	"utilitiesMenu.stagePreviewer": "Stage Previewer",
 	"utilitiesMenu.offsetEditor": "Offset Editor",
+	"utilitiesMenu.rubHitboxEditor": "Rub Hitbox Editor",
 	"utilitiesMenu.langConverter": ".LANG Converter",
 	"utilitiesMenu.loadFile": "Load File",
 	"utilitiesMenu.newFile": "New File",
@@ -664,6 +665,12 @@
 	"offsetEditor.particleType.gunShoot": "Gun Chamber (Shooting)",
 	"offsetEditor.particleType.gunSkill": "Gun Chamber (Skill)",
 	"offsetEditor.exit.prompt": "Are you sure you want to exit the Offset Editor?",
+
+	"rubHitboxEditor.title": "Modify Hitboxes",
+	"rubHitboxEditor.description": "Arrow Keys to Move Hitbox\nWASD Keys to Resize Hitbox\nHold SHIFT/CTRL to Increase Rate",
+	"rubHitboxEditor.position": "Position",
+	"rubHitboxEditor.size": "Size",
+	"rubHitboxEditor.exit.prompt": "Are you sure you want to exit the Offset Editor?",
 
 	"langConverter.successPrompt": "JSON file exported in:\n%1",
 

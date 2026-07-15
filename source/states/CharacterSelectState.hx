@@ -339,7 +339,7 @@ class CharacterSelectState extends SuffState {
 
 		leftButton = new SuffButton(0, 0, null, Paths.image('ui/icons/buttons/left'), null, 100, 100);
 		leftButton.x = marginLeft.x + marginLeft.width - leftButton.width - 32;
-		leftButton.y = marginLeft.y + (FlxG.height * cardOccupicationHeight - leftButton.height) / 2;
+		leftButton.y = marginLeft.y + 10;
 		leftButton.onClick = function() {
 			changePage(-1);
 		};

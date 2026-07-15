@@ -13,12 +13,13 @@ import shaders.DiscolorationMaskedShader;
 import objects.particles.Liquid;
 import objects.particles.Puff;
 import backend.typedefs.CharacterOffsetsData;
-import backend.typedefs.CharacterHitboxData;
+import backend.typedefs.CharacterBoxData;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.util.FlxSpriteUtil;
 import ui.plugins.CursorHandler;
 import ui.plugins.CursorHandler;
 import objects.particles.HoseboundChain;
+import backend.typedefs.CharacterHitboxData;
 
 class Character extends FlxSprite {
 	// Metadata //
@@ -61,7 +62,7 @@ class Character extends FlxSprite {
 	public var cpuSabotageVictim:Bool = false;
 	public var cpuSkillMemories:Array<String> = [];
 	public var cpuSkillLevel:Int = 1;
-	public var rubHitboxes:Array<CharacterHitboxData> = [];
+	public var rubHitboxes:Array<CharacterBoxData> = [];
 
 	public var boundingBox:FlxRect = new FlxRect(170, 70, 200, 500);
 	public var hovered:Bool = false;
@@ -117,6 +118,7 @@ class Character extends FlxSprite {
 		var json:CharacterData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/stats.json'));
 		var spriteJson:CharacterCosmeticData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json'));
 		var offsetsJson:CharacterOffsetsData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/offsets.json'));
+		var hitboxJson:CharacterHitboxData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/hitbox.json'));
 
 		// name = json.name;
 		/*
@@ -198,7 +200,7 @@ class Character extends FlxSprite {
 		bounceScale = spriteJson.bounceScale ?? 0.02;
 		bounceFrames = spriteJson.bounceFrames ?? 3;
 
-		var hitboxes:Array<CharacterHitboxData> = cast spriteJson.rubHitboxes;
+		var hitboxes:Array<CharacterBoxData> = cast hitboxJson.rubHitboxes;
 		for (hitboxData in hitboxes) {
 			this.rubHitboxes.push(hitboxData);
 		}
@@ -538,7 +540,7 @@ class Character extends FlxSprite {
 	public function updateRubHitbox() {
 		if (rubHitbox == null || this.offset == null)
 			return;
-		var rubHitboxData:CharacterHitboxData = rubHitboxes[Std.int(FlxMath.bound(currentPressure, 0, maxPressure + 1))];
+		var rubHitboxData:CharacterBoxData = rubHitboxes[Std.int(FlxMath.bound(currentPressure, 0, maxPressure + 1))];
 		rubHitbox.x = rubHitboxData.position[0];
 		var flippedOffsets:Bool = false;
 		if (this.flipX)

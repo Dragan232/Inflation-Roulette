@@ -33,8 +33,8 @@ class Achievements {
 			type: BOOLEAN
 		});
 		#end
-		createAchievement('winByYourself', {
-			tier: LAME,
+		createAchievement('playLocalMultiplayer', {
+			tier: COMMON,
 			type: BOOLEAN,
 			alwaysAchievable: true
 		});
@@ -112,7 +112,8 @@ class Achievements {
 			tier: LAME,
 			type: BOOLEAN,
 			hideFromMenu: true,
-			resettable: false
+			resettable: false,
+			alwaysAchievable: true
 		});
 
 		// Hidden
@@ -121,14 +122,16 @@ class Achievements {
 			type: BOOLEAN,
 			hideIcon: true,
 			hideName: true,
-			silent: true
+			silent: true,
+			alwaysAchievable: true
 		});
 		createAchievement('nineTwentyOne', {
 			tier: LAME,
 			type: BOOLEAN,
 			hideIcon: true,
 			hideName: true,
-			silent: true
+			silent: true,
+			alwaysAchievable: true
 		});
 
 		for (id => data in achievementsList) {

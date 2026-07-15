@@ -2,8 +2,7 @@
 	"spriteSheets": [
 		"0",
 		"1",
-		"2",
-		"3"
+		"2"
 	],
 	"animations": [
 		{
@@ -37,13 +36,6 @@
 		{
 			"name": "idle4",
 			"prefix": "idle4",
-			"fps": 24,
-			"indices": [],
-			"loop": true
-		},
-		{
-			"name": "idle5",
-			"prefix": "idle5",
 			"fps": 24,
 			"indices": [],
 			"loop": true
@@ -126,13 +118,6 @@
 			"loop": true
 		},
 		{
-			"name": "prepareShoot5",
-			"prefix": "prepareShoot5",
-			"fps": 24,
-			"indices": [],
-			"loop": true
-		},
-		{
 			"name": "preShoot0",
 			"prefix": "preShoot0",
 			"fps": 24,
@@ -163,13 +148,6 @@
 		{
 			"name": "preShoot4",
 			"prefix": "preShoot4",
-			"fps": 24,
-			"indices": [],
-			"loop": false
-		},
-		{
-			"name": "preShoot5",
-			"prefix": "preShoot5",
 			"fps": 24,
 			"indices": [],
 			"loop": false
@@ -210,13 +188,6 @@
 			"loop": false
 		},
 		{
-			"name": "pass5",
-			"prefix": "pass5",
-			"fps": 24,
-			"indices": [],
-			"loop": false
-		},
-		{
 			"name": "shootBlank0",
 			"prefix": "shootBlank0",
 			"fps": 24,
@@ -247,13 +218,6 @@
 		{
 			"name": "shootBlank4",
 			"prefix": "shootBlank4",
-			"fps": 24,
-			"indices": [],
-			"loop": false
-		},
-		{
-			"name": "shootBlank5",
-			"prefix": "shootBlank5",
 			"fps": 24,
 			"indices": [],
 			"loop": false
@@ -292,14 +256,11 @@
 			"prefix": "shootLive4",
 			"fps": 24,
 			"indices": [],
-			"loop": false
-		},
-		{
-			"name": "shootLive5",
-			"prefix": "shootLive5",
-			"fps": 24,
-			"indices": [],
-			"loop": false
+			"loop": false,
+			"soundPaths": [
+				"game/inflation/universal/bursting"
+			],
+			"autoPitch": false
 		},
 		{
 			"name": "helplessOverinflated",
@@ -308,11 +269,12 @@
 			"indices": [],
 			"loop": false,
 			"soundPaths": [
-				"game/inflation/universal/hiccups/hiccup_1",
-				"game/inflation/universal/hiccups/hiccup_2",
-				"game/inflation/universal/hiccups/hiccup_3",
-				"game/inflation/universal/hiccups/hiccup_4",
-				"game/inflation/universal/hiccups/hiccup_5"
+				"game/inflation/gas/belches/belch_7",
+				"game/inflation/gas/belches/belch_8",
+				"game/inflation/gas/belches/belch_9",
+				"game/inflation/gas/belches/belch_10",
+				"game/inflation/gas/belches/belch_11",
+				"game/inflation/gas/belches/belch_12"
 			]
 		},
 		{
@@ -323,11 +285,12 @@
 			"indices": [],
 			"loop": false,
 			"soundPaths": [
-				"game/inflation/universal/hiccups/hiccup_1",
-				"game/inflation/universal/hiccups/hiccup_2",
-				"game/inflation/universal/hiccups/hiccup_3",
-				"game/inflation/universal/hiccups/hiccup_4",
-				"game/inflation/universal/hiccups/hiccup_5"
+				"game/inflation/gas/belches/belch_7",
+				"game/inflation/gas/belches/belch_8",
+				"game/inflation/gas/belches/belch_9",
+				"game/inflation/gas/belches/belch_10",
+				"game/inflation/gas/belches/belch_11",
+				"game/inflation/gas/belches/belch_12"
 			]
 		},
 		{
@@ -366,11 +329,74 @@
 			"loop": false
 		},
 		{
-			"name": "skill5",
-			"prefix": "skill5",
+			"name": "skillAssault0",
+			"prefix": "skillAssault0",
 			"fps": 24,
 			"indices": [],
-			"loop": false
+			"loop": true
+		},
+		{
+			"name": "skillAssault1",
+			"prefix": "skillAssault1",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssault2",
+			"prefix": "skillAssault2",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssault3",
+			"prefix": "skillAssault3",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssault4",
+			"prefix": "skillAssault4",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssaultFail0",
+			"prefix": "skillAssaultFail0",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssaultFail1",
+			"prefix": "skillAssaultFail1",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssaultFail2",
+			"prefix": "skillAssaultFail2",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssaultFail3",
+			"prefix": "skillAssaultFail3",
+			"fps": 24,
+			"indices": [],
+			"loop": true
+		},
+		{
+			"name": "skillAssaultFail4",
+			"prefix": "skillAssaultFail4",
+			"fps": 24,
+			"indices": [],
+			"loop": true
 		},
 		{
 			"name": "shocked0",
@@ -407,14 +433,6 @@
 		{
 			"name": "shocked4",
 			"prefix": "shocked4",
-			"fps": 24,
-			"indices": [],
-			"loop": false,
-			"bouncy": true
-		},
-		{
-			"name": "shocked5",
-			"prefix": "shocked5",
 			"fps": 24,
 			"indices": [],
 			"loop": false,
@@ -461,21 +479,79 @@
 			"bouncy": true
 		},
 		{
-			"name": "win5",
-			"prefix": "win5",
+			"name": "rubbed1",
+			"prefix": "rubbed1",
 			"fps": 24,
 			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed2",
+			"prefix": "rubbed2",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed3",
+			"prefix": "rubbed3",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbed4",
+			"prefix": "rubbed4",
+			"fps": 24,
+			"indices": [],
+			"loop": false,
+			"bouncy": true
+		},
+		{
+			"name": "rubbedOverinflated",
+			"prefix": "rubbedOverinflated",
+			"fps": 24,
 			"loop": false,
 			"bouncy": true
 		}
 	],
 
+	"rubHitboxes": [
+		{
+			"position": [250, 290],
+			"size": [140, 140]
+		},
+		{
+			"position": [240, 280],
+			"size": [150, 160]
+		},
+		{
+			"position": [220, 270],
+			"size": [200, 200]
+		},
+		{
+			"position": [200, 230],
+			"size": [260, 280]
+		},
+		{
+			"position": [180, 200],
+			"size": [320, 320]
+		},
+		{
+			"position": [110, 190],
+			"size": [480, 400]
+		}
+	],
+
 	"belchThreshold": 2,
-	"gurgleThreshold": 3,
-	"creakThreshold": 4,
+	"gurgleThreshold": 2,
+	"creakThreshold": 3,
 	"leakThreshold": 4,
 	"navelLeakThreshold": 3,
-	"voicePitch": 1,
+	"voicePitch": 1.3,
 	"poppingVelocityMultiplier": [1.0, 1.0],
 	"poppingGravityMultiplier": 1.0,
 	"antialiasing": false

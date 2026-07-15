@@ -914,13 +914,21 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
 			var hoseboundIndices = getPlayer(playerIndex).hoseboundIndices;
+			var cancelLossForHoseboundUser:Bool = false;
 			for (index in hoseboundIndices) {
 				getPlayer(index).currentPressure += 1;
+				if (getPlayer(index).isEliminated() && getPlayer(playerIndex).isEliminated())
+					cancelLossForHoseboundUser = true;
 				getPlayer(index).discolorationStrength += 1 / getPlayer(index).maxPressure * 0.75;
 				// getPlayer(index).currentConfidence += getPlayer(index).confidenceChangeOnLiveShot;
 				// Disabled for balancing reasons
-				getPlayer(index).playAnim('shocked');
+				if (getPlayer(index).isEliminated())
+					eliminatePlayer(index);
+				else
+					getPlayer(index).playAnim('shocked');
 			}
+			if (cancelLossForHoseboundUser)
+				getPlayer(playerIndex).currentPressure -= 1;
 			if (Gameplay.currentFiller.npcOnPop != '')
 				getPlayer(playerIndex).stomachNpcContents.push(Gameplay.currentFiller.npcOnPop);
 			if (currentLiveRoundDamage > 1) {
@@ -1122,7 +1130,6 @@ class PlayState extends SuffState {
 		cameraFocusButton.visible = false;
 
 		var allHumanPlayers:Bool = true;
-		var humansThatUsedSkills:Int = 0;
 		var cpuLowestLevel:Int = Constants.CPU_SKILL_LIMIT[1];
 		var winningIndex:Int = -1;
 		for (num => char in characterGroup) {
@@ -1135,8 +1142,6 @@ class PlayState extends SuffState {
 					cpuLowestLevel = char.cpuSkillLevel;
 				continue;
 			}
-			if (char.skillUseCount > 0)
-				humansThatUsedSkills++;
 		}
 
 		doTimer('confettiTimer', new FlxTimer().start(0.5, function(_:FlxTimer) {
@@ -1171,8 +1176,8 @@ class PlayState extends SuffState {
 		else if (characterGroup.members.length == 6)
 			Achievements.advanceProgress('sixPlayers', [true]);
 
-		if (allHumanPlayers && humansThatUsedSkills == 1) {
-			Achievements.advanceProgress('winByYourself', [true]);
+		if (allHumanPlayers) {
+			Achievements.advanceProgress('playLocalMultiplayer', [true]);
 		}
 	}
 
@@ -1556,6 +1561,8 @@ class PlayState extends SuffState {
 		for (num => char in characterGroup) {
 			pressurizeStreak.push(0);
 			var leX:Int = Std.int(FlxMath.lerp(FlxG.width / 2 + stage.data.characterX[0], FlxG.width / 2 + stage.data.characterX[1], num / (characterGroup.members.length - 1)));
+			char.velocity.set(0, 0);
+			char.acceleration.set(0, 0);
 			char.x = leX;
 			char.y = stage.data.characterY;
 			char.currentPressure = 0;
