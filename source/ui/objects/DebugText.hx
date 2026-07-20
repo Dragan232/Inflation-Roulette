@@ -79,8 +79,12 @@ class DebugText extends TextField {
 			updateText();
 
 			textColor = 0xFFFFFFFF;
-			if (currentFPS <= Preferences.data.maxFramerate * 0.8) {
-				textColor = 0xFFFF0000;
+			if (Preferences.data.maxFramerate != 500) {
+				if (currentFPS < Preferences.data.maxFramerate * 0.75)
+					textColor = 0xFFFF0000;
+			} else {
+				if (currentFPS < 120)
+					textColor = 0xFFFF0000;
 			}
 		}
 

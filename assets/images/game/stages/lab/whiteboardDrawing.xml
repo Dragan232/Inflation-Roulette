@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="whiteboardDrawings.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="drawing0000" x="0" y="0" width="160" height="100"/>
+	<SubTexture name="drawing0001" x="160" y="0" width="160" height="100"/>
+	<SubTexture name="drawing0002" x="320" y="0" width="160" height="100"/>
+	<SubTexture name="drawing0003" x="480" y="0" width="160" height="100"/>
+	<SubTexture name="drawing0004" x="0" y="100" width="160" height="100"/>
+	<SubTexture name="drawing0005" x="160" y="100" width="160" height="100"/>
+	<SubTexture name="drawing0006" x="320" y="100" width="160" height="100"/>
+	<SubTexture name="drawing0007" x="480" y="100" width="160" height="100"/>
+	<SubTexture name="drawing0008" x="0" y="200" width="160" height="100"/>
+	<SubTexture name="drawing0009" x="160" y="200" width="160" height="100"/>
+	<SubTexture name="drawing0010" x="320" y="200" width="160" height="100"/>
+	<SubTexture name="drawing0011" x="480" y="200" width="160" height="100"/>
+	<SubTexture name="drawing0012" x="0" y="300" width="160" height="100"/>
+	<SubTexture name="drawing0013" x="160" y="300" width="160" height="100"/>
+	<SubTexture name="drawing0014" x="320" y="300" width="160" height="100"/>
+	<SubTexture name="drawing0015" x="480" y="300" width="160" height="100"/>
+</TextureAtlas>

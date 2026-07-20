@@ -134,8 +134,11 @@ class JukeboxState extends SuffState {
 	var bgShadowTick:Float = 0;
 	final bgShadowSpawnTick:Float = 0.5;
 
-	override function update(elapsed:Float) {
+	var elapsedTime:Float = 0;
+
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
+		elapsedTime += elapsed;
 
 		bgShadowTick += elapsed;
 		if (bgShadowTick >= bgShadowSpawnTick) {
@@ -158,7 +161,7 @@ class JukeboxState extends SuffState {
 			});
 		}
 
-		var leScale = Math.pow(Math.sin(SuffState.timePassedOnState * 0.25), 2);
+		var leScale = Math.pow(Math.sin(elapsedTime * 0.25), 2);
 		bg.scale.set(bgScale.x + 0.5 * leScale, bgScale.y + 0.5 * leScale);
 		bg.alpha = 0.75 + leScale * 0.25;
 

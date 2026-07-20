@@ -82,8 +82,7 @@ class Main extends Sprite {
 
 		FlxTransitionableState.skipNextTransOut = true;
 
-		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate,
-			game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		#if !mobile
 		debugText = new DebugText(0, 0, 0xFFFFFF);
@@ -94,7 +93,7 @@ class Main extends Sprite {
 		#end
 
 		FlxG.fixedTimestep = false;
-		FlxG.game.focusLostFramerate = 60;
+		FlxG.game.focusLostFramerate = 10;
 		FlxG.keys.preventDefaultKeys = [FlxKey.TAB];
 
 		#if html5

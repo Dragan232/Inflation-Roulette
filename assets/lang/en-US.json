@@ -127,7 +127,7 @@
 	// Please make sure that this is written in a formal tone.
 	"warningMenu.windowDisplay": "Warning",
 	"warningMenu.title": "WARNING",
-	"warningMenu.content": "This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content, and may not be suitable to some. External addons made by third-parties are unmoderated and may contain material which may cause discomfort in some players. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing 'Accept', you acknowledge these warnings and fully bear any consequences caused by this game.",
+	"warningMenu.content": "This game is only for mature demographics over 18 YEARS OF AGE.\nThis is a fetish game, primarily containing FURRY INFLATION content. External addons made by third-parties are unmoderated. Recording and streaming of this game to social media platforms where juveniles are widely present is highly discouraged.\nThis game also features flashing images and screen shaking that may trigger photosensitive symptoms to some people. These effects can be dampened via the Options menu.\nBy pressing 'Accept', you acknowledge these warnings and fully bear any consequences caused by this game.",
 	"menu.accept": "Accept",
 
 	"optionsMenu.windowDisplay": "Options",
@@ -401,6 +401,10 @@
 	// Again, transliterate Shitfucks.
 	"stage.shitfucks.name": "Shitfucks Café",
 	"stage.shitfucks.description": "Specializes in selling beverages. Definitely nothing wrong going on here.",
+	// Paprika Beachside: Beach themed background. Held in somewhere of a beach resort.
+	// You do not have to transliterate Paprika.
+	"stage.beach.name": "Paprika Beachside",
+	"stage.beach.description": "A popular beachside resort. Known for being a honeymoon destination and its nightclubs.",
 	// White Void: Literally just a white void with a glass table.
 	"stage.void.name": "White Void",
 	"stage.void.description": "Household name as a place for all activities, featured in countless art pieces and animations.",
@@ -670,7 +674,7 @@
 	"rubHitboxEditor.description": "Arrow Keys to Move Hitbox\nWASD Keys to Resize Hitbox\nHold SHIFT/CTRL to Increase Rate",
 	"rubHitboxEditor.position": "Position",
 	"rubHitboxEditor.size": "Size",
-	"rubHitboxEditor.exit.prompt": "Are you sure you want to exit the Offset Editor?",
+	"rubHitboxEditor.exit.prompt": "Are you sure you want to exit the Rub Hitbox Editor?",
 
 	"langConverter.successPrompt": "JSON file exported in:\n%1",
 

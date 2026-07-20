@@ -1,0 +1,207 @@
+{
+	"stageCameraZoom": 0.9,
+	"characterCameraZoom": 1.2,
+	"cameraBounds": [-540, -240, 2360, 1100],
+	"backgroundObjects": [
+		{
+			"id": "sky",
+			"graphic": "sky",
+			"position": ["c", "c"],
+			"scrollFactor": [0.2, 0.1]
+		},
+		{
+			"id": "cloud1",
+			"graphic": "cloud",
+			"scale": [2, 2],
+			"antialiasing": true,
+			"position": ["c-1200", "-20"],
+			"scrollFactor": [0.22, 0.12],
+			"velocity": [16, 0],
+			"respawnTime": 100,
+			"hideInDecreaseDetail": true,
+			"alpha": 0.25
+		},
+		{
+			"id": "cloud2",
+			"graphic": "cloud",
+			"scale": [2, 2],
+			"antialiasing": true,
+			"position": ["c-1000", "-40"],
+			"scrollFactor": [0.24, 0.14],
+			"velocity": [20, 0],
+			"respawnTime": 80,
+			"hideInDecreaseDetail": true,
+			"alpha": 0.5
+		},
+		{
+			"id": "cloudMain",
+			"graphic": "cloud",
+			"scale": [2, 2],
+			"antialiasing": true,
+			"position": ["c-800", "-60"],
+			"scrollFactor": [0.26, 0.16],
+			"velocity": [12.5, 0],
+			"respawnTime": 128
+		},
+		{
+			"id": "sea",
+			"graphic": "sea",
+			"position": ["c", "320"],
+			"scrollFactor": [0.4, 0.25],
+			"alpha": 0.75
+		},
+		{
+			"id": "seaAnimated",
+			"graphic": "sea",
+			"animations": [
+				{
+					"name": "idle",
+					"prefix": "idle",
+					"fps": 4
+				}
+			],
+			"scale": [4, 1],
+			"position": ["c", "310"],
+			"scrollFactor": [0.4, 0.25],
+			"hideInDecreaseDetail": true,
+			"alpha": 0.5
+		},
+		{
+			"id": "floorBack",
+			"graphic": "floorBack",
+			"position": ["c", "c"],
+			"scrollFactor": [0.4, 0.5]
+		},
+		{
+			"id": "beachPasserby",
+			"graphic": "beachPasserby",
+			"position": ["c-1600", "c+50"],
+			"velocity": [80, 0],
+			"animations": [
+				{
+					"name": "greenClaire",
+					"prefix": "greenClaire",
+					"fps": 24
+				},
+				{
+					"name": "trackpadLonne",
+					"prefix": "trackpadLonne",
+					"fps": 24
+				},
+				{
+					"name": "seresIndigo",
+					"prefix": "seresIndigo",
+					"fps": 24
+				},
+				{
+					"name": "coffsIsabelle",
+					"prefix": "coffsIsabelle",
+					"fps": 24
+				},
+				{
+					"name": "silverDan",
+					"prefix": "silverDan",
+					"fps": 24
+				},
+				{
+					"name": "blue",
+					"prefix": "blue",
+					"fps": 24
+				},
+				{
+					"name": "adiraJack",
+					"prefix": "adiraJack",
+					"fps": 24
+				},
+				{
+					"name": "caroDenver",
+					"prefix": "caroDenver",
+					"fps": 24
+				}
+			],
+			"respawnTime": 40,
+			"randomAnim": true,
+			"randomAnimOnRespawn": true,
+			"hideInDecreaseDetail": true,
+			"color": "#E0C0A0",
+			"scrollFactor": [0.4, 0.5]
+		},
+		{
+			"id": "floorFront",
+			"graphic": "floorFront",
+			"position": ["c", "c"],
+			"scale": [1.5, 1],
+			"scrollFactor": [0.8, 0.7]
+		},
+		{
+			"id": "floorDecal",
+			"graphic": "floorDecal",
+			"position": ["c", "c"],
+			"scrollFactor": [0.9, 0.75],
+			"hideInDecreaseDetail": true
+		},
+		{
+			"id": "treeRight1",
+			"graphic": "tree",
+			"position": ["c+480", "-160"],
+			"scrollFactor": [0.8, 0.8],
+			"color": "#A0A0A0"
+		},
+		{
+			"id": "cactus",
+			"graphic": "cactus",
+			"position": ["c+580", "300"],
+			"scrollFactor": [0.9, 0.9],
+			"hideInDecreaseDetail": true
+		},
+		{
+			"id": "treeRight2",
+			"graphic": "tree",
+			"position": ["c+720", "-80"],
+			"scrollFactor": [0.8, 0.8],
+			"hideInDecreaseDetail": true
+		},
+		{
+			"id": "treeLeft",
+			"graphic": "tree",
+			"position": ["c-700", "-100"],
+			"scrollFactor": [0.8, 0.8],
+			"flipX": true,
+			"color": "#E0E0E0"
+		},
+		{
+			"id": "tiki",
+			"graphic": "tiki",
+			"position": ["c-680", "230"],
+			"scale": [0.9, 0.9],
+			"scrollFactor": [0.85, 0.85],
+			"flipX": true,
+			"angle": -4,
+			"hideInDecreaseDetail": true
+		}
+	],
+	"characterX": [-420, 420],
+	"characterY": 690,
+	"gunY": 520,
+	"gunScrollFactor": [1.25, 1.15],
+	"tableObjects": [
+		{
+			"id": "table",
+			"graphic": "table",
+			"position": ["c", "500"],
+			"scrollFactor": [1.2, 1.1]
+		}
+	],
+	"foregroundObjects": [
+		{
+			"id": "shine",
+			"graphic": "shine",
+			"position": ["c", "c"],
+			"scrollFactor": [0, 0],
+			"alpha": 0.5,
+			"blend": "add",
+			"hideInDecreaseDetail": true,
+			"antialiasing": true
+		}
+	]
+}

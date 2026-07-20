@@ -205,6 +205,9 @@ class NPC extends FlxSprite {
 		if (this.currentAction == WALK) {
 			this.velocity.x = this.movement.x;
 			this.velocity.y = this.movement.y;
+		} else {
+			var decayRatio = 1 / (1 + (elapsed * friction));
+			this.velocity.x *= decayRatio;
 		}
 		if (this.y > PlayState.instance.stage.data.characterY) {
 			this.velocity.y = this.velocity.y * -restitution;
@@ -213,7 +216,6 @@ class NPC extends FlxSprite {
 				this.velocity.y = 0;
 			}
 			this.y = PlayState.instance.stage.data.characterY;
-			this.velocity.x *= Math.max(0, 1 - elapsed * 20 * friction);
 		}
 	}
 }

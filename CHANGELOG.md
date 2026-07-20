@@ -31,6 +31,10 @@ Hotfixes are quick updates that fixes critical bugs.
   - Mind Games
   - ? ?????? ???? ?? ???????
   - Utilizer
+- New Skills:
+  - Unload
+  - Denial
+  - Hosebound
 - Player count slider in Gamemode Select Screen.
 - Quick Config menu when choosing Quick Play.
   - You are able to quickly select your preferred Filler and Stage for the game. Default options are Random.
@@ -54,13 +58,13 @@ Hotfixes are quick updates that fixes critical bugs.
 #### Technical
 - Android build.
 - Legacy LANG File Converter.
-- Warning screen (re-added due to bug)
 - Version checking to alert you on the latest version of IRR. 
   - This can be disabled in the Options menu
   - Only supports versions >=3.0.0
 - Operations are now output on console on the Preload menu.
 - Characters now have an additional JSON file named `offsets.json` used to determine the positions of certain coordinates relative to the sprite.
   - Used for sprite origins, camera offsets, and particle spawn positions.
+- Characters now also have an additional JSON file named `hitbox.json` used to determine the positions of rub hitboxes.
 - Gamemodes can now limit the Skill Level of CPU players using `cpuMinLevel` and `cpuMaxLevel`.
   - This in turn fixes the issue where higher levels of CPU players sabotage endlessly in Classic Mode.
 ### Changes
@@ -88,13 +92,16 @@ Hotfixes are quick updates that fixes critical bugs.
 - Restarting a game session is quicker and done without a transition.
   - This also reduces memory usage on restart.
 #### Technical
+- Warning screen now always show up during the startup of the game.
 - All changelogs are now kept in one file.
 - Skill Cards now only uses one file
 - VRAM Caching is now off by default.
 - `cylinderDamageChangeOnBlank`, and `cylinderInitialDamage` now support floats.
   - The final damage dealt will be rounded down.
 - Character sprites are no longer preloaded on the start of the game.
-- Decreased RAM usage by 50%. (Not guaranteed)
+- Decreased RAM usage by up to 50%. (Not guaranteed)
+- Max Framerate is now capped at 120.
+  - Since this update uses more resources, higher framerates are unstable on low-end devices.
 #### Utilities
 - Character Editor now generates addon metadata and localization files for you.
 ### Removals
@@ -102,6 +109,7 @@ Hotfixes are quick updates that fixes critical bugs.
 - Removed Modifiers
   - Since this feature is under-utilized and not expanded upon, modifiers no longer have any effect.
 - Removed gamemodes: Stand-Off and Mayhem
+- Removed gamemode parameter: `cylinderDamageChangeOnLive`
 ### Fixes
 - Scroll bars, Gallery Image View, Credits menu, and Options sliders snaps elements in place on touchscreens.
 - Blurry Cobalt crashes the game.
@@ -116,7 +124,6 @@ Hotfixes are quick updates that fixes critical bugs.
 - Texts on achievement toasts not visible after changing a language that modifies the game font.
 - `cylinderInitialDamage` has no effect on first round.
 - Shib's starting animation snaps into looping animation with no anticipation
-
 
 ## v2.1.1 - Patch of Creativity, Pitstop 1 Hotfix 1 - 2026-04-19
 ### Changes

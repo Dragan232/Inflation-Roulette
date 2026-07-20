@@ -125,8 +125,11 @@ class ImHighOnCrackStartupState extends SuffState {
 		allowToSkip = false;
 	}
 
-	override function update(elapsed:Float) {
+	var elapsedTime:Float = 0;
+
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
+		elapsedTime += elapsed;
 
 		if (!loadedObjects)
 			return;
@@ -136,13 +139,13 @@ class ImHighOnCrackStartupState extends SuffState {
 		}
 
 		if (allowToSkip) {
-			logo.y = (FlxG.height - logo.height) / 2 + Math.sin(SuffState.timePassedOnState * 1.5) * 18;
+			logo.y = (FlxG.height - logo.height) / 2 + Math.sin(elapsedTime * 1.5) * 18;
 		}
 
 		if (shadows != null) {
 			for (shadow in shadows) {
-				shadow.x = logo.x + Math.sin(SuffState.timePassedOnState * 2) * 20 * shadow.ID;
-				shadow.y = logo.y + Math.sin(SuffState.timePassedOnState * 2) * 20 * shadow.ID;
+				shadow.x = logo.x + Math.sin(elapsedTime * 2) * 20 * shadow.ID;
+				shadow.y = logo.y + Math.sin(elapsedTime * 2) * 20 * shadow.ID;
 			}
 		}
 	}

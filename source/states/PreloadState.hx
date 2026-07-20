@@ -14,6 +14,8 @@ class PreloadState extends SuffState {
 	var preloadTxt:FlxText;
 	#end
 
+	public static var hasBeenWarned:Bool = false;
+
 	var loadingProgress:Int = -1;
 	var loadingTexts:Array<String> = ['gameplay', 'music', 'achievements', 'toasts', 'tooltip', 'cursor', 'splashes'];
 
@@ -71,7 +73,7 @@ class PreloadState extends SuffState {
 				case 'achievements':
 					Achievements.initialize();
 				case 'toasts':
-					MusicToast.initialize();
+					// MusicToast.initialize();
 					AchievementToast.initialize();
 					trace('Setup Music Toasts, Achievement Toasts');
 				case 'tooltip':
@@ -152,6 +154,11 @@ class PreloadState extends SuffState {
 	}
 	
 	function goToStartupState() {
+		if (!hasBeenWarned) {
+			FlxTransitionableState.skipNextTransOut = true;
+			SuffState.switchState(new WarningState());
+			return;
+		}
 		#if _CHECK_FOR_UPDATES
 		if (Preferences.data.checkForUpdates) {
 			var http = new haxe.Http("https://raw.githubusercontent.com/Sufferneer/Inflation-Roulette-Reloaded/main/curVersion.txt");

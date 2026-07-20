@@ -5,6 +5,7 @@ typedef StageObjectData = {
 	graphic:String,
 	position:Array<String>,
 	?hideInDecreaseDetail:Bool,
+	?showInDecreaseDetail:Bool,
 	?angle:Float,
 	?alpha:Float,
 	?flipX:Bool,

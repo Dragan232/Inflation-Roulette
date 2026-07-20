@@ -2,20 +2,20 @@ package backend;
 
 import backend.typedefs.MusicMetadata;
 import backend.Addons;
-import flash.media.Sound;
+import openfl.media.Sound;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
-import openfl.display3D.textures.RectangleTexture;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.system.System;
 import tjson.TJSON as Json;
-import backend.typedefs.FillerSoundData;
+import openfl.display3D.textures.RectangleTexture;
 
 /**
  * List of functions for getting assets.
  */
+@:access(openfl.display.BitmapData)
 class Paths {
 	/**
 	 * The current used extension for sounds.
@@ -28,9 +28,10 @@ class Paths {
 	 */
 	public static var dumpExclusions:Array<String> = [
 		'assets/music/',
-		'text',
+		// 'text',
 		'assets/images/ui/plugins/',
-		'plugins/'
+		'plugins/',
+		'assets/images/ui/menus/achievements/icons/'
 	];
 	
 	public static function isDumpExcluded(key:String) {
@@ -350,28 +351,33 @@ class Paths {
 			#if sys
 			if (FileSystem.exists(file))
 				bitmap = BitmapData.fromFile(file);
-			else
-			#end
-			{
-				if (OpenFlAssets.exists(file, IMAGE))
-					bitmap = OpenFlAssets.getBitmapData(file);
+			else #end if (OpenFlAssets.exists(file, IMAGE))
+				bitmap = OpenFlAssets.getBitmapData(file);
+			if (bitmap == null) {
+				trace('Bitmap not found: $file');
+				return null;
 			}
 		}
 
-		localTrackedAssets.push(file);
 		#if desktop
-		if (allowGPU && Preferences.data?.cacheOnGPU) {
-			var texture:RectangleTexture = FlxG.stage.context3D.createRectangleTexture(bitmap.width, bitmap.height, BGRA, true);
-			texture.uploadFromBitmapData(bitmap);
-			bitmap.image.data = null;
-			bitmap.dispose();
+		if (allowGPU && Preferences.data?.cacheOnGPU && bitmap.image != null) {
+			bitmap.lock();
+			@:privateAccess
+			if (bitmap.__texture == null) {
+				bitmap.image.premultiplied = true;
+				bitmap.getTexture(FlxG.stage.context3D);
+			}
+			bitmap.getSurface();
 			bitmap.disposeImage();
-			bitmap = BitmapData.fromTexture(texture);
+			bitmap.image.data = null;
+			bitmap.image = null;
+			bitmap.readable = true;
 		}
 		#end
 		var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, file);
 		newGraphic.persist = true;
 		newGraphic.destroyOnNoUse = false;
+		localTrackedAssets.push(file);
 		currentTrackedTextures.set(file, newGraphic);
 		return newGraphic;
 	}
@@ -461,43 +467,27 @@ class Paths {
 	 * @param key The name to be assigned for the sound for quick access.
 	 */
 	public static function returnSound(path:String, key:String) {
-		var gottenPath:String = appendSoundExt(getPath('$path/$key'));
-
+		var file:String = appendSoundExt(getPath('$path/$key'));
 		#if _ALLOW_ADDONS
-		var addonLibPath:String = '';
-		if (path != null)
-			addonLibPath += '$path';
-
-		var file:String = addonsSounds(addonLibPath, key);
-		if (FileSystem.exists(file)) {
-			if (!currentTrackedSounds.exists(file)) {
-				currentTrackedSounds.set(file, Sound.fromFile(file));
-			}
-			localTrackedAssets.push(file);
-			return currentTrackedSounds.get(file);
-		}
+		if (!FileSystem.exists(file))
+			file = addonsSounds(path, key);
 		#end
 
-		#if sys
-		if (FileSystem.exists(gottenPath)) {
-			if (!currentTrackedSounds.exists(gottenPath)) {
-				currentTrackedSounds.set(gottenPath, Sound.fromFile(gottenPath));
-			}
-			localTrackedAssets.push(key);
-			return currentTrackedSounds.get(gottenPath);
-		}
-		#end
-		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
-		if (!currentTrackedSounds.exists(gottenPath))
+		if (!currentTrackedSounds.exists(file)) {
 			#if sys
-			currentTrackedSounds.set(gottenPath, Sound.fromFile(gottenPath));
+			if (FileSystem.exists(file))
+				currentTrackedSounds.set(file, Sound.fromFile(file));
 			#else
-			{
-				currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(Paths.getPath(appendSoundExt('$path/$key'))));
-			}
+			if (OpenFlAssets.exists(file, SOUND))
+				currentTrackedSounds.set(file, OpenFlAssets.getSound(file));
 			#end
-			localTrackedAssets.push(gottenPath);
-		return currentTrackedSounds.get(gottenPath);
+			else {
+				trace('Sound not found: $path/$key');
+				return returnSound('sounds', 'eh');
+			}
+		}
+		localTrackedAssets.push(file);
+		return currentTrackedSounds.get(file);
 	}
 
 	inline static public function lang(key:String = '') {

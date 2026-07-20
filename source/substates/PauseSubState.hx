@@ -34,7 +34,7 @@ class PauseSubState extends SuffSubState {
 		pauseMusic.looped = true;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 		pauseMusic.fadeIn(5, 0, 0.5 * Preferences.data.musicVolume);
-		MusicToast.play(Paths.musicMetadata('pause'));
+		// MusicToast.play(Paths.musicMetadata('pause'));
 
 		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('pauseMenu.title'), 48);
 		var headingTextTargetY:Int = 4;
@@ -87,10 +87,10 @@ class PauseSubState extends SuffSubState {
 		}
 	}
 
-	var holdTime:Float = 0;
+	var elapsedTime:Float = 0;
 
 	function buttonFunction(daSelected:String) {
-		if (timePassedOnSubState < 0.25) // Prevent Insta-Unpausing
+		if (elapsedTime < 0.25) // Prevent Insta-Unpausing
 			return;
 		switch (daSelected.toLowerCase()) {
 			case 'resume':
@@ -116,8 +116,10 @@ class PauseSubState extends SuffSubState {
 		}
 	}
 
-	override function update(elapsed:Float) {
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
+
+		elapsedTime += elapsed;
 
 		if (Controls.justPressed('exit')) {
 			buttonFunction('RESUME');
@@ -135,7 +137,7 @@ class PauseSubState extends SuffSubState {
 			SuffState.playMusic('cutscene');
 	}
 
-	override function destroy() {
+	public override function destroy() {
 		pauseMusic.pause();
 		super.destroy();
 	}

@@ -129,8 +129,8 @@ class ResultsState extends SuffState {
 				ranks[i] = 0;
 		}
 		trace(ranks);
-		barLeaderboard = new FlxSprite().makeGraphic(FlxG.width, 192, 0xFF000000);
-		barLeaderboard.alpha = 0.25;
+		barLeaderboard = new FlxSprite().makeGraphic(FlxG.width, 192, 0xFFE0E0E0);
+		barLeaderboard.blend = MULTIPLY;
 		barLeaderboard.y = barUp.height - barLeaderboard.height;
 		add(barLeaderboard);
 		for (rank => playerNum in ranks) {
@@ -518,12 +518,15 @@ class ResultsState extends SuffState {
 	public static var allowSkip:Bool = true;
 	var isLeaving:Bool = false;
 
-	override function update(elapsed:Float) {
+	var elapsedTime:Float = 0;
+
+	public override function update(elapsed:Float) {
+		elapsedTime += elapsed;
 		for (num => txt in resultsTitleGroup.members) {
-			txt.y = barUp.y + (barUp.height - txt.height) / 2 + 5 - Math.pow(Math.sin(num / resultsTitleGroup.members.length * 180 * Constants.TO_RADIANS - SuffState.timePassedOnState * 4), 2) * 7;
+			txt.y = barUp.y + (barUp.height - txt.height) / 2 + 5 - Math.pow(Math.sin(num / resultsTitleGroup.members.length * 180 * Constants.TO_RADIANS - elapsedTime * 4), 2) * 7;
 		}
 		for (num => txt in resultsDescGroup.members) {
-			txt.y = barDown.y + (barDown.height - txt.height) / 2 + 5 - Math.pow(Math.sin(num / resultsDescGroup.members.length * 360 * Constants.TO_RADIANS + SuffState.timePassedOnState * 4), 2) * 7;
+			txt.y = barDown.y + (barDown.height - txt.height) / 2 + 5 - Math.pow(Math.sin(num / resultsDescGroup.members.length * 360 * Constants.TO_RADIANS + elapsedTime * 4), 2) * 7;
 			txt.x += txt.velocity.x * elapsed;
 			if (txt.x <= -80)
 				txt.x = FlxG.width;

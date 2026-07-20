@@ -106,7 +106,7 @@ class AchievementToast extends FlxSpriteGroup {
 			instance.dequeue();
 	}
 
-	override function update(elapsed:Float) {
+	public override function update(elapsed:Float) {
 		if (instance == null) {
 			return;
 		}

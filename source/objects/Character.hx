@@ -45,7 +45,7 @@ class Character extends FlxSprite {
 	public var bounceFrames:Int = 3;
 
 	// Gameplay Variables //
-	public var currentPressure:Int = 0;
+	public var currentPressure(default, set):Int = 0;
 	public var maxPressure:Int = 4;
 	public var currentConfidence:Int = 0;
 	public var maxConfidence:Int = 4;
@@ -309,12 +309,20 @@ class Character extends FlxSprite {
 
 		if (rubHitbox != null)
 			FlxG.state.add(rubHitbox);
+
+		updateRubHitbox();
 	}
 
 	public var discolorationStrength(default, set):Float = 0;
 
 	function set_discolorationStrength(value:Float):Float {
 		return discolorationStrength = FlxMath.bound(value, 0, 1);
+	}
+
+	function set_currentPressure(value:Int):Int {
+		currentPressure = value;
+		updateRubHitbox();
+		return value;
 	}
 
 	public override function update(elapsed:Float) {
@@ -488,7 +496,6 @@ class Character extends FlxSprite {
 		}
 
 		if (rubHitbox != null) {
-			updateRubHitbox();
 			cursorOnBelly = mouseOverlapsRubHitbox() && onIdle && currentPressure > 0;
 			if (onIdle && currentPressure > 0) {
 				if (cursorOnBelly) {

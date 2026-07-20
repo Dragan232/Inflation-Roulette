@@ -169,7 +169,7 @@ class RubHitboxEditorState extends UtilitiesBaseMenuState {
 	}
 
 	function updateValues() {
-		offsetTxt.text = Language.getPhrase('rubHitboxEditor.position') + '\n[${hitbox.x - character.x}, ${hitbox.y - character.y}]\n' + Language.getPhrase('rubHitboxEditor.size') + '\nSize: [${hitbox.width}, ${hitbox.height}]';
+		offsetTxt.text = Language.getPhrase('rubHitboxEditor.position') + '\n[${hitbox.x - character.x}, ${hitbox.y - character.y}]\n' + Language.getPhrase('rubHitboxEditor.size') + '\n[${hitbox.width}, ${hitbox.height}]';
 		offsetTxt.y = FlxG.height - offsetTxt.height - 32;
 	}
 }

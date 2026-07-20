@@ -3,24 +3,16 @@ package ui;
 import backend.enums.SuffTransitionStyle;
 import backend.typedefs.MusicMetadata;
 import flixel.addons.ui.FlxUIState;
-import flixel.FlxSubState;
 import flixel.FlxState;
-import flixel.system.scaleModes.StageSizeScaleMode;
-import flixel.system.scaleModes.BaseScaleMode;
-import flixel.system.scaleModes.RatioScaleMode;
-import openfl.filters.ColorMatrixFilter;
-import tjson.TJSON as Json;
-import flash.media.Sound;
+import openfl.media.Sound;
 import openfl.filters.ShaderFilter;
 import shaders.GrayscaleShader;
 
 class SuffState extends FlxUIState {
 	public static var currentMusicName:String = '';
-	public static var timePassedOnState:Float = 0;
-	public static var capTimePassed:Bool = true;
 	public static var currentMusicBPM:Float = 0;
 
-	override function create() {
+	public override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 
 		if (!skip)
@@ -29,7 +21,6 @@ class SuffState extends FlxUIState {
 		super.create();
 
 		FlxTransitionableState.skipNextTransOut = false;
-		timePassedOnState = 0;
 	}
 
 	public static function playMusic(tag:String, volume:Float = 1, forceRestart:Bool = false) {
@@ -48,8 +39,10 @@ class SuffState extends FlxUIState {
 		currentMusicName = usedTag;
 		FlxG.sound.playMusic(Paths.music(usedTag), volume * Preferences.data.musicVolume);
 		var metadata:MusicMetadata = Paths.musicMetadata(usedTag);
+		/*
 		if (metadata.toast)
 			MusicToast.play(metadata);
+		 */
 		if (metadata.loopTime == null || metadata.loopTime >= 0) {
 			FlxG.sound.music.looped = true;
 			if (metadata.loopTime != null)
@@ -68,17 +61,14 @@ class SuffState extends FlxUIState {
 	}
 
 	public static function playUISound(tag:Sound, volume:Float = 1, pitch:Float = 1) {
-		var sound = new FlxSound().loadEmbedded(tag, false, true);
+		var sound:FlxSound = new FlxSound().loadEmbedded(tag, false, true);
 		sound.autoDestroy = true;
 		sound.volume = volume * Preferences.data.uiSoundVolume;
 		sound.pitch = pitch;
 		sound.play();
 	}
 
-	override function update(elapsed:Float) {
-		timePassedOnState += elapsed;
-		if (capTimePassed && timePassedOnState > 360)
-			timePassedOnState = 0;
+	public override function update(elapsed:Float) {
 
 		super.update(elapsed);
 	}

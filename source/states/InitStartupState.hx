@@ -19,9 +19,6 @@ class InitStartupState extends SuffState {
 
 		FlxTransitionableState.skipNextTransIn = true;
 		FlxTransitionableState.skipNextTransOut = true;
-
-		if (FlxG.save.data.acknowledgedTermsOfService == null || FlxG.save.data.termsOfService == null)
-			SuffState.switchState(new WarningState());
 		new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 			var startupState = '';
 			#if (_ALLOW_ADDONS && android)

@@ -31,19 +31,37 @@ class Stage extends FlxBasic {
 		var tableObjects:Array<StageObjectData> = data.tableObjects;
 		var foregroundObjects:Array<StageObjectData> = data.foregroundObjects;
 		for (object in backgroundObjects) {
-			if (Preferences.data.decreaseDetail && object.hideInDecreaseDetail == true) continue;
+			if (Preferences.data.decreaseDetail) {
+				if (object.hideInDecreaseDetail == true)
+					continue;
+			} else {
+				if (object.showInDecreaseDetail == true)
+					continue;
+			}
 			var obj:StageObject = loadObject(object, data.id);
 			addBehindCharacters(object.id, obj);
 		}
 		trace('Loaded background objects');
 		for (object in tableObjects) {
-			if (Preferences.data.decreaseDetail && object.hideInDecreaseDetail == true) continue;
+			if (Preferences.data.decreaseDetail) {
+				if (object.hideInDecreaseDetail == true)
+					continue;
+			} else {
+				if (object.showInDecreaseDetail == true)
+					continue;
+			}
 			var obj:StageObject = loadObject(object, data.id);
 			addBehindGun(object.id, obj);
 		}
 		trace('Loaded table objects');
 		for (object in foregroundObjects) {
-			if (Preferences.data.decreaseDetail && object.hideInDecreaseDetail == true) continue;
+			if (Preferences.data.decreaseDetail) {
+				if (object.hideInDecreaseDetail == true)
+					continue;
+			} else {
+				if (object.showInDecreaseDetail == true)
+					continue;
+			}
 			var obj:StageObject = loadObject(object, data.id);
 			addObject(object.id, obj);
 		}
@@ -95,18 +113,26 @@ class Stage extends FlxBasic {
 		object.randomAnimOnRespawn = !(!objectData.randomAnimOnRespawn);
 		if (objectData.respawnTime != null)
 			object.respawnTime = objectData.respawnTime;
+		var graphicPath = Paths.getImagePath('game/stages/$stageID/' + objectData.graphic, true);
+		if (!Paths.fileExists(graphicPath))
+			graphicPath = Paths.getImagePath('game/stages/' + objectData.graphic, true);
+		graphicPath = graphicPath.replace('.png', '');
+		graphicPath = graphicPath.replace('assets/images/', '');
 		if (objectData.animations != null) {
-			object.frames = Paths.sparrowAtlas('game/stages/$stageID/' + objectData.graphic);
+			object.frames = Paths.sparrowAtlas(graphicPath);
 			var animations:Array<AnimationData> = cast objectData.animations;
 			for (animData in animations) {
-				object.animation.addByPrefix(animData.name, animData.prefix, animData.fps);
+				if (animData.indices != null && animData.indices.length > 0)
+					object.animation.addByIndices(animData.name, animData.prefix, animData.indices, '', animData.fps);
+				else
+					object.animation.addByPrefix(animData.name, animData.prefix, animData.fps);
 			}
 			if (objectData.randomAnim == true)
 				object.animation.play(FlxG.random.getObject(object.animation.getNameList()), true);
 			else
 				object.animation.play(animations[0].name, true);
 		} else {
-			object.loadGraphic(Paths.image('game/stages/$stageID/' + objectData.graphic));
+			object.loadGraphic(Paths.image(graphicPath));
 		}
 		if (objectData.scrollFactor != null && objectData.scrollFactor.length == 2)
 			object.scrollFactor.set(objectData.scrollFactor[0], objectData.scrollFactor[1]);

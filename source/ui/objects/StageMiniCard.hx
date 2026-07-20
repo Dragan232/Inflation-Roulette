@@ -13,16 +13,27 @@ class StageMiniCard extends SuffButton {
 		this.stage = stage;
 		super(x, y, null, null, null, Constants.CHARACTER_CARD_DIMENSIONS[0], Constants.CHARACTER_CARD_DIMENSIONS[1], false);
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/stages/mini/$stage'));
+		var bgGraphic = Paths.image('ui/menus/characterSelect/stages/$stage');
+		bg = new FlxSprite(-19, 1).loadGraphic(bgGraphic);
+		bg.clipRect = FlxRect.get(24, 4, 140, 190);
+		bg.updateHitbox();
 		add(bg);
 
-		outline = new FlxSprite().loadGraphic(Utilities.makeBorder(bg.width, bg.height));
+		outline = new FlxSprite().loadGraphic(Utilities.makeBorder(Constants.CHARACTER_CARD_DIMENSIONS[0], Constants.CHARACTER_CARD_DIMENSIONS[1]));
 		add(outline);
 
 		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('stage.$stage.name').toUpperCase());
 		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
-		charNameText.setBorderStyle(OUTLINE, 0xFF000000, 0.25);
+		charNameText.setBorderStyle(OUTLINE, 0x80000000, 0.25);
 		add(charNameText);
+	}
+
+	override private function get_width():Int {
+		return Constants.CHARACTER_CARD_DIMENSIONS[0];
+	}
+
+	override private function get_height():Int {
+		return Constants.CHARACTER_CARD_DIMENSIONS[1];
 	}
 
 	public function setScale(x:Float, y:Float) {

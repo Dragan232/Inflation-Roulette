@@ -884,15 +884,17 @@ class PlayState extends SuffState {
 
 		SuffState.playSound(Paths.sound('game/shoot'));
 		if (getPlayer(playerIndex).denialCount > 0 && cylinderContent[0]) {
-			SuffState.playSound(Paths.sound('game/denialActivate'));
 			var particleOffset = getPlayer(playerIndex).getParticleOffset('navel');
 			var denialShield = new DenialShield(getPlayer(playerIndex).x + particleOffset.x, getPlayer(playerIndex).y + particleOffset.y);
 			particleGroup.add(denialShield);
 			screenShake(0.01, 0.1);
-			if (currentLiveRoundDamage > 1)
+			if (currentLiveRoundDamage > 1) {
 				currentLiveRoundDamage = 1;
-			else
+				SuffState.playSound(Paths.sound('game/denialActivate'));
+			} else {
 				dealDamage = false;
+				SuffState.playSound(Paths.sound('game/denialActivatePressurize'));
+			}
 			getPlayer(playerIndex).denialCount = 0;
 		}
 		if (getPlayer(playerIndex).denialCount > 0)
@@ -1061,7 +1063,6 @@ class PlayState extends SuffState {
 			if (!Preferences.data.decreaseDetail) {
 				particleGroup.add(new ScrapEmitter(character.x, character.y - character.width / 2, character.id, stage.data.characterY, character.maxPressure));
 
-				var particleMultiplier:Float = 1;
 				if (Gameplay.currentFiller.particleType == Liquid) {
 					if (!Preferences.data.decreaseDetail) {
 						for (i in 0...FlxG.random.int(6, 9)) {
@@ -1070,9 +1071,8 @@ class PlayState extends SuffState {
 							particleGroup.add(stain);
 						}
 					}
-					particleMultiplier = 3;
 				}
-				particleGroup.add(new PopEmitter(character.x, character.y - character.height / 2, stage.data.characterY, Gameplay.currentFiller.particleType, particleMultiplier, Gameplay.currentFiller.particleColor));
+				particleGroup.add(new PopEmitter(character.x, character.y - character.height / 2, stage.data.characterY, Gameplay.currentFiller.particleType, Gameplay.currentFiller.particleColor));
 				character.stomachNpcContents = [];
 				if (!Preferences.data.decreaseDetail) {
 					var npcCount = FlxG.random.int(Gameplay.currentFiller.npcCountOnPop[0], Gameplay.currentFiller.npcCountOnPop[1]);

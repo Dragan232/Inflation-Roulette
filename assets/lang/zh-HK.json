@@ -2,9 +2,6 @@
 	// Translation File
 	// Language: Traditional Chinese (Hong Kong)
 	
-	// Comments are prefixed with two slashes (//), and will not be recognized by the game.
-	// Comments are reserved for translation notes, either to clarify context or give instructions.
-	
 	"metadata.title": "膨脹輪盤：重裝上陣",
 	"metadata.titleShort": "膨脹輪盤",
 	"metadata.acronym": "膨脹輪盤",
@@ -78,7 +75,7 @@
 
 	"warningMenu.windowDisplay": "警告",
 	"warningMenu.title": "警告",
-	"warningMenu.content": "本遊戲僅限18歲以上之成年玩家！\n\n本遊戲為戀物向作品，主要包含獸人膨脹內容，部分玩家可能感到不適。由第三方製作的附加包未經審核，可能包含令部分玩家不適的內容。強烈建議勿於未成年人常駐之社群平台錄製或直播本遊戲！\n\n本遊戲包含閃爍畫面與畫面晃動效果，能引發部分玩家光敏性癲癇症狀，可透過設定選單減緩此類特效。\n\n點擊「接受」即表示您已知悉上述警告，並願自行承擔遊戲所引發之任何影響。",
+	"warningMenu.content": "本遊戲僅限18歲以上之成年玩家！\n\n本遊戲為戀物向作品，主要包含獸人膨脹內容。由第三方製作的附加包未經審核，可能包含令部分玩家不適的內容。強烈建議勿於未成年人常駐之社群平台錄製或直播本遊戲！\n\n本遊戲包含閃爍畫面與畫面晃動效果，能引發部分玩家光敏性癲癇症狀，可透過設定選單減緩此類特效。\n\n點擊「接受」即表示您已知悉上述警告，並願自行承擔遊戲所引發之任何影響。",
 	"menu.accept": "接受",
 
 	"optionsMenu.windowDisplay": "設定",
@@ -310,25 +307,21 @@
 	"character.random.name": "隨機",
 	"character.random.name.short": "隨機",
 	"character.random.description": "不知選誰？讓遊戲決定吧！",
-	
-	// Classic Room: The original stage from the original game redrawn.
+
 	"stage.classic.name": "經典客房",
 	"stage.classic.description": "我們都熟悉且喜愛的房。",
-	// Manager's Lounge: The context is that four people, either motivated by a better life or forced by their higher-ups, are
-	// offered a place as a game participant to satisfy the manager's desires.
 	"stage.reloaded.name": "休息室",
 	"stage.reloaded.description": "這場景⋯是鹹片的拍攝現場吧？恭喜你，答對了，攝影機還正轉著呢。",
-	// Shitfucks Café: Named Shitfucks. The exact coffee shop that Chester works at. Sells coffee that inflates people, and agreed
-	// to host horrible shit like this. Disgusting.
 	"stage.shitfucks.name": "史弗事咖啡廳",
 	"stage.shitfucks.description": "出名的咖啡店。裡面絕對沒有任何不可告人的事。",
-	// White Void: Literally just a white void with a glass table.
+	"stage.beach.name": "紅椒海灘俱樂部",
+	"stage.beach.description": "一家海濱度假村。以其夜總會和蜜月勝地而聞名。",
 	"stage.void.name": "白色虛空",
 	"stage.void.description": "大名鼎鼎的全能活動場所，無數藝術作品和動畫裡都有它的身影。",
 	"stage.random.name": "隨機",
 	"stage.random.description": "不知選哪裡？讓遊戲決定吧！",
 	
-	"gameOn.text": "遊戲開始",
+	"gameOn.text": "遊戲開始!",
 	
 	"skill.reload.name": "換彈",
 	"skill.reload.description": "重新裝填彈膛，重置被實彈擊中的機率。",
@@ -349,7 +342,7 @@
 	"skill.unload.name": "入彈",
 	"skill.unload.description": "將4發子彈裝入彈膛，其中1發為實彈。",
 	"skill.denial.name": "抵賴",
-	"skill.avoidance.description": "防止實彈傷害並消除加壓的效能。",
+	"skill.denial.description": "防止實彈傷害並消除加壓的效能。",
 	"skill.hosebound.name": "束縛",
 	"skill.hosebound.description": "與目標共同承受傷害。",
 
@@ -453,6 +446,7 @@
 	"utilitiesMenu.characterCreator": "人物創建器",
 	"utilitiesMenu.stagePreviewer": "背景預覽器",
 	"utilitiesMenu.offsetEditor": "偏移編輯器",
+	"utilitiesMenu.rubHitboxEditor": "揉搓碰撞箱編輯器",
 	"utilitiesMenu.langConverter": "LANG 檔案轉換器",
 	"utilitiesMenu.loadFile": "載入文件",
 	"utilitiesMenu.newFile": "新增文件",
@@ -536,7 +530,7 @@
 	"stagePreviewer.exit": "退出預覽器",
 	"stagePreviewer.exit.prompt": "確定要退出背景預覽器嗎？",
 
-	"offsetEditor.title": "修改偏移",
+	"offsetEditor.title": "編輯偏移",
 	"offsetEditor.description": "用方向鍵調整偏移\n按住 SHIFT/CTRL 鍵提高移動速度\n確保十字準星對準目標位置",
 	"offsetEditor.offsetType.origin": "原點",
 	"offsetEditor.offsetType.cameraOffset": "相機",
@@ -549,6 +543,12 @@
 	"offsetEditor.particleType.gunShoot": "槍膛（射擊）",
 	"offsetEditor.particleType.gunSkill": "槍膛（技能）",
 	"offsetEditor.exit.prompt": "確定要退出偏移編輯器嗎？",
+
+	"rubHitboxEditor.title": "編輯碰撞箱",
+	"rubHitboxEditor.description": "用方向鍵調整碰撞箱位置\n用 WASD 鍵調整碰撞箱大小\n按住 SHIFT/CTRL 鍵提高移動速度",
+	"rubHitboxEditor.position": "位置",
+	"rubHitboxEditor.size": "大小",
+	"rubHitboxEditor.exit.prompt": "確定要退出揉搓碰撞箱編輯器嗎？",
 
 	"langConverter.successPrompt": "JSON檔案已導出至：\n%1",
 

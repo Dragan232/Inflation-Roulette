@@ -3,8 +3,6 @@ package ui;
 import flixel.FlxSubState;
 
 class SuffSubState extends FlxSubState {
-	public var timePassedOnSubState:Float = 0;
-
 	public function new() {
 		super();
 
@@ -17,11 +15,6 @@ class SuffSubState extends FlxSubState {
 	}
 
 	public override function update(elapsed:Float) {
-		if (persistentUpdate)
-			SuffState.timePassedOnState += elapsed;
-
-		timePassedOnSubState += elapsed;
-
 		super.update(elapsed);
 	}
 }

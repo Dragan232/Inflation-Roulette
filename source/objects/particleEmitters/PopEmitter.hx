@@ -4,10 +4,10 @@ import objects.particles.Puff;
 import states.PlayState;
 
 class PopEmitter extends FlxObject {
-	public function new(x, y, floorY:Float = 690, particle:Class<FlxSprite>, particleCountMultiplier:Float = 1, color:FlxColor = 0xFFFFFFFF) {
+	public function new(x, y, floorY:Float = 690, particle:Class<FlxSprite>, color:FlxColor = 0xFFFFFFFF) {
 		super(x, y);
 		
-		for (i in 0...Math.ceil(FlxG.random.int(30, 40) * particleCountMultiplier)) {
+		for (i in 0...20) {
 			var puff = Type.createInstance(particle ?? Puff, [x, y, floorY]);
 			puff.color = color;
 			var direction = FlxG.random.float(-180, 180);

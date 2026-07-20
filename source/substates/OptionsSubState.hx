@@ -177,10 +177,12 @@ class OptionsSubState extends SuffSubState {
 			Preferences.data.alwaysPlayMainMenuAnims = value;
 		}, Preferences.data.alwaysPlayMainMenuAnims);
 
+		/*
 		createBooleanOption('showMusicToast',
 			function(value:Bool) {
 				Preferences.data.showMusicToast = value;
 			}, Preferences.data.showMusicToast);
+		 */
 
 		createBooleanOption('enableLetterbox',
 			function(value:Bool) {
@@ -252,7 +254,7 @@ class OptionsSubState extends SuffSubState {
 		createSliderOption('maxFramerate', function(value:Float) {
 			Preferences.data.maxFramerate = Math.round(value);
 			PauseSubState.usedFollowLerp = 0.1 * Preferences.data.cameraSpeed;
-		}, 30, #if !mobile 500 #else 120 #end, 10, function(value:Float) {
+		}, 30,120, 10, function(value:Float) {
 			return '' + Math.round(value);
 		}, Preferences.data.maxFramerate);
 		// Mobile framerate is capped at 120 to avoid device heating up
