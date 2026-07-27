@@ -1,7 +1,7 @@
 # Inflation Roulette: Reloaded
 _Inflation Roulette: Reloaded_ is a luck-based strategy game developed by NicklySuffer.
 
-Aiming to expand upon [a game of the same title](https://snowyboiwhomakesstuf.itch.io/inflation-roulette), it features more characters, more cosmetic elements, skill-based gameplay, and modding support.
+Aiming to expand upon a game of the same title, it features more characters, more cosmetic elements, skill-based gameplay, and modding support.
 
 This game is developed using HaxeFlixel, officially supporting Windows, Android, and Linux targets.
 

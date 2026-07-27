@@ -114,11 +114,12 @@ class Stage extends FlxBasic {
 		object.randomAnimOnRespawn = !(!objectData.randomAnimOnRespawn);
 		if (objectData.respawnTime != null)
 			object.respawnTime = objectData.respawnTime;
-		var graphicPath = Paths.getImagePath('game/stages/$stageID/' + objectData.graphic, true);
-		if (!Paths.fileExists(graphicPath))
-			graphicPath = Paths.getImagePath('game/stages/' + objectData.graphic, true);
-		graphicPath = graphicPath.replace('.png', '');
-		graphicPath = graphicPath.replace('assets/images/', '');
+		var graphic = Paths.getImage('game/stages/$stageID/' + objectData.graphic);
+		var graphicPath = 'game/stages/$stageID/' + objectData.graphic;
+		if (graphic == null) {
+			graphic = Paths.getImage('game/stages/' + objectData.graphic);
+			graphicPath = 'game/stages/' + objectData.graphic;
+		}
 		if (objectData.animations != null) {
 			object.frames = Paths.getSparrowAtlas(graphicPath);
 			var animations:Array<AnimationData> = cast objectData.animations;

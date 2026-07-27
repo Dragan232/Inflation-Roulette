@@ -497,28 +497,28 @@ class Paths {
 
 	inline static public function getAddonsSounds(path:String, key:String) {
 		var langPath = getAddonsPath('lang/${Preferences.data.language}/' + path + '/' + key + '.' + SOUND_EXT);
-		if (fileExists(langPath))
+		if (langPath != null)
 			return langPath;
 		return getAddonsPath(path + '/' + key + '.' + SOUND_EXT);
 	}
 
 	inline static public function getAddonsImages(key:String) {
 		var langPath = getAddonsPath('lang/${Preferences.data.language}/images/' + key + '.png');
-		if (fileExists(langPath))
+		if (langPath != null)
 			return langPath;
 		return getAddonsPath('images/' + key + '.png');
 	}
 
 	inline static public function getAddonsVideos(key:String) {
 		var langPath = getAddonsPath('lang/${Preferences.data.language}/videos/' + key + VIDEO_EXT);
-		if (fileExists(langPath))
+		if (langPath != null)
 			return langPath;
 		return getAddonsPath('videos/' + key + VIDEO_EXT);
 	}
 
 	inline static public function getAddonsXml(key:String) {
 		var langPath = getAddonsPath('lang/${Preferences.data.language}/images/' + key + '.xml');
-		if (fileExists(langPath))
+		if (langPath != null)
 			return langPath;
 		return getAddonsPath('images/' + key + '.xml');
 	}
@@ -526,8 +526,10 @@ class Paths {
 	static public function getAddonsPath(key:String) {
 		for (addon in Addons.globalAddons) {
 			var fileToCheck:String = getPathInAddons(addon + '/' + key);
-			if (FileSystem.exists(fileToCheck))
+			if (FileSystem.exists(fileToCheck)) {
+				trace('Fetched from addon $addon: $fileToCheck');
 				return fileToCheck;
+			}
 		}
 		return null;
 	}

@@ -353,7 +353,7 @@
 	"characterSelect.cantEarnAchievements": "You cannot earn most achievements with these settings.",
 	
 	// Goober: A character species present in the original Inflation Roulette.
-	// Looks like a feline, or a canine, or something, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao
+	// Looks like a feline, or a canine, or something, but doesn't exactly behave like one. IDK lmao
 	// Skills: Reload, Sabotage
 	"character.goober.name": "Goober",
 	"character.goober.name.short": "Goober",
@@ -544,9 +544,9 @@
 	"galleryMainMenu.windowDisplay": "Gallery",
 	// If the language's script can be written vertically, set this string to false
 	"galleryMainMenu.envelope.rotateText": "true",
-	// Context: According to Snowyboi, there are different versions of Goobers, one being Slime Goobers, and one labelled "???".
+	// Context: There are different versions of Goobers, one being Slime Goobers, and one labelled "???".
 	// The way I interpret this is like, them having races or something
-	"galleryMainMenu.envelope.goober.description": "First seen in the original game, the Goobers jump into action with a new coat of paint! They have become the go-to character to be featured in countless remakes and fanart alike.\n\nAs for why and how they joined the game, no one knows! Actors? Hostages? Sell-outs? Lots of theories are out there! Not much is known about their biology, but it has been confirmed that they have been classified into several races, ranging from Goobers composed entirely out of slime to R»EDA©±ED§²½\n\nGoober is a species created by Snowyboi.",
+	"galleryMainMenu.envelope.goober.description": "First seen in the original game, the Goobers jump into action with a new coat of paint! They have become the go-to character to be featured in countless remakes and fanart alike.\n\nAs for why and how they joined the game, no one knows! Actors? Hostages? Sell-outs? Lots of theories are out there! Not much is known about their biology, but it has been confirmed that they have been classified into several races, ranging from Goobers composed entirely out of slime to R»EDA©±ED§²½",
 	// Context: Literally no lore implication. He's just here for the sake of being here lol
 	"galleryMainMenu.envelope.asimo.description": "Harnessing his electric powers, Asimo jolts into Inflation Roulette claiming to \"have some fun\".\n\nWe don't know how he got here, and we totally have no connections with him, other than he's a wolf, he's the Manager's playtester for his stupid Friday Night Funkin' mod, and he's the winner of an art raffle to be added to the game as a character for the Example Addon.\n\nAsimo is a guest character owned by WolfKylis.",
 	"galleryMainMenu.envelope.shib.description": "Last name Nou; first name Shiba. Hailing from a mysterious planet, this cat-like creature joins the roster! Their Chinese name can be interpreted as \"Zero Ten Eight\", derived from the nuclear site they landed on in Beijing.\n\nSpending the first few years of their life scouring to different places to live, they eventually founded themself inside of The Manager's garage. The man adopted them as his secondary assistant and soon found themself in love with the primary assistant (lab-grown btw, ew). With no apparent reason other than to show-off in front of their boyfriend, they joined the game to show off their hidden abilities.\n\nShib is a character owned by NicklySuffer, made prior to the development of Inflation Roulette Reloaded.",

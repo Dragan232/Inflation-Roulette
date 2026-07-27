@@ -315,7 +315,7 @@
 	"characterSelect.option.skillLevel.format.levelUp": "> %1 >",
 	
 	// Goober: Una especie animal presente en el Inflation Roulette original.
-	// Parece un felino, pero no se comporta exactamente como uno. No sé, pregúntale a Snowyboi jaja
+	// Parece un felino, pero no se comporta exactamente como uno.
 	// Skills: Recarga, Sabotaje
 	"character.goober.name": "Goober",
 	"character.goober.name.short": "Goober",
@@ -431,9 +431,9 @@
 	
 	// If the language's script can be written vertically, set this string to false
 	"galleryMainMenu.envelope.rotateText": "true",
-	// Context:Según Snowyboi, existen diferentes versiones de Goobers, una de ellas llamada Slime Goobers y otra etiquetada como "???".
+	// Context:Existen diferentes versiones de Goobers, una de ellas llamada Slime Goobers y otra etiquetada como "???".
 	// The way I interpret this is like, them having races or something
-	"galleryMainMenu.envelope.goober.description": "Vistos por primera vez en el juego original, ¡los Goobers entran en acción con una nueva capa de pintura! Se han convertido en los personajes predilectos para aparecer en incontables remakes y fanarts por igual.\n\nEn cuanto a por qué y cómo se unieron al juego, ¡nadie lo sabe! ¿Actores? ¿Rehenes? ¿Vendidos? ¡Existen muchísimas teorías! No se sabe mucho sobre su biología, pero se ha confirmado que han sido clasificados en varias razas, que van desde Goobers compuestos completamente de slime hasta R»EDA©±ED§²½\n\nGoober es una especie creada por Snowyboi.",
+	"galleryMainMenu.envelope.goober.description": "Vistos por primera vez en el juego original, ¡los Goobers entran en acción con una nueva capa de pintura! Se han convertido en los personajes predilectos para aparecer en incontables remakes y fanarts por igual.\n\nEn cuanto a por qué y cómo se unieron al juego, ¡nadie lo sabe! ¿Actores? ¿Rehenes? ¿Vendidos? ¡Existen muchísimas teorías! No se sabe mucho sobre su biología, pero se ha confirmado que han sido clasificados en varias razas, que van desde Goobers compuestos completamente de slime hasta R»EDA©±ED§²½",
 	// Context: Literally no lore implication. He's just here for the sake of being here lol
 	"galleryMainMenu.envelope.asimo.description": "Aprovechando sus poderes eléctricos, Asimo llega electrizando a Inflation Roulette afirmando que viene “a divertirse un poco”.\n\nNo sabemos cómo llegó aquí, y definitivamente no tenemos ninguna relación con él, aparte de que es un lobo, es el tester del Manager para su estúpido mod de Friday Night Funkin’, y fue el ganador de un sorteo de arte para ser añadido al juego como personaje del Example Addon.\n\nAsimo es un personaje invitado propiedad de WolfKylis.",
 	// Context: You can say the reason they're here is nepotism? They're just a partner with the Manager's lab-grown assistant

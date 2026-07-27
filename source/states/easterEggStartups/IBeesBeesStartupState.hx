@@ -12,7 +12,7 @@ class IBeesBeesStartupState extends SuffState {
 	var pizzas:FlxSpriteContainer = new FlxSpriteContainer();
 	var shownPizzas:Array<Int> = [];
 
-	override function create() {
+	public override function create() {
 		super.create();
 
 		Window.setTitle(Constants.COPYRIGHT, 'Original Concept by Snowyboi');

@@ -346,7 +346,7 @@
 	"characterSelect.option.skillLevel.format.levelUp": "> %1 >",
 
 	// Goober: A character species present in the original Inflation Roulette.
-	// Looks like a feline, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao
+	// Looks like a feline, but doesn't exactly behave like one. IDK lmao
 	// Skills: Reload, Sabotage
 	"character.goober.name": "Губер",
 	"character.goober.name.short": "Губер",
@@ -501,9 +501,9 @@
 	"galleryMainMenu.windowDisplay": "Галерея",
 	// If the language's script can be written vertically, set this string to false
 	"galleryMainMenu.envelope.rotateText": "true",
-	// Context: According to Snowyboi, there are different versions of Goobers, one being Slime Goobers, and one labelled "???".
+	// Context: There are different versions of Goobers, one being Slime Goobers, and one labelled "???".
 	// The way I interpret this is like, them having races or something
-	"galleryMainMenu.envelope.goober.description": "Впервые показанные в классической версии, Губеры вступают в бой в новом обличии! Они стали главными персонажами многочисленных ремейков и фанартов по этой игре.\n\nНикто не знает, почему они вообще решили играть! Актёры? Заложники? Продажные? Фанаты продолжают теоризировать! О их биологии известно мало, но подтверждена информация о наличии у них нескольких рас, варьирующихся от Губеров, сделанных целиком из слизи, до R»EDA©±ED§²½\n\nГуберы — это вид, созданный Snowyboi.",
+	"galleryMainMenu.envelope.goober.description": "Впервые показанные в классической версии, Губеры вступают в бой в новом обличии! Они стали главными персонажами многочисленных ремейков и фанартов по этой игре.\n\nНикто не знает, почему они вообще решили играть! Актёры? Заложники? Продажные? Фанаты продолжают теоризировать! О их биологии известно мало, но подтверждена информация о наличии у них нескольких рас, варьирующихся от Губеров, сделанных целиком из слизи, до R»EDA©±ED§²½",
 	// Context: Literally no lore implication. He's just here for the sake of being here lol
 	"galleryMainMenu.envelope.asimo.description": "Обладающий силой тока Асимо врывается в Раздутую Рулетку, чтобы, по его словам, \"повеселиться\".\n\nМы понятия не имеем, как он сюда попал, и вообще у нас с ним никаких связей нет, разве что у Менеджера, Асимо работает тестером для его тупого мода на Friday Night Funkin', а ещё он победил в лотерее и попал в игру как персонаж для Аддона \"Example Addon\".\n\nАсимо — персонаж-гость, принадлежащий WolfKylis.",
 	// Context: You can say the reason they're here is nepotism? They're just a partner with the Manager's lab-grown assistant
