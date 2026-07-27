@@ -162,7 +162,7 @@ class LanguageSelectState extends SuffState {
 		progress.onClick = function() {
 			if (!Language.exportUnmatchingKeys())
 				return;
-			openSubState(new GenericPrompt(Language.getPhrase('languageMenu.exportedUnmatchedKeys', ['exports/lang/${Preferences.data.language}_UNMATCHED.json']), 1080));
+			openSubState(new GenericPrompt(Language.getPhrase('languageMenu.exportedUnmatchedKeys', ['exports/lang/${Preferences.data.language}_UNMATCHING.json']), 1080));
 		};
 		#end
 		progress.btnTextColor = progress.btnTextColorHovered = progress.btnTextColorClicked = progress.btnTextColorDisabled = textColor;

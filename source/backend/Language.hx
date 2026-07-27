@@ -102,7 +102,7 @@ class Language {
 		rawJson += '\n}';
 		if (!FileSystem.exists('./exports/lang/'))
 			FileSystem.createDirectory('./exports/lang/');
-		File.saveContent('exports/lang/${Preferences.data.language}_UNMATCHED.json', rawJson);
+		File.saveContent('exports/lang/${Preferences.data.language}_UNMATCHING.json', rawJson);
 
 		return true;
 	}

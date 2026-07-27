@@ -1,6 +1,6 @@
 {
 	// Translation File
-	// Language: English (US)
+	// Language: Russian (Russia)
 	
 	// Comments are prefixed with two slashes (//) before each LINE, and will not be recognized by the game.
 	// Comments are reserved for translation notes, either to clarify context or give instructions.
@@ -63,10 +63,12 @@
 	// ^My uncreative, unpatched ass could NEVER :fire:
 	"metadata.version.name.major.2": "Патч Творчества",
 	// Yes. I'm using Greek letters for stylistic purposes (even tho it looks kinda offensive lmao)
+	"metadata.version.name.major.3": "Завершённое Издание",
 	"metadata.version.name.state.a": "Публичная Альфа %1",
 	"metadata.version.name.state.b": "Публичная Бета %1",
 	"metadata.version.name.state.c": "Предрелиз %1",
-	
+
+	"mainMenu.windowDisplay": "Главное Меню",
 	// These are the button texts in the Main Menu.
 	"mainMenu.play": "Играть",
 	"mainMenu.achievements": "Достижения",
@@ -108,7 +110,10 @@
 	"mainMenu.dongs.comment.3000": "ну ты настолько отчаянный или что",
 	"mainMenu.dongs.comment.5000": "на десять тыщ твоё сохранение сотрётся с компа вместе с игрой",
 	"mainMenu.dongs.comment.10000": "ладно, забирай уже свою ачивку. а теперь с глаз моих долой.",
-	
+
+	"mainMenu.donate.tooltip": "Вы можете поддержать разработчика донатом!",
+
+	"extrasMenu.windowDisplay": "Плюшки",
 	"extrasMenu.title": "ДОП. ПЛЮШКИ",
 	"extrasMenu.gallery": "Галерея",
 	"extrasMenu.jukebox": "Пластинки",
@@ -121,9 +126,11 @@
 	"debugText.format": "%1: %2",
 	
 	// Please make sure that this is written in a formal tone.
-	"warningMenu.title": "ОБРАТИТЬ ВНИМАНИЕ",
+	"warningMenu.windowDisplay": "Предупреждение",
+	"warningMenu.content": "Эта игра предназначена СТРОГО для лиц СТАРШЕ 18 ЛЕТ.\nИгра содержит фетиши, преимущественно НАДУВАНИЕ ФУРРИ, и для некоторых может оказаться неприемлемой. Аддоны, созданные третьими лицами, НЕ МОДЕРИРУЮТСЯ и могут содержать контент, который может вызвать дискомфорт у некоторых людей. Запись и публикация этой игры на видеохостинги и стриминги, на которых преобладают дети, не приветствуется.\nТакже игра содержит мигающие изображения и тряску экрана, что может вызвать приступ у фоточувствительных людей. Такие эффекты могут быть приглушены в меню Настроек.\nНажимая 'Принять', Вы соглашаетесь с прочитанным и берёте на себя ответственность за последствия, вызванные этой игрой.",
 	"menu.accept": "Принять",
-	
+
+	"optionsMenu.windowDisplay": "Настройки",
 	"optionsMenu.heading.gameplay": "Игровой процесс",
 	"optionsMenu.heading.preferences": "Предпочтения",
 	"optionsMenu.heading.visuals": "Графика",
@@ -271,17 +278,39 @@
 	"option.showMemoryUsageOnDebugText.description": "Отображает текущее использование памяти в Информации для Отладки.",
 	"option.showCurrentStateOnDebugText.name": "Текущее Состояние",
 	"option.showCurrentStateOnDebugText.description": "Отображает текущее открытое меню в Информации для Отладки.",
-	
+	"option.enableBelching.name": "Отрыжка",
+	"option.enableBelching.description": "Игроки отрыгивают, когда надуты.",
+	"option.enableSkinTinting.name": "Окрашивание",
+	"option.enableSkinTinting.description": "Цвет кожи игроков меняется, когда они надуты конкретными средствами.",
+	"option.enableOralLeaking.name": "Вытекание из Рта",
+	"option.enableOralLeaking.description": "Из рта игроков вытекает жидкость, когда они надуты конкретными средствами.",
+	"option.enableNavelLeaking.name": "Вытекание из Пупа",
+	"option.enableNavelLeaking.description": "Из пупка игроков вытекает жидкость, когда они надуты конкретными средствами.",
+	"option.hideTooltip.name": "Спрятать Подсказки",
+	"option.hideTooltip.description": "Отключает подсказки при наведении на кнопки.",
+	"option.screenSafeZone.name": "Безопасная Зона",
+	"option.screenSafeZone.description": "Настраивайте ползунки, пока белая зона не покроет все доступные участки вашего экрана.\n(Интерфейс обновится после выхода)",
+	"option.decreaseDetail.name": "Низкая Графика",
+	"option.decreaseDetail.description": "Уменьшает количество необязательных эффектов. Может помочь на слабых устройствах.",
+
+	"addonsMenu.windowDisplay": "Аддоны",
 	"addonsMenu.authors": "Авторы:",
 	"addonsMenu.noAddonsDetected.title": "Аддоны не Обнаружены",
 	"addonsMenu.noAddonsDetected.content": "Аддоны не были обнаружены в соответствующей папке. Проверьте наличие файла metadata.json в папке metadata Ваших аддонов.\nЕсли Вы думаете, что произошла ошибка, пожалуйтесь на проблему в нашем репозитории GitHub.",
-	
+
+	"languageMenu.windowDisplay": "Выбор Языка",
 	"languageMenu.title": "ВЫБОР ЯЗЫКА",
 	"languageMenu.description": "Учтите: Перевод может быть неточным и содержать ошибки/непереведённый текст.",
 	"languageMenu.contributors": "Авторы",
 	"languageMenu.completion": "%1 Выполнено",
-	
+	"languageMenu.deprecated": "[НЕДОПУСТИМО]",
+	"languageMenu.exportedUnmatchedKeys": "Отсутствующие и недопустимые ключи локализации экспортированы в:\n%1",
+
+	"gamemodeSelect.windowDisplay": "Выбор Режима",
 	"gamemodeSelect.title": "ВЫБОР РЕЖИМА",
+	"gamemodeSelect.playerCount": "Игроков",
+	"gamemodeSelect.setting.format": "%1: %2",
+	
 	"gamemode.quickPlay.name": "Быстрая Игра",
 	"gamemode.quickPlay.description": "Случайные персонажи.\nСразу в бой. Без заморочек.",
 	// Reloaded should remain untranslated for Latin scripts
@@ -293,9 +322,12 @@
 	"gamemode.classic.description": "Истинный рандом и бесконечная подстава.\nКлассический способ игры.",
 	"gamemode.charge.name": "Нарастание",
 	"gamemode.charge.description": "Урон увеличивается с каждым холостым патроном.\nРисково, но зрелищно.",
-	
+
+	"characterSelect.windowDisplay": "Настройка Геймплея",
+	"characterSelect.selectFiller": "ВЫБОР ОТРАВЫ",
+	"characterSelect.cantEarnAchievements": "Большинство достижений нельзя получить с данными настройками.",
 	// Select Character: This phrase is meant to be "epic". Try to make your translation mysterious/archaic.
-	"characterSelect.selectCharacter": "ВЫБОР ЛИКА",
+	"characterSelect.selectCharacter": "ВЫБОР ОБЛИКА",
 	"characterSelect.holdCardsToSeeInfo": "Наведите На Профиль Для Дополнительной Информации",
 	// Select Stage: This however, does not need to be in the same tone as Select Character.
 	"characterSelect.selectStage": "ВЫБОР ЛОКАЦИИ",
@@ -312,7 +344,7 @@
 	"characterSelect.option.skillLevel.format.inBounds": "%1",
 	"characterSelect.option.skillLevel.format.levelDown": "< %1 <",
 	"characterSelect.option.skillLevel.format.levelUp": "> %1 >",
-	
+
 	// Goober: A character species present in the original Inflation Roulette.
 	// Looks like a feline, but doesn't exactly behave like one. IDK ask Snowyboi ig lmao
 	// Skills: Reload, Sabotage
@@ -333,8 +365,10 @@
 	"character.chester.name.short": "Честер",
 	"character.chester.description": "Несчастный бариста, вынужденный играть своей компанией. Его работа воспитала в нём устойчивость.",
 	// Option to choose a random character.
+	"character.random.name": "Случайный",
+	"character.random.name.short": "Случайный",
 	"character.random.description": "Не уверены, кого выбрать? Позвольте игре решить.",
-	
+
 	// Classic Room: The original stage from the original game redrawn.
 	"stage.classic.name": "Классическая Комната",
 	"stage.classic.description": "Та самая комната, которая Вам так хорошо знакома.",
@@ -355,6 +389,12 @@
 	
 	// Splash text that is displayed
 	"gameOn.text": "В БОЙ!",
+
+	"game.windowDisplay": "%1 - %2 Игроков",
+	"game.playerIndicator.you": "ТЫ",
+	"game.playerIndicator.player": "P%1",
+	// Prompt after activating an offensive skill (e.g. Assault, Amnesia)
+	"game.selectTarget": "ВЫБЕРИТЕ ЦЕЛЬ",
 	
 	"skill.reload.name": "Перезарядка",
 	"skill.reload.description": "Перезаряжает пушку, а с ней и шанс на боевой патрон.",
@@ -372,16 +412,21 @@
 	"skill.amnesia.description": "Запрещает сопернику по выбору использовать свои способности.",
 	"skill.assault.name": "Напасть",
 	"skill.assault.description": "Выстрелите в соперника по выбору. Жертва получит две единицы Смелости, если патрон окажется холостым.",
-	
+
+	"pauseMenu.windowDisplay": "Пауза",
 	"pauseMenu.title": "ИГРА НА ПАУЗЕ",
 	"pauseMenu.resume": "Продолжить",
 	"pauseMenu.restart": "Заново",
 	"pauseMenu.options": "Настройки",
 	
 	"stats.pressure": "Давление",
+	"stats.pressure.Null": "Лопнут",
+	"stats.pressure.Overinflated": "Раздут",
 	"stats.confidence": "Смелость",
 	"stats.skill": "Навык",
 	"stats.skills": "Навыки",
+
+	"creditsMenu.windowDisplay": "Титры",
 	
 	// Be the last player standing in a match.
 	"achievement.firstWin.name": "Первая Победа",
@@ -410,18 +455,41 @@
 	"achievement.minimumScore.description": "Пацан к успеху шёл, только направление попутал. Так дебильно играть можно только намеренно.",
 	// Win in all game modes at least once.
 	"achievement.allGameModeWins.name": "Кругосветка",
-	"achievement.allGameModeWins.description": "И конечно, вместо занятия делом ты попёрся играть на всех локациях.",
+	"achievement.allGameModeWins.description": "И конечно, вместо занятия делом ты опробовал все режимы.",
 	// Win as all vanilla characters at least once.
 	"achievement.allCharacterWins.name": "Не Имей Сто Рублей",
 	// ^А имей сто друзей. Каждый даст по два рубля, будет двести у тебя.
-	"achievement.allCharacterWins.description": "Похоже, среди этих ликов у тебя нет любимого.",
+	"achievement.allCharacterWins.description": "Похоже, среди этих обликов у тебя нет любимого.",
 	// Find all Easter Egg Startups.
 	"achievement.allEasterEggs.name": "Бездельник Года",
 	"achievement.allEasterEggs.description": "Глифы античности сокрыты завесой загадки. Отыскать их можно прошерстив файлы или код.",
 	// Accumulate 10000 Dongs in the Main Menu.
 	"achievement.noLife.name": "Финальный Босс Безработицы",
 	"achievement.noLife.description": "Ради ЭТОГО драгоценное время твоей жизни было потрачено впустую. Это не достижение, это клеймо, и тебе придётся жить с ним.",
+	"achievement.rarePolarizeSuccess.name": "Кавказская Рулетка",
+	"achievement.rarePolarizeSuccess.description": "Чем свежее партия патронов, тем ненадёжнее этот навык, но тебе чудом удалось успешно воспользоваться им в одной из таких ситуаций.",
+	"achievement.eliminateByAssault.name": "Есть Пробитие",
+	"achievement.eliminateByAssault.description": "С игроком на грани поражения нужно расправляться напрямую.",
+	"achievement.intentionalLoseByPolarize.name": "Пошляк",
+	"achievement.intentionalLoseByPolarize.description": "Ты знал, что тебе ничего не грозит, ты знал, что ты на пределе и ты знал, что тебя это угробит, но ты не смог устоять. У меня не осталось никакой веры в тебя.",
+	"achievement.findCameraman.name": "Свет, Камера, Мотор!",
+	"achievement.findCameraman.description": "А вы видели оператора?",
+	"achievement.winAgainstStrategicCPUs.name": "Игры Разума",
+	"achievement.winAgainstStrategicCPUs.description": "Ни ты, ни эти болванки умом не блещут, но раз все на них так бомбят, наверное, ты молодец.",
+	"achievement.nineTwentyOne.name": "9 Убитых и 21 Раненый",
+	"achievement.nineTwentyOne.description": "Ты тоже это видел? Это одна из тех картинок, что всё больше походит на файл смерти, чем дольше ты на неё смотришь.",
+	"achievement.exportCharacterProject.name": "Утилизатор",
+	"achievement.exportCharacterProject.description": "Создай собственный облик воспользовавшись утилитой Migrational Order Directive.",
+	"achievement.liveShots.name": "Нужно Больше Воздуха",
+	"achievement.liveShots.description": "Одну пулю .357 Magnum можно изготовить примерно за 15¢, но розничная цена варьируется от 60¢ до $1.40. А ты прикинь выстрелить сотней таких.",
+	"achievement.twoPlayers.name": "Дуэль",
+	"achievement.twoPlayers.description": "Два болвана, одно дуло. Кому удастся выжить? Ответ: Менеджеру.",
+	"achievement.sixPlayers.name": "Шестикратный Кавардак",
+	"achievement.sixPlayers.description": "И это — шестёрка? Единственная шестёрка, которую я здесь вижу — ты.",
+	"achievement.allFillerWins.name": "Правильное Питание",
+	"achievement.allFillerWins.description": "Испытай на себе все виды пыток и постарайся при этом остаться целым.",
 	
+	"achievementsMenu.windowDisplay": "Достижения",
 	"achievementsMenu.title": "Ваши достижения",
 	"achievementsMenu.description": "Выберите достижение для просмотра деталей и статуса выполнения.",
 	"achievementsMenu.resetProgress": "Сбросить Прогресс",
@@ -429,7 +497,8 @@
 	"achievementToast.title": "Открыто Достижение!",
 	
 	"resetAchievementMenu.prompt": "Вы подтверждаете сброс\n%1?\nЭто действие нельзя отменить.",
-	
+
+	"galleryMainMenu.windowDisplay": "Галерея",
 	// If the language's script can be written vertically, set this string to false
 	"galleryMainMenu.envelope.rotateText": "true",
 	// Context: According to Snowyboi, there are different versions of Goobers, one being Slime Goobers, and one labelled "???".
@@ -447,7 +516,10 @@
 	"galleryMainMenu.envelope.community": "Арты Сообщества",
 	"galleryMainMenu.envelope.community.description": "Коллекция фанартов, нарисованных друзьями и фанатами разработчиков.",
 	"galleryEntryMenu.viewFullImage": "Показать Целиком",
-	
+
+	"jukeboxMenu.windowDisplay": "Пластинки",
+
+	"utilitiesMenu.windowDisplay": "Утилиты",
 	// These will be button text that will be in the Utilities Main Menu.
 	"utilitiesMenu.characterCreator": "Редактор Персонажей",
 	"utilitiesMenu.stagePreviewer": "Просмотр Локаций",
@@ -516,12 +588,16 @@
 	"characterCreator.confirmExport.prompt": "Игра экспортирует метаданные, спрайты и данные анимаций вашего Проекта Спрайта в формат, используемый игрой. В зависимости от характеристик устройства, экспорт может занять от пары секунд до ОЧЕНЬ ДОЛГОГО ВРЕМЕНИ. Вы можете закрыть фоновые программы для ускорения процесса.\n\nПосле завершения все экспортированные спрайты будут храниться в папке \"export\" внутри корневой папки игры. Пожалуйста, не закрывайте это окно во время экспорта, чтобы избежать возможного повреждения данных.\n\nВы действительно хотите экспортировать проект?",
 	"characterCreator.exporting": "Экспорт Анимаций:\n%1",
 	"characterCreator.exporting.generatingCharacterData": "Генерация файлов JSON...",
+	"characterCreator.exporting.generatingAddonMetadata": "Генерация Метаданных Аддона...",
 	"characterCreator.exporting.finalizing": "Завершение...",
 	"characterCreator.exporting.missingAnimations": "В Проекте отсутствуют анимации:\n%1",
 	"prompt.andManyMore": "и некоторые другие...",
 	"characterCreator.exporting.description": "Держите это окно открытым.",
 	"characterCreator.exportSuccessful.prompt": "Проект успешно экспортирован. Возможно, Вам придётся подправить пару значений в файлах JSON.\n\nЭкспортировано как:\n%1",
-	
+	"characterCreator.modifyOffsets": "Изменить Смещения",
+	"characterCreator.exporting.generatingLangFile": "Генерация Файлов Локализации...",
+
+	"animationCreator.windowDisplay": "Редактор Анимаций",
 	"animationCreator.save": "Сохранить Анимацию",
 	"animationCreator.exit": "Покинуть Редактор",
 	"animationCreator.exit.prompt": "Вы ДЕЙСТВИТЕЛЬНО хотите покинуть Редактор Анимаций?\nНесохранённый прогресс будет утерян.",
@@ -534,7 +610,17 @@
 	"stagePreviewer.screenshot": "Режим Снимков",
 	"stagePreviewer.exit": "Покинуть Просмотр",
 	"stagePreviewer.exit.prompt": "Вы ДЕЙСТВИТЕЛЬНО хотите покинуть просмотр локаций?",
-	
+
+	"offsetEditor.title": "Изменить Смещения",
+	"offsetEditor.description": "Стрелочки — Передвижение\nЗажмите SHIFT/CTRL, чтобы Увеличить Скорость\nУбедитесь, что Центр Крестика Расположен в Желаемой Точке",
+	"offsetEditor.offsetType.origin": "Исходная Точка",
+	"offsetEditor.offsetType.overhead": "Макушка",
+	"offsetEditor.offsetType.mouth": "Рот",
+	"offsetEditor.offsetType.navel": "Пуп",
+	"offsetEditor.offsetType.gunShoot": "Барабан (Выстрел)",
+	"offsetEditor.offsetType.gunSkill": "Барабан (Навык)",
+
+	"resultsMenu.windowDisplay": "Итоги",
 	"resultsMenu.title": "ПЕРЕЙДЁМ К ИТОГАМ!",
 	"resultsMenu.instructions": "Нажмите Любую Клавишу Для Выхода",
 	// Score bonus for last standing players
@@ -567,12 +653,11 @@
 	"menu.no": "Нет",
 	"menu.ok": "Ок",
 	"menu.confirm": "Подтвердить",
+	"menu.decline": "Отклонить",
 	"menu.cancel": "Отменить",
 	"menu.exit": "Выйти",
-	
-	// Prompt after activating an offensive skill (e.g. Assault, Amnesia)
-	"game.selectTarget": "ВЫБЕРИТЕ ЦЕЛЬ",
 
+	"preloadMenu.windowDisplay": "Предзагрузка",
 	"preloadMenu.progress.gameplay": "Загрузжаем Режимы...",
 	"preloadMenu.progress.achievements": "Задаём Прогресс Достижений...",
 	"preloadMenu.progress.toasts": "Сооружаем Уведомления...",
@@ -581,11 +666,58 @@
 	"preloadMenu.progress.splashes": "Пишем Сплеши...",
 	"preloadMenu.progress.music": "Ищем Пластинки...",
 	"preloadMenu.finished": "Готово!",
-	
+
+	"outdatedVersionMenu.windowDisplay": "Версия Устарела!",
 	"outdatedVersionMenu.heading": "Версия Устарела",
 	"outdatedVersionMenu.text": "Эй! В данный момент вы используете старую версию Раздутая Рулетка: Перезапуск. Пожалуйста, установите последнюю версию чтобы насладится новыми возможностями и баг-фиксами!\n\nВаша Версия: %1\nПоследняя Версия: %2",
 	"outdatedVersionMenu.update": "Обновить",
 	"outdatedVersionMenu.dismiss": "Нет, спасибо",
+
+	"androidPermissionsMenu.windowDisplay": "Требуются Разрешения!",
+	"androidPermissionsMenu.permissionsRequired": "Требуются Разрешения",
+	"androidPermissionsMenu.permissionsGranted": "Разрешения Получены!",
+	"androidPermissionsMenu.description": "Тут такое дело, Андроид не хочет, чтобы мы видели аддоны, которые ты установил.\n\nЧтобы аддоны корректно работали, понадобится дать нам разрешение на чтение файлов внешней памяти твоего телефона.",
+	"androidPermissionsMenu.playWithoutAddons": "Играть Без Аддонов",
+
+	"filler.air.name": "Воздух",
+	"filler.air.description": "Стандартный выбор. Пули наполняют сжатым углекислым газом.",
+	"filler.water.name": "Вода",
+	"filler.water.description": "Увесистая и громкая. Чрезмерное употребление может привести к непроизвольному выделению из рта.",
+	"filler.soda.name": "Лимонад",
+	"filler.soda.description": "Сладкий газированный напиток. Совмещает в себе свойства воздуха и воды.",
+	"filler.slime.name": "Слайм",
+	"filler.slime.description": "Разумная слизь, что плодится бесполым путём в кишечнике. Двигается внутри носителей и похищает их ДНК.",
+	"filler.berry.name": "Черника",
+	"filler.berry.description": "Радиоактивный сок черники. Окрашивает кожу потребителя и сочится из нескольких отверстий.",
+	"filler.random.name": "Случайная",
+	"filler.random.description": "Не уверены, что выбрать? Позвольте игре решить.",
+	"loading.message.format": "%1...",
+	"loading.messages": [
+		"Загрузка",
+		"Подождите",
+		"Наберитесь терпения",
+		"Подготавливаем оборудование",
+		"Ставим мебель",
+		"Наполняем патроны",
+		"Латаем животы",
+		"Набираем участников",
+		"Откачиваем участников",
+		"Готовим напитки",
+		"Подмешиваем алкоголь в напитки"
+	],
+	"loading.messagesRare": [
+		"Разгружаем всё и вновь загружаем",
+		"Вызываем полицию",
+		"Запускаем шайтан-машину",
+		"Тратим время",
+		"Изобретаем новые баги",
+		"Кидаем страйки на ИИ-видеоролики",
+		"Истощаем запас идей",
+		"Чиним Редактор Персонажей",
+		"Гладим животы",
+		"Лечим холеру",
+		"Молим о пощаде"
+	],
 	
 	// Fallback for HTML build
 	"gamemode.fiftyFifty.name": "50/50",
