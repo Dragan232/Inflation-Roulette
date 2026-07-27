@@ -2,7 +2,11 @@
 	"shared": [
 		"Courtesy of NicklySuffer!",
 		"Eighteen-plus!",
-		"No kids allowed!"
+		"No kids allowed!",
+		"Achievement icons drawn by Globe-Freak!",
+		"Gallery stickers drawn by EchoBloom!",
+		"Linux port by changedinflation.de!",
+		"Additional music by Ninshot At Dawn!"
 	],
 	"unique": [
 		{
@@ -231,6 +235,41 @@
 				"im in your walls",
 				"<:("
 			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "04-06",
+			"end": "05-01",
+			"id": "hkdsePeriod",
+			"name": "HKDSE Period",
+			"colors": ["#F5A65F", "#00916E", "#004762", "#00916E"],
+			"splashes": [
+				"Good luck in DSE!",
+				"You shouldn't be playing this",
+				"Go back to study bro",
+				"There's passages to recite bro",
+				"There's vocabulary to know bro",
+				"There's equations to solve bro",
+				"There's redox equations to recite bro",
+				"There's molecular genetics to comprehand bro",
+				"There's graphs to analyze bro",
+				"There's algorithms to fill in bro"
+			]
+		},
+		{
+			"useLunarCalender": false,
+			"start": "07-10",
+			"end": "07-20",
+			"id": "hkdseResultsDay",
+			"name": "HKDSE Results Day",
+			"colors": ["#F5A65F", "#00916E", "#004762", "#00916E"],
+			"splashes": [
+				"Add oil!",
+				"Good luck with the results!",
+				"Your homeboy got a 5 in English",
+				"Your homeboy got a 5* in ICT",
+				"Your homeboy got a 2 in Chinese"
+			]
 		}
 	],
 	"fallback": [
@@ -264,15 +303,10 @@
 		"Compiled by Lime!",
 		"Written in Haxe!",
 		"HTML support!",
-		"Achievement icons drawn by Globe-Freak!",
-		"Gallery stickers drawn by EchoBloom!",
-		"Linux port by changedinflation.de!",
-		"Additional music by Ninshot At Dawn!",
 		"Macintosh port coming soon, I think",
 		"Android support!",
 		"Also try Inflation Roulette Expanded!",
 		"Also try The Dealer's Choice!",
-		"Also try the original game!",
 		"Absolutely zaza-free!",
 		"Cancer-inducing!",
 		"Don't play at 9:21 PM!",

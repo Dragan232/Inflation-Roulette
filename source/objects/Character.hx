@@ -239,7 +239,6 @@ class Character extends FlxSprite {
 
 
 		var combinedAtlas:FlxAtlasFrames = Paths.getSparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
-		var combinedMaskAtlas:FlxAtlasFrames = null;
 		if (!Preferences.data.decreaseDetail && discoloration != null) {
 			maskFrames = [];
 			discoloration.initMask(0, Paths.getImage('game/characters/$id/mask/${spriteJson.spriteSheets[0]}').bitmap);
@@ -295,7 +294,12 @@ class Character extends FlxSprite {
 		}
 
 		animation.onFrameChange.add(function(animName:String, frameNumber:Int, frameIndex:Int) {
-			if (discoloration == null || maskFrames == null) return;
+			if (discoloration == null) return;
+			if (maskFrames == null) {
+				discoloration.setUseMask(false);
+				return;
+			} else
+				discoloration.setUseMask(true);
 			discoloration.setMask(maskFrames.get(animToMask.get(animName)));
 			discoloration.setFrameBounds(
 				frame.uv.left,
