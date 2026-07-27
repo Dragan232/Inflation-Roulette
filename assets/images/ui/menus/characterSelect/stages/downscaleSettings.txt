@@ -1,0 +1,6 @@
+This file has no effect on gameplay and is only used to document what settings I use
+for the screenshots.
+
+Program: Paint.NET
+Downsampling Mode: Adaptive (Sharp)
+Size: 352 x 198

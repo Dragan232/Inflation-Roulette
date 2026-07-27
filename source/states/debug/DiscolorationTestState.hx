@@ -2,7 +2,6 @@ package states.debug;
 
 import ui.objects.SuffIconButton;
 import objects.Character;
-import shaders.DiscolorationMaskedShader;
 import backend.Gameplay;
 import backend.Filler;
 
@@ -10,23 +9,37 @@ class DiscolorationTestState extends SuffState {
 	var exiting:Bool = false;
 	var exitButton:SuffIconButton;
 
-	var character:Character;
+	var characterGroup:FlxTypedGroup<Character>;
+	
+	var camGame:FlxCamera;
+	var camHUD:FlxCamera;
 
-	var rubText:FlxText;
+	public override function create() {
+		camGame = new FlxCamera(0, 0, FlxG.width, FlxG.height);
+		camHUD = new FlxCamera(0, 0, FlxG.width, FlxG.height);
+		camGame.bgColor = 0xFF000000;
+		camHUD.bgColor.alpha = 0;
 
-	override function create() {
+		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camHUD, false);
+
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		super.create();
 
-		Gameplay.currentFiller = new Filler('air');
+		Gameplay.currentFiller = new Filler('berry');
 
-		rubText = new FlxText(0, 0, 0, '', 32);
-		add(rubText);
-
-		character = new Character('synda', FlxG.width / 2, FlxG.height * 0.825);
-		add(character);
+		characterGroup = new FlxTypedGroup<Character>();
+		for (index => charId in Gameplay.globalCharacterList) {
+			var firstX = FlxG.width / 2 - (Gameplay.globalCharacterList.length - 1) / 2 * 200;
+			var character = new Character(charId, firstX + index * 200, FlxG.height * 0.825);
+			characterGroup.add(character);
+		}
+		add(characterGroup);
+		FlxG.camera.zoom = 0.825;
 
 		exitButton = new SuffIconButton(20, 20, 'buttons/exit', null, 2);
 		exitButton.x = FlxG.width - exitButton.width - 20;
+		exitButton.camera = camHUD;
 		exitButton.onClick = function() {
 			exitMenu();
 		};
@@ -40,15 +53,8 @@ class DiscolorationTestState extends SuffState {
 		SuffState.switchState(new MainMenuState());
 	}
 
-	override function update(elapsed:Float) {
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
-
-		rubText.text = '
-		rubValue: ${character.rubValue}
-		rubDuration: ${character.rubDuration}
-		forceExpulsionTimer: ${character.forceExpulsionTimer}
-		leakTimer: ${character.leakTimer}
-		';
 
 		if (Controls.justPressed('exit')) {
 			exitMenu();
@@ -56,18 +62,18 @@ class DiscolorationTestState extends SuffState {
 
 		if (Controls.justPressed('left') || Controls.justPressed('right')) {
 			if (Controls.justPressed('left'))
-				character.discoloration.strength -= 0.1;
+				for (char in characterGroup) char.discolorationStrength -= 0.1;
 			else if (Controls.justPressed('right'))
-				character.discoloration.strength += 0.1;
-			trace(character.discoloration.strength);
+				for (char in characterGroup) char.discolorationStrength += 0.1;
+			for (char in characterGroup) char.discoloration.strength = char.discolorationStrength;
 		}
 
 		if (Controls.justPressed('up') || Controls.justPressed('down')) {
 			if (Controls.justPressed('up'))
-				character.currentPressure += 1;
+				for (char in characterGroup) char.currentPressure += 1;
 			else if (Controls.justPressed('down'))
-				character.currentPressure -= 1;
-			character.playAnim('shocked');
+				for (char in characterGroup) char.currentPressure -= 1;
+			for (char in characterGroup) char.playAnim('shocked');
 		}
 	}
 }

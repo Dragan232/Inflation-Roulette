@@ -7,7 +7,7 @@ class SuffTransitionBlock extends FlxSpriteGroup {
 		var bg:FlxSprite = new FlxSprite().makeGraphic(size, size, color);
 		add(bg);
 
-		var gold:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/transitions/tiles/$suffix'));
+		var gold:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage('ui/transitions/tiles/$suffix'));
 		gold.setGraphicSize(size, size);
 		gold.updateHitbox();
 		gold.alpha = 0.1;

@@ -22,12 +22,12 @@ class ExplorerFile extends SuffButton {
 		hoverBG.alpha = 0.25;
 		add(hoverBG);
 
-		fileIcon = new FlxSprite().loadGraphic(Paths.image('ui/menus/utilities/explorer/' + '${fileType}'));
+		fileIcon = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/utilities/explorer/' + '${fileType}'));
 		fileIcon.setGraphicSize(Std.int(size / 235 * fileIcon.width));
 		fileIcon.updateHitbox();
 
 		fileNameTxt = new FlxText(0, 0, size, name, 16);
-		fileNameTxt.font = Paths.font('small', false);
+		fileNameTxt.font = Paths.getFont('small', false);
 		fileNameTxt.alignment = CENTER;
 
 		fileIcon.x = (size - fileIcon.width) / 2;
@@ -36,7 +36,7 @@ class ExplorerFile extends SuffButton {
 
 		icon = new FlxSprite();
 		if (iconPath != null && iconPath.length > 0) {
-			icon.loadGraphic(Paths.image('ui/menus/utilities/explorer/icons/$iconPath'));
+			icon.loadGraphic(Paths.getImage('ui/menus/utilities/explorer/icons/$iconPath'));
 			icon.setGraphicSize(Std.int(size / 235 * icon.width));
 			icon.updateHitbox();
 		} else

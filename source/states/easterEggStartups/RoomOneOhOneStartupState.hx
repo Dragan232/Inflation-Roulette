@@ -23,14 +23,14 @@ class RoomOneOhOneStartupState extends SuffState {
 
 		Window.setTitle('YOU\'RE SUPPOSED TO OBEY ME');
 
-		explodeSound = new FlxSound().loadEmbedded(Paths.sound('explosionLoud'));
+		explodeSound = new FlxSound().loadEmbedded(Paths.getSound('explosionLoud'));
 		explodeSound.volume = Preferences.data.uiSoundVolume;
 
-		ambientSound = new FlxSound().loadEmbedded(Paths.sound('ui/startup/roomoneohone/vibRibbon'));
+		ambientSound = new FlxSound().loadEmbedded(Paths.getSound('ui/startup/roomoneohone/vibRibbon'));
 		ambientSound.volume = Preferences.data.musicVolume;
 		ambientSound.play();
 
-		bg = new FlxBackdrop(Paths.image('ui/menus/easterEggStartups/roomoneohone/bg'));
+		bg = new FlxBackdrop(Paths.getImage('ui/menus/easterEggStartups/roomoneohone/bg'));
 		bg.color = 0xFFFFFFFF;
 		bg.velocity.set(60, 60);
 		add(bg);
@@ -40,13 +40,13 @@ class RoomOneOhOneStartupState extends SuffState {
 		bgWhat.alpha = 0.75;
 		add(bgWhat);
 
-		var bgMask = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/mask'));
+		var bgMask = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/mask'));
 		bgMask.scale.set(1.1, 1.1);
 		add(bgMask);
 
 		add(souls);
 		for (num => s in soulsCirclingPaths) {
-			var soul:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/roomoneohone/souls/$s'));
+			var soul:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/roomoneohone/souls/$s'));
 			soul.setGraphicSize(soulSize);
 			soul.updateHitbox();
 			soul.offset.y = soul.height - soulSize;
@@ -54,7 +54,7 @@ class RoomOneOhOneStartupState extends SuffState {
 			souls.add(soul);
 		}
 
-		soulCenter = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/roomoneohone/souls/$soulCenterPath'));
+		soulCenter = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/roomoneohone/souls/$soulCenterPath'));
 		soulCenter.setGraphicSize(soulSize);
 		soulCenter.updateHitbox();
 		soulCenter.offset.y = soulCenter.height - soulSize;

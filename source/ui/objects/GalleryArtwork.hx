@@ -9,7 +9,7 @@ class GalleryArtwork extends SuffButton {
 	static final maxWidth:Float = 720;
 	static final maxHeight:Float = 540;
 	public function new(x:Float, y:Float, path:String) {
-		var leGraphic = Paths.image('ui/menus/extras/gallery/images/' + path);
+		var leGraphic = Paths.getImage('ui/menus/extras/gallery/images/' + path);
 		image = new FlxSprite().loadGraphic(leGraphic);
 		var leScale = Math.min(maxWidth / image.width, maxHeight / image.height);
 		if (leScale > 1) leScale = Std.int(leScale);

@@ -41,7 +41,7 @@ class AchievementIcon extends FlxSprite {
 		if (Achievements.achievementsList.exists(id) && Achievements.achievementsList.get(id).hideIcon == true && locked)
 			iconPath = 'ui/menus/achievements/icons/fallback/hidden';
 
-		loadGraphic(Paths.image(iconPath));
+		loadGraphic(Paths.getImage(iconPath));
 	}
 
 	override function update(elapsed:Float) {

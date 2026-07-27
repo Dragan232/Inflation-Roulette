@@ -17,7 +17,7 @@ class SkillCard extends SuffButton {
 
 	public function new(x:Float, y:Float, skill:Skill) {
 		this.skill = skill;
-		var usedImage = Paths.image('ui/skillCard');
+		var usedImage = Paths.getImage('ui/skillCard');
 		super(x, y, null, usedImage, null, usedImage.width, usedImage.height, false);
 
 		skillBorder = new FlxSprite().loadGraphic(Utilities.makeBorder(usedImage.width, usedImage.height, 4));
@@ -28,18 +28,18 @@ class SkillCard extends SuffButton {
 		add(skillIcon);
 
 		skillTitle = new FlxText(usedImage.height, 5, usedImage.width - usedImage.height - 6, Language.getPhrase('skill.${skill.id}.name'));
-		skillTitle.setFormat(Paths.font('default'), 32, FlxColor.WHITE);
+		skillTitle.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE);
 
 		skillDescription = new FlxText(skillTitle.x, skillTitle.y + skillTitle.height, usedImage.width - usedImage.height - 6,
 			Language.getPhrase('skill.${skill.id}.description'));
-		skillDescription.setFormat(Paths.font('small'), 16, FlxColor.WHITE);
+		skillDescription.setFormat(Paths.getFont('small'), 16, FlxColor.WHITE);
 		skillDescription.alpha = 0.5;
 
 		costIcon = new GameIcon(usedImage.height, usedImage.height - 35, 'stats/confidence', 32);
 		costIcon.color = 0xFF4A4399;
 
 		skillCost = new FlxText(usedImage.height + costIcon.width + 2, costIcon.y, 0, '' + skill.cost);
-		skillCost.setFormat(Paths.font('default'), 32, costIcon.color);
+		skillCost.setFormat(Paths.getFont('default'), 32, costIcon.color);
 		skillCost.y = costIcon.y + (costIcon.height - skillCost.height) / 2;
 
 		add(skillTitle);

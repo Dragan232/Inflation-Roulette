@@ -26,7 +26,7 @@ class ExtrasSubState extends SuffSubState {
 		final outlineThickness:Int = 4;
 
 		var galleryBG:FlxSprite = new FlxSprite(box.x + outlineThickness, box.y + outlineThickness);
-		galleryBG.loadGraphic(Paths.image('ui/menus/extras/galleryBG'), true, 420, 360);
+		galleryBG.loadGraphic(Paths.getImage('ui/menus/extras/galleryBG'), true, 420, 360);
 		galleryBG.animation.add('selected', [0]);
 		galleryBG.animation.add('idle', [1]);
 		galleryBG.animation.play('idle');
@@ -35,7 +35,7 @@ class ExtrasSubState extends SuffSubState {
 		add(galleryBG);
 
 		var galleryText:FlxText = new FlxText(galleryBG.x, galleryBG.y + galleryBG.height * 0.15, galleryBG.width, Language.getPhrase('extrasMenu.gallery'), 48);
-		galleryText.setFormat(Paths.font('default'), 48, 0xFFFFFFFF, CENTER, OUTLINE, 0xFFFFFFFF);
+		galleryText.setFormat(Paths.getFont('default'), 48, 0xFFFFFFFF, CENTER, OUTLINE, 0xFFFFFFFF);
 		galleryText.borderSize = 0;
 		add(galleryText);
 
@@ -56,7 +56,7 @@ class ExtrasSubState extends SuffSubState {
 		add(galleryButton);
 
 		var jukeboxBG:FlxSprite = new FlxSprite(box.x + box.width / 2 + outlineThickness * 0.5, box.y + outlineThickness);
-		jukeboxBG.loadGraphic(Paths.image('ui/menus/extras/jukeboxBG'), true, 420, 360);
+		jukeboxBG.loadGraphic(Paths.getImage('ui/menus/extras/jukeboxBG'), true, 420, 360);
 		jukeboxBG.animation.add('selected', [0]);
 		jukeboxBG.animation.add('idle', [1]);
 		jukeboxBG.animation.play('idle');
@@ -65,7 +65,7 @@ class ExtrasSubState extends SuffSubState {
 		add(jukeboxBG);
 
 		var jukeboxText:FlxText = new FlxText(jukeboxBG.x, jukeboxBG.y + jukeboxBG.height * 0.15, jukeboxBG.width, Language.getPhrase('extrasMenu.jukebox'), 48);
-		jukeboxText.setFormat(Paths.font('default'), 48, 0xFFFFFFFF, CENTER, OUTLINE, 0xFFFFFFFF);
+		jukeboxText.setFormat(Paths.getFont('default'), 48, 0xFFFFFFFF, CENTER, OUTLINE, 0xFFFFFFFF);
 		jukeboxText.borderSize = 0;
 		add(jukeboxText);
 

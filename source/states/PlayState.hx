@@ -175,7 +175,7 @@ class PlayState extends SuffState {
 
 		reloadCylinder(Gameplay.currentGamemode.cylinderLiveCount);
 
-		pumpGun = new FlxSprite().loadGraphic(Paths.image('game/pumpGun'));
+		pumpGun = new FlxSprite().loadGraphic(Paths.getImage('game/pumpGun'));
 
 		characterGroup = new FlxTypedContainer<Character>();
 		add(characterGroup);
@@ -220,13 +220,13 @@ class PlayState extends SuffState {
 			Achievements.advanceProgress('findCameraman', [true]);
 
 			var cobalt:FlxSprite = new FlxSprite();
-			cobalt.frames = Paths.sparrowAtlas('game/cobalt');
+			cobalt.frames = Paths.getSparrowAtlas('game/cobalt');
 			cobalt.animation.addByPrefix('appear', 'appear', 24, false);
 			cobalt.animation.play('appear');
 			cobalt.x = FlxG.width - cobalt.width;
 			cobalt.y = FlxG.height - cobalt.height;
 			cobalt.animation.onFrameChange.add(function(animName, frameNumber, frameIndex) {
-				if (frameNumber == 4 || frameNumber == 10) SuffState.playSound(Paths.sound('game/glassTap'));
+				if (frameNumber == 4 || frameNumber == 10) SuffState.playSound(Paths.getSound('game/glassTap'));
 			});
 			cobalt.animation.onFinish.add(function(_) {
 				cobalt.destroy();
@@ -254,17 +254,17 @@ class PlayState extends SuffState {
 		stage.load();
 
 		selectLight = new FlxSprite();
-		selectLight.loadGraphic(Paths.image('game/selectLight'));
+		selectLight.loadGraphic(Paths.getImage('game/selectLight'));
 		#if _ALLOW_EASTER_EGGS
 		if (FlxG.random.bool(1 / 128 * 100))
-			selectLight.loadGraphic(Paths.image('game/selectLightAlt'));
+			selectLight.loadGraphic(Paths.getImage('game/selectLightAlt'));
 		#end
 		selectLight.visible = false;
 		members.insert(members.indexOf(characterGroup), selectLight);
 
 		// UI Stuff//
 		if (!Preferences.data.decreaseDetail) {
-			dangerVignette = new FlxSprite().loadGraphic(Paths.image('ui/vignette'));
+			dangerVignette = new FlxSprite().loadGraphic(Paths.getImage('ui/vignette'));
 			dangerVignette.setGraphicSize(FlxG.width + 20, FlxG.height + 20);
 			dangerVignette.updateHitbox();
 			dangerVignette.screenCenter();
@@ -306,7 +306,7 @@ class PlayState extends SuffState {
 		uiBGGroup.add(uiBGBottom);
 
 		skillsText = new FlxText(0, 0, 0, Language.getPhrase('stats.skills').toUpperCase());
-		skillsText.setFormat(Paths.font('default'), 32, FlxColor.WHITE);
+		skillsText.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE);
 		skillsText.x = uiBGTop.width - skillsText.width;
 		uiBGGroup.add(skillsText);
 
@@ -318,7 +318,7 @@ class PlayState extends SuffState {
 		pressureIcon = new GameIcon(ScreenSafeArea.X, 0, 'stats/pressure', 32);
 
 		pressureText = new FlxText(pressureIcon.x + pressureIcon.width + 4, 0, 0, '');
-		pressureText.setFormat(Paths.font('default'), 32, pressureBarColors[0]);
+		pressureText.setFormat(Paths.getFont('default'), 32, pressureBarColors[0]);
 		uiBGGroup.add(pressureIcon);
 		uiBGGroup.add(pressureText);
 
@@ -333,7 +333,7 @@ class PlayState extends SuffState {
 		confidenceIcon = new GameIcon(ScreenSafeArea.X, 0, 'stats/confidence', 32);
 
 		confidenceText = new FlxText(confidenceIcon.x + confidenceIcon.width + 4, 0, 0, '');
-		confidenceText.setFormat(Paths.font('default'), 32, confidenceBarColors[0]);
+		confidenceText.setFormat(Paths.getFont('default'), 32, confidenceBarColors[0]);
 		uiBGGroup.add(confidenceIcon);
 		uiBGGroup.add(confidenceText);
 
@@ -343,8 +343,8 @@ class PlayState extends SuffState {
 		skillCardsGroup.camera = camHUD;
 		add(skillCardsGroup);
 
-		var shootButtonImage = Paths.image('ui/icons/buttons/shoot');
-		var shootButtonHighlightedImage = Paths.image('ui/icons/buttons/shootHighlighted');
+		var shootButtonImage = Paths.getImage('ui/icons/buttons/shoot');
+		var shootButtonHighlightedImage = Paths.getImage('ui/icons/buttons/shootHighlighted');
 		shootButton = new SuffButton(0, 0, null, shootButtonImage, shootButtonHighlightedImage, shootButtonImage.width, shootButtonImage.height, false);
 		shootButton.y = FlxG.height - shootButton.height - ScreenSafeArea.Y;
 		shootButton.camera = camHUD;
@@ -541,9 +541,9 @@ class PlayState extends SuffState {
 	}
 
 	function playGunContactSound(glassVolume:Float = 0) {
-		SuffState.playSound(Paths.soundRandom('game/weapon', 1, 3));
+		SuffState.playSound(Paths.getSoundRandom('game/weapon', 1, 3));
 		if (glassVolume <= 0) return;
-		SuffState.playSound(Paths.sound('game/glassTap'), glassVolume);
+		SuffState.playSound(Paths.getSound('game/glassTap'), glassVolume);
 	}
 
 	function togglePauseFunctionality(enable:Bool = true) {
@@ -564,8 +564,10 @@ class PlayState extends SuffState {
 
 		// I am sorry future me
 		animAllCharacters('introPartOne', 1, false); // All characters play their first intro animation
+		stage.dynamicPlayAnim('introPartOne', false);
 		new FlxTimer().start(1.5 + getMaximumAnimLength('introPartOne'), function(_:FlxTimer) { // First intro animation delay + 1.5 seconds
 			pumpGun.visible = true;
+			stage.dynamicPlayAnim('introPartTwo');
 			FlxTween.tween(pumpGun, {y: pumpGunY}, 0.5, { // Gun lands on table
 				onComplete: function(_:FlxTween) {
 					animAllCharacters('introPartTwo', 0.5, true); // All characters play their second intro animation
@@ -743,7 +745,7 @@ class PlayState extends SuffState {
 		// trace(getPlayer(playerIndex).animSoundPaths[soundName]);
 		if (getPlayer(playerIndex).animSoundPaths[soundName] == null || getPlayer(playerIndex).animSoundPaths[soundName].length <= 0) {
 			if (Paths.fileExists(Paths.getSoundPath('game/skills/' + soundName), SOUND)) {
-				SuffState.playSound(Paths.sound('game/skills/' + soundName));
+				SuffState.playSound(Paths.getSound('game/skills/' + soundName));
 			}
 		}
 		doTimer('reenablePlayerUI', new FlxTimer().start(getPlayer(playerIndex).getCurAnimLength(), function(_:FlxTimer) {
@@ -839,7 +841,7 @@ class PlayState extends SuffState {
 		toggleLetterbox(true);
 		if (getPlayer(attackerIndex).animSoundPaths[soundName] == null || getPlayer(attackerIndex).animSoundPaths[soundName].length <= 0) {
 			if (Paths.fileExists(Paths.getSoundPath('game/skills/' + soundName), SOUND)) {
-				SuffState.playSound(Paths.sound('game/skills/' + soundName));
+				SuffState.playSound(Paths.getSound('game/skills/' + soundName));
 			}
 		}
 	}
@@ -882,7 +884,7 @@ class PlayState extends SuffState {
 		}
 		var playerAnimName:String = 'idle';
 
-		SuffState.playSound(Paths.sound('game/shoot'));
+		SuffState.playSound(Paths.getSound('game/shoot'));
 		if (getPlayer(playerIndex).denialCount > 0 && cylinderContent[0]) {
 			var particleOffset = getPlayer(playerIndex).getParticleOffset('navel');
 			var denialShield = new DenialShield(getPlayer(playerIndex).x + particleOffset.x, getPlayer(playerIndex).y + particleOffset.y);
@@ -890,10 +892,10 @@ class PlayState extends SuffState {
 			screenShake(0.01, 0.1);
 			if (currentLiveRoundDamage > 1) {
 				currentLiveRoundDamage = 1;
-				SuffState.playSound(Paths.sound('game/denialActivate'));
+				SuffState.playSound(Paths.getSound('game/denialActivate'));
 			} else {
 				dealDamage = false;
-				SuffState.playSound(Paths.sound('game/denialActivatePressurize'));
+				SuffState.playSound(Paths.getSound('game/denialActivatePressurize'));
 			}
 			getPlayer(playerIndex).denialCount = 0;
 		}
@@ -905,13 +907,14 @@ class PlayState extends SuffState {
 			playerAnimName = 'shootBlank';
 		}
 		getPlayer(playerIndex).playAnim(playerAnimName, false);
+		stage.dynamicPlayAnim(playerAnimName);
 		if (getPlayer(playerIndex).currentPressure >= getPlayer(playerIndex).maxPressure) {
 			FlxG.sound.music.pause();
 		}
 		if (dealDamage) {
 			if (!getPlayer(playerIndex).cpuControlled)
 				Achievements.advanceProgress('liveShots', [1]);
-			SuffState.playSound(Paths.sound('game/inflate'));
+			SuffState.playSound(Paths.getSound('game/inflate'));
 			getPlayer(playerIndex).currentPressure += 1;
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
@@ -964,7 +967,7 @@ class PlayState extends SuffState {
 
 			var percent = getPlayer(playerIndex).getPressurePercentage();
 			var fwoompSuffix:String = percent >= 0.5 ? 'Large' : 'Small';
-			SuffState.playSound(Paths.soundRandom('game/inflation/universal/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
+			SuffState.playSound(Paths.getSoundRandom('game/inflation/universal/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
 			if (Preferences.data.enableBellyCreaks) {
 				SuffState.playSound(Gameplay.currentFiller.getCreakSound(), percent, percent * 1.5 + 1);
 			}
@@ -1058,6 +1061,7 @@ class PlayState extends SuffState {
 		pumpGun.visible = true;
 		if (currentSessionEnablePopping && !getPlayer(playerIndex).disablePopping) { // Pop player instead
 			getPlayer(playerIndex).playAnim('popped', false);
+			stage.dynamicPlayAnim('pop');
 			var character = getPlayer(playerIndex);
 			particleGroup.add(new Bloosh(character.x, character.y - character.height / 2));
 			if (!Preferences.data.decreaseDetail) {
@@ -1097,6 +1101,7 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).velocity.y = -1200 * getPlayer(playerIndex).poppingVelocityMultiplier[1];
 		} else {
 			getPlayer(playerIndex).playAnim('idle');
+			stage.dynamicPlayAnim('overinflate');
 		}
 
 		if (!isEnding) {
@@ -1146,12 +1151,14 @@ class PlayState extends SuffState {
 
 		doTimer('confettiTimer', new FlxTimer().start(0.5, function(_:FlxTimer) {
 			getPlayer(winnerIndex).playAnim('shocked', false);
-			SuffState.playSound(Paths.sound('game/confetti'));
+			stage.dynamicPlayAnim('preWin');
+			SuffState.playSound(Paths.getSound('game/confetti'));
 			members.insert(members.indexOf(characterGroup), new ConfettiEmitter(getPlayer(winnerIndex).x - FlxG.width / 2.5, getPlayer(winnerIndex).y - getPlayer(winnerIndex).height, 30, stage.data.characterY));
 			members.insert(members.indexOf(characterGroup), new ConfettiEmitter(getPlayer(winnerIndex).x + FlxG.width / 2.5, getPlayer(winnerIndex).y - getPlayer(winnerIndex).height, 150, stage.data.characterY));
 			doTimer('winAnim', new FlxTimer().start(0.5 + getPlayer(winnerIndex).getCurAnimLength(), function(_:FlxTimer) {
 				SuffState.playMusic('win', 1, true);
 				getPlayer(winnerIndex).playAnim('win', false);
+				stage.dynamicPlayAnim('win', false);
 				doTimer('finishCutscene', new FlxTimer().start(Math.max(4.5, getPlayer(currentTurnIndex).getCurAnimLength()), function(_:FlxTimer) {
 					finishEndCutscene();
 				}));
@@ -1209,7 +1216,7 @@ class PlayState extends SuffState {
 			doTween('pumpGunPass', FlxTween.tween(pumpGun, {x: pumpGunXDestinations[currentTurnIndex]}, 0.5, {
 				startDelay: (!(Preferences.data.skipEliminatedPlayers && getPlayer(currentTurnIndex).isEliminated()) ? 0.5 : 0), ease: FlxEase.quadOut, onStart: function(_:FlxTween) {
 					if (!slient)
-						SuffState.playSound(Paths.sound('game/weaponSlide'));
+						SuffState.playSound(Paths.getSound('game/weaponSlide'));
 					if (!(Preferences.data.skipEliminatedPlayers && getPlayer(currentTurnIndex).isEliminated()))
 						focusCameraOnPlayer(currentTurnIndex); else
 						changeTurn(change, true);
@@ -1463,7 +1470,7 @@ class PlayState extends SuffState {
 		uiRevealGroup.clear();
 		uiRevealGroup.visible = revealCylinderContents && !getPlayer(currentTurnIndex).cpuControlled;
 		if (!revealCylinderContents) return;
-		var arrow:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/bulletArrow'));
+		var arrow:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage('ui/bulletArrow'));
 		for (num => state in cylinderContent) {
 			var bullet = new RevealBullet(0, 0, state);
 			bullet.x = num * bullet.width;
@@ -1605,7 +1612,7 @@ class PlayState extends SuffState {
 		Paths.clearUnusedMemory();
 	}
 
-	override function update(elapsed:Float) {
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
 
 		pressureBar.updateBar();

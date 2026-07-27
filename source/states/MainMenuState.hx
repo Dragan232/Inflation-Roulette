@@ -81,7 +81,7 @@ class MainMenuState extends SuffState {
 		grid.velocity.set(-32, -32);
 		add(grid);
 
-		overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
+		overlay = new FlxBackdrop(Paths.getImage('ui/transitions/horizontal'), Y);
 		overlay.x = -overlay.width / 2 + (FlxG.width - overlay.width) / 2 + 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF105060;
@@ -99,7 +99,7 @@ class MainMenuState extends SuffState {
 		add(dongText);
 
 		splashText = new FlxText(0, 0, FlxG.width * 0.4, 'Empty');
-		splashText.setFormat(Paths.font('default', false), 32, FlxColor.YELLOW, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
+		splashText.setFormat(Paths.getFont('default', false), 32, FlxColor.YELLOW, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
 		splashText.text = getRandomSplashText();
 		splashText.y = logo.y + logo.height + 10;
 		add(splashText);
@@ -123,7 +123,7 @@ class MainMenuState extends SuffState {
 		add(topInfoTextGroup);
 		for (i in 0...topInfoTextList.length) {
 			var infoText = new FlxText(0, 0, 0, topInfoTextList[i]);
-			infoText.setFormat(Paths.font((i == 0) ? 'default' : 'unicode'), 16, FlxColor.WHITE);
+			infoText.setFormat(Paths.getFont((i == 0) ? 'default' : 'unicode'), 16, FlxColor.WHITE);
 			infoText.x = FlxG.width - infoText.width - ScreenSafeArea.X;
 			infoText.y = infoText.height * i + ScreenSafeArea.Y;
 			topInfoTextGroup.add(infoText);
@@ -142,13 +142,13 @@ class MainMenuState extends SuffState {
 		add(bottomInfoTextGroup);
 		for (i in 0...bottomInfoTextList.length) {
 			var infoText = new FlxText(0, 0, 0, bottomInfoTextList[i]);
-			infoText.setFormat(Paths.font('default'), 16, FlxColor.WHITE);
+			infoText.setFormat(Paths.getFont('default'), 16, FlxColor.WHITE);
 			infoText.x = FlxG.width - infoText.width - ScreenSafeArea.X;
 			infoText.y = FlxG.height - infoText.height * (bottomInfoTextList.length - i) - ScreenSafeArea.Y;
 			bottomInfoTextGroup.add(infoText);
 		}
 
-		var creditImage = Paths.image('ui/menus/nicklySufferLogo');
+		var creditImage = Paths.getImage('ui/menus/nicklySufferLogo');
 		creditsButton = new SuffButton(20 + ScreenSafeArea.X, 0, '', creditImage, null, creditImage.width, creditImage.height, false);
 		creditsButton.y = FlxG.height - creditsButton.height - 20 - ScreenSafeArea.Y;
 		creditsButton.btnTextColorHovered = creditsButton.btnTextColorClicked = 0xFFFFFF00;
@@ -267,9 +267,9 @@ class MainMenuState extends SuffState {
 			leText = getRandomSplashText();
 		}
 		if (Utilities.supportedBySuffirat(leText))
-			splashText.font = Paths.font('default', false);
+			splashText.font = Paths.getFont('default', false);
 		else
-			splashText.font = Paths.font('unicode');
+			splashText.font = Paths.getFont('unicode');
 		splashText.text = leText;
 	}
 
@@ -335,7 +335,7 @@ class MainMenuState extends SuffState {
 		changeSplashText();
 		FlxTween.cancelTweensOf(splashText, ['y']);
 		FlxTween.tween(splashText, {y: logo.y + logo.height + 10}, 0.08, {ease: FlxEase.cubeOut});
-		SuffState.playUISound(Paths.sound('ui/dong'));
+		SuffState.playUISound(Paths.getSound('ui/dong'));
 
 		dongCount++;
 		dongText.text = Language.getPhrase('mainMenu.dongs', [dongCount]);
@@ -408,7 +408,7 @@ class MainMenuState extends SuffState {
 				FlxG.save.data.easterEggStartup = '';
 				FlxG.save.flush();
 
-				SuffState.playUISound(Paths.sound('ui/startup/transition'), 0.75, 3);
+				SuffState.playUISound(Paths.getSound('ui/startup/transition'), 0.75, 3);
 			}
 
 			splashTextChangeTimer += elapsed;
@@ -441,5 +441,12 @@ class MainMenuState extends SuffState {
 			}
 		}
 		#end
+
+		if (Preferences.data.enableDebugKeybinds) {
+			if (FlxG.keys.pressed.CONTROL) {
+				if (FlxG.keys.justPressed.C)
+					SuffState.switchState(new DiscolorationTestState());
+			}
+		}
 	}
 }

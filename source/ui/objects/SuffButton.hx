@@ -23,7 +23,7 @@ class SuffButton extends FlxSpriteGroup {
 	public var btnTextColorDisabled:FlxColor = 0xFF808080;
 	public var btnTextSize(default, set):Int = 48;
 	public var btnTextAlpha(default, set):Float = 1;
-	public var btnTextFontPath(default, set):String = Paths.font('default');
+	public var btnTextFontPath(default, set):String = Paths.getFont('default');
 
 	public var btnBGColor(default, set):FlxColor = 0xFF0F4894;
 	public var btnBGColorHovered:FlxColor = 0xFF4F9BFF;
@@ -247,7 +247,7 @@ class SuffButton extends FlxSpriteGroup {
 				if (!disabled && onClick != null)
 					onClick();
 				if (releaseSound != '')
-					SuffState.playUISound(Paths.sound(releaseSound));
+					SuffState.playUISound(Paths.getSound(releaseSound));
 				idleButton();
 				clicked = false;
 			}
@@ -281,7 +281,7 @@ class SuffButton extends FlxSpriteGroup {
 		if (btnIcon != null && !disabled)
 			switchIconImage(btnIconImageHovered);
 		if (hoverSound != '')
-			SuffState.playUISound(Paths.sound(hoverSound));
+			SuffState.playUISound(Paths.getSound(hoverSound));
 	}
 
 	public function switchIconImage(img:FlxGraphic) {
@@ -300,7 +300,7 @@ class SuffButton extends FlxSpriteGroup {
 		if (btnIcon != null && !disabled)
 			btnIcon.color = btnTextColorClicked;
 		if (clickSound != '')
-			SuffState.playUISound(Paths.sound(clickSound));
+			SuffState.playUISound(Paths.getSound(clickSound));
 	}
 
 	function idleButton() {

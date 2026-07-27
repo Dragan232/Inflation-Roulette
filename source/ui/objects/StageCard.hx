@@ -10,7 +10,7 @@ class StageCard extends SuffButton {
 
 		this.stageID = stageID;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/stages/$stageID'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/characterSelect/stages/$stageID'));
 		add(bg);
 
 		outline = new FlxSprite().loadGraphic(Utilities.makeBorder(bg.width, bg.height, 5, 0xFFFFFFFF));

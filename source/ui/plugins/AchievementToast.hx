@@ -49,7 +49,7 @@ class AchievementToast extends FlxSpriteGroup {
 		instance.icon.alpha = 0;
 		displayedText = Language.getPhrase('achievementToast.title') + '\n' + Language.getPhrase('achievement.$id.name');
 		instance.text.color = 0xFFFFFFFF;
-		instance.text.font = Paths.font('default');
+		instance.text.font = Paths.getFont('default');
 		instance.text.text = displayedText;
 		instance.text.updateHitbox();
 		instance.text.x = instance.x + instance.icon.width + 20;
@@ -59,7 +59,7 @@ class AchievementToast extends FlxSpriteGroup {
 		FlxTween.tween(instance, {y: FlxG.height - instance.height - 20}, 0.5, {
 			ease: FlxEase.backOut,
 			onStart: function(_) {
-				SuffState.playUISound(Paths.sound('ui/achievements/achievement' + Achievements
+				SuffState.playUISound(Paths.getSound('ui/achievements/achievement' + Achievements
 				.achievementsList.get(id).tier), 0.75);
 			}
 		});

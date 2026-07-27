@@ -3,7 +3,7 @@ package objects.particles;
 class Swirl extends FlxSprite {
 	public function new(x:Float = 0, y:Float = 0, color:FlxColor = 0xFFFFFFFF, alpha:Float = 0.5) {
 		super(x, y);
-		var graphic = Paths.image('game/particles/swirl');
+		var graphic = Paths.getImage('game/particles/swirl');
 		loadGraphic(graphic, true, Std.int(graphic.height), Std.int(graphic.height));
 		animation.add('idle', [for (i in 0...12) i], FlxG.random.int(10, 14), false);
 		animation.play('idle', true);

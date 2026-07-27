@@ -287,8 +287,8 @@
 	"option.cacheOnGPU.description": "Allows the GPU to be used for storing textures using VRAM for lower RAM usage.\nMay not work correctly with lower-end graphics cards.",
 	"option.checkForUpdates.name": "Check for Updates",
 	"option.checkForUpdates.description": "Automatically check for latest updates of the game on startup.",
-	"option.enableDebugKeybinds.name": "Debug Keybinds",
-	"option.enableDebugKeybinds.description": "Enable debug keybinds on PC.\n(Disables in-game achievements on press)",
+	"option.enableDebugKeybinds.name": "Developer Keybinds",
+	"option.enableDebugKeybinds.description": "Enable developer keybinds on PC.\n(Disables in-game achievements on press)",
 	"option.showDebugText.name": "Debug Text",
 	"option.showDebugText.description": "Displays debug information on the top-left corner of the screen.",
 	"option.showFramerateOnDebugText.name": "Framerate",
@@ -405,6 +405,10 @@
 	// You do not have to transliterate Paprika.
 	"stage.beach.name": "Paprika Beachside",
 	"stage.beach.description": "A popular beachside resort. Known for being a honeymoon destination and its nightclubs.",
+	// Paprika Beachside: Independent laboratory, this time they're testing the Pump Gun.
+	// They are doing... product testing. Certainly, no test subjects were harmed.
+	"stage.lab.name": "Orchid Labs",
+	"stage.lab.description": "An obscure independent laboratory. Infamous for testing products from shady clients.",
 	// White Void: Literally just a white void with a glass table.
 	"stage.void.name": "White Void",
 	"stage.void.description": "Household name as a place for all activities, featured in countless art pieces and animations.",

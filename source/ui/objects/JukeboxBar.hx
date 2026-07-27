@@ -24,7 +24,7 @@ class JukeboxBar extends FlxSpriteGroup {
 		this.music = cast Json.parse(Paths.getTextFromFile('music/$musicID.json'));
 		this.album = cast Json.parse(Paths.getTextFromFile('data/extras/jukebox/albums/${music.album}.json'));
 
-		back = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/bar/back'));
+		back = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/extras/jukebox/bar/back'));
 		back.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(back);
 
@@ -34,17 +34,17 @@ class JukeboxBar extends FlxSpriteGroup {
 		updateClipRect();
 		add(text);
 
-		base = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/bar/base'));
+		base = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/extras/jukebox/bar/base'));
 		add(base);
 
 		albumText = new FlxText(12, 12, 0, album.name, 16);
-		albumText.font = Paths.font('default', false);
+		albumText.font = Paths.getFont('default', false);
 		albumText.color = 0xFF202020;
 		albumText.y = 120 + (30 - albumText.height) / 2;
 		add(albumText);
 
 		authorText = new FlxText(12, 12, 0, music.author, 16);
-		authorText.font = Paths.font('default', false);
+		authorText.font = Paths.getFont('default', false);
 		authorText.color = 0xFF202020;
 		authorText.x = width - authorText.width - 12;
 		authorText.y = 120 + (30 - authorText.height) / 2;

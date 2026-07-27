@@ -6,7 +6,7 @@ class Sparkle extends FlxSprite {
 
 	public function new(x:Float = 0, y:Float = 0, finishCallback:Sparkle->Void = null) {
 		super(x, y);
-		var graphic = Paths.image('game/particles/sparkle');
+		var graphic = Paths.getImage('game/particles/sparkle');
 		loadGraphic(graphic, true, Std.int(graphic.height), Std.int(graphic.height));
 		animation.add('idle', [0, 1, 2, 3, 2, 1, 0], FlxG.random.int(framerates[0], framerates[1]), false);
 		animation.play('idle', true);

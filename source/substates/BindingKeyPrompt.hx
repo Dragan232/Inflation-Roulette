@@ -18,7 +18,7 @@ class BindingKeyPrompt extends SuffSubState {
 		bg.alpha = 0.625;
 		add(bg);
 
-		var promptBG = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/box'));
+		var promptBG = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/box'));
 		promptBG.color = 0x606060;
 		promptBG.alpha = 0.75;
 		promptBG.setGraphicSize(FlxG.width / 1280 * 800, FlxG.height / 720 * 500);
@@ -100,7 +100,7 @@ class BindingKeyPrompt extends SuffSubState {
 		bindingKey = false;
 		updateKeyButton();
 
-		SuffState.playUISound(Paths.sound('ui/typeEnter'));
+		SuffState.playUISound(Paths.getSound('ui/typeEnter'));
 	}
 
 	function removeKey(){
@@ -112,7 +112,7 @@ class BindingKeyPrompt extends SuffSubState {
 		bindingKey = false;
 		updateKeyButton();
 
-		SuffState.playUISound(Paths.sound('ui/type_1'));
+		SuffState.playUISound(Paths.getSound('ui/type_1'));
 	}
 
 	override function update(elapsed:Float) {

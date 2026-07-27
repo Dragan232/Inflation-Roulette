@@ -14,12 +14,12 @@ class WarningState extends SuffState {
 		Window.setTitle(Language.getPhrase('warningMenu.windowDisplay'));
 
 		warningTitle = new FlxText(0, 0, 0, Language.getPhrase('warningMenu.title'));
-		warningTitle.setFormat(Paths.font('default'), 80, 0xFFFF0000);
+		warningTitle.setFormat(Paths.getFont('default'), 80, 0xFFFF0000);
 		warningTitle.screenCenter();
 		add(warningTitle);
 
 		warningDesc = new FlxText(0, 0, FlxG.width * 0.85, Language.getPhrase('warningMenu.content'));
-		warningDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, JUSTIFY);
+		warningDesc.setFormat(Paths.getFont('default'), 32, 0xFFFFFFFF, JUSTIFY);
 		warningDesc.x = Std.int((FlxG.width - warningDesc.width) / 2);
 		add(warningDesc);
 

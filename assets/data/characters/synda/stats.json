@@ -5,11 +5,11 @@
 	"skills": [
 		{
 			"id": "reload",
-			"cost": 2
+			"cost": 3
 		},
 		{
 			"id": "polarize",
-			"cost": 3
+			"cost": 2
 		},
 		{
 			"id": "assault",

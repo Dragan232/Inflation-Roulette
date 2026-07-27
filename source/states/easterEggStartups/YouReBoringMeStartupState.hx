@@ -22,7 +22,7 @@ class YouReBoringMeStartupState extends SuffState {
 		});
 		add(video);
 
-		if (video.load(Paths.video('obituary'))) {
+		if (video.load(Paths.getVideo('obituary'))) {
 			video.start();
 			allowToSkip = true;
 		}

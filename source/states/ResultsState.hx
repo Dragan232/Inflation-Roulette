@@ -198,9 +198,9 @@ class ResultsState extends SuffState {
 			var spriteExists:Bool = Paths.fileExists(Paths.getImagePath('ui/menus/results/characters/${data[i].charID}'));
 			var char:FlxSprite = new FlxSprite();
 			if (spriteExists) {
-				char.frames = Paths.sparrowAtlas('ui/menus/results/characters/${data[i].charID}');
+				char.frames = Paths.getSparrowAtlas('ui/menus/results/characters/${data[i].charID}');
 			} else {
-				char.frames = Paths.sparrowAtlas('ui/menus/results/characters/goober');
+				char.frames = Paths.getSparrowAtlas('ui/menus/results/characters/goober');
 			}
 			var suffix = data[i].charPressure <= 1 ? 'Standing' : 'Defeated';
 			char.animation.addByPrefix('idle', 'idle${suffix}0', 24, true);
@@ -223,7 +223,7 @@ class ResultsState extends SuffState {
 			characterGroup.add(char);
 
 			var winBonusTxt:FlxText = new FlxText(bar.x + 50, barUp.height + 20, FlxG.width / data.length - 140, Language.getPhrase('resultsMenu.winBonus'), 32);
-			winBonusTxt.font = Paths.font('small');
+			winBonusTxt.font = Paths.getFont('small');
 			winBonusTxt.ID = i;
 			while (winBonusTxt.height > 96) {
 				winBonusTxt.size -= 8;

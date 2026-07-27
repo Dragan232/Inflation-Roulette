@@ -6,7 +6,7 @@ class PlayerIndicator extends FlxSpriteGroup {
 	
 	public function new(x:Float = 0, y:Float = 0, player:Int = 0, alt:Bool = false) {
 		arrow = new FlxSprite();
-		arrow.loadGraphic(Paths.image('game/particles/playerIndicator'));
+		arrow.loadGraphic(Paths.getImage('game/particles/playerIndicator'));
 		arrow.color = Constants.PLAYER_COLORS[player];
 
 		text = new FlxText(Language.getPhrase('game.playerIndicator.player', ['${player + 1}']), 64);

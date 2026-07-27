@@ -17,18 +17,18 @@ class AchievementProgressBar extends FlxSpriteGroup {
 	public function new(x:Float = 0, y:Float = 0) {
 		super();
 
-		completion = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/completion'));
-		completion.loadGraphic(Paths.image('ui/menus/achievements/completion'), true, Std.int(completion.height), Std.int(completion.height));
+		completion = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/completion'));
+		completion.loadGraphic(Paths.getImage('ui/menus/achievements/completion'), true, Std.int(completion.height), Std.int(completion.height));
 		completion.animation.add('true', !Preferences.data.enablePhotosensitiveMode ? [1, 0, 1, 0, 1] : [1], 24, false);
 		completion.animation.add('false', [0], 24, false);
 		add(completion);
 
-		progressBarBG = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/progressBarBG'));
+		progressBarBG = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/progressBarBG'));
 		progressBarBG.x = completion.width - 5;
 		progressBarBG.y = (completion.height - progressBarBG.height) / 4;
 		add(progressBarBG);
 
-		progressBar = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/progressBar'));
+		progressBar = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/progressBar'));
 		progressBar.x = progressBarBG.x + 10;
 		progressBar.y = progressBarBG.y + 10;
 		add(progressBar);
@@ -37,7 +37,7 @@ class AchievementProgressBar extends FlxSpriteGroup {
 
 		progressTextBlack = new FlxText(0, 0, 0, '0 / 0', 48);
 		progressTextBlack.color = 0xFF000000;
-		progressTextBlack.font = progressTextWhite.font = Paths.font('default', false);
+		progressTextBlack.font = progressTextWhite.font = Paths.getFont('default', false);
 		progressTextBlack.angle = progressTextWhite.angle = -2.5;
 		add(progressTextBlack);
 		add(progressTextWhite);
@@ -82,7 +82,7 @@ class AchievementProgressBar extends FlxSpriteGroup {
 			startDelay: 0.1,
 			onComplete: function(_) {
 				if (progressBar.clipRect.width == progressBar.width) {
-					SuffState.playUISound(Paths.sound('ui/achievements/sparkle'), 0.625);
+					SuffState.playUISound(Paths.getSound('ui/achievements/sparkle'), 0.625);
 					completion.animation.play('true');
 				}
 			}

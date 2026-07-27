@@ -48,7 +48,7 @@ We have a dedicated wiki for the documentation and guides for the inner workings
    3. From `assets/lang/`, copy `en-US.json` and the `en-US/` folder.
    4. Rename the copied `en-US` file and folder to your language's locale code. (formatted as `language-REGION`)
    5. Edit the `.json` file's strings. Do *NOT* edit the keys.
-   6. In `<language-REGION>/metadata/`, edit `metadata.json`.
+   6. In `<language-REGION>/`, edit `metadata.json`.
 2. Click the **Pull Requests** tab in the repository's menu navigation bar.
 3. Click **New Pull Request**.
 4. Select the **main** branch.

@@ -113,6 +113,135 @@
 			"scrollFactor": [0.35, 0.45]
 		},
 		{
+			"id": "greenScientist",
+			"graphic": "greenScientist",
+			"animations": [
+				{
+					"name": "autumn",
+					"prefix": "autumn"
+				},
+				{
+					"name": "clem",
+					"prefix": "clem"
+				},
+				{
+					"name": "cynthia",
+					"prefix": "cynthia"
+				},
+				{
+					"name": "fantakit",
+					"prefix": "fantakit"
+				},
+				{
+					"name": "ponderz",
+					"prefix": "ponderz"
+				},
+				{
+					"name": "seiba",
+					"prefix": "seiba"
+				},
+				{
+					"name": "trigger",
+					"prefix": "trigger"
+				},
+				{
+					"name": "sufferneer",
+					"prefix": "sufferneer"
+				}
+			],
+			"position": ["c+1000", "c-100"],
+			"reactionTime": 0.5,
+			"scrollFactor": [0.35, 0.45],
+			"randomAnim": true,
+			"randomAnimOnRespawn": true,
+			"velocity": [-200, 0],
+			"walkStep": [10, 0],
+			"walkMovement": [0, 2],
+			"color": "#C0C0C0",
+			"respawnTime": 40
+		},
+		{
+			"id": "blueScientist",
+			"graphic": "blueScientist",
+			"animations": [
+				{
+					"name": "idle",
+					"prefix": "idle"
+				},
+				{
+					"name": "shootLive",
+					"prefix": "shootLive",
+					"loop": false
+				},
+				{
+					"name": "win",
+					"prefix": "win"
+				},
+				{
+					"name": "pop",
+					"prefix": "pop",
+					"loop": false
+				},
+				{
+					"name": "overinflate",
+					"prefix": "overinflate",
+					"loop": false
+				},
+				{
+					"name": "introPartOne",
+					"prefix": "introPartOne",
+					"loop": true
+				},
+				{
+					"name": "introPartTwo",
+					"prefix": "introPartTwo",
+					"loop": true
+				}
+			],
+			"position": ["c+150", "c-80"],
+			"reactionTime": 0.75,
+			"scrollFactor": [0.4, 0.5]
+		},
+		{
+			"id": "redScientist",
+			"graphic": "redScientist",
+			"animations": [
+				{
+					"name": "idle",
+					"prefix": "idle",
+					"fps": 24
+				},
+				{
+					"name": "shootLive",
+					"prefix": "shootLive",
+					"loop": false
+				},
+				{
+					"name": "pop",
+					"prefix": "pop",
+					"loop": false
+				},
+				{
+					"name": "overinflate",
+					"prefix": "overinflate",
+					"loop": false
+				},
+				{
+					"name": "introPartOne",
+					"prefix": "introPartOne",
+					"loop": false
+				},
+				{
+					"name": "introPartTwo",
+					"prefix": "introPartTwo",
+					"loop": false
+				}
+			],
+			"position": ["c+280", "c-100"],
+			"reactionTime": 0.5,
+			"scrollFactor": [0.4, 0.5]
+		},
+		{
 			"id": "wall",
 			"graphic": "wall",
 			"position": ["c", "c+50"],
@@ -140,8 +269,7 @@
 			"id": "table",
 			"graphic": "table",
 			"position": ["c", "500"],
-			"scrollFactor": [1.2, 1.1],
-			"scale": [1.25, 1]
+			"scrollFactor": [1.2, 1.1]
 		}
 	],
 	"foregroundObjects": [
@@ -167,8 +295,7 @@
 			"id": "pillarLeft",
 			"hideInDecreaseDetail": true,
 			"graphic": "pillar",
-			"scale": [0.75, 1],
-			"position": ["c-1100", "c"],
+			"position": ["c-1200", "c"],
 			"alpha": 0.625,
 			"scrollFactor": [1.3, 0.8]
 		},
@@ -176,8 +303,7 @@
 			"id": "pillarRight",
 			"hideInDecreaseDetail": true,
 			"graphic": "pillar",
-			"scale": [0.75, 1],
-			"position": ["c+1100", "c"],
+			"position": ["c+1200", "c"],
 			"alpha": 0.625,
 			"scrollFactor": [1.3, 0.8]
 		}

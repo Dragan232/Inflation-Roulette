@@ -13,9 +13,13 @@ class StageMiniCard extends SuffButton {
 		this.stage = stage;
 		super(x, y, null, null, null, Constants.CHARACTER_CARD_DIMENSIONS[0], Constants.CHARACTER_CARD_DIMENSIONS[1], false);
 
-		var bgGraphic = Paths.image('ui/menus/characterSelect/stages/$stage');
-		bg = new FlxSprite(-19, 1).loadGraphic(bgGraphic);
-		bg.clipRect = FlxRect.get(24, 4, 140, 190);
+		var bgGraphic = Paths.getImage('ui/menus/characterSelect/stages/$stage');
+		bg = new FlxSprite().loadGraphic(bgGraphic);
+		var rectOffset = FlxPoint.get(24, 4);
+		if (stage == 'random')
+			rectOffset.x = (bgGraphic.width - 140) / 2;
+		bg.clipRect = FlxRect.get(rectOffset.x, rectOffset.y, 140, 190);
+		bg.setPosition(-rectOffset.x + 5, 1);
 		bg.updateHitbox();
 		add(bg);
 
@@ -23,7 +27,7 @@ class StageMiniCard extends SuffButton {
 		add(outline);
 
 		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('stage.$stage.name').toUpperCase());
-		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
+		charNameText.setFormat(Paths.getFont('small'), 32, FlxColor.WHITE);
 		charNameText.setBorderStyle(OUTLINE, 0x80000000, 0.25);
 		add(charNameText);
 	}

@@ -51,7 +51,7 @@ class GalleryMainMenuState extends SuffState {
 				ease: FlxEase.quintOut,
 				startDelay: 0.1 * num,
 				onStart: function(_) {
-					SuffState.playUISound(Paths.soundRandom('game/weapon', 1, 3), 1, 2.25 + Math.random() * 0.25);
+					SuffState.playUISound(Paths.getSoundRandom('game/weapon', 1, 3), 1, 2.25 + Math.random() * 0.25);
 				},
 				onUpdate: function(_) {
 					envelope.y = envelope.intendedPos.y;

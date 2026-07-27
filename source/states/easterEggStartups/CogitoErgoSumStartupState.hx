@@ -37,7 +37,7 @@ class CogitoErgoSumStartupState extends SuffState {
 
 		if (!Preferences.data.decreaseDetail) {
 			for (i in 1...21)
-				Paths.image('ui/menus/easterEggStartups/cogitoergosum/' + i);
+				Paths.getImage('ui/menus/easterEggStartups/cogitoergosum/' + i);
 		}
 
 		upThumbnails = new FlxSpriteContainer();
@@ -62,7 +62,7 @@ class CogitoErgoSumStartupState extends SuffState {
 			}
 		}
 
-		satan = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/cogitoergosum/satan'));
+		satan = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/cogitoergosum/satan'));
 		satan.camera = camHUD;
 		satan.alpha = 0;
 		satan.setGraphicSize(FlxG.width, FlxG.height);
@@ -70,13 +70,13 @@ class CogitoErgoSumStartupState extends SuffState {
 		satan.antialiasing = !Preferences.data.enableForcedAliasing;
 		satan.screenCenter();
 
-		var vignette = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/mask'));
+		var vignette = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/mask'));
 		vignette.camera = camHUD;
 		vignette.scale.set(2, 2);
 		add(satan);
 		add(vignette);
 
-		hateSpeech = new FlxSound().loadEmbedded(Paths.soundRandom('ui/startup/cogitoergosum/hate', 1, 2));
+		hateSpeech = new FlxSound().loadEmbedded(Paths.getSoundRandom('ui/startup/cogitoergosum/hate', 1, 2));
 		hateSpeech.volume = Preferences.data.gameSoundVolume;
 		hateSpeech.play();
 
@@ -110,7 +110,7 @@ class CogitoErgoSumStartupState extends SuffState {
 	}
 
 	function getRandomThumbnail() {
-		return Paths.image('ui/menus/easterEggStartups/cogitoergosum/' + FlxG.random.int(1, 20));
+		return Paths.getImage('ui/menus/easterEggStartups/cogitoergosum/' + FlxG.random.int(1, 20));
 	}
 
 	function skipIntro() {
@@ -121,8 +121,8 @@ class CogitoErgoSumStartupState extends SuffState {
 		hateSpeech.stop();
 		FlxTween.cancelTweensOf(satan);
 		satan.destroy();
-		SuffState.playSound(Paths.sound('ui/startup/cogitoergosum/exit'));
-		SuffState.playSound(Paths.sound('explosionLoud'));
+		SuffState.playSound(Paths.getSound('ui/startup/cogitoergosum/exit'));
+		SuffState.playSound(Paths.getSound('explosionLoud'));
 		if (!Preferences.data.decreaseDetail) {
 			for (i in 0...16) {
 				var explode:Explosion = new Explosion(0, 0, FlxG.random.int(2, 6), 0);

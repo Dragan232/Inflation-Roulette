@@ -46,7 +46,7 @@ class SuffTransition extends SuffSubState {
 
 		switch (style) {
 			case DEFAULT:
-				var tran:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/transitions/default'));
+				var tran:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage('ui/transitions/default'));
 				tran.setGraphicSize(Std.int(tran.width * FlxG.width / 1280), Std.int(tran.height * FlxG.height / 720));
 				tran.updateHitbox();
 				tran.color = 0xFF000000;
@@ -94,7 +94,7 @@ class SuffTransition extends SuffSubState {
 		}
 
 		loadingTxt = new FlxText(0, 0, FlxG.width / 2, Language.getPhrase('loading.message.format', [leText]).toUpperCase());
-		loadingTxt.setFormat(Paths.font('default'), 72, FlxColor.WHITE);
+		loadingTxt.setFormat(Paths.getFont('default'), 72, FlxColor.WHITE);
 		loadingTxt.setPosition(72, FlxG.height - 72 - loadingTxt.height);
 		add(loadingTxt);
 		loadingTxt.visible = false;
@@ -159,7 +159,7 @@ class SuffTransition extends SuffSubState {
 				}
 			case INTERMISSION:
 				if (!transIn) {
-					SuffState.playUISound(Paths.sound('ui/mainMenu/easterEgg'));
+					SuffState.playUISound(Paths.getSound('ui/mainMenu/easterEgg'));
 					new FlxTimer().start(0.625, function(_) {
 						FlxTween.num(0, 1, bandDecayDuration, {
 							onComplete: function(_) {
@@ -186,7 +186,7 @@ class SuffTransition extends SuffSubState {
 						if (curBlock < trans.members.length) {
 							trans.members[curBlock].visible = !isTransIn;
 							curBlock++;
-							SuffState.playUISound(Paths.soundRandom('ui/transition/pop', 1, 5), FlxG.random.float(0.25, 0.75), FlxG.random.float(2, 3));
+							SuffState.playUISound(Paths.getSoundRandom('ui/transition/pop', 1, 5), FlxG.random.float(0.25, 0.75), FlxG.random.float(2, 3));
 						}
 					}
 					blockDuration = 0;

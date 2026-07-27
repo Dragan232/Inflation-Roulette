@@ -6,7 +6,7 @@ class Bloosh extends FlxSprite {
 
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y);
-		var graphic = Paths.image('game/particles/bloosh');
+		var graphic = Paths.getImage('game/particles/bloosh');
 		loadGraphic(graphic, true, Std.int(graphic.height), Std.int(graphic.height));
 		animation.add('idle', [for (i in 0...6) i], 12 + FlxG.random.int(-4, 4), false);
 		offset.x += width / 2;

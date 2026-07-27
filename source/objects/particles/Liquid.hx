@@ -4,8 +4,8 @@ class Liquid extends FlxSprite {
 	var floorY:Float = 690;
 	public function new(x:Float = 0, y:Float = 0, ?floorY:Float = 690) {
 		super(x, y);
-		loadGraphic(Paths.image('game/particles/liquid'));
-		// loadGraphic(Paths.image('debug/arrowSquare'));
+		loadGraphic(Paths.getImage('game/particles/liquid'));
+		// loadGraphic(Paths.getImage('debug/arrowSquare'));
 		this.offset.x += this.width / 2;
 		this.offset.y += this.height / 2;
 		this.originXLerp = this.width / 2;

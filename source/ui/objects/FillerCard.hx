@@ -17,14 +17,14 @@ class FillerCard extends SuffButton {
 
 		this.filler = filler;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/fillers/${filler.id}'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/characterSelect/fillers/${filler.id}'));
 		add(bg);
 
 		outline = new FlxSprite().loadGraphic(Utilities.makeBorder(bg.width, bg.height));
 		add(outline);
 
 		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase('filler.${filler.id}.name').toUpperCase());
-		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
+		charNameText.setFormat(Paths.getFont('small'), 32, FlxColor.WHITE);
 		charNameText.blend = INVERT;
 		add(charNameText);
 	}

@@ -39,7 +39,7 @@ class AddonsMenuState extends SuffState {
 		bg.alpha = 0.5;
 		add(bg);
 
-		icons = new FlxBackdrop(Paths.image('ui/menus/addons/bg'));
+		icons = new FlxBackdrop(Paths.getImage('ui/menus/addons/bg'));
 		icons.scale.set(2, 2);
 		icons.updateHitbox();
 		icons.velocity.set(-40, -40);
@@ -60,10 +60,10 @@ class AddonsMenuState extends SuffState {
 			noAddonsInstalled = true;
 
 			var noModsDetected:FlxText = new FlxText(0, 0, 0, Language.getPhrase('addonsMenu.noAddonsDetected.title'));
-			noModsDetected.setFormat(Paths.font('default'), 64);
+			noModsDetected.setFormat(Paths.getFont('default'), 64);
 
 			var noModsDetectedDesc:FlxText = new FlxText(0, 0, Std.int(noModsDetected.width * 1.5), Language.getPhrase('addonsMenu.noAddonsDetected.content'));
-			noModsDetectedDesc.setFormat(Paths.font('default'), 32, 0xFFFFFFFF, CENTER);
+			noModsDetectedDesc.setFormat(Paths.getFont('default'), 32, 0xFFFFFFFF, CENTER);
 
 			noModsDetected.screenCenter(X);
 			noModsDetected.y = (FlxG.height - (noModsDetected.height + noModsDetectedDesc.height)) / 2;
@@ -118,7 +118,7 @@ class AddonsMenuState extends SuffState {
 
 		modBanner = new FlxSprite();
 
-		modBannerVignette = new FlxSprite().loadGraphic(Paths.image('ui/menus/addons/bannerVignette'));
+		modBannerVignette = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/addons/bannerVignette'));
 		modBannerVignette.alpha = 0.5;
 		changeBanner('');
 
@@ -157,11 +157,11 @@ class AddonsMenuState extends SuffState {
 		var modMetadataY:Float = 0;
 
 		var modMetadataTitle = new FlxText(modBannerBG.x + 16, modMetadataY, modBannerBG.width - 32, addon.name, 48);
-		modMetadataTitle.font = Paths.font('default', false);
+		modMetadataTitle.font = Paths.getFont('default', false);
 		modMetadataItems.add(modMetadataTitle);
 		modMetadataY += modMetadataTitle.height;
 		var modMetadataDesc = new FlxText(modMetadataTitle.x, modMetadataY, modMetadataTitle.width, addon.description, 32);
-		modMetadataDesc.font = Paths.font('default', false);
+		modMetadataDesc.font = Paths.getFont('default', false);
 		modMetadataY += modMetadataDesc.height + 32;
 		modMetadataItems.add(modMetadataDesc);
 		var authorStr:String = '';
@@ -174,7 +174,7 @@ class AddonsMenuState extends SuffState {
 			authorStr += '$name - $role';
 		}
 		var modAuthorsText = new FlxText(modMetadataTitle.x, modMetadataY, modMetadataDesc.width, authorStr, 32);
-		modAuthorsText.font = Paths.font('default', false);
+		modAuthorsText.font = Paths.getFont('default', false);
 		modMetadataItems.add(modAuthorsText);
 
 		modMetadataItems.y = modBanner.y + modBanner.height;
@@ -201,7 +201,7 @@ class AddonsMenuState extends SuffState {
 	}
 
 	function changeBanner(folder:String) {
-		var path:String = Paths.addons('$folder/metadata/banner.png');
+		var path:String = Paths.getPathInAddons('$folder/banner.png');
 		if (!FileSystem.exists(path)) {
 			path = Paths.getImagePath('ui/menus/addons/defaultBanner');
 		}

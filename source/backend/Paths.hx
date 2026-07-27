@@ -10,7 +10,6 @@ import openfl.display.BitmapData;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.system.System;
 import tjson.TJSON as Json;
-import openfl.display3D.textures.RectangleTexture;
 
 /**
  * List of functions for getting assets.
@@ -112,7 +111,7 @@ class Paths {
 	 */
 	public static function getImagePath(file:String, suffix:Bool = true):String {
 		#if _ALLOW_ADDONS
-		var key = addonFolders('images/' + file + (suffix ? '.png' : ''));
+		var key = getAddonsPath('images/' + file + (suffix ? '.png' : ''));
 		if (key != null)
 			return key;
 		#end
@@ -121,7 +120,7 @@ class Paths {
 
 	public static function getMusicPath(file:String, suffix:Bool = true):String {
 		#if _ALLOW_ADDONS
-		var key = addonFolders('music/' + file + (suffix ? '.$SOUND_EXT' : ''));
+		var key = getAddonsPath('music/' + file + (suffix ? '.$SOUND_EXT' : ''));
 		if (key != null)
 			return key;
 		#end
@@ -130,20 +129,11 @@ class Paths {
 
 	public static function getSoundPath(file:String, suffix:Bool = true):String {
 		#if _ALLOW_ADDONS
-		var key = addonFolders('sounds/' + file + (suffix ? '.$SOUND_EXT' : ''));
+		var key = getAddonsPath('sounds/' + file + (suffix ? '.$SOUND_EXT' : ''));
 		if (key != null)
 			return key;
 		#end
 		return getPath('sounds/' + file + (suffix ? '.$SOUND_EXT' : ''));
-	}
-
-	/**
-	 * Add the sound extention string to the end of a directory.
-	 * 
-	 * @param file
-	 */
-	inline public static function appendSoundExt(file:String):String {
-		return file + '.$SOUND_EXT';
 	}
 
 	/**
@@ -170,10 +160,10 @@ class Paths {
 		#if _ALLOW_ADDONS
 		if (addons) {
 			for (addon in Addons.globalAddons) {
-				if (FileSystem.exists(Paths.addons(addon + '/' + path))) {
-					for (i in FileSystem.readDirectory(Paths.addons(addon + '/' + path))) {
+				if (FileSystem.exists(Paths.getPathInAddons(addon + '/' + path))) {
+					for (i in FileSystem.readDirectory(Paths.getPathInAddons(addon + '/' + path))) {
 						var item = i.replace('.$fileFormat', '');
-						if (!pathsInFolder.contains(item) && !FileSystem.isDirectory(Paths.addons(addon + '/' + path + '/' + i)))
+						if (!pathsInFolder.contains(item) && !FileSystem.isDirectory(Paths.getPathInAddons(addon + '/' + path + '/' + i)))
 							pathsInFolder.push(item);
 					}
 				}
@@ -211,9 +201,9 @@ class Paths {
 		#if _ALLOW_ADDONS
 		if (addons) {
 			for (addon in Addons.globalAddons) {
-				if (FileSystem.exists(Paths.addons('$addon/$path'))) {
-					for (i in FileSystem.readDirectory(Paths.addons('$addon/$path'))) {
-						if (!pathsInFolder.contains(i) && FileSystem.isDirectory(Paths.addons('$addon/$path/$i')) && FileSystem.exists(Paths.addons('$addon/$path/$i/$fileToCheck')))
+				if (FileSystem.exists(Paths.getPathInAddons('$addon/$path'))) {
+					for (i in FileSystem.readDirectory(Paths.getPathInAddons('$addon/$path'))) {
+						if (!pathsInFolder.contains(i) && FileSystem.isDirectory(Paths.getPathInAddons('$addon/$path/$i')) && FileSystem.exists(Paths.getPathInAddons('$addon/$path/$i/$fileToCheck')))
 							pathsInFolder.push(i);
 					}
 				}
@@ -231,7 +221,7 @@ class Paths {
 	 */
 	public static function getSparrowXmlPath(file:String):String {
 		#if _ALLOW_ADDONS
-		var key = addonFolders('images/' + file + '.xml');
+		var key = getAddonsPath('images/' + file + '.xml');
 		if (key != null)
 			return key;
 		#end
@@ -243,7 +233,7 @@ class Paths {
 	 * 
 	 * @param key The filename of the sound.
 	 */
-	static public function sound(key:String):Sound {
+	static public function getSound(key:String):Sound {
 		var sound:Sound = returnSound('sounds', key);
 		return sound;
 	}
@@ -255,8 +245,8 @@ class Paths {
 	 * @param min The minimum suffix value.
 	 * @param max The maximum suffix value.
 	 */
-	inline static public function soundRandom(key:String, min:Int, max:Int) {
-		return sound(key + '_' + FlxG.random.int(min, max));
+	inline static public function getSoundRandom(key:String, min:Int, max:Int) {
+		return getSound(key + '_' + FlxG.random.int(min, max));
 	}
 
 	/**
@@ -264,7 +254,7 @@ class Paths {
 	 * 
 	 * @param key The filename of the music.
 	 */
-	inline static public function music(key:String):Sound {
+	inline static public function getMusic(key:String):Sound {
 		var file:Sound = returnSound('music', key);
 		return file;
 	}
@@ -274,7 +264,7 @@ class Paths {
 	 * 
 	 * @param tag The filename of the music.
 	 */
-	inline static public function musicMetadata(tag:String):MusicMetadata {
+	inline static public function getMusicMetadata(tag:String):MusicMetadata {
 		var usedTag:String = tag;
 		var json:MusicMetadata = null;
 		var rawJson = getTextFromFile('music/' + usedTag + '.json');
@@ -295,12 +285,12 @@ class Paths {
 	 * @param key The directory of the image in the `images/` folder.
 	 * @param allowGPU Whether to allow VRAM to store this image or not.
 	 */
-	static public function image(key:String, useLang:Bool = true, ?allowGPU:Bool = true):FlxGraphic {
+	static public function getImage(key:String, useLang:Bool = true, ?allowGPU:Bool = true):Null<FlxGraphic> {
 		var bitmap:BitmapData = null;
 		var file:String = null;
 
 		#if _ALLOW_ADDONS
-		file = addonsImages(key);
+		file = getAddonsImages(key);
 		if (currentTrackedTextures.exists(file)) {
 			localTrackedAssets.push(file);
 			return currentTrackedTextures.get(file);
@@ -310,7 +300,7 @@ class Paths {
 		#end
 
 		if (useLang) {
-			file = lang('images/$key.png');
+			file = getLangPath('images/$key.png');
 			if (!fileExists(file))
 				file = getPath('images/$key.png');
 		} else {
@@ -382,9 +372,9 @@ class Paths {
 		return newGraphic;
 	}
 
-	static public function video(key:String) {
+	static public function getVideo(key:String) {
 		#if _ALLOW_ADDONS
-		var file:String = addonsVideos(key);
+		var file:String = getAddonsVideos(key);
 		if (FileSystem.exists(file))
 			return file;
 		#end
@@ -396,13 +386,13 @@ class Paths {
 	 * 
 	 * @param key The directory of the text file.
 	 */
-	static public function getTextFromFile(key:String, addons:Bool = true):String {
+	static public function getTextFromFile(key:String, addons:Bool = true):Null<String> {
 		var path = getPath(key);
 		#if sys
 		#if _ALLOW_ADDONS
 		if (addons) {
-			if (FileSystem.exists(addonFolders(key)))
-				return File.getContent(addonFolders(key));
+			if (FileSystem.exists(getAddonsPath(key)))
+				return File.getContent(getAddonsPath(key));
 		}
 		#end
 		if (FileSystem.exists(path))
@@ -414,9 +404,9 @@ class Paths {
 		return null;
 	}
 
-	inline static public function font(key:String, useLang:Bool = true) {
-		if (useLang && fileExists(lang('fonts/${key}_${Preferences.data.language}.ttf')))
-			return lang('fonts/${key}_${Preferences.data.language}.ttf');
+	inline static public function getFont(key:String, useLang:Bool = true) {
+		if (useLang && fileExists(getLangPath('fonts/${key}_${Preferences.data.language}.ttf')))
+			return getLangPath('fonts/${key}_${Preferences.data.language}.ttf');
 		return getPath('fonts/$key.ttf');
 	}
 
@@ -433,19 +423,19 @@ class Paths {
 	}
 
 	/**
-	 * Returns a Sparrow v2 Altas to be used for animations for sprites.
+	 * Returns a Sparrow v2 Atlas to be used for animations for sprites.
 	 * 
 	 * @param key The directory of both the image and XML file.
-	 * @param allowGPU Whether to allow VRAM to store the texture altas or not.
+	 * @param allowGPU Whether to allow VRAM to store the texture atlas or not.
 	 */
-	inline static public function sparrowAtlas(key:String, xmlPath:String = null, ?allowGPU:Bool = true):FlxAtlasFrames {
-		var imageLoaded:FlxGraphic = image(key, allowGPU);
+	static public function getSparrowAtlas(key:String, xmlPath:String = null, ?allowGPU:Bool = true):FlxAtlasFrames {
+		var imageLoaded:FlxGraphic = getImage(key, allowGPU);
 		#if _ALLOW_ADDONS
 		var xmlExists:Bool = false;
 
 		if (xmlPath == null)
 			xmlPath = key;
-		var xml:String = addonsXml(xmlPath);
+		var xml:String = getAddonsXml(xmlPath);
 		if (FileSystem.exists(xml))
 			xmlExists = true;
 
@@ -467,69 +457,75 @@ class Paths {
 	 * @param key The name to be assigned for the sound for quick access.
 	 */
 	public static function returnSound(path:String, key:String) {
-		var file:String = appendSoundExt(getPath('$path/$key'));
 		#if _ALLOW_ADDONS
-		if (!FileSystem.exists(file))
-			file = addonsSounds(path, key);
+		var modFile = getAddonsSounds(path, key);
+		if (FileSystem.exists(modFile)) {
+			if (!currentTrackedSounds.exists(modFile)) {
+				currentTrackedSounds.set(modFile, Sound.fromFile(modFile));
+			}
+			localTrackedAssets.push(key);
+			return currentTrackedSounds.get(modFile);
+		}
 		#end
-
+		var file:String = getPath('$path/$key.$SOUND_EXT');
+		// trace(file);
 		if (!currentTrackedSounds.exists(file)) {
+			var sound:Sound = null;
 			#if sys
-			if (FileSystem.exists(file))
-				currentTrackedSounds.set(file, Sound.fromFile(file));
+			sound = Sound.fromFile(file);
 			#else
-			if (OpenFlAssets.exists(file, SOUND))
-				currentTrackedSounds.set(file, OpenFlAssets.getSound(file));
+			sound = OpenFlAssets.getSound(file);
 			#end
-			else {
-				trace('Sound not found: $path/$key');
+			if (sound == null) {
+				trace('Sound $path/$key does not exist. Using placeholder sound');
 				return returnSound('sounds', 'eh');
 			}
+			currentTrackedSounds.set(file, sound);
 		}
 		localTrackedAssets.push(file);
 		return currentTrackedSounds.get(file);
 	}
 
-	inline static public function lang(key:String = '') {
+	inline static public function getLangPath(key:String = '') {
 		return getPath('lang/${Preferences.data.language}/$key');
 	}
 
 	#if _ALLOW_ADDONS
-	inline static public function addons(key:String = '') {
+	inline static public function getPathInAddons(key:String = '') {
 		return AndroidUtil.getPath() + 'addons/' + key;
 	}
 
-	inline static public function addonsSounds(path:String, key:String) {
-		var langPath = addonFolders('lang/${Preferences.data.language}/' + path + '/' + key + '.' + SOUND_EXT);
+	inline static public function getAddonsSounds(path:String, key:String) {
+		var langPath = getAddonsPath('lang/${Preferences.data.language}/' + path + '/' + key + '.' + SOUND_EXT);
 		if (fileExists(langPath))
 			return langPath;
-		return addonFolders(path + '/' + key + '.' + SOUND_EXT);
+		return getAddonsPath(path + '/' + key + '.' + SOUND_EXT);
 	}
 
-	inline static public function addonsImages(key:String) {
-		var langPath = addonFolders('lang/${Preferences.data.language}/images/' + key + '.png');
+	inline static public function getAddonsImages(key:String) {
+		var langPath = getAddonsPath('lang/${Preferences.data.language}/images/' + key + '.png');
 		if (fileExists(langPath))
 			return langPath;
-		return addonFolders('images/' + key + '.png');
+		return getAddonsPath('images/' + key + '.png');
 	}
 
-	inline static public function addonsVideos(key:String) {
-		var langPath = addonFolders('lang/${Preferences.data.language}/videos/' + key + VIDEO_EXT);
+	inline static public function getAddonsVideos(key:String) {
+		var langPath = getAddonsPath('lang/${Preferences.data.language}/videos/' + key + VIDEO_EXT);
 		if (fileExists(langPath))
 			return langPath;
-		return addonFolders('videos/' + key + VIDEO_EXT);
+		return getAddonsPath('videos/' + key + VIDEO_EXT);
 	}
 
-	inline static public function addonsXml(key:String) {
-		var langPath = addonFolders('lang/${Preferences.data.language}/images/' + key + '.xml');
+	inline static public function getAddonsXml(key:String) {
+		var langPath = getAddonsPath('lang/${Preferences.data.language}/images/' + key + '.xml');
 		if (fileExists(langPath))
 			return langPath;
-		return addonFolders('images/' + key + '.xml');
+		return getAddonsPath('images/' + key + '.xml');
 	}
 
-	static public function addonFolders(key:String) {
+	static public function getAddonsPath(key:String) {
 		for (addon in Addons.globalAddons) {
-			var fileToCheck:String = addons(addon + '/' + key);
+			var fileToCheck:String = getPathInAddons(addon + '/' + key);
 			if (FileSystem.exists(fileToCheck))
 				return fileToCheck;
 		}

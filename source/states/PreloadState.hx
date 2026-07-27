@@ -30,7 +30,7 @@ class PreloadState extends SuffState {
 		Window.setTitle(Language.getPhrase('preloadMenu.windowDisplay'));
 
 		#if !html5
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/preload/loadingArt'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/preload/loadingArt'));
 		bg.alpha = 0;
 		preloadTxt = new FlxText(0, 0, FlxG.width, '', 32);
 		preloadTxt.alignment = CENTER;
@@ -67,7 +67,7 @@ class PreloadState extends SuffState {
 					var musicList = Utilities.textFileToArray('data/extras/jukebox/musicList.txt', true);
 					for (music in musicList) {
 						trace('Cached music: $music');
-						Paths.music(music);
+						Paths.getMusic(music);
 					}
 					#end
 				case 'achievements':
@@ -127,12 +127,12 @@ class PreloadState extends SuffState {
 		#if _ALLOW_EASTER_EGGS
 		if ((Date.now().getHours() == 21 && Date.now().getMinutes() == 21) || FlxG.random.bool(1 / 1024 * 100)) {
 			var originalDimensions:Array<Float> = [bg.width, bg.height];
-			bg.loadGraphic(Paths.image('ui/menus/preload/areWeFuckingForRealBro'));
+			bg.loadGraphic(Paths.getImage('ui/menus/preload/areWeFuckingForRealBro'));
 			bg.setGraphicSize(Std.int(originalDimensions[0]), Std.int(originalDimensions[1]));
 			bg.updateHitbox();
 			preloadTxt.visible = false;
 			Achievements.advanceProgress('nineTwentyOne', [true]);
-			SuffState.playUISound(Paths.sound('void'));
+			SuffState.playUISound(Paths.getSound('void'));
 			new FlxTimer().start(1, function(_) {
 				FlxG.camera.fade(0xFF000000, 0, false);
 				new FlxTimer().start(4.0, function(_) {

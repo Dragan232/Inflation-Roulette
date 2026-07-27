@@ -19,7 +19,7 @@ class GalleryEnvelope extends SuffButton {
 		for (i in 0...envelopeID.length)
 			seed += envelopeID.fastCodeAt(i);
 
-		var what = Paths.image('ui/menus/extras/gallery/envelope');
+		var what = Paths.getImage('ui/menus/extras/gallery/envelope');
 		super(x, y, null, null, null, what.width, what.height, false);
 		this.clickSound = '';
 		this.hoverSound = 'ui/extras/gallery/envelopeHover';
@@ -36,14 +36,14 @@ class GalleryEnvelope extends SuffButton {
 		base.color = FlxColor.fromHSB(hue, saturation * 0.25, Math.min(1, brightness * 1.33), 1);
 		add(base);
 
-		var sticker:FlxSprite = new FlxSprite().loadGraphic(Paths.image
+		var sticker:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage
 		('ui/menus/extras/gallery/envelopeStickers/$envelopeID'));
 		sticker.x = (base.width - sticker.width) / 2 + randomNum(-20, 20);
 		sticker.y = (base.height - sticker.height) / 2 + 100 + randomNum(-20, 20);
 		sticker.angle = randomNum(-30, 30);
 		add(sticker);
 
-		string = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/gallery/envelopeString'));
+		string = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/extras/gallery/envelopeString'));
 		add(string);
 
 		text = new FlxText(0, 144, 0, Language.getPhrase(envelopeData.titleTranslationKey, [], Language.getPhrase('galleryMainMenu.envelope.${envelopeData.id}')), 64);

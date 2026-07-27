@@ -18,7 +18,7 @@ class ScreenSafeAreaSubState extends SuffSubState {
 
 		Window.setTitle(Language.getPhrase('optionsMenu.windowDisplay'), Language.getPhrase('option.screenSafeArea.name'));
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/bg'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/bg'));
 		bg.color = 0x303030;
 		bg.setGraphicSize(FlxG.width);
 		bg.updateHitbox();
@@ -29,18 +29,18 @@ class ScreenSafeAreaSubState extends SuffSubState {
 		bounds.alpha = 0.25;
 		add(bounds);
 
-		cornerTopLeft = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/boundsCorner'));
+		cornerTopLeft = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/boundsCorner'));
 		add(cornerTopLeft);
 
-		cornerTopRight = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/boundsCorner'));
+		cornerTopRight = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/boundsCorner'));
 		cornerTopRight.flipX = true;
 		add(cornerTopRight);
 
-		cornerBottomLeft = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/boundsCorner'));
+		cornerBottomLeft = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/boundsCorner'));
 		cornerBottomLeft.flipY = true;
 		add(cornerBottomLeft);
 
-		cornerBottomRight = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/boundsCorner'));
+		cornerBottomRight = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/boundsCorner'));
 		cornerBottomRight.flipX = true;
 		cornerBottomRight.flipY = true;
 		add(cornerBottomRight);

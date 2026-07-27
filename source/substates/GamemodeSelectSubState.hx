@@ -36,7 +36,7 @@ class GamemodeSelectSubState extends SuffSubState {
 		FlxTween.tween(bg, {alpha: 0.75}, 0.5);
 		add(bg);
 
-		light = new FlxSprite().loadGraphic(Paths.image('game/selectLight'));
+		light = new FlxSprite().loadGraphic(Paths.getImage('game/selectLight'));
 		light.scale.set(FlxG.width, 1);
 		light.color = 0x20000000;
 		light.alpha = 0.25;
@@ -112,7 +112,7 @@ class GamemodeSelectSubState extends SuffSubState {
 
 	function switchGameModeArt(gamemode:Gamemode) {
 		FlxTween.cancelTweensOf(gameModeArt);
-		gameModeArt.loadGraphic(Paths.image('ui/menus/mainMenu/gameModes/${gamemode.id}'));
+		gameModeArt.loadGraphic(Paths.getImage('ui/menus/mainMenu/gameModes/${gamemode.id}'));
 		gameModeArt.visible = true;
 		gameModeArt.x = FlxG.width - gameModeArt.width * (7 / 8);
 		gameModeArt.y = FlxG.height - gameModeArt.height;

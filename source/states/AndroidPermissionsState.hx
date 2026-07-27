@@ -20,7 +20,7 @@ class AndroidPermissionsState extends SuffState {
 		Window.setTitle(Language.getPhrase('androidPermissionsMenu.windowDisplay'));
 
 		bg = new FlxSprite();
-		bg.loadGraphic(Paths.image('ui/menus/android/permissionsRequired'));
+		bg.loadGraphic(Paths.getImage('ui/menus/android/permissionsRequired'));
 
 		title = new FlxText(0, 0, FlxG.width * 0.4, Language.getPhrase('androidPermissionsMenu.permissionsRequired'), 48);
 		description = new FlxText(0, 0, title.width, Language.getPhrase('androidPermissionsMenu.description'), 32);
@@ -64,17 +64,17 @@ class AndroidPermissionsState extends SuffState {
 
 		if (askingForPermissions == true && AndroidUtil.checkAllFilesPermission()) {
 			askingForPermissions = false;
-			bg.loadGraphic(Paths.image('ui/menus/android/permissionsGranted'));
+			bg.loadGraphic(Paths.getImage('ui/menus/android/permissionsGranted'));
 			title.text = Language.getPhrase('androidPermissionsMenu.permissionsGranted');
 			title.y = Std.int((FlxG.height - title.height) / 1.75);
 			description.destroy();
 			acceptButton.destroy();
 			declineButton.destroy();
-			SuffState.playUISound(Paths.sound('game/confetti'));
+			SuffState.playUISound(Paths.getSound('game/confetti'));
 			SuffState.playMusic('win');
 			new FlxTimer().start(3, function(_) {
 				FlxG.sound.music.stop();
-				SuffState.playUISound(Paths.sound('void'), 1, 0.8909);
+				SuffState.playUISound(Paths.getSound('void'), 1, 0.8909);
 				FlxG.camera.fade(0xFF000000, 2, function() {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;

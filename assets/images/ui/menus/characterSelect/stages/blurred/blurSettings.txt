@@ -1,4 +1,5 @@
-This file has no effect on gameplay and is only used to document what settings I use for the background blur.
+This file has no effect on gameplay and is only used to document what settings I use
+for the background blur.
 
 Program: Paint.NET
 Setting: Gaussian Blur

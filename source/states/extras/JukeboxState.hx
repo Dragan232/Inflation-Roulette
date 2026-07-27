@@ -26,7 +26,7 @@ class JukeboxState extends SuffState {
 
 		super.create();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/extras/jukebox/bg'));
 		bg.screenCenter();
 		bgScale = FlxPoint.get(FlxG.width / Constants.ORIGINAL_FLXG_WIDTH, FlxG.height / Constants.ORIGINAL_FLXG_HEIGHT);
 		add(bg);
@@ -50,7 +50,7 @@ class JukeboxState extends SuffState {
 		add(barGroup);
 		var list:Array<String> = Utilities.textFileToArray('data/extras/jukebox/musicList.txt');
 		for (num => item in list) {
-			Paths.music(item);
+			Paths.getMusic(item);
 			var bar:JukeboxBar = new JukeboxBar(0, FlxG.height, item);
 			bar.x = (FlxG.width - bar.width) / 2;
 			barGroup.add(bar);
@@ -89,7 +89,7 @@ class JukeboxState extends SuffState {
 
 	function changeAlbumText(text:String = '') {
 		var leText = new FlxText(0, 0, 0, text, 64);
-		leText.font = Paths.font('default', false);
+		leText.font = Paths.getFont('default', false);
 		leText.color = 0xFFFFFFFF;
 		for (item in albumText) {
 			item.loadGraphic(leText.graphic);
@@ -143,7 +143,7 @@ class JukeboxState extends SuffState {
 		bgShadowTick += elapsed;
 		if (bgShadowTick >= bgShadowSpawnTick) {
 			bgShadowTick = 0;
-			var bgShadow = new FlxSprite(bg.x, bg.y).loadGraphic(Paths.image('ui/menus/extras/jukebox/bg'));
+			var bgShadow = new FlxSprite(bg.x, bg.y).loadGraphic(Paths.getImage('ui/menus/extras/jukebox/bg'));
 			bgShadow.screenCenter();
 			bgShadow.scale.x = bg.scale.x;
 			bgShadow.scale.y = bg.scale.y;

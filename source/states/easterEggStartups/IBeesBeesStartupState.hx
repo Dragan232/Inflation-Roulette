@@ -17,7 +17,7 @@ class IBeesBeesStartupState extends SuffState {
 
 		Window.setTitle(Constants.COPYRIGHT, 'Original Concept by Snowyboi');
 
-		bg = new FlxBackdrop(Paths.image('ui/menus/easterEggStartups/ibeesbees/bg'));
+		bg = new FlxBackdrop(Paths.getImage('ui/menus/easterEggStartups/ibeesbees/bg'));
 		bg.color = 0xFFFFFFFF;
 		bg.velocity.set(60, 60);
 		add(bg);
@@ -27,7 +27,7 @@ class IBeesBeesStartupState extends SuffState {
 		bgWhat.alpha = 0.75;
 		add(bgWhat);
 
-		var bgMask = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/mask'));
+		var bgMask = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/mask'));
 		bgMask.scale.set(2, 2);
 		add(bgMask);
 
@@ -36,7 +36,7 @@ class IBeesBeesStartupState extends SuffState {
 		var _height = Math.ceil(FlxG.height / pizzaSize.height);
 		for (w in 0..._width) {
 			for (h in 0..._height) {
-				var pizza = new FlxSprite(w * pizzaSize.width, h * pizzaSize.height).loadGraphic(Paths.image('ui/menus/easterEggStartups/ibeesbees/pizza'));
+				var pizza = new FlxSprite(w * pizzaSize.width, h * pizzaSize.height).loadGraphic(Paths.getImage('ui/menus/easterEggStartups/ibeesbees/pizza'));
 				pizza.setGraphicSize(Std.int(pizzaSize.width), Std.int(pizzaSize.height));
 				pizza.updateHitbox();
 				pizza.alpha = (w + h) % 2 * 0.2 + 0.4;
@@ -64,7 +64,7 @@ class IBeesBeesStartupState extends SuffState {
 		var leMember = pizzas.members[randomIndex];
 		leMember.visible = true;
 
-		SuffState.playUISound(Paths.sound('ui/transition/pop_1'), 1, 2.25);
+		SuffState.playUISound(Paths.getSound('ui/transition/pop_1'), 1, 2.25);
 		shownPizzas.push(randomIndex);
 	}
 

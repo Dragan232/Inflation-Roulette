@@ -69,10 +69,10 @@ class NPC extends FlxSprite {
 		];
 
 		super(x, y);
-		if (Paths.sparrowAtlas('game/npcs/$npcId/' + currentCharacterId) == null)
-			this.frames = Paths.sparrowAtlas('game/npcs/$npcId/universal');
+		if (Paths.getSparrowAtlas('game/npcs/$npcId/' + currentCharacterId) == null)
+			this.frames = Paths.getSparrowAtlas('game/npcs/$npcId/universal');
 		else
-			this.frames = Paths.sparrowAtlas('game/npcs/$npcId/' + currentCharacterId);
+			this.frames = Paths.getSparrowAtlas('game/npcs/$npcId/' + currentCharacterId);
 		var animationArray:Array<AnimationData> = rawJson.animations ?? [];
 		for (anim in animationArray) {
 			var name = anim.name;

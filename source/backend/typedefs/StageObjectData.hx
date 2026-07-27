@@ -25,5 +25,6 @@ typedef StageObjectData = {
 	?randomAnim:Bool,
 	?randomAnimOnRespawn:Bool,
 	?walkMovement:Array<Float>,
+	?reactionTime:Float,
 	?walkStep:Array<Float>,
 }

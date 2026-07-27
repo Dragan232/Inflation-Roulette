@@ -128,6 +128,16 @@ class Main extends Sprite {
 
 	#if _ALLOW_CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
+		for (sound in FlxG.sound.defaultSoundGroup.sounds) {
+			sound.stop();
+			sound.destroy();
+		}
+		for (music in FlxG.sound.defaultMusicGroup.sounds) {
+			music.stop();
+			music.destroy();
+		}
+		FlxG.sound.play(Paths.getSound('eh'), Preferences?.data?.uiSoundVolume ?? 0.5);
+		
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
@@ -138,8 +148,17 @@ class Main extends Sprite {
 			"bro are you trying to make them bigger or something",
 			"kusmek??? is that you???",
 			"bro there's kids around youtube stop recording",
-			"WAIT!! THAT'S NOT AN INTENDED FEATURE!! :broken_heart: :skull:"
+			"WAIT!! THAT'S NOT AN INTENDED FEATURE!! :broken_heart: :skull:",
+			"here comes a chopper to chop off your head",
+			"death to the eternal enemies of oceania",
+			"don't take the ajuniga's name in vain"
 		];
+		
+		#if _OFFICIAL_BUILD
+		errMsg = FlxG.stage.application.meta.get('file') + '\n';
+		errMsg += VersionUtil.getFullVersion() + '\n';
+		errMsg += VersionUtil.getVersionName(VersionUtil.getFullVersion()) + '\n\n';
+		#end
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
@@ -155,11 +174,10 @@ class Main extends Sprite {
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error;
+		errMsg += '\nError Message: ' + e.error + '\n';
+		errMsg += '\n' + errMsgTitle[FlxG.random.int(0, errMsgTitle.length - 1)];
 		#if _OFFICIAL_BUILD
-		errMsg += "\n\nGame: " + FlxG.stage.application.meta.get('file');
-		errMsg += "\nVersion: " + VersionUtil.getFullVersion();
-		errMsg += "\nPlease report this error to the GitHub page: https://github.com/Sufferneer/Inflation-Roulette-Reloaded";
+		errMsg += "\nhttps://github.com/Sufferneer/Inflation-Roulette-Reloaded";
 		#end
 
 		#if desktop
@@ -171,7 +189,7 @@ class Main extends Sprite {
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		Application.current.window.alert(errMsg + '\n\n', errMsgTitle[FlxG.random.int(0, errMsgTitle.length - 1)]);
+		Application.current.window.alert(errMsg, 'Uncaught Fatal Error!');
 		Sys.exit(1);
 	}
 	#end

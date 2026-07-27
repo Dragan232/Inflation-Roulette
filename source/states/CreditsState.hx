@@ -14,8 +14,6 @@ class CreditsState extends SuffState {
 		['', '', 'GAME_LOGO', Std.int(FlxG.height / 4)],
 		['Design, Code, Art, Sound, Music', '', 'HEADING'],
 		['NicklySuffer', 'nicklysuffer', 'LOGO'],
-		['Original Concept', '', 'HEADING'],
-		['Snowyboi', '', 'default'],
 		['Additional Programmer', '', 'HEADING'],
 		['changedinflation.de', '', 'default'],
 		['Additional Music', '', 'HEADING'],
@@ -28,6 +26,49 @@ class CreditsState extends SuffState {
 		['Runey\n(Balloonomatopoeia)', '', 'default'],
 		['Developed With', '', 'HEADING'],
 		['HaxeFlixel', 'haxeflixel', 'LOGO', Std.int(FlxG.height / 4)],
+		['Ko-Fi Backers', '', 'HEADING'],
+		[
+			'Trigger',
+			'',
+			'default'
+		],
+		[
+			'Hanz (highmon)',
+			'',
+			'default'
+		],
+		[
+			'Gunjack (wojcio85)',
+			'',
+			'default'
+		],
+		[
+			'chemical roach',
+			'',
+			'default'
+		],
+		[
+			'leboulangerie',
+			'',
+			'default'
+		],
+		[
+			'Shylizard47',
+			'',
+			'default'
+		],
+		[
+			'deyucca',
+			'',
+			'default'
+		],
+		[
+			'Target',
+			'',
+			'default'
+		],
+		['Original Concept', '', 'HEADING'],
+		['Snowyboi', '', 'default', Std.int(FlxG.height / 4)],
 		[
 			'Initially started as a joke, this project has been in continuous development for a while now. I would like to thank my fans for their support throughout the development of this game, as well as Discord members who provided feedback and ideas.',
 			'',
@@ -62,7 +103,7 @@ class CreditsState extends SuffState {
 		grid.velocity.set(64, 64);
 		add(grid);
 
-		var overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
+		var overlay = new FlxBackdrop(Paths.getImage('ui/transitions/horizontal'), Y);
 		overlay.x = -overlay.width / 2 + (FlxG.width - overlay.width) / 2 + 40;
 		overlay.velocity.set(0, 32);
 		overlay.color = 0xFF0000FF;
@@ -98,7 +139,7 @@ class CreditsState extends SuffState {
 				if (line[2] == 'GAME_LOGO') {
 					leLogo = new GameLogo(leCharSpace, 0);
 				} else {
-					leLogo.loadGraphic(Paths.image(texturePath));
+					leLogo.loadGraphic(Paths.getImage(texturePath));
 					leLogo.updateHitbox();
 				}
 				leCharSpace += Std.int(leLogo.width + 10);
@@ -117,7 +158,7 @@ class CreditsState extends SuffState {
 					leFont = 'default';
 					leColor = FlxColor.YELLOW;
 				}
-				leChar.setFormat(Paths.font(leFont, false), leSize, leColor);
+				leChar.setFormat(Paths.getFont(leFont, false), leSize, leColor);
 			}
 			if (leLogo.height > leChar.height) {
 				leChar.y = (leLogo.height - leChar.height) / 2;

@@ -25,11 +25,11 @@ class CharacterSelectText extends FlxSpriteGroup {
 		this.clear();
 		if (character == null) { // Default character data
 			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase(overlay));
-			text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
+			text.setFormat(Paths.getFont('default'), size, FlxColor.WHITE);
 			add(text);
 		} else if (character.id == 'random') {
 			var text:FlxText = new FlxText(0, 0, 0, Language.getPhrase('character.random.description'));
-			text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
+			text.setFormat(Paths.getFont('default'), size, FlxColor.WHITE);
 			add(text);
 		} else {
 			for (item in substringList) {
@@ -56,7 +56,7 @@ class CharacterSelectText extends FlxSpriteGroup {
 				}
 				// Text
 				var text:FlxText = new FlxText(textX, 0, 0, subString);
-				text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
+				text.setFormat(Paths.getFont('default'), size, FlxColor.WHITE);
 				add(text);
 				if (subString.length > 0)
 					textX += text.width;
@@ -73,7 +73,7 @@ class CharacterSelectText extends FlxSpriteGroup {
 				if (substringList.indexOf(item) < substringList.length - 1) {
 					textX += 8;
 					var text:FlxText = new FlxText(textX, 0, 0, separator);
-					text.setFormat(Paths.font('default'), size, FlxColor.WHITE);
+					text.setFormat(Paths.getFont('default'), size, FlxColor.WHITE);
 					add(text);
 					textX += text.width + 8;
 				}

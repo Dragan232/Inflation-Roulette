@@ -47,15 +47,15 @@ class SuffSlider extends FlxSpriteGroup {
 		// trace(range);
 		this.scaling = scaling;
 
-		outline = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/slider/bar'));
+		outline = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/slider/bar'));
 
 		parent = new FlxSprite();
-		parent.frames = Paths.sparrowAtlas('ui/menus/options/slider/switch');
+		parent.frames = Paths.getSparrowAtlas('ui/menus/options/slider/switch');
 		parent.animation.addByPrefix('idle', 'idle', 24, true);
 		parent.animation.addByPrefix('hovered', 'hovered', 24, true);
 
 		displayText = new FlxText(0, outline.height, outline.width, '');
-		displayText.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER);
+		displayText.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, CENTER);
 
 		minX = outline.x;
 		maxX = outline.x + outline.width - parent.width;
@@ -125,7 +125,7 @@ class SuffSlider extends FlxSpriteGroup {
 		}
 		if (FlxG.mouse.overlaps(parent, this.camera) && visible) {
 			if (!hovered) {
-				SuffState.playUISound(Paths.sound('ui/buttonHover'));
+				SuffState.playUISound(Paths.getSound('ui/buttonHover'));
 				parent.animation.play('hovered');
 				Tooltip.text = tooltipText;
 				hovered = true;

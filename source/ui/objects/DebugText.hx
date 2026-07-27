@@ -58,7 +58,7 @@ class DebugText extends TextField {
 	}
 
 	public function reloadFont(color:Int = 0xFFFFFFFF) {
-		defaultTextFormat = new TextFormat(Paths.font('default'), 16, color);
+		defaultTextFormat = new TextFormat(Paths.getFont('default'), 16, color);
 		updateText();
 	}
 

@@ -202,14 +202,14 @@ class OptionsSubState extends SuffSubState {
 
 		createSliderOption('gameSoundVolume', function(value:Float) {
 			Preferences.data.gameSoundVolume = value;
-			SuffState.playSound(Paths.soundRandom('game/weapon', 1, 3));
+			SuffState.playSound(Paths.getSoundRandom('game/weapon', 1, 3));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.gameSoundVolume, LOGARITHMIC);
 
 		createSliderOption('uiSoundVolume', function(value:Float) {
 			Preferences.data.uiSoundVolume = value;
-			SuffState.playUISound(Paths.sound('ui/dong'));
+			SuffState.playUISound(Paths.getSound('ui/dong'));
 		}, 0.0, 1.0, 0.05, function(value:Float) {
 			return Math.round(value * 100) + '%';
 		}, Preferences.data.uiSoundVolume, LOGARITHMIC);
@@ -315,7 +315,7 @@ class OptionsSubState extends SuffSubState {
 		if (optionsGroup.members.length > 0)
 			optionsY += 32;
 		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('optionsMenu.heading.$name'));
-		text.setFormat(Paths.font('small'), 32, FlxColor.WHITE, CENTER);
+		text.setFormat(Paths.getFont('small'), 32, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 		optionsY += 48;
 
@@ -326,7 +326,7 @@ class OptionsSubState extends SuffSubState {
 
 	function createBooleanOption(ID:String, callback:Bool->Void, defaultValue:Bool) {
 		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('option.${ID}.name'));
-		text.setFormat(Paths.font('default'), 48, FlxColor.WHITE, CENTER);
+		text.setFormat(Paths.getFont('default'), 48, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 
 		var option:SuffBoolean = new SuffBoolean(text.x + text.width + 16, optionsY, callback, defaultValue);
@@ -343,7 +343,7 @@ class OptionsSubState extends SuffSubState {
 
 	function createSliderOption(ID:String, callback:Float->Void, rangeMin:Float, rangeMax:Float, step:Float, displayFunction:Float->String, defaultValue:Float, scaling:SuffSliderScaling = LINEAR) {
 		var text:FlxText = new FlxText(optionsXPadding, optionsY, 0, Language.getPhrase('option.${ID}.name'));
-		text.setFormat(Paths.font('default'), 48, FlxColor.WHITE, CENTER);
+		text.setFormat(Paths.getFont('default'), 48, FlxColor.WHITE, CENTER);
 		optionsGroup.add(text);
 
 		var option:SuffSlider = new SuffSlider(text.x + text.width + 16, optionsY, callback, rangeMin, rangeMax, step, displayFunction,

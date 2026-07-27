@@ -18,7 +18,7 @@ class GameOnSubState extends SuffSubState {
 		add(slashBGDim);
 
 		slashBG = new FlxSprite();
-		slashBG.frames = Paths.sparrowAtlas('ui/menus/characterSelect/slashBG');
+		slashBG.frames = Paths.getSparrowAtlas('ui/menus/characterSelect/slashBG');
 		slashBG.animation.addByPrefix('idle', 'idle', 24, false);
 		slashBG.screenCenter();
 		slashBG.scale.set(FlxG.width / Constants.ORIGINAL_FLXG_WIDTH, 0.75);
@@ -26,7 +26,7 @@ class GameOnSubState extends SuffSubState {
 		add(slashBG);
 
 		gameOn = new FlxText(0, 0, 0, Language.getPhrase('gameOn.text'));
-		gameOn.setFormat(Paths.font('default'), 256, FlxColor.WHITE);
+		gameOn.setFormat(Paths.getFont('default'), 256, FlxColor.WHITE);
 		while (gameOn.width > FlxG.width - 200) {
 			gameOn.size -= 16;
 			slashBG.scale.y = gameOn.size / 256 * 0.75;

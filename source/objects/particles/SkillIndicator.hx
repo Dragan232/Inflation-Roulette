@@ -5,7 +5,7 @@ import flixel.effects.FlxFlicker;
 class SkillIndicator extends FlxSprite {
 	public function new(x:Float = 0, originalY:Float = 0, skillID:String = 'reload') {
 		super(x, originalY);
-		loadGraphic(Paths.image('ui/icons/skills/$skillID'));
+		loadGraphic(Paths.getImage('ui/icons/skills/$skillID'));
 		setGraphicSize(80);
 		updateHitbox();
 		offset.x += width / 2;

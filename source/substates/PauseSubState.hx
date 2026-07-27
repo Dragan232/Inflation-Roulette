@@ -29,12 +29,12 @@ class PauseSubState extends SuffSubState {
 		add(bg);
 
 		pauseMusic = new FlxSound();
-		pauseMusic.loadEmbedded(Paths.music('pause'));
+		pauseMusic.loadEmbedded(Paths.getMusic('pause'));
 		pauseMusic.volume = 0;
 		pauseMusic.looped = true;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 		pauseMusic.fadeIn(5, 0, 0.5 * Preferences.data.musicVolume);
-		// MusicToast.play(Paths.musicMetadata('pause'));
+		// MusicToast.play(Paths.getMusicMetadata('pause'));
 
 		var headingText:FlxText = new FlxText(0, 0, 0, Language.getPhrase('pauseMenu.title'), 48);
 		var headingTextTargetY:Int = 4;

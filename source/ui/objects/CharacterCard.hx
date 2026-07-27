@@ -17,14 +17,14 @@ class CharacterCard extends SuffButton {
 
 		this.characterData = character;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/characterSelect/cards/${characterData.id}/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/characterSelect/cards/${characterData.id}/bg'));
 		add(bg);
 
 		outline = new FlxSprite().loadGraphic(Utilities.makeBorder(bg.width, bg.height));
 		add(outline);
 
 		charSprite = new FlxSprite();
-		charSprite.frames = Paths.sparrowAtlas('ui/menus/characterSelect/cards/${characterData.id}/character');
+		charSprite.frames = Paths.getSparrowAtlas('ui/menus/characterSelect/cards/${characterData.id}/character');
 		charSprite.animation.addByPrefix('idle', 'idle');
 		charSprite.animation.addByPrefix('selected', 'selected', 24, false);
 		charSprite.animation.play('idle');
@@ -37,7 +37,7 @@ class CharacterCard extends SuffButton {
 
 		var key = characterData.cardDisplayedKey != null ? characterData.cardDisplayedKey : 'character.${characterData.id}.name';
 		charNameText = new FlxText(6, 6, width - 6 * 2, Language.getPhrase(key).toUpperCase());
-		charNameText.setFormat(Paths.font('small'), 32, FlxColor.WHITE);
+		charNameText.setFormat(Paths.getFont('small'), 32, FlxColor.WHITE);
 		add(charNameText);
 	}
 

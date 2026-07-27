@@ -13,7 +13,7 @@ class JukeboxRecord extends FlxSpriteGroup {
 		label.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(label);
 
-		base = new FlxSprite().loadGraphic(Paths.image('ui/menus/extras/jukebox/record/base'));
+		base = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/extras/jukebox/record/base'));
 		base.antialiasing = !Preferences.data.enableForcedAliasing;
 		add(base);
 
@@ -25,7 +25,7 @@ class JukeboxRecord extends FlxSpriteGroup {
 
 	private function set_album(value:String) {
 		this.album = value;
-		label.loadGraphic(Paths.image('ui/menus/extras/jukebox/albumCovers/$value'));
+		label.loadGraphic(Paths.getImage('ui/menus/extras/jukebox/albumCovers/$value'));
 		label.setPosition(
 			this.x + (base.width - label.width) / 2,
 			this.y + (base.height - label.height) / 2

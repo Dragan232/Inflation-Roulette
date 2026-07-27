@@ -7,7 +7,7 @@ class BulletShell extends FlxSprite {
 	var spawnPuff:Bool = false;
 	public function new(x:Float = 0, y:Float = 0, ?floorY:Float = 690, spawnPuff:Bool = false) {
 		super(x, y);
-		loadGraphic(Paths.image('game/particles/shell'), true, 20, 30);
+		loadGraphic(Paths.getImage('game/particles/shell'), true, 20, 30);
 		animation.add('idle', spawnPuff ? [0] : [1]);
 		animation.play('idle');
 		offset.x += width / 2;
@@ -46,7 +46,7 @@ class BulletShell extends FlxSprite {
 			velocity.x *= 0.75;
 			angularVelocity = FlxG.random.float(-1080, 1080);
 			if (!Preferences.data.decreaseSounds)
-				SuffState.playSound(Paths.sound('game/shell'), Math.pow(bouncesLeft / 6, 2) * 0.5, 1 + FlxG.random.float(-0.02, 0.02));
+				SuffState.playSound(Paths.getSound('game/shell'), Math.pow(bouncesLeft / 6, 2) * 0.5, 1 + FlxG.random.float(-0.02, 0.02));
 			if (bouncesLeft <= 0) {
 				velocity.x = velocity.y = acceleration.y = angularVelocity = 0;
 				angle = 90 * FlxG.random.int(-1, 1, [0]);

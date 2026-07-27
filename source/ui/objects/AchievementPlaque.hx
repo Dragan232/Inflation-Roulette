@@ -15,8 +15,8 @@ class AchievementPlaque extends SuffButton {
 		super(x, y, null, null, null, 160, 160, false);
 
 		this.achievementData = achievement;
-		plaqueFrame = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/frames/common'));
-		plaqueFrame.loadGraphic(Paths.image('ui/menus/achievements/frames/common'), true, Std.int(plaqueFrame.width / 2), Std.int(plaqueFrame.height));
+		plaqueFrame = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/frames/common'));
+		plaqueFrame.loadGraphic(Paths.getImage('ui/menus/achievements/frames/common'), true, Std.int(plaqueFrame.width / 2), Std.int(plaqueFrame.height));
 		plaqueFrame.animation.add('false', [0], true);
 		plaqueFrame.animation.add('true', [1], true);
 		plaqueFrame.animation.play('idle');
@@ -36,7 +36,7 @@ class AchievementPlaque extends SuffButton {
 		var frameType = '${achievementData.tier}'.toLowerCase();
 		if (locked)
 			frameType = 'locked';
-		plaqueFrame.loadGraphic(Paths.image('ui/menus/achievements/frames/$frameType'), true, Std.int(plaqueFrame.width), Std.int(plaqueFrame.height));
+		plaqueFrame.loadGraphic(Paths.getImage('ui/menus/achievements/frames/$frameType'), true, Std.int(plaqueFrame.width), Std.int(plaqueFrame.height));
 		plaqueFrame.animation.add('false', [0], true);
 		plaqueFrame.animation.add('true', [1], true);
 		plaqueFrame.animation.play('$hovered');

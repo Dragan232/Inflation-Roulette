@@ -10,7 +10,7 @@ class ImHighOnCrackStartupState extends SuffState {
 
 		// Precache shards
 		for (i in 0...shardCount) {
-			Paths.image('ui/menus/easterEggStartups/imhighoncrack/shards/' + i);
+			Paths.getImage('ui/menus/easterEggStartups/imhighoncrack/shards/' + i);
 		}
 
 		startIntro();
@@ -28,20 +28,20 @@ class ImHighOnCrackStartupState extends SuffState {
 	var skipIntroTimer:FlxTimer;
 
 	function startIntro() {
-		ambientSound = new FlxSound().loadEmbedded(Paths.sound('ui/startup/imhighoncrack/ambience'));
+		ambientSound = new FlxSound().loadEmbedded(Paths.getSound('ui/startup/imhighoncrack/ambience'));
 		ambientSound.looped = true;
 		ambientSound.play();
 
 		add(shadows);
 
-		bg = new FlxBackdrop(Paths.image('ui/menus/easterEggStartups/imhighoncrack/heartAttack'));
+		bg = new FlxBackdrop(Paths.getImage('ui/menus/easterEggStartups/imhighoncrack/heartAttack'));
 		bg.color = 0xFF00FFFF;
 		bg.blend = OVERLAY;
 		bg.alpha = 0.375;
 		bg.velocity.set(90, 90);
 		add(bg);
 
-		var bgMask = new FlxSprite().loadGraphic(Paths.image('ui/menus/easterEggStartups/mask'));
+		var bgMask = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/easterEggStartups/mask'));
 		add(bgMask);
 
 		logo = new FlxSprite().loadGraphic(bg.graphic);
@@ -82,13 +82,13 @@ class ImHighOnCrackStartupState extends SuffState {
 
 		if (!Preferences.data.decreaseDetail) {
 			for (i in 0...shardCount) {
-				var shard = new FlxSprite(logo.x, logo.y).loadGraphic(Paths.image('ui/menus/easterEggStartups/imhighoncrack/shards/' + i));
+				var shard = new FlxSprite(logo.x, logo.y).loadGraphic(Paths.getImage('ui/menus/easterEggStartups/imhighoncrack/shards/' + i));
 				shard.setGraphicSize(Std.int(logo.width), Std.int(logo.height));
 				shard.updateHitbox();
 				shards.add(shard);
 			}
 		} else {
-			var shard = new FlxSprite(logo.x, logo.y).loadGraphic(Paths.image('ui/menus/easterEggStartups/imhighoncrack/shardsCombined'));
+			var shard = new FlxSprite(logo.x, logo.y).loadGraphic(Paths.getImage('ui/menus/easterEggStartups/imhighoncrack/shardsCombined'));
 			shard.setGraphicSize(Std.int(logo.width), Std.int(logo.height));
 			shard.updateHitbox();
 			shards.add(shard);
@@ -98,9 +98,9 @@ class ImHighOnCrackStartupState extends SuffState {
 
 		FlxG.drawFramerate = FlxG.updateFramerate;
 
-		SuffState.playUISound(Paths.sound('ui/startup/imhighoncrack/crack'));
+		SuffState.playUISound(Paths.getSound('ui/startup/imhighoncrack/crack'));
 		new FlxTimer().start(1.25, function(tmr:FlxTimer) {
-			SuffState.playUISound(Paths.sound('ui/startup/imhighoncrack/break'));
+			SuffState.playUISound(Paths.getSound('ui/startup/imhighoncrack/break'));
 			if (!Preferences.data.decreaseDetail) {
 				if (!Preferences.data.enablePhotosensitiveMode) {
 					FlxG.camera.flash(0xFFFFFFFF, 0.25);

@@ -3,7 +3,7 @@ package objects.particles;
 class Stain extends FlxSprite {
 	public function new(x:Float = 0, y:Float = 0, color:FlxColor = 0xFFFFFFFF) {
 		super(x, y);
-		loadGraphic(Paths.image('game/particles/stains/' + FlxG.random.int(1, 8)));
+		loadGraphic(Paths.getImage('game/particles/stains/' + FlxG.random.int(1, 8)));
 		this.antialiasing = !Preferences.data.enableForcedAliasing;
 		this.offset.x += this.width / 2;
 		this.offset.y += this.height / 2;

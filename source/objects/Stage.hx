@@ -12,6 +12,7 @@ class Stage extends FlxBasic {
 	private var game(get, never):PlayState;
 	public var data:StageData;
 	public var objects:Map<String, StageObject> = new Map<String, StageObject>();
+	public var dynamicObjects:Map<String, StageObject> = new Map<String, StageObject>();
 
 	public function new(id:String = 'reloaded') {
 		data = cast Json.parse(Paths.getTextFromFile('data/stages/$id.json'));
@@ -119,20 +120,28 @@ class Stage extends FlxBasic {
 		graphicPath = graphicPath.replace('.png', '');
 		graphicPath = graphicPath.replace('assets/images/', '');
 		if (objectData.animations != null) {
-			object.frames = Paths.sparrowAtlas(graphicPath);
+			object.frames = Paths.getSparrowAtlas(graphicPath);
 			var animations:Array<AnimationData> = cast objectData.animations;
 			for (animData in animations) {
 				if (animData.indices != null && animData.indices.length > 0)
-					object.animation.addByIndices(animData.name, animData.prefix, animData.indices, '', animData.fps);
+					object.animation.addByIndices(animData.name, animData.prefix, animData.indices, '', animData.fps ?? 24, animData.loop ?? true);
 				else
-					object.animation.addByPrefix(animData.name, animData.prefix, animData.fps);
+					object.animation.addByPrefix(animData.name, animData.prefix, animData.fps ?? 24, animData.loop ?? true);
 			}
 			if (objectData.randomAnim == true)
 				object.animation.play(FlxG.random.getObject(object.animation.getNameList()), true);
 			else
 				object.animation.play(animations[0].name, true);
 		} else {
-			object.loadGraphic(Paths.image(graphicPath));
+			object.loadGraphic(Paths.getImage(graphicPath));
+		}
+		if (objectData.reactionTime != null && objectData.reactionTime >= 0) {
+			object.reactionTime = objectData.reactionTime;
+			object.animation.onFinish.add(function (animName:String) {
+				if (animName == 'idle' || !object.animBackToIdle)
+					return;
+				object.animation.play('idle', true);
+			});
 		}
 		if (objectData.scrollFactor != null && objectData.scrollFactor.length == 2)
 			object.scrollFactor.set(objectData.scrollFactor[0], objectData.scrollFactor[1]);
@@ -179,18 +188,36 @@ class Stage extends FlxBasic {
 		super.update(elapsed);
 	}
 
-	public function addObject(tag:String, object:StageObject) {
+	public function dynamicPlayAnim(animName:String = 'idle', animBackToIdle:Bool = true, force:Bool = true, delayMultiplier:Float = 1) {
+		if (dynamicObjects == [])
+			return;
+		for (tag => object in dynamicObjects) {
+			if (object.animation.getByName(animName) == null)
+				continue;
+			object.animBackToIdle = animBackToIdle;
+			new FlxTimer().start(FlxG.random.float(0, object.reactionTime) * delayMultiplier, function(_)
+			object.animation.play(animName, force));
+		}
+	}
+
+	inline public function registerObject(tag:String, object:StageObject) {
 		objects.set(tag, object);
+		if (object.reactionTime >= 0)
+			dynamicObjects.set(tag, object);
+	}
+
+	inline public function addObject(tag:String, object:StageObject) {
+		registerObject(tag, object);
 		return game.add(object);
 	}
 
-	public function addBehindGun(tag:String, object:StageObject) {
-		objects.set(tag, object);
+	inline public function addBehindGun(tag:String, object:StageObject) {
+		registerObject(tag, object);
 		return game.members.insert(game.members.indexOf(game.pumpGun), object);
 	}
 
-	public function addBehindCharacters(tag:String, object:StageObject) {
-		objects.set(tag, object);
+	inline public function addBehindCharacters(tag:String, object:StageObject) {
+		registerObject(tag, object);
 		return game.members.insert(game.members.indexOf(game.characterGroup), object);
 	}
 

@@ -57,9 +57,9 @@ class CharacterSimple extends FlxSprite {
 		bounceFrames = spriteJson.bounceFrames ?? 3;
 		voicePitch = spriteJson.voicePitch ?? 1;
 
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
+		var combinedAtlas:FlxAtlasFrames = Paths.getSparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
 		for (i in 1...spriteJson.spriteSheets.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
+			var atlas:FlxAtlasFrames = Paths.getSparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
 			combinedAtlas.addAtlas(atlas, false);
 		}
 		frames = combinedAtlas;
@@ -151,7 +151,7 @@ class CharacterSimple extends FlxSprite {
 				var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
 				var daSound = daSoundList[FlxG.random.int(0, daSoundList.length - 1)];
 				var pitch = autoPitchAnims.get(usedAnimName) ? voicePitch + FlxG.random.float(-0.1, 0.1) : 1;
-				SuffState.playSound(Paths.sound(daSound), 1, pitch);
+				SuffState.playSound(Paths.getSound(daSound), 1, pitch);
 			}
 		}
 

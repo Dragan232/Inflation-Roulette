@@ -25,7 +25,7 @@ class Addons {
 	public static function getAddonDirectories():Array<String> {
 		var list:Array<String> = [];
 		#if _ALLOW_ADDONS
-		var addonsFolder:String = Paths.addons();
+		var addonsFolder:String = Paths.getPathInAddons();
 		if (FileSystem.exists(addonsFolder)) {
 			for (folder in FileSystem.readDirectory(addonsFolder)) {
 				var path = haxe.io.Path.join([addonsFolder, folder]);
@@ -39,7 +39,7 @@ class Addons {
 
 	public static function getAddonMetadata(?folder:String = null):AddonMetadata {
 		#if _ALLOW_ADDONS
-		var path = Paths.addons(folder + '/metadata/metadata.json');
+		var path = Paths.getPathInAddons(folder + '/metadata.json');
 		if (FileSystem.exists(path)) {
 			var rawJson:String = File.getContent(path);
 			trace(rawJson);
@@ -58,7 +58,7 @@ class Addons {
 
 		// Scan for folders
 		for (folder in getAddonDirectories()) {
-			if (folder.trim().length > 0 && FileSystem.exists(Paths.addons(folder)) && FileSystem.isDirectory(Paths.addons(folder))) {
+			if (folder.trim().length > 0 && FileSystem.exists(Paths.getPathInAddons(folder)) && FileSystem.isDirectory(Paths.getPathInAddons(folder))) {
 				list.push(folder);
 			}
 		}

@@ -34,7 +34,7 @@ class GalleryEntryState extends SuffState {
 
 	override function create() {
 		for (art in envelopeData.artwork) {
-			Paths.image('ui/menus/extras/gallery/images/${envelopeData.id}/$art');
+			Paths.getImage('ui/menus/extras/gallery/images/${envelopeData.id}/$art');
 		}
 		super.create();
 
@@ -44,7 +44,7 @@ class GalleryEntryState extends SuffState {
 		bg.color = FlxColor.fromString(envelopeData.color);
 		add(bg);
 
-		overlay = new FlxBackdrop(Paths.image('ui/transitions/horizontal'), Y);
+		overlay = new FlxBackdrop(Paths.getImage('ui/transitions/horizontal'), Y);
 		overlay.x = FlxG.width / 2 - 40;
 		if (bg.color.brightness > (1 / 3)) {
 			// nice hue shifted dark-shaded color for overlay
@@ -63,7 +63,7 @@ class GalleryEntryState extends SuffState {
 
 		for (i in 0...Math.ceil(FlxG.height / 64)) {
 			var text:FlxText = new FlxText(envelopeData.quotes[i % envelopeData.quotes.length], 64);
-			text.font = Paths.font('default', false);
+			text.font = Paths.getFont('default', false);
 			var textBG:FlxBackdrop = new FlxBackdrop(text.graphic, X, 64);
 			textBG.y = i * 64;
 			textBG.alpha = 0.25;
@@ -71,23 +71,23 @@ class GalleryEntryState extends SuffState {
 			add(textBG);
 		}
 
-		topOverlay = new FlxBackdrop(Paths.image('ui/transitions/default'), X);
+		topOverlay = new FlxBackdrop(Paths.getImage('ui/transitions/default'), X);
 		topOverlay.y = -(FlxG.height + 80) + 40;
 		topOverlay.color = 0x40FFFFFF;
 		topOverlay.alpha = 0.375;
 		topOverlay.velocity.set(-64, 0);
 		add(topOverlay);
 
-		bottomOverlay = new FlxBackdrop(Paths.image('ui/transitions/default'), X);
+		bottomOverlay = new FlxBackdrop(Paths.getImage('ui/transitions/default'), X);
 		bottomOverlay.y = (FlxG.height - 80) - 40;
 		bottomOverlay.color = 0x40FFFFFF;
 		bottomOverlay.alpha = 0.375;
 		bottomOverlay.velocity.set(64, 0);
 		add(bottomOverlay);
 
-		var renderGraphic:FlxGraphic = Paths.image('ui/menus/extras/gallery/images/placeholderRender');
+		var renderGraphic:FlxGraphic = Paths.getImage('ui/menus/extras/gallery/images/placeholderRender');
 		if (Paths.fileExists(Paths.getImagePath('ui/menus/extras/gallery/images/${envelopeData.id}/${envelopeData.artwork[0]}')))
-			renderGraphic = Paths.image('ui/menus/extras/gallery/images/${envelopeData.id}/${envelopeData.artwork[0]}');
+			renderGraphic = Paths.getImage('ui/menus/extras/gallery/images/${envelopeData.id}/${envelopeData.artwork[0]}');
 		render = new FlxSprite(FlxG.width).loadGraphic(renderGraphic);
 		var leScale = (FlxG.height - 120) / render.height;
 		render.scale.set(leScale, leScale);
@@ -107,7 +107,7 @@ class GalleryEntryState extends SuffState {
 
 		descriptionText = Language.getPhrase('galleryMainMenu.envelope.${envelopeData.id}.description');
 		description = new FlxText(title.x, title.y + title.height + 16, FlxG.width / 2 - title.x * 2, descriptionText, 32);
-		description.font = Paths.font('default');
+		description.font = Paths.getFont('default');
 		while (description.height > FlxG.height - title.y - description.y) {
 			description.size -= 1;
 		}
@@ -124,7 +124,7 @@ class GalleryEntryState extends SuffState {
 		add(artworkButton);
 
 		var hasJson:Bool = Paths.fileExists(Paths.getPath('data/characters/${envelopeData.id}/cosmetic.json'));
-		var hasAddonJson:Bool = #if _ALLOW_ADDONS Paths.fileExists(Paths.addonFolders('data/characters/${envelopeData.id}/cosmetic.json')) #else false #end;
+		var hasAddonJson:Bool = #if _ALLOW_ADDONS Paths.fileExists(Paths.getAddonsPath('data/characters/${envelopeData.id}/cosmetic.json')) #else false #end;
 		if (envelopeData.hasCharacter && (hasJson || hasAddonJson)) {
 			character = new CharacterSimple(envelopeData.id, 0, 0);
 			character.playAnim('idle');
@@ -214,17 +214,17 @@ class GalleryEntryState extends SuffState {
 			var curChar = descriptionText.substr(descriptionCurChar, 1);
 			description.text = description.text + curChar;
 			if (descriptionCurChar % 3 == 0) {
-				SuffState.playUISound(Paths.soundRandom('ui/type', 1, 4), 0.8);
+				SuffState.playUISound(Paths.getSoundRandom('ui/type', 1, 4), 0.8);
 			}
 			if (curChar == '\n') {
-				SuffState.playUISound(Paths.sound('ui/typeEnter'));
+				SuffState.playUISound(Paths.getSound('ui/typeEnter'));
 			}
 			descriptionTick = 0;
 			if (PAUSE_PUNCTUATION.contains(curChar))
 				descriptionTick = -0.125;
 			descriptionCurChar++;
 			if (descriptionCurChar == descriptionText.length)
-				SuffState.playUISound(Paths.sound('ui/typeEnter'));
+				SuffState.playUISound(Paths.getSound('ui/typeEnter'));
 		}
 
 		descriptionRate = FlxG.mouse.pressed ? 10 : 1;
@@ -240,7 +240,7 @@ class GalleryEntryState extends SuffState {
 			character.currentPressure++;
 			if (character.currentPressure <= character.maxPressure) {
 				var fwoompSuffix:String = character.getPressurePercentage() >= 0.5 ? 'Large' : 'Small';
-				SuffState.playSound(Paths.soundRandom('game/inflation/universal/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
+				SuffState.playSound(Paths.getSoundRandom('game/inflation/universal/fwoomps/fwoomp' + fwoompSuffix, 1, Constants.FWOOMPS_SAMPLE_COUNT), 0.75, 0.5);
 				character.playAnim('shocked', true);
 				if (idleTimer != null) idleTimer.cancel();
 				idleTimer = new FlxTimer().start(1.0, function(_) {

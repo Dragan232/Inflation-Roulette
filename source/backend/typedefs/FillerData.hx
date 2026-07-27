@@ -6,8 +6,7 @@ typedef FillerData = {
 	?liquidColor:String,
 
 	?tintColor:String,
-	?destabilizationFactor:Array<Float>, // [0, 0, 0]
-
+	
 	?gurgles:FillerSoundData,
 	?creaks:FillerSoundData,
 	?belches:FillerSoundData,

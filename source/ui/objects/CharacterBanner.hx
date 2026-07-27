@@ -41,9 +41,9 @@ class CharacterBanner extends SuffButton {
 
 	public static function precacheBanners() {
 		for (item in Gameplay.globalCharacterList) {
-			Paths.sparrowAtlas('ui/menus/characterSelect/banners/$item');
+			Paths.getSparrowAtlas('ui/menus/characterSelect/banners/$item');
 		}
-		Paths.sparrowAtlas('ui/menus/characterSelect/banners/random');
+		Paths.getSparrowAtlas('ui/menus/characterSelect/banners/random');
 	}
 
 	public function dissolve() {
@@ -68,7 +68,7 @@ class CharacterBanner extends SuffButton {
 
 	public function setCharacter(char:String) {
 		designatedPlayer = char;
-		character.frames = Paths.sparrowAtlas('ui/menus/characterSelect/banners/$designatedPlayer');
+		character.frames = Paths.getSparrowAtlas('ui/menus/characterSelect/banners/$designatedPlayer');
 		character.animation.addByPrefix('idle', 'idle', 24, false);
 		character.animation.addByPrefix('start', 'start', 24, false);
 		character.visible = true;

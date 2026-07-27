@@ -41,7 +41,7 @@ class GalleryArtworkViewState extends SuffState {
 
 		FlxG.camera.follow(cameraPos);
 
-		art = new FlxSprite(0, FlxG.height).loadGraphic(Paths.image('ui/menus/extras/gallery/images/$path'));
+		art = new FlxSprite(0, FlxG.height).loadGraphic(Paths.getImage('ui/menus/extras/gallery/images/$path'));
 		art.x = (FlxG.width - art.width) / 2;
 		FlxTween.tween(art, {y: Std.int((FlxG.height - art.height) / 2)}, 0.5, {ease: FlxEase.quintOut});
 		var curZoom = Math.min((FlxG.width - 320) / art.width, (FlxG.height - 180) / art.height);

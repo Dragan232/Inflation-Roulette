@@ -8,7 +8,7 @@ class GameLogo extends FlxSprite {
 
 		antialiasing = !Preferences.data.enableForcedAliasing;
 
-		loadGraphic(Paths.image('ui/menus/gameLogo'));
+		loadGraphic(Paths.getImage('ui/menus/gameLogo'));
 		scale.set(logoScale, logoScale);
 		updateHitbox();
 	}

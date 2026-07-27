@@ -37,8 +37,8 @@ class SuffState extends FlxUIState {
 			return;
 		}
 		currentMusicName = usedTag;
-		FlxG.sound.playMusic(Paths.music(usedTag), volume * Preferences.data.musicVolume);
-		var metadata:MusicMetadata = Paths.musicMetadata(usedTag);
+		FlxG.sound.playMusic(Paths.getMusic(usedTag), volume * Preferences.data.musicVolume);
+		var metadata:MusicMetadata = Paths.getMusicMetadata(usedTag);
 		/*
 		if (metadata.toast)
 			MusicToast.play(metadata);

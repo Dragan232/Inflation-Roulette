@@ -44,13 +44,13 @@ class GalleryArtworkSubState extends SuffSubState {
 		});
 
 		title = new FlxText(0, 0, FlxG.width * 0.625, '', 16);
-		title.font = Paths.font('default', false);
+		title.font = Paths.getFont('default', false);
 		title.alignment = CENTER;
 		title.screenCenter(X);
 		add(title);
 
 		description = new FlxText(0, 0, FlxG.width * 0.625, '', 16);
-		description.font = Paths.font('default', false);
+		description.font = Paths.getFont('default', false);
 		description.alignment = JUSTIFY;
 		description.screenCenter(X);
 		add(description);
@@ -106,7 +106,7 @@ class GalleryArtworkSubState extends SuffSubState {
 			var translatedWarnings = artworkData.warnings.map(function(f:String) return Language.getPhrase('galleryEntryMenu.warning.' + f));
 			artworkGroup.members[curSelected].tooltipText = Language.getPhrase('galleryEntryMenu.viewFullImageWarned', [translatedWarnings.join(', ')]);
 			var dimensions = [artworkGroup.members[curSelected].width, artworkGroup.members[curSelected].height];
-			artworkGroup.members[curSelected].image.loadGraphic(Paths.image('ui/menus/extras/gallery/images/contentWarning'));
+			artworkGroup.members[curSelected].image.loadGraphic(Paths.getImage('ui/menus/extras/gallery/images/contentWarning'));
 			artworkGroup.members[curSelected].image.setGraphicSize(dimensions[0], dimensions[1]);
 			artworkGroup.members[curSelected].image.updateHitbox();
 		}

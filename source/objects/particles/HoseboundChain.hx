@@ -3,7 +3,7 @@ package objects.particles;
 class HoseboundChain extends FlxSprite {
 	public function new(x:Float = 0, y:Float = 0, playerIndex:Int = 0) {
 		super(x, y);
-		loadGraphic(Paths.image('game/particles/hoseboundChain'));
+		loadGraphic(Paths.getImage('game/particles/hoseboundChain'));
 		this.color = Constants.PLAYER_COLORS[playerIndex];
 		this.alpha = 0.25;
 		this.offset.x += this.width / 2;

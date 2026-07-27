@@ -57,14 +57,14 @@ class AchievementsState extends SuffState {
 
 		FlxG.camera.follow(cameraPosLerped, LOCKON);
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/bg'));
 		bg.screenCenter();
 		var ratio = Math.max(FlxG.width / Constants.ORIGINAL_FLXG_WIDTH, FlxG.height / Constants.ORIGINAL_FLXG_HEIGHT);
 		bg.scale.set(ratio + 0.2, ratio + 0.2);
 		bg.scrollFactor.set(0.8, 0);
 		add(bg);
 
-		spotlight = new FlxSprite().loadGraphic(Paths.image('ui/menus/achievements/spotlight'));
+		spotlight = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/achievements/spotlight'));
 		spotlight.alpha = 0.375;
 		if (!Preferences.data.decreaseDetail)
 			spotlight.blend = ADD;
@@ -80,7 +80,7 @@ class AchievementsState extends SuffState {
 			var locked:Bool = Achievements.isLocked(id);
 
 			var shelf:FlxSprite = new FlxSprite();
-			shelf.loadGraphic(Paths.image('ui/menus/achievements/shelf'));
+			shelf.loadGraphic(Paths.getImage('ui/menus/achievements/shelf'));
 			shelf.x = (FlxG.width - shelf.width) / 2;
 			shelf.y = 300 + 240 * (Math.floor(num / plaquesPerShelf) % shelvesPerPage) + FlxG.height * Math.floor(num / plaquesPerShelf / shelvesPerPage);
 			shelves.add(shelf);
@@ -117,7 +117,7 @@ class AchievementsState extends SuffState {
 		}
 		lastPage = Math.floor((num - 1) / plaquesPerShelf / shelvesPerPage);
 
-		overlay = new FlxSprite(FlxG.width).loadGraphic(Paths.image('ui/menus/achievements/overlay'));
+		overlay = new FlxSprite(FlxG.width).loadGraphic(Paths.getImage('ui/menus/achievements/overlay'));
 		overlay.scrollFactor.set();
 		add(overlay);
 
@@ -152,7 +152,7 @@ class AchievementsState extends SuffState {
 		resetButton.visible = false;
 		add(resetButton);
 
-		upButton = new SuffButton(20, 20, null, Paths.image('ui/menus/achievements/arrow'), Paths.image('ui/menus/achievements/arrowHovered'), 190, 100,
+		upButton = new SuffButton(20, 20, null, Paths.getImage('ui/menus/achievements/arrow'), Paths.getImage('ui/menus/achievements/arrowHovered'), 190, 100,
 			false);
 		upButton.x = ((FlxG.width - overlayWidth) - upButton.width) / 2;
 		upButton.y = 20;
@@ -164,7 +164,7 @@ class AchievementsState extends SuffState {
 		add(upButton);
 		upButton.visible = false;
 
-		downButton = new SuffButton(20, 20, null, Paths.image('ui/menus/achievements/arrow'), Paths.image('ui/menus/achievements/arrowHovered'), 190, 100,
+		downButton = new SuffButton(20, 20, null, Paths.getImage('ui/menus/achievements/arrow'), Paths.getImage('ui/menus/achievements/arrowHovered'), 190, 100,
 			false);
 		downButton.x = ((FlxG.width - overlayWidth) - downButton.width) / 2;
 		downButton.y = FlxG.height - downButton.height - 20;
@@ -196,7 +196,7 @@ class AchievementsState extends SuffState {
 		if (curPage + delta < 0 || curPage + delta > lastPage)
 			return;
 		if (delta != 0)
-			SuffState.playUISound(Paths.sound('ui/pageChange'));
+			SuffState.playUISound(Paths.getSound('ui/pageChange'));
 		curPage += delta;
 		cameraPosOffset.y = -curPage * FlxG.height;
 		upButton.visible = curPage > 0;

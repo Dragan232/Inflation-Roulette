@@ -59,7 +59,7 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 		var exportingDescription = new FlxText(0, 0, exportingText.width, Language.getPhrase('characterCreator.exporting.description'), 32);
 		exportingDescription.alignment = CENTER;
 
-		speen = new FlxSprite().loadGraphic(Paths.image('ui/menus/utilities/whatTheFuck'));
+		speen = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/utilities/whatTheFuck'));
 		speen.screenCenter(X);
 
 		bar = new SuffBar(0, 0, function () {
@@ -200,9 +200,9 @@ class ExportingProjectPrompt extends UtilitiesBaseMenuSubState {
 			color: '#808080'
 		};
 
-		if (!FileSystem.isDirectory('exports/$projectName/metadata') || !FileSystem.exists('exports/$projectName/metadata'))
-			FileSystem.createDirectory('exports/$projectName/metadata');
-		File.saveContent('exports/$projectName/metadata/metadata.json', haxe.Json.stringify(metadata, '\t'));
+		if (!FileSystem.isDirectory('exports/$projectName') || !FileSystem.exists('exports/$projectName'))
+			FileSystem.createDirectory('exports/$projectName/');
+		File.saveContent('exports/$projectName/metadata.json', haxe.Json.stringify(metadata, '\t'));
 
 		new FlxTimer().start(0.02, function(_) {
 			sucessfulExport();

@@ -25,7 +25,7 @@ class Utilities {
 		#if _ALLOW_ADDONS
 		if (addons) {
 			for (addon in Addons.globalAddons) {
-				var lePath = Paths.addons(addon + '/' + path);
+				var lePath = Paths.getPathInAddons(addon + '/' + path);
 				if (FileSystem.exists(lePath))
 					daList = daList + '\n' + File.getContent(lePath);
 			}
@@ -70,17 +70,6 @@ class Utilities {
 	 */
 	public static function distanceBetweenPoints(SpriteA:Array<Float>, SpriteB:Array<Float>):Float {
 		return Math.sqrt(Math.pow(SpriteB[0] - SpriteA[0], 2) + Math.pow(SpriteB[1] - SpriteA[1], 2));
-	}
-
-	/**
-	 * Change the appearance of the mouse cursor.
-	 * 
-	 * @param tag The cursor used.
-	 * @param pressed Whether to use the pressed version of the cursor.
-	 */
-	public static function changeCursorImage(tag:String, pressed:Bool = false):Void {
-		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/plugins/cursor/${tag}' + (pressed ? 'Held' : '')));
-		FlxG.mouse.load(spr.pixels, 1, -7, -6);
 	}
 
 	/**

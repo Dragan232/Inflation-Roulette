@@ -46,27 +46,27 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		musicToast.add(bg);
 
 		// nowPlayingText = new FlxText(paddingX, paddingY, 0, '');
-		// nowPlayingText.setFormat(Paths.font('default'), 16, FlxColor.WHITE, LEFT);
+		// nowPlayingText.setFormat(Paths.getFont('default'), 16, FlxColor.WHITE, LEFT);
 		// nowPlayingText.scrollFactor.set();
 		// musicToast.add(nowPlayingText);
 
 		songTitleText = new FlxText(paddingX, bg.height - paddingY, 0, '');
 		songTitleText.y = Std.int((bg.height - songTitleText.height) / 2);
-		songTitleText.setFormat(Paths.font('default', false), 16, FlxColor.WHITE, LEFT);
+		songTitleText.setFormat(Paths.getFont('default', false), 16, FlxColor.WHITE, LEFT);
 		songTitleText.scrollFactor.set();
 
 		musicToast.add(songTitleText);
 
 		musicToast.add(record);
 
-		recordBG = new FlxSprite().loadGraphic(Paths.image('ui/plugins/musicToast/record'));
+		recordBG = new FlxSprite().loadGraphic(Paths.getImage('ui/plugins/musicToast/record'));
 
 		bg.scale.set(songTitleText.width + recordBG.width / 2 + paddingX, 1);
 		bg.updateHitbox();
 		recordBG.scrollFactor.set();
 		record.add(recordBG);
 
-		recordCover = new FlxSprite().loadGraphic(Paths.image('ui/plugins/musicToast/covers/nicklysuffer'));
+		recordCover = new FlxSprite().loadGraphic(Paths.getImage('ui/plugins/musicToast/covers/nicklysuffer'));
 		recordCover.scrollFactor.set();
 		record.add(recordCover);
 
@@ -92,8 +92,8 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		FlxGraphic.defaultPersist = true;
 		instance.songTitleText.text = '$songTitle - $songAuthor';
 
-		instance.recordBG.loadGraphic(Paths.image('ui/plugins/musicToast/record'));
-		instance.recordCover.loadGraphic(Paths.image('ui/plugins/musicToast/covers/${songAuthor.toLowerCase().replace(' ', '_')}'));
+		instance.recordBG.loadGraphic(Paths.getImage('ui/plugins/musicToast/record'));
+		instance.recordCover.loadGraphic(Paths.getImage('ui/plugins/musicToast/covers/${songAuthor.toLowerCase().replace(' ', '_')}'));
 		FlxGraphic.defaultPersist = false;
 
 		instance.bg.scale.set(instance.songTitleText.width + paddingX + instance.recordBG.width / 2 + paddingX, 1);
@@ -135,7 +135,7 @@ class MusicToast extends FlxTypedContainer<FlxBasic> {
 		}
 		if (FlxG.mouse.overlaps(instance.record, instance.musicToast.camera) && FlxG.mouse.justPressed) {
 			instance.leScale += 0.2;
-			SuffState.playUISound(Paths.sound('ui/dong'));
+			SuffState.playUISound(Paths.getSound('ui/dong'));
 			instance.totalElasped = startDelay + moveInDuration;
 		}
 		instance.record.scale.set(instance.leScale, instance.leScale);

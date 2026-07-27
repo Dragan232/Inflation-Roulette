@@ -51,7 +51,7 @@ class LanguageSelectState extends SuffState {
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
 		add(bg);
 
-		bgOverlay = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/bgOverlay'));
+		bgOverlay = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/language/bgOverlay'));
 		bgOverlay.alpha = 0.2;
 		bgOverlay.visible = false;
 		bgOverlay.antialiasing = !Preferences.data.enableForcedAliasing;
@@ -61,7 +61,7 @@ class LanguageSelectState extends SuffState {
 		bgOverlay.screenCenter();
 		add(bgOverlay);
 
-		ajuniga = new FlxSprite().loadGraphic(Paths.image('ui/menus/language/ajuniga'));
+		ajuniga = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/language/ajuniga'));
 		ajuniga.screenCenter();
 		originalAjunigaPosition = new FlxPoint(ajuniga.x, ajuniga.y);
 		ajuniga.antialiasing = !Preferences.data.enableForcedAliasing;
@@ -75,11 +75,11 @@ class LanguageSelectState extends SuffState {
 		}
 
 		selectorLeft = new FlxText(0, 0, 0, '>', 48);
-		selectorLeft.font = Paths.font('default', false);
+		selectorLeft.font = Paths.getFont('default', false);
 		selectorLeft.x = -selectorLeft.width;
 
 		selectorRight = new FlxText(0, 0, 0, '<', 48);
-		selectorRight.font = Paths.font('default', false);
+		selectorRight.font = Paths.getFont('default', false);
 		selectorRight.x = FlxG.width;
 
 		selectorLeft.color = selectorRight.color = textColor;
@@ -107,7 +107,7 @@ class LanguageSelectState extends SuffState {
 
 			var langFontPath = Paths.getPath('lang/$item/fonts/default_$item.ttf');
 			if (!Paths.fileExists(langFontPath)) {
-				langFontPath = Paths.font('default');
+				langFontPath = Paths.getFont('default');
 			}
 			var btn = new SuffTextButton(32, (FlxG.height - (languages.length * 64 + (languages.length - 1) * padding)) / 2 + (64 + padding) * num,
 				'${metadata.name} (${metadata.locale})', 48, langFontPath);
@@ -136,7 +136,7 @@ class LanguageSelectState extends SuffState {
 						Main.debugText.reloadFont();
 					}
 				} else {
-					SuffState.playUISound(Paths.sound('ui/invalid'));
+					SuffState.playUISound(Paths.getSound('ui/invalid'));
 				}
 			}
 			languageButtons.add(btn);
@@ -151,13 +151,13 @@ class LanguageSelectState extends SuffState {
 		add(selectorRight);
 
 		title = new FlxText(0, 64 + ScreenSafeArea.Y, (FlxG.width - languageOverlay.width) / 2 - 64 - ScreenSafeArea.X, Language.getPhrase('languageMenu.title'));
-		title.setFormat(Paths.font('default'), 48, textColor);
+		title.setFormat(Paths.getFont('default'), 48, textColor);
 		title.x = -title.width;
 		add(title);
 
 		var leProgress = (Language.getCompletionProgress(Preferences.data.language) * 100) + '%';
 		progress = new SuffTextButton(0, title.y + title.height + 16, Language.getPhrase('languageMenu.completion', [leProgress]), 32, FlxPoint.get(0, 0));
-		progress.btnTextFontPath = Paths.font('small');
+		progress.btnTextFontPath = Paths.getFont('small');
 		#if _ALLOW_FILE_CREATION
 		progress.onClick = function() {
 			if (!Language.exportUnmatchingKeys())
@@ -171,7 +171,7 @@ class LanguageSelectState extends SuffState {
 		add(progress);
 
 		description = new FlxText(0, progress.y + progress.height + 16, title.width, Language.getPhrase('languageMenu.description'));
-		description.setFormat(Paths.font('small'), 32, textColor);
+		description.setFormat(Paths.getFont('small'), 32, textColor);
 		description.x = -description.width;
 		add(description);
 
@@ -227,7 +227,7 @@ class LanguageSelectState extends SuffState {
 			if (Paths.fileExists(langFont))
 				text.font = langFont;
 			else
-				text.font = Paths.font('small');
+				text.font = Paths.getFont('small');
 			text.x = -text.width;
 			text.y = FlxG.height - 32 - 32 * (contributors.length - num) - ScreenSafeArea.Y;
 			FlxTween.tween(text, {x: 32 + ScreenSafeArea.X}, 0.75, {
@@ -308,7 +308,7 @@ class LanguageSelectState extends SuffState {
 
 		bg.color = leBGColor;
 		bgOverlay.visible = true;
-		ajuniga.loadGraphic(Paths.image('ui/menus/language/ajunigaBlended'));
+		ajuniga.loadGraphic(Paths.getImage('ui/menus/language/ajunigaBlended'));
 		ajuniga.angle = 0;
 		exitButton.visible = githubButton.visible = true;
 

@@ -25,7 +25,7 @@ class ResetAchievementPrompt extends SuffSubState {
 
 		confirmButton = new SuffButton(0, 0, Language.getPhrase('menu.confirm'), null, null, 300, 100);
 		confirmButton.onClick = function() {
-			SuffState.playUISound(Paths.sound('ui/achievements/ominous'), 0.6, 1);
+			SuffState.playUISound(Paths.getSound('ui/achievements/ominous'), 0.6, 1);
 			Achievements.resetProgress(id);
 			AchievementsState.instance.lockPlaque(id);
 			AchievementsState.instance.changeAchievementText(Achievements.achievementsList[id], Achievements.curProgress[id]);

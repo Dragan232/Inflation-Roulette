@@ -51,7 +51,7 @@ class JukeboxBarTextCharacter extends FlxSprite {
 		//trace(character, glyphs);
 
 		var path = '${character.fastCodeAt(0)}';
-		this.frames = Paths.sparrowAtlas('ui/menus/extras/jukebox/bar/glyphs');
+		this.frames = Paths.getSparrowAtlas('ui/menus/extras/jukebox/bar/glyphs');
 		this.animation.addByPrefix('idle', path + ' ');
 		this.animation.play('idle', true);
 		this.updateHitbox();

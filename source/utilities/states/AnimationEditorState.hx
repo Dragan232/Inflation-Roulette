@@ -168,7 +168,7 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 		}
 		add(lastFrameButton);
 
-		framePointer = new FlxSprite().loadGraphic(Paths.image('ui/menus/utilities/animation/framePointer'));
+		framePointer = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/utilities/animation/framePointer'));
 		framePointer.x = frameLeftBar.width;
 		framePointer.y = frameBG.y;
 		framePointer.offset.x = framePointer.width / 2;
@@ -247,9 +247,9 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 		for (i in 0...frames.length) {
 			var frame:FlxSprite = new FlxSprite();
 			if (frames[i] != null) {
-				frame.loadGraphic(Paths.image('ui/menus/utilities/animation/keyframe'));
+				frame.loadGraphic(Paths.getImage('ui/menus/utilities/animation/keyframe'));
 			} else {
-				frame.loadGraphic(Paths.image('ui/menus/utilities/animation/frame'));
+				frame.loadGraphic(Paths.getImage('ui/menus/utilities/animation/frame'));
 			}
 			frame.x = i * frame.width;
 			frameGroup.add(frame);
@@ -454,7 +454,7 @@ class AnimationEditorState extends UtilitiesBaseMenuState {
 
 	function set_playing(value:Bool):Bool {
 		playing = value;
-		var graphic:FlxGraphic = value ? Paths.image('ui/icons/utilities/pause') : Paths.image('ui/icons/utilities/play');
+		var graphic:FlxGraphic = value ? Paths.getImage('ui/icons/utilities/pause') : Paths.getImage('ui/icons/utilities/play');
 		playButton.switchIconImage(graphic);
 		return value;
 	}

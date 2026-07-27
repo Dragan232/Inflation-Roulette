@@ -12,7 +12,7 @@ class SuffBoolean extends SuffButton {
 		onChangeCallback = callback;
 
 		outline = new FlxSprite();
-		outline.frames = Paths.sparrowAtlas('ui/menus/options/boolean/outline');
+		outline.frames = Paths.getSparrowAtlas('ui/menus/options/boolean/outline');
 		outline.animation.addByPrefix('true', 'on', 24, false);
 		outline.animation.addByPrefix('false', 'off', 24, false);
 		outline.animation.play('true');
@@ -24,7 +24,7 @@ class SuffBoolean extends SuffButton {
 		}
 
 		parent = new FlxSprite();
-		parent.frames = Paths.sparrowAtlas('ui/menus/options/boolean/base');
+		parent.frames = Paths.getSparrowAtlas('ui/menus/options/boolean/base');
 		parent.animation.addByPrefix('true', 'on', 24, false);
 		parent.animation.addByPrefix('false', 'off', 24, false);
 

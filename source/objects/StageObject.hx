@@ -5,6 +5,8 @@ class StageObject extends FlxSprite {
 	public var walkMovement:Array<Float> = [0, 0];
 	public var randomAnimOnRespawn:Bool = false;
 	public var respawnTime:Float = -1;
+	public var reactionTime:Float = -1;
+	public var animBackToIdle:Bool = true;
 
 	public var age:Float = 0;
 	public var originalOffset:FlxPoint = FlxPoint.weak(0, 0);

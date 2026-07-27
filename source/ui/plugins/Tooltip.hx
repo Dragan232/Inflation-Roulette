@@ -26,7 +26,7 @@ class Tooltip extends FlxSpriteGroup {
 		scrollFactor.set();
 
 		tooltipText = new FlxText(padding.x, padding.y, tooltipWidth, '');
-		tooltipText.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
+		tooltipText.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, LEFT);
 		tooltipText.graphic.persist = true;
 
 		bg = new FlxSprite().makeGraphic(1, 1, 0xFF000000, 'plugins/tooltip/bg');
@@ -58,10 +58,10 @@ class Tooltip extends FlxSpriteGroup {
 			return value;
 
 		FlxGraphic.defaultPersist = true;
-		instance.tooltipText.font = Paths.font('default');
+		instance.tooltipText.font = Paths.getFont('default');
 		instance.tooltipText.text = text;
 		var experimental = new FlxText(0, 0, 0, text);
-		experimental.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
+		experimental.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, LEFT);
 		var leWidth = Math.min(tooltipWidth, experimental.width) + padding.x * 2;
 		var leHeight = instance.tooltipText.height + padding.y * 2;
 		experimental.destroy();
@@ -97,8 +97,8 @@ class Tooltip extends FlxSpriteGroup {
 		}
 		instance.y = FlxMath.bound(instance.y, 0, FlxG.height - instance.bg.height);
 		#else
-		instance.x = (leMousePos.x > FlxG.width / 2) ? ScreenSafeArea.X : FlxG.width - instance.bg.width - ScreenSafeArea.X;
-		instance.y = (leMousePos.y > FlxG.height / 2) ? (Preferences.data.showDebugText ? Main.debugText.height + ScreenSafeArea.Y : ScreenSafeArea.Y) : FlxG.height - instance.bg.height - ScreenSafeArea.Y;
+		instance.x = (leMousePos.x > FlxG.width / 2) ? 20 + ScreenSafeArea.X : FlxG.width - instance.bg.width - 20 - ScreenSafeArea.X;
+		instance.y = (leMousePos.y > FlxG.height / 2) ? (Preferences.data.showDebugText ? 20 + Main.debugText.height + ScreenSafeArea.Y : 20 + ScreenSafeArea.Y) : FlxG.height - instance.bg.height - 20 - ScreenSafeArea.Y;
 		#end
 	}
 }

@@ -49,10 +49,10 @@ class Gameplay {
 	}
 
 	public static function precacheResultsAssets() {
-		Paths.music('resultsStart');
-		Paths.music('resultsLoop');
+		Paths.getMusic('resultsStart');
+		Paths.getMusic('resultsLoop');
 		for (i in globalCharacterList) {
-			Paths.sparrowAtlas('ui/menus/results/characters/$i');
+			Paths.getSparrowAtlas('ui/menus/results/characters/$i');
 		}
 	}
 
@@ -60,7 +60,7 @@ class Gameplay {
 		var rawJson:CharacterCosmeticData = cast TJSON.parse(Paths.getTextFromFile('data/characters/$char/cosmetic.json'));
 		for (i in rawJson.spriteSheets) {
 			var sheet = 'game/characters/$char/$i';
-			Paths.sparrowAtlas(sheet);
+			Paths.getSparrowAtlas(sheet);
 			trace('Cached sprite sheet: $sheet');
 		}
 	}

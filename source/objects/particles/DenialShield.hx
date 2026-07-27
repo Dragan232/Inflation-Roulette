@@ -5,7 +5,7 @@ import flixel.effects.FlxFlicker;
 class DenialShield extends FlxSprite {
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y);
-		loadGraphic(Paths.image('game/particles/denialShield'));
+		loadGraphic(Paths.getImage('game/particles/denialShield'));
 		offset.x += width / 2;
 		offset.y += height / 2;
 		color = 0xFF00C0FF;

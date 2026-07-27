@@ -32,7 +32,7 @@ class RubHitboxEditorState extends UtilitiesBaseMenuState {
 		character.screenCenter();
 		add(character);
 
-		hitbox = new FlxSprite().loadGraphic(Paths.image('debug/circle512'));
+		hitbox = new FlxSprite().loadGraphic(Paths.getImage('debug/circle512'));
 		add(hitbox);
 
 		rubHitboxData = character.rubHitboxes.copy();

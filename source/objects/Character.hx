@@ -14,10 +14,7 @@ import objects.particles.Liquid;
 import objects.particles.Puff;
 import backend.typedefs.CharacterOffsetsData;
 import backend.typedefs.CharacterBoxData;
-import flixel.input.mouse.FlxMouseEvent;
 import flixel.util.FlxSpriteUtil;
-import ui.plugins.CursorHandler;
-import ui.plugins.CursorHandler;
 import objects.particles.HoseboundChain;
 import backend.typedefs.CharacterHitboxData;
 
@@ -75,7 +72,9 @@ class Character extends FlxSprite {
 	// Cosmetic Variables //
 	public var idleAfterAnimation:Bool = true;
 	public var disableBellySounds:Bool = false;
-	public var mask:FlxSprite;
+	public var maskFrames:Map<String, Int> = null;
+	public var animToMask:Map<String, String> = [];
+
 	public var rubHitbox:FlxSprite;
 	public var bouncyAnims:Map<String, Bool> = [];
 	public var autoPitchAnims:Map<String, Bool> = [];
@@ -205,11 +204,13 @@ class Character extends FlxSprite {
 			this.rubHitboxes.push(hitboxData);
 		}
 		if (this.rubHitboxes.length <= 0) {
-			for (i in 0...maxPressure + 1)
-				this.rubHitboxes.push({
+			for (i in 0...maxPressure + 1) {
+				var rubHitbox:CharacterBoxData = {
 					position: [260, 290],
 					size: [160, 160]
-				});
+				};
+				this.rubHitboxes.push(rubHitbox);
+			}
 		}
 		trace(rubHitboxes);
 
@@ -231,31 +232,35 @@ class Character extends FlxSprite {
 
 		if (Preferences.data.enableDiscoloration && Preferences.data.enableGLSL && Gameplay.currentFiller.tintColor != null) {
 			var leColor = Gameplay.currentFiller.tintColor;
-			var leDestabilization:Array<Float> = Gameplay.currentFiller.destabilizationFactor;
 			discoloration = new DiscolorationMaskedShader([leColor.red, leColor.green, leColor.blue]);
-			discoloration.destabilization = leDestabilization;
 			this.shader = discoloration;
 			trace('Discoloration shader created for $id with color $leColor');
 		}
 
 
-		var combinedAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
+		var combinedAtlas:FlxAtlasFrames = Paths.getSparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[0]}');
 		var combinedMaskAtlas:FlxAtlasFrames = null;
 		if (!Preferences.data.decreaseDetail && discoloration != null) {
-			combinedMaskAtlas = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[0]}');
-		}
-		for (i in 1...spriteJson.spriteSheets.length) {
-			var atlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
-			combinedAtlas.addAtlas(atlas, false);
-			if (combinedMaskAtlas != null) {
-				var maskAtlas:FlxAtlasFrames = Paths.sparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[i]}');
-				combinedMaskAtlas.addAtlas(maskAtlas, false);
+			maskFrames = [];
+			discoloration.initMask(0, Paths.getImage('game/characters/$id/mask/${spriteJson.spriteSheets[0]}').bitmap);
+			maskFrames.set(spriteJson.spriteSheets[0], 0);
+			for (frame in combinedAtlas.frames) {
+				if (!frame.name.endsWith('0000')) continue;
+				animToMask.set(frame.name.replace('0000', ''), spriteJson.spriteSheets[0]);
 			}
 		}
-
-		if (combinedMaskAtlas != null) {
-			mask = new FlxSprite();
-			mask.frames = combinedMaskAtlas;
+		for (i in 1...spriteJson.spriteSheets.length) {
+			var atlas:FlxAtlasFrames = Paths.getSparrowAtlas('game/characters/$id/${spriteJson.spriteSheets[i]}');
+			combinedAtlas.addAtlas(atlas, false);
+			if (maskFrames != null) {
+				var maskAtlas = Paths.getSparrowAtlas('game/characters/$id/mask/${spriteJson.spriteSheets[i]}');
+				for (frame in maskAtlas.frames) {
+					if (!frame.name.endsWith('0000')) continue;
+					animToMask.set(frame.name.replace('0000', ''), spriteJson.spriteSheets[i]);
+				}
+				discoloration.initMask(i, maskAtlas.parent.bitmap);
+				maskFrames.set(spriteJson.spriteSheets[i], i);
+			}
 		}
 
 		super(x, y);
@@ -267,20 +272,18 @@ class Character extends FlxSprite {
 		var animationsArray = spriteJson.animations;
 		if (animationsArray != null && animationsArray.length > 0) {
 			for (anim in animationsArray) {
-				var animName:String = '' + anim.name;
-				var animPrefix:String = '' + anim.prefix + '0'; // Prevent wocky shit from happening
+				var animName:String = anim.name;
+				var animPrefix:String = anim.prefix; // Prevent wocky shit from happening
 				var animFps:Int = anim.fps ?? 24;
 				var animLoop:Bool = anim.loop ?? true;
 				var animIndices:Array<Int> = anim.indices ?? [];
 				if (animIndices != null && animIndices.length > 0) {
-					animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
-					if (mask != null)
-						mask.animation.addByIndices(animName, animPrefix, animIndices, "", animFps, animLoop);
+					animation.addByIndices(animName, animPrefix + '0', animIndices, "", animFps, animLoop);
 				} else {
-					animation.addByPrefix(animName, animPrefix, animFps, animLoop);
-					if (mask != null)
-						mask.animation.addByPrefix(animName, animPrefix, animFps, animLoop);
+					animation.addByPrefix(animName, animPrefix + '0', animFps, animLoop);
 				}
+				if (!animToMask.exists(animName) && animToMask.exists(animPrefix))
+					animToMask.set(animName, animToMask.get(animPrefix));
 				if (anim.soundPaths != null && anim.soundPaths.length > 0)
 					addSoundPath(animName, anim.soundPaths, anim.autoPitch ?? true);
 				bouncyAnims.set(animName, anim.bouncy ?? false);
@@ -290,6 +293,18 @@ class Character extends FlxSprite {
 			animation.addByPrefix('idle0', 'idle0', 24);
 			bouncyAnims.set('idle0', false);
 		}
+
+		animation.onFrameChange.add(function(animName:String, frameNumber:Int, frameIndex:Int) {
+			if (discoloration == null || maskFrames == null) return;
+			discoloration.setMask(maskFrames.get(animToMask.get(animName)));
+			discoloration.setFrameBounds(
+				frame.uv.left,
+				frame.uv.top,
+				frame.uv.right,
+				frame.uv.bottom
+			);
+		});
+
 		playAnim('idle');
 		currentPressure = 0;
 
@@ -327,7 +342,6 @@ class Character extends FlxSprite {
 
 	public override function update(elapsed:Float) {
 		if (discoloration != null) {
-			discoloration.setMask(mask?.frame?.parent?.bitmap);
 			if (currentPressure > 0 && currentPressure <= maxPressure) {
 				// trace(discoloration.strength);
 				discolorationStrength += 0.01 * elapsed * getPressurePercentage();
@@ -454,7 +468,7 @@ class Character extends FlxSprite {
 				var npcID:String = stomachNpcContents.shift();
 				if (npcID != null) {
 					var particleOffset = getParticleOffset(Gameplay.currentFiller.npcSpawnLocationOnOverinflate).add(this.x, this.y);
-					SuffState.playSound(Paths.soundRandom('game/inflation/universal/hiccups/hiccup', 1, 5), 0.5,
+					SuffState.playSound(Paths.getSoundRandom('game/inflation/universal/hiccups/hiccup', 1, 5), 0.5,
 					voicePitch + FlxG.random.float(-0.025, 0.025));
 					playAnim('helpless', true, true, false, false);
 					var npc = new NPC(npcID, particleOffset.x, particleOffset.y, this.id);
@@ -485,15 +499,6 @@ class Character extends FlxSprite {
 			}
 			swirlSpawnTimer = FlxG.random.float();
 		}
-		if (mask != null) {
-			mask.animation.play(
-				this.animation.curAnim.name,
-				true,
-				false,
-				this.animation.curAnim.curFrame
-			);
-			mask.animation.curAnim.flipX = this.animation.curAnim.flipX;
-		}
 
 		if (rubHitbox != null) {
 			cursorOnBelly = mouseOverlapsRubHitbox() && onIdle && currentPressure > 0;
@@ -503,7 +508,7 @@ class Character extends FlxSprite {
 						rubDuration += elapsed;
 						var mouseVel = Math.sqrt(FlxG.mouse.deltaX * FlxG.mouse.deltaX + FlxG.mouse.deltaY * FlxG.mouse.deltaY);
 						if (mouseVel > 10 && rubSoundTimer <= 0) {
-							SuffState.playSound(Paths.soundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 6 * (mouseVel / 10), 0.75);
+							SuffState.playSound(Paths.getSoundRandom('game/inflation/universal/rubs/rub', 1, 6), elapsed * 6 * (mouseVel / 10), 0.75);
 							rubSoundTimer = !Preferences.data.decreaseSounds ? 0.25 : 0.5;
 						}
 						// You have to be gentle with it
@@ -564,7 +569,7 @@ class Character extends FlxSprite {
 		rubHitbox.alpha = 1 / 255;
 	}
 
-	function substituteAnim(key:String):String {
+	inline function substituteAnim(key:String):String {
 		if (animExists(key + parseAnimationSuffix()) || animExists(key))
 			return key;
 		return missingAnimReplace.get(key) ?? key;
@@ -637,7 +642,7 @@ class Character extends FlxSprite {
 				var daSoundList:Array<String> = animSoundPaths.get(usedAnimName);
 				var daSound = daSoundList[FlxG.random.int(0, daSoundList.length - 1)];
 				var pitch = autoPitchAnims.get(usedAnimName) ? voicePitch + FlxG.random.float(-0.1, 0.1) : 1;
-				SuffState.playSound(Paths.sound(daSound), 1, pitch);
+				SuffState.playSound(Paths.getSound(daSound), 1, pitch);
 			}
 		}
 
@@ -662,7 +667,7 @@ class Character extends FlxSprite {
 		var offsetArray = particleOffsets.get(position);
 		if (isEliminated()) {
 			var index = offsetArray.length - 1;
-			if (PlayState.currentSessionEnablePopping && !disablePopping)
+			if ((PlayState?.currentSessionEnablePopping ?? Preferences.data.enablePopping) && !disablePopping)
 				index = offsetArray.length - 2;
 			vel.set(offsetArray[index][0], offsetArray[index][1]);
 		} else {
@@ -678,13 +683,16 @@ class Character extends FlxSprite {
 	public function parseAnimationSuffix() {
 		return switch (currentPressure) {
 			case(_ > maxPressure) => true:
-				if (PlayState.currentSessionEnablePopping && !disablePopping) 'Null'; else 'Overinflated';
+				if ((PlayState?.currentSessionEnablePopping ?? Preferences.data.enablePopping) && !disablePopping)
+					'Null';
+				else
+					'Overinflated';
 			default:
 				'' + currentPressure;
 		}
 	}
 
-	public function getPressurePercentage(multiplied:Bool = false):Float {
+	inline public function getPressurePercentage(multiplied:Bool = false):Float {
 		return currentPressure / maxPressure * (multiplied ? 100 : 1);
 	}
 
@@ -695,25 +703,25 @@ class Character extends FlxSprite {
 		return usedAnimName;
 	}
 
-	public function getCurAnimLength():Float {
+	inline public function getCurAnimLength():Float {
 		return getAnimLength(animation.curAnim.name);
 	}
 
-	public function getAnimLength(AnimName:String):Float {
+	inline public function getAnimLength(AnimName:String):Float {
 		var usedAnimName:String = joinAnimationName(AnimName);
 		var leAnim = animation.getByName(usedAnimName);
 		return leAnim != null ? (leAnim.frames.length - 1) / leAnim.frameRate : 0;
 	}
 
-	public function mouseOverlapsBoundingBox() {
+	inline public function mouseOverlapsBoundingBox() {
 		return FlxG.mouse.x >= this.x - this.offset.x + boundingBox.x && FlxG.mouse.x <= this.x - this.offset.x + boundingBox.x + boundingBox.width && FlxG.mouse.y >= this.y - this.offset.y + boundingBox.y && FlxG.mouse.y <= this.y - this.offset.y + boundingBox.y + boundingBox.height;
 	}
 
-	public function mouseOverlapsRubHitbox() {
+	inline public function mouseOverlapsRubHitbox() {
 		return rubHitbox?.pixelsOverlapPoint(FlxG.mouse.getWorldPosition(), 0x01, FlxG.camera) ?? false;
 	}
 
-	public function isEliminated() {
+	inline public function isEliminated() {
 		return currentPressure > maxPressure;
 	}
 

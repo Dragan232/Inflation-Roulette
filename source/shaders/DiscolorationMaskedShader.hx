@@ -7,15 +7,17 @@ class DiscolorationMaskedShader extends FlxShader {
 	@:glFragmentSource('
 	#pragma header
         uniform vec3 tintColor;
-        uniform vec3 destabilizeIntensity;
         uniform float intensity;
-        uniform sampler2D excludeMaskTexture;
+        uniform sampler2D maskTexture;
+        uniform int maskIndex;
 
         uniform bool useMask;
+        // x = left, y = top, z = right, w = bottom
+        uniform vec4 frameBounds;
 
         void main() {
             vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
-            vec4 excludeMaskColor = vec4(0.0);
+            vec4 maskColor = vec4(0.0);
 
             // Skip math entirely if base pixel is already transparent
             if (color.a == 0.0) {
@@ -24,37 +26,33 @@ class DiscolorationMaskedShader extends FlxShader {
             }
 
 			if (useMask) {
-				excludeMaskColor = flixel_texture2D(excludeMaskTexture, openfl_TextureCoordv);
+				vec2 localCoord = (openfl_TextureCoordv - frameBounds.xy) / (frameBounds.zw - frameBounds.xy);
+				maskColor = flixel_texture2D(maskTexture, frameBounds.xy + localCoord * (frameBounds.zw - frameBounds.xy));
 			}
-			float alphaMask = 1.0 - excludeMaskColor.a;
-            color.r *= pow((tintColor.r / 255.) * (1. + destabilizeIntensity.r), intensity * alphaMask);
-			color.g *= pow((tintColor.g / 255.) * (1. + destabilizeIntensity.g), intensity * alphaMask);
-			color.b *= pow((tintColor.b / 255.) * (1. + destabilizeIntensity.b), intensity * alphaMask);
+			/*
+			float alphaMask = 1.0 - maskColor.a;
+            color.r *= pow((tintColor.r) * (1. + destabilizeIntensity.r), intensity * alphaMask);
+			color.g *= pow((tintColor.g) * (1. + destabilizeIntensity.g), intensity * alphaMask);
+			color.b *= pow((tintColor.b) * (1. + destabilizeIntensity.b), intensity * alphaMask);
+			*/
+			color.rgb = mix(color.rgb, tintColor.rgb * maskColor.rgb, intensity * maskColor.a);
 
 			gl_FragColor = vec4(color.rgb, color.a);
 		}
 	')
+	public var maskBitmaps:Array<BitmapData> = [];
 	public var color(default, set):Array<Float> = [0, 0, 0];
-	public var destabilization(default, set):Array<Float> = [0, 0, 0];
 	public var strength(default, set):Float = 0;
 
 	private function set_color(value:Array<Float>):Array<Float> {
 		color = value;
-		tintColor.value = [value[0], value[1], value[2]];
+		tintColor.value = [value[0] / 255, value[1] / 255, value[2] / 255];
 		return value;
 	}
 	private function get_color():Array<Float> {
 		return tintColor.value;
 	}
-
-	private function set_destabilization(value:Array<Float>):Array<Float> {
-		destabilization = value;
-		return destabilizeIntensity.value = [value[0], value[1], value[2]];
-	}
-	private function get_destabilization():Array<Float> {
-		return destabilizeIntensity.value;
-	}
-
+	
 	private function set_strength(value:Float):Float {
 		this.strength = FlxMath.bound(value, 0, 1);
 		intensity.value = [this.strength];
@@ -66,18 +64,36 @@ class DiscolorationMaskedShader extends FlxShader {
 
 	public function new(color:Array<Float>) {
 		super();
-		this.useMask.value = [true];
+		this.maskIndex.value = [0];
+		this.useMask.value = [false];
+		this.frameBounds.value = [
+			0,
+			0,
+			640,
+			640
+		];
 		this.color = color;
-		this.destabilization = [0, 0, 0];
 		this.strength = 0;
 	}
 
-	public function setMask(bitmap:BitmapData):Void {
-		this.useMask.value = [(bitmap != null)];
-		this.excludeMaskTexture.input = bitmap;
+	public function initMask(index:Int = 0, bitmap:BitmapData):Void {
+		this.useMask.value = [true];
+		if (index > this.maskBitmaps.length - 1) this.maskBitmaps.resize(index + 1);
+		this.maskBitmaps[index] = bitmap;
 	}
 
-	public function update(elapsed:Float) {
-		// time += elapsed * flashSpeed;
+	public function setMask(index:Int = 0):Void {
+		this.maskTexture.input = maskBitmaps[index];
 	}
+
+	public function setFrameBounds(x:Float, y:Float, width:Float, height:Float):Void {
+		this.frameBounds.value = [
+			x,
+			y,
+			width,
+			height
+		];
+	}
+
+	public function update(elapsed:Float) {}
 }

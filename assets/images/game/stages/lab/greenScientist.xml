@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="greenScientist.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="autumn0000" x="0" y="0" width="600" height="300"/>
+	<SubTexture name="clem0000" x="600" y="0" width="600" height="300"/>
+	<SubTexture name="cynthia0000" x="0" y="300" width="600" height="300"/>
+	<SubTexture name="fantakit0000" x="600" y="300" width="600" height="300"/>
+	<SubTexture name="ponderz0000" x="0" y="600" width="600" height="300"/>
+	<SubTexture name="seiba0000" x="600" y="600" width="600" height="300"/>
+	<SubTexture name="sufferneer0000" x="0" y="900" width="600" height="300"/>
+	<SubTexture name="trigger0000" x="600" y="900" width="600" height="300"/>
+</TextureAtlas>

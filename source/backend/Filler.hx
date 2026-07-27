@@ -16,7 +16,6 @@ class Filler {
 	public var liquidColor:FlxColor = 0xFFFFFFFF;
 
 	public var tintColor:Null<FlxColor>;
-	public var destabilizationFactor:Array<Float> = [0, 0, 0];
 
 	public var gurgles:FillerSoundData;
 	public var creaks:FillerSoundData;
@@ -53,8 +52,6 @@ class Filler {
 
 		if (rawData.tintColor != null)
 			this.tintColor = FlxColor.fromString(rawData.tintColor);
-		if (rawData.destabilizationFactor != null)
-			this.destabilizationFactor = rawData.destabilizationFactor;
 
 		if (rawData.gurgles != null) {
 			this.gurgles = cast rawData.gurgles;
@@ -98,22 +95,22 @@ class Filler {
 	}
 
 	public function getGurgleSound() {
-		return Paths.soundRandom('game/inflation/${gurgles.archetype}/gurgles/gurgle', 1, gurgles.samples);
+		return Paths.getSoundRandom('game/inflation/${gurgles.archetype}/gurgles/gurgle', 1, gurgles.samples);
 	}
 
 	public function getCreakSound() {
-		return Paths.soundRandom('game/inflation/${creaks.archetype}/creaks/creak', 1, creaks.samples);
+		return Paths.getSoundRandom('game/inflation/${creaks.archetype}/creaks/creak', 1, creaks.samples);
 	}
 
 	public function getBelchSound() {
-		return Paths.soundRandom('game/inflation/${belches.archetype}/belches/belch', 1, belches.samples);
+		return Paths.getSoundRandom('game/inflation/${belches.archetype}/belches/belch', 1, belches.samples);
 	}
 	public function getLeakSound() {
-		return Paths.soundRandom('game/inflation/${leaks.archetype}/leaks/leak', 1, leaks.samples);
+		return Paths.getSoundRandom('game/inflation/${leaks.archetype}/leaks/leak', 1, leaks.samples);
 	}
 
 	public function getBurstSound() {
-		return Paths.soundRandom('game/inflation/${bursts.archetype}/bursts/burst', 1, bursts.samples) ?? Paths.sound('game/inflation/gas/bursts/burst_1');
+		return Paths.getSoundRandom('game/inflation/${bursts.archetype}/bursts/burst', 1, bursts.samples) ?? Paths.getSound('game/inflation/gas/bursts/burst_1');
 	}
 
 	public function toString():String {

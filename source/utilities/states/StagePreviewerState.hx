@@ -68,7 +68,7 @@ class StagePreviewerState extends UtilitiesBaseMenuState {
 		}
 		add(characterGroup);
 
-		pumpGun = new FlxSprite().loadGraphic(Paths.image('game/pumpGun'));
+		pumpGun = new FlxSprite().loadGraphic(Paths.getImage('game/pumpGun'));
 		add(pumpGun);
 
 		cameraTxt = new FlxText(16, 16, '[0, 0]\n1.0', 32);

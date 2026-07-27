@@ -22,7 +22,7 @@ class Language {
 		fallbackPhrases = fetchPhrases(defaultLanguage);
 		fallbackKeys = fetchKeys(defaultLanguage);
 
-		FlxAssets.FONT_DEFAULT = Paths.font('default');
+		FlxAssets.FONT_DEFAULT = Paths.getFont('default');
 	}
 
 	public static function getCompletionProgress(languageKey:String) {
@@ -117,7 +117,7 @@ class Language {
 			phrasesCount[langID] += 1;
 		}
 		for (addon in Addons.globalAddons) {
-			var moddedPhrases:DynamicAccess<Dynamic> = Json.parse(File.getContent(Paths.addons('$addon/lang/$langID.json')));
+			var moddedPhrases:DynamicAccess<Dynamic> = Json.parse(File.getContent(Paths.getPathInAddons('$addon/lang/$langID.json')));
 			for (key => string in moddedPhrases) {
 				lePhrases.set(key, string);
 			}

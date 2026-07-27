@@ -5,7 +5,6 @@
 	"particleType": "liquid",
 
 	"tintColor": "#6040FF",
-	"destabilizationFactor": [0.25, 0, 0.5],
 
 	"gurgles": {
 		"archetype": "berry",

@@ -116,7 +116,7 @@ class CharacterSelectState extends SuffState {
 		add(grid);
 
 		if (bannerGroup.x > 0) {
-			fillerLeft = new FlxBackdrop(Paths.image('ui/menus/filler'), Y);
+			fillerLeft = new FlxBackdrop(Paths.getImage('ui/menus/filler'), Y);
 			var leScale = Math.max(1, (FlxG.width - bannerGroup.width) / 2 / fillerLeft.width);
 			fillerLeft.scale.set(leScale, leScale);
 			fillerLeft.updateHitbox();
@@ -124,7 +124,7 @@ class CharacterSelectState extends SuffState {
 			fillerLeft.velocity.y = 40;
 			add(fillerLeft);
 
-			fillerRight = new FlxBackdrop(Paths.image('ui/menus/filler'), Y);
+			fillerRight = new FlxBackdrop(Paths.getImage('ui/menus/filler'), Y);
 			var leScale = Math.max(1, (FlxG.width - bannerGroup.width) / 2 / fillerRight.width);
 			fillerRight.scale.set(leScale, leScale);
 			fillerRight.updateHitbox();
@@ -134,7 +134,7 @@ class CharacterSelectState extends SuffState {
 		}
 
 		selectCharacterTxt = new FlxText(0, 0, 0, Language.getPhrase('characterSelect.selectCharacter'));
-		selectCharacterTxt.setFormat(Paths.font('default'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
+		selectCharacterTxt.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.SHADOW, 0x80000000);
 		selectCharacterTxt.borderSize = 4;
 		selectCharacterTxt.screenCenter();
 		selectCharacterTxt.y = FlxG.height * (1 - cardOccupicationHeight) - selectCharacterTxt.height;
@@ -337,7 +337,7 @@ class CharacterSelectState extends SuffState {
 		}
 		fillerGroup.y = FlxG.height;
 
-		leftButton = new SuffButton(0, 0, null, Paths.image('ui/icons/buttons/left'), null, 100, 100);
+		leftButton = new SuffButton(0, 0, null, Paths.getImage('ui/icons/buttons/left'), null, 100, 100);
 		leftButton.x = marginLeft.x + marginLeft.width - leftButton.width - 32;
 		leftButton.y = marginLeft.y + 10;
 		leftButton.onClick = function() {
@@ -346,7 +346,7 @@ class CharacterSelectState extends SuffState {
 		leftButton.visible = lastPage > 0;
 		add(leftButton);
 
-		rightButton = new SuffButton(0, 0, null, Paths.image('ui/icons/buttons/right'), null, 100, 100);
+		rightButton = new SuffButton(0, 0, null, Paths.getImage('ui/icons/buttons/right'), null, 100, 100);
 		rightButton.x = marginRight.x + 32;
 		rightButton.y = leftButton.y;
 		rightButton.onClick = function() {
@@ -380,7 +380,7 @@ class CharacterSelectState extends SuffState {
 		var option:SuffBoolean = new SuffBoolean(0, optionY[i], callback, defaultValue);
 
 		var text:FlxText = new FlxText(0, optionY[i], 0, name);
-		text.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
+		text.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, LEFT);
 
 		text.x = sectionWidth * i + (sectionWidth - (text.width + 8 + option.width)) / 2;
 		text.y = optionY[i] + (option.height - text.height) / 2;
@@ -398,7 +398,7 @@ class CharacterSelectState extends SuffState {
 			displayFunction, defaultValue);
 
 		var text:FlxText = new FlxText(0, optionY[i], 0, name);
-		text.setFormat(Paths.font('default'), 32, FlxColor.WHITE, LEFT);
+		text.setFormat(Paths.getFont('default'), 32, FlxColor.WHITE, LEFT);
 
 		text.x = sectionWidth * i + (sectionWidth - (text.width)) / 2;
 		option.x = sectionWidth * i + (sectionWidth - (option.width)) / 2;
@@ -712,7 +712,7 @@ class CharacterSelectState extends SuffState {
 		curStage = FlxMath.wrap(curStage + delta, 0, stages.length - 1);
 		var stageID = stages[curStage];
 		var stage = new FlxSprite();
-		stage.loadGraphic(Paths.image('ui/menus/characterSelect/stages/blurred/' + stageID));
+		stage.loadGraphic(Paths.getImage('ui/menus/characterSelect/stages/blurred/' + stageID));
 		stage.setGraphicSize(FlxG.width);
 		stage.updateHitbox();
 		stage.antialiasing = !Preferences.data.enableForcedAliasing;

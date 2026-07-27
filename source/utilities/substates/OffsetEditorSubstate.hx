@@ -121,7 +121,7 @@ class OffsetEditorSubstate extends UtilitiesBaseMenuSubState {
 	}
 
 	function reloadSprite() {
-		var graphic:FlxGraphic = Paths.image('ui/menus/utilities/silhouette');
+		var graphic:FlxGraphic = Paths.getImage('ui/menus/utilities/silhouette');
 		var path = UtilitiesBaseMenuState.loadedPath + '/sprites/${offsetsAnimation.get(currentOffsetType)}${parseAnimationSuffix(currentPressure)}/0.png';
 		if (FileSystem.exists(path)) {
 			graphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));

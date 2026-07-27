@@ -6,7 +6,7 @@ class Puff extends FlxSprite {
 	var scaleLerp:Float = 0;
 	public function new(x, y, floorY) {
 		super(x, y);
-		var graphic = Paths.image('game/particles/puff');
+		var graphic = Paths.getImage('game/particles/puff');
 		loadGraphic(graphic, true, Std.int(graphic.height), Std.int(graphic.height));
 		animation.add('idle', [FlxG.random.int(0, 3)]);
 		animation.play('idle', true);

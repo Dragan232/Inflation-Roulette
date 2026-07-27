@@ -9,7 +9,7 @@ class SuffUITabMenu extends FlxUITabMenu {
 		super(back_, tabs_, tab_names_and_labels_, tab_offset, stretch_tabs, tab_spacing, tab_stacking);
 		for (tab in this._tabs) {
 			var leTab:FlxUIButton = cast tab;
-			leTab.label.font = Paths.font('default');
+			leTab.label.font = Paths.getFont('default');
 			leTab.label.size = 16;
 			leTab.resize(leTab.width, leTab.height + 16);
 		}

@@ -14,7 +14,7 @@ class ControlsOptionsSubState extends SuffSubState {
 
 		Window.setTitle(Language.getPhrase('optionsMenu.windowDisplay'), Language.getPhrase('option.controls.name'));
 
-		bg = new FlxSprite().loadGraphic(Paths.image('ui/menus/options/bg'));
+		bg = new FlxSprite().loadGraphic(Paths.getImage('ui/menus/options/bg'));
 		bg.color = 0x303030;
 		bg.setGraphicSize(FlxG.width, FlxG.height);
 		bg.updateHitbox();
