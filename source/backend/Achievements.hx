@@ -33,11 +33,7 @@ class Achievements {
 			type: BOOLEAN
 		});
 		#end
-		createAchievement('playLocalMultiplayer', {
-			tier: COMMON,
-			type: BOOLEAN,
-			alwaysAchievable: true
-		});
+		createAchievement('noWinners', {tier: LAME, type: BOOLEAN});
 		// Challenges
 		createAchievement('doublePressurize', {tier: GOOD, type: BOOLEAN});
 		createAchievement('noPressureWin', {tier: GOOD, type: BOOLEAN});

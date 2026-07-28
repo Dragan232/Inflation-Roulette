@@ -71,8 +71,6 @@ class PlayState extends SuffState {
 	
 	var dangerVignette:FlxSprite;
 
-	var gaussianBlurShader:GaussianBlurShader = new GaussianBlurShader(20);
-
 	// Game Logic
 	var currentTurnIndex:Int = 0;
 	var winnerIndex:Null<Int> = null;
@@ -669,7 +667,7 @@ class PlayState extends SuffState {
 		}
 		getPlayer(playerIndex).playAnim(actualAnimName);
 		var offsets = getPlayer(playerIndex).getParticleOffset('overhead');
-		members.insert(members.indexOf(getPlayer(playerIndex)), new SkillIndicator(getPlayer(playerIndex).x + offsets.x, getPlayer(playerIndex).y + offsets.y, skill.id));
+		particleGroup.add(new SkillIndicator(getPlayer(playerIndex).x + offsets.x, getPlayer(playerIndex).y + offsets.y, skill.id));
 
 		switch (skill.id) {
 			case 'reload':
@@ -836,7 +834,7 @@ class PlayState extends SuffState {
 		if (getPlayer(attackerIndex).flipX) flipX = !flipX;
 		getPlayer(attackerIndex).playAnim(actualAnimName, false, true, flipX);
 		var offsets = getPlayer(attackerIndex).getParticleOffset('overhead');
-		members.insert(members.indexOf(getPlayer(attackerIndex)), new SkillIndicator(getPlayer(attackerIndex).x + offsets.x, getPlayer(attackerIndex).y + offsets.y, skill.id));
+		particleGroup.add(new SkillIndicator(getPlayer(attackerIndex).x + offsets.x, getPlayer(attackerIndex).y + offsets.y, skill.id));
 
 		toggleLetterbox(true);
 		if (getPlayer(attackerIndex).animSoundPaths[soundName] == null || getPlayer(attackerIndex).animSoundPaths[soundName].length <= 0) {
@@ -892,10 +890,10 @@ class PlayState extends SuffState {
 			screenShake(0.01, 0.1);
 			if (currentLiveRoundDamage > 1) {
 				currentLiveRoundDamage = 1;
-				SuffState.playSound(Paths.getSound('game/denialActivate'));
+				SuffState.playSound(Paths.getSound('game/denialActivatePressurize'));
 			} else {
 				dealDamage = false;
-				SuffState.playSound(Paths.getSound('game/denialActivatePressurize'));
+				SuffState.playSound(Paths.getSound('game/denialActivate'));
 			}
 			getPlayer(playerIndex).denialCount = 0;
 		}
@@ -919,21 +917,18 @@ class PlayState extends SuffState {
 			getPlayer(playerIndex).discolorationStrength += 1 / getPlayer(playerIndex).maxPressure * 0.75;
 			getPlayer(playerIndex).currentConfidence += getPlayer(playerIndex).confidenceChangeOnLiveShot;
 			var hoseboundIndices = getPlayer(playerIndex).hoseboundIndices;
-			var cancelLossForHoseboundUser:Bool = false;
 			for (index in hoseboundIndices) {
+				if (getPlayer(index).isEliminated())
+					continue;
 				getPlayer(index).currentPressure += 1;
-				if (getPlayer(index).isEliminated() && getPlayer(playerIndex).isEliminated())
-					cancelLossForHoseboundUser = true;
 				getPlayer(index).discolorationStrength += 1 / getPlayer(index).maxPressure * 0.75;
 				// getPlayer(index).currentConfidence += getPlayer(index).confidenceChangeOnLiveShot;
 				// Disabled for balancing reasons
 				if (getPlayer(index).isEliminated())
-					eliminatePlayer(index);
+					eliminatePlayer(index, 0, getRemainingPlayers() >= 1);
 				else
 					getPlayer(index).playAnim('shocked');
 			}
-			if (cancelLossForHoseboundUser)
-				getPlayer(playerIndex).currentPressure -= 1;
 			if (Gameplay.currentFiller.npcOnPop != '')
 				getPlayer(playerIndex).stomachNpcContents.push(Gameplay.currentFiller.npcOnPop);
 			if (currentLiveRoundDamage > 1) {
@@ -1054,8 +1049,9 @@ class PlayState extends SuffState {
 		}
 	}
 
-	function eliminatePlayer(playerIndex:Int, turnChangeAfterwards:Int = 0) {
+	function eliminatePlayer(playerIndex:Int, turnChangeAfterwards:Int = 0, canEndGame:Bool = true) {
 		getPlayer(playerIndex).currentPressure = getPlayer(playerIndex).maxPressure + 1;
+		getPlayer(playerIndex).hoseboundIndices = [];
 		isEnding = evaluateEnding(); // Check if remaining players are eliminated
 		playGunContactSound();
 		pumpGun.visible = true;
@@ -1104,6 +1100,14 @@ class PlayState extends SuffState {
 			stage.dynamicPlayAnim('overinflate');
 		}
 
+		if (dangerVignette != null) {
+			FlxTween.cancelTweensOf(dangerVignette);
+			dangerVignette.alpha = 0;
+		}
+		
+		if (!canEndGame)
+			return;
+
 		if (!isEnding) {
 			FlxG.sound.music.resume();
 			doTween('aTweenButItsATimerLol', FlxTween.tween(camGame, {alpha: 1}, ((currentSessionEnablePopping && !getPlayer(playerIndex).disablePopping) ? 2.5 : 1), {
@@ -1122,11 +1126,6 @@ class PlayState extends SuffState {
 					playEndCutscene();
 				}
 			}));
-		}
-
-		if (dangerVignette != null) {
-			FlxTween.cancelTweensOf(dangerVignette);
-			dangerVignette.alpha = 0;
 		}
 	}
 
@@ -1147,6 +1146,17 @@ class PlayState extends SuffState {
 					cpuLowestLevel = char.cpuSkillLevel;
 				continue;
 			}
+		}
+
+		if (winningIndex == -1) {
+			Achievements.advanceProgress('noWinners', [true]);
+			doTimer('confettiTimer', new FlxTimer().start(0.5, function(_:FlxTimer) {
+				SuffState.playSound(Paths.getSound('game/awkwardness'));
+				doTimer('finishCutscene', new FlxTimer().start(4.5, function(_:FlxTimer) {
+					finishEndCutscene();
+				}));
+			}));
+			return;
 		}
 
 		doTimer('confettiTimer', new FlxTimer().start(0.5, function(_:FlxTimer) {
@@ -1182,15 +1192,12 @@ class PlayState extends SuffState {
 			Achievements.advanceProgress('twoPlayers', [true]);
 		else if (characterGroup.members.length == 6)
 			Achievements.advanceProgress('sixPlayers', [true]);
-
-		if (allHumanPlayers) {
-			Achievements.advanceProgress('playLocalMultiplayer', [true]);
-		}
 	}
 
 	function finishEndCutscene() {
 		SuffState.playMusic('null');
-		ResultsState.data = ScoringUtil.judgeGame(characterGroup.members);
+		var characters:Array<Character> = cast characterGroup.members;
+		ResultsState.data = ScoringUtil.judgeGame(characters);
 		FlxTransitionableState.skipNextTransOut = true;
 		SuffState.switchState(new ResultsState(), FADE);
 	}
@@ -1492,6 +1499,10 @@ class PlayState extends SuffState {
 		}
 		updateSkillAvailability(currentTurnIndex);
 	}
+	
+	function getRemainingPlayers():Int {
+		return [for (char in characterGroup) if (!char.isEliminated()) true].length;
+	}
 
 	function evaluateEnding() {
 		var aliveCharCount:Int = 0;
@@ -1598,6 +1609,7 @@ class PlayState extends SuffState {
 
 		isManuallyFocusingStage = false;
 		isSelectingPlayer = false;
+		revealCylinderContents = false;
 		toggleCameraFocusButton(!getPlayer(currentTurnIndex).cpuControlled);
 		reloadRevealUI();
 		focusCameraOnPlayer(currentTurnIndex);

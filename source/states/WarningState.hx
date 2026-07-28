@@ -8,7 +8,7 @@ class WarningState extends SuffState {
 	var acceptButton:SuffButton;
 	var languageButton:SuffIconButton;
 
-	override function create() {
+	public override function create() {
 		super.create();
 
 		Window.setTitle(Language.getPhrase('warningMenu.windowDisplay'));
@@ -18,7 +18,7 @@ class WarningState extends SuffState {
 		warningTitle.screenCenter();
 		add(warningTitle);
 
-		warningDesc = new FlxText(0, 0, FlxG.width * 0.85, Language.getPhrase('warningMenu.content'));
+		warningDesc = new FlxText(0, 0, FlxG.width * 0.85 - ScreenSafeArea.X * 2, Language.getPhrase('warningMenu.content'));
 		warningDesc.setFormat(Paths.getFont('default'), 32, 0xFFFFFFFF, JUSTIFY);
 		warningDesc.x = Std.int((FlxG.width - warningDesc.width) / 2);
 		add(warningDesc);
@@ -55,7 +55,7 @@ class WarningState extends SuffState {
 		add(languageButton);
 	}
 
-	override function update(elapsed:Float) {
+	public override function update(elapsed:Float) {
 		super.update(elapsed);
 	}
 }

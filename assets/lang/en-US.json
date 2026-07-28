@@ -507,9 +507,9 @@
 	"achievement.findCameraman.name": "Lights, Camera, Action!",
 	"achievement.findCameraman.description": "Have you seen the cameraman?",
 	// Meet Cobalt. (1/128 probability)
-	"achievement.playLocalMultiplayer.name": "Family Fun",
-	"achievement.playLocalMultiplayer.description": "Somehow get someone to play with you... or you can just control everyone. Don't worry; we won't know.",
-	// Win a game in Local Multiplayer.
+	"achievement.noWinners.name": "WarPumps",
+	"achievement.noWinners.description": "Somehow knock everyone out of the game, including yourself.",
+	// Play a game with no winners
 	"achievement.winAgainstStrategicCPUs.name": "Mind Games",
 	"achievement.winAgainstStrategicCPUs.description": "Not gonna lie the bots aren't very smart either, but seeing everyone raging over these freaks, nice job.",
 	// Win a game with every CPU set to their highest skill level.
