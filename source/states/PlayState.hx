@@ -1647,12 +1647,12 @@ class PlayState extends SuffState {
 
 			if (Preferences.data.enableDebugKeybinds) {
 				if (Controls.justPressed('debug1')) {
-					Achievements.enabled = false;
+					// Achievements.enabled = false;
 					getPlayer(currentTurnIndex).currentConfidence += 1;
 					updateSkillAvailability(currentTurnIndex);
 				}
 				if (Controls.justPressed('debug2')) {
-					Achievements.enabled = false;
+					// Achievements.enabled = false;
 					shoot(currentTurnIndex);
 				}
 			}

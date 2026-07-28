@@ -266,7 +266,7 @@
 	"option.checkForUpdates.name": "Comprova actualitzacions",
 	"option.checkForUpdates.description": "Comprova automàticament si hi ha darreres actualitzacions del joc a inici.",
 	"option.enableDebugKeybinds.name": "Assignacions de depuració",
-	"option.enableDebugKeybinds.description": "Active assignacions de depuració a ordenador.\n(Desactiva assoliments del joc en prémer)",
+	"option.enableDebugKeybinds.description": "Active assignacions de depuració a ordenador.",
 	"option.showDebugText.name": "Text de depuració",
 	"option.showDebugText.description": "Mostra informació de depuració a la cantonada superior esquerra de la pantalla.",
 	"option.showFramerateOnDebugText.name": "Freqüència de fotogrames",
@@ -543,13 +543,13 @@
 	"resultsMenu.title": "LES RESULTATS SÓN A!",
 	"resultsMenu.instructions": "Prema qualsevol tecla per sortir",
 	// Score bonus for last standing players
-	"resultsMenu.winBonus": "Bonus Guanyador",
+	"resultsMenu.winBonus": "Guanyador",
 	// Score bonus for Pressure percentage.
-	"resultsMenu.edgingBonus": "Bonus de Pressió",
+	"resultsMenu.edgingBonus": "Pressió",
 	// Replaces Edging Bonus when player somehow hasn't inflated once.
-	"resultsMenu.edgingBonus.alt": "Bonus de Sort",
+	"resultsMenu.edgingBonus.alt": "Sort",
 	// Score bonus for using Skills.
-	"resultsMenu.skillBonus": "Bonus d'Habilitat",
+	"resultsMenu.skillBonus": "Habilitat",
 	"resultsMenu.bestPlayer": "VICTORIÓS",
 	"resultsMenu.bestPlayers": "VICTORIOSOS",
 	"resultsMenu.badPlayer": "DECEPCIÓ",

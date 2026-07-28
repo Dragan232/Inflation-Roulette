@@ -288,7 +288,7 @@
 	"option.checkForUpdates.name": "Check for Updates",
 	"option.checkForUpdates.description": "Automatically check for latest updates of the game on startup.",
 	"option.enableDebugKeybinds.name": "Developer Keybinds",
-	"option.enableDebugKeybinds.description": "Enable developer keybinds on PC.\n(Disables in-game achievements on press)",
+	"option.enableDebugKeybinds.description": "Enable developer keybinds on PC.",
 	"option.showDebugText.name": "Debug Text",
 	"option.showDebugText.description": "Displays debug information on the top-left corner of the screen.",
 	"option.showFramerateOnDebugText.name": "Framerate",
@@ -686,13 +686,13 @@
 	"resultsMenu.title": "THE SCORES ARE IN!",
 	"resultsMenu.instructions": "Press Any Key To Exit",
 	// Score bonus for last standing players
-	"resultsMenu.winBonus": "Winning Bonus",
+	"resultsMenu.winBonus": "Winning",
 	// Score bonus for Pressure percentage.
-	"resultsMenu.edgingBonus": "Pressure Bonus",
+	"resultsMenu.edgingBonus": "Pressure",
 	// Replaces Edging Bonus when player somehow hasn't inflated once.
-	"resultsMenu.edgingBonus.alt": "Luck Bonus",
+	"resultsMenu.edgingBonus.alt": "Luck",
 	// Score bonus for using Skills.
-	"resultsMenu.skillBonus": "Skill Bonus",
+	"resultsMenu.skillBonus": "Skill",
 	"resultsMenu.bestPlayer": "VICTORIOUS",
 	"resultsMenu.bestPlayers": "VICTORIOUS",
 	"resultsMenu.badPlayer": "DISAPPOINTMENT",

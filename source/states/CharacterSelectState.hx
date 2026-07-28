@@ -884,6 +884,7 @@ class CharacterSelectState extends SuffState {
 
 	function proceedToPlayState() {
 		Achievements.enabled = canEarnAchievements;
+		trace('Achievements enabled: ' + Achievements.enabled);
 		var characterCPUControlled = '';
 		for (i in Gameplay.cpuControlled) {
 			characterCPUControlled += i ? '1' : '0';

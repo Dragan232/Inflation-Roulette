@@ -114,31 +114,31 @@ class Character extends FlxSprite {
 	public function new(character:String, x:Float = 0, y:Float = 0) {
 		this.id = character;
 		timerMultiplier = Preferences.data.decreaseSounds ? 3 : 1;
-		var json:CharacterData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/stats.json'));
-		var spriteJson:CharacterCosmeticData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json'));
-		var offsetsJson:CharacterOffsetsData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/offsets.json'));
-		var hitboxJson:CharacterHitboxData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/hitbox.json'));
+		var json:CharacterData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/stats.json')) ?? null;
+		var spriteJson:CharacterCosmeticData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/cosmetic.json')) ?? null;
+		var offsetsJson:CharacterOffsetsData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/offsets.json')) ?? null;
+		var hitboxJson:CharacterHitboxData = cast Json.parse(Paths.getTextFromFile('data/characters/' + id + '/hitbox.json')) ?? null;
 
 		// name = json.name;
 		/*
 		if (json.description != null)
 			description = json.description;
 		*/
-		maxPressure = json.maxPressure;
-		maxConfidence = json.maxConfidence;
-		belchThreshold = spriteJson.belchThreshold ?? 3;
-		leakThreshold = spriteJson.leakThreshold ?? 4;
-		navelLeakThreshold = spriteJson.navelLeakThreshold ?? 3;
-		gurgleThreshold = spriteJson.gurgleThreshold ?? 3;
-		creakThreshold = spriteJson.creakThreshold ?? 4;
-		voicePitch = spriteJson.voicePitch ?? 4;
-		if (offsetsJson.originPosition != null)
+		maxPressure = json?.maxPressure ?? 4;
+		maxConfidence = json?.maxConfidence ?? 4;
+		belchThreshold = spriteJson?.belchThreshold ?? 3;
+		leakThreshold = spriteJson?.leakThreshold ?? 4;
+		navelLeakThreshold = spriteJson?.navelLeakThreshold ?? 3;
+		gurgleThreshold = spriteJson?.gurgleThreshold ?? 3;
+		creakThreshold = spriteJson?.creakThreshold ?? 4;
+		voicePitch = spriteJson?.voicePitch ?? 4;
+		if (offsetsJson?.originPosition != null)
 			originPosition = offsetsJson.originPosition;
-		if (offsetsJson.poppedCameraOffset != null)
+		if (offsetsJson?.poppedCameraOffset != null)
 			poppedCameraOffset = offsetsJson.poppedCameraOffset;
-		if (offsetsJson.cameraOffset != null)
+		if (offsetsJson?.cameraOffset != null)
 			cameraOffset = offsetsJson.cameraOffset;
-		if (offsetsJson.particleOffsets == null) {
+		if (offsetsJson?.particleOffsets == null) {
 			offsetsJson.particleOffsets = {
 				overhead: [
 					[0, -480],
@@ -199,11 +199,8 @@ class Character extends FlxSprite {
 		bounceScale = spriteJson.bounceScale ?? 0.02;
 		bounceFrames = spriteJson.bounceFrames ?? 3;
 
-		var hitboxes:Array<CharacterBoxData> = cast hitboxJson.rubHitboxes;
-		for (hitboxData in hitboxes) {
-			this.rubHitboxes.push(hitboxData);
-		}
-		if (this.rubHitboxes.length <= 0) {
+		var hitboxes:Array<CharacterBoxData> = cast hitboxJson?.rubHitboxes;
+		if (hitboxes == null || hitboxes.length <= 0) {
 			for (i in 0...maxPressure + 1) {
 				var rubHitbox:CharacterBoxData = {
 					position: [260, 290],
@@ -211,6 +208,10 @@ class Character extends FlxSprite {
 				};
 				this.rubHitboxes.push(rubHitbox);
 			}
+		} else {
+			for (hitboxData in hitboxes) {
+				this.rubHitboxes.push(hitboxData);
+			}	
 		}
 		trace(rubHitboxes);
 

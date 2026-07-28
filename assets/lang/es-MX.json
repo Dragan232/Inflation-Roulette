@@ -263,7 +263,7 @@
 	"option.cacheOnGPU.name": "Caché en VRAM",
 	"option.cacheOnGPU.description": "Permite usar la GPU para almacenar texturas usando VRAM y así reducir el uso de RAM.\nPuede que no funcione correctamente con tarjetas gráficas de gama baja.",
 	"option.enableDebugKeybinds.name": "Atajos de depuración",
-	"option.enableDebugKeybinds.description": "Activa las teclas de depuración en PC.\n(Desactiva los logros del juego al presionarlas)",
+	"option.enableDebugKeybinds.description": "Activa las teclas de depuración en PC.",
 	"option.showDebugText.name": "Texto de depuración",
 	"option.showDebugText.description": "Muestra información de depuración en la esquina superior izquierda de la pantalla.",
 	"option.showFramerateOnDebugText.name": "Frecuencia de cuadros",
@@ -540,13 +540,13 @@
 	"resultsMenu.title": "¡LOS RESULTADOS ESTÁN LISTOS!",
 	"resultsMenu.instructions": "Presiona cualquier tecla para salir",
 	// Bonificación de puntos por ser el último en pie
-	"resultsMenu.winBonus": "Bonificación por Victoria",
+	"resultsMenu.winBonus": "Victoria",
 	// Bonificación de puntos por porcentaje de presión.
-	"resultsMenu.edgingBonus": "Bonificación de Presión",
+	"resultsMenu.edgingBonus": "Presión",
 	// Reemplaza la Bonificación de Presión cuando el jugador no ha inflado ni una vez.
-	"resultsMenu.edgingBonus.alt": "Bonificación de Suerte",
+	"resultsMenu.edgingBonus.alt": "Suerte",
 	// Bonificación de puntos por usar Habilidades.
-	"resultsMenu.skillBonus": "Bonificación por Habilidad",
+	"resultsMenu.skillBonus": "Habilidad",
 	"resultsMenu.bestPlayer": "VICTORIOSO",
 	"resultsMenu.bestPlayers": "VICTORIOSOS",
 	"resultsMenu.badPlayer": "DECEPCIÓN",

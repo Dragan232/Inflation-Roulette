@@ -269,7 +269,7 @@
 	"option.checkForUpdates.name": "Проверить наличие обновлений",
 	"option.checkForUpdates.description": "Проверять наличие обновлений игры при запуске.",
 	"option.enableDebugKeybinds.name": "Клавиши Отладки",
-	"option.enableDebugKeybinds.description": "Включает клавиши для отладки на ПК.\n(Не позволяет получать достижения после нажатия)",
+	"option.enableDebugKeybinds.description": "Включает клавиши для отладки на ПК.",
 	"option.showDebugText.name": "Информация для Отладки",
 	"option.showDebugText.description": "Отображает Информацию для Отладки в левом верхнем краю экрана.",
 	"option.showFramerateOnDebugText.name": "Частота Кадров",
@@ -624,13 +624,13 @@
 	"resultsMenu.title": "ПЕРЕЙДЁМ К ИТОГАМ!",
 	"resultsMenu.instructions": "Нажмите Любую Клавишу Для Выхода",
 	// Score bonus for last standing players
-	"resultsMenu.winBonus": "Бонус за Победу",
+	"resultsMenu.winBonus": "Победу",
 	// Score bonus for Pressure percentage.
-	"resultsMenu.edgingBonus": "Бонус за Пузо",
+	"resultsMenu.edgingBonus": "Пузо",
 	// Replaces Edging Bonus when player somehow hasn't inflated once.
-	"resultsMenu.edgingBonus.alt": "Бонус за Удачу",
+	"resultsMenu.edgingBonus.alt": "Удачу",
 	// Score bonus for using Skills.
-	"resultsMenu.skillBonus": "Бонус за Навыки",
+	"resultsMenu.skillBonus": "Навыки",
 	"resultsMenu.bestPlayer": "ПОБЕДИЛ",
 	"resultsMenu.bestPlayers": "ПОБЕДИЛИ",
 	"resultsMenu.badPlayer": "ПРОДУЛ",

@@ -235,7 +235,7 @@
 	"option.cacheOnGPU.name": "顯存快取",
 	"option.cacheOnGPU.description": "允許使用 GPU 透過 VRAM 儲存材質，從而降低 RAM 使用量。\n可能無法在低階 GPU 上正常運作。",
 	"option.enableDebugKeybinds.name": "調試快捷鍵",
-	"option.enableDebugKeybinds.description": "在電腦上啟用調試快捷鍵。\n（按下快捷鍵將停用遊戲成就）",
+	"option.enableDebugKeybinds.description": "在電腦上啟用調試快捷鍵。",
 	"option.showDebugText.name": "調試文字",
 	"option.showDebugText.description": "在螢幕左上角顯示調試資訊。",
 	"option.showFramerateOnDebugText.name": "FPS",
@@ -558,13 +558,13 @@
 	"resultsMenu.title": "遊戲結果！",
 	"resultsMenu.instructions": "按任意鍵退出",
 	// Score bonus for last standing players
-	"resultsMenu.winBonus": "獲勝獎勵",
+	"resultsMenu.winBonus": "獲勝",
 	// Score bonus for Pressure percentage.
-	"resultsMenu.edgingBonus": "瀕裂獎勵",
+	"resultsMenu.edgingBonus": "瀕裂",
 	// Replaces Edging Bonus when player somehow hasn't inflated once.
-	"resultsMenu.edgingBonus.alt": "好運獎勵",
+	"resultsMenu.edgingBonus.alt": "好運",
 	// Score bonus for using Skills.
-	"resultsMenu.skillBonus": "技能獎勵",
+	"resultsMenu.skillBonus": "技能",
 	"resultsMenu.bestPlayer": "贏家",
 	"resultsMenu.bestPlayers": "贏家",
 	"resultsMenu.badPlayer": "可恥",
