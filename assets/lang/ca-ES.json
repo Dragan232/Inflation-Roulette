@@ -122,6 +122,7 @@
 	
 	// Please make sure that this is written in a formal tone.
 	"warningMenu.title": "ADVERTÈNCIA",
+	"warningMenu.content": "Aquest joc només és per a públic adult major de 18 ANYS.\nAquest és un joc fetitxista, que conté principalment contingut INFLAMENT DE FURROS. Els complements externs creats per tercers no estan moderats. Es desaconsella en gran mesura gravar i reproduir en transmissió aquest joc a plataformes de xarxes socials on hi hagi una presència àmplia de menors.\nAquest joc també presenta imatges intermitents i tremolors de pantalla que poden desencadenar símptomes de fotosensibilitat en algunes persones. Aquests efectes es poden mitigar mitjançant el menú Opcions.\nEn prémer \"Accepta\", acceptes aquests avisos i assumeixes completament les conseqüències causades per aquest joc.",
 	"menu.accept": "Accepta",
 	
 	"optionsMenu.heading.gameplay": "Joc",
@@ -265,8 +266,8 @@
 	"option.cacheOnGPU.description": "Permet que la GPU s'utilitzi per emmagatzemar textures mitjançant VRAM per a un ús menor de RAM.\nPot ser que no funcioni correctament amb targetes gràfiques de gamma baixa.",
 	"option.checkForUpdates.name": "Comprova actualitzacions",
 	"option.checkForUpdates.description": "Comprova automàticament si hi ha darreres actualitzacions del joc a inici.",
-	"option.enableDebugKeybinds.name": "Assignacions de depuració",
-	"option.enableDebugKeybinds.description": "Active assignacions de depuració a ordenador.",
+	"option.enableDebugKeybinds.name": "Assignacions de desenvolupador",
+	"option.enableDebugKeybinds.description": "Active assignacions de desenvolupador a ordenador.",
 	"option.showDebugText.name": "Text de depuració",
 	"option.showDebugText.description": "Mostra informació de depuració a la cantonada superior esquerra de la pantalla.",
 	"option.showFramerateOnDebugText.name": "Freqüència de fotogrames",
@@ -337,6 +338,19 @@
 	"character.chester.name": "Chester Damian",
 	"character.chester.name.short": "Chester",
 	"character.chester.description": "Un barista desafortunat obligat a jugar a aquest joc per a una empresa. Seva feina entrena seva resistència.",
+	// Synda: Character created by NicklySuffer. Resembles one of those squid dogs from Changed.
+	// Her tentacles were amputated due to an accident, and desperately needs money for cybernetic tentacles.
+	// Designed as a high-risk character, with the ability to shoot others.
+	// Skills: Reload, Assault
+	"character.synda.name": "Synthia D'Arcy",
+	"character.synda.name.short": "Synda",
+	"character.synda.description": "Una dona desesperada que busca fons per a millores corporals. Pot disparar altres amb prou confiança.",
+	// Jacob: Guest character. A dorky fox tricked into playing the game.
+	// Designed as a low-risk character.
+	// Skills: Reload, Denial
+	"character.jacob.name": "Jacob Goatington",
+	"character.jacob.name.short": "Jacob",
+	"character.jacob.description": "Una guineu tímida que s'ha enganyat per jugar. Malgrat això, pot evitar ràpidament la confrontació.",
 	// Option to choose a random character.
 	"character.random.description": "No saps qui triar? Deixa que el joc decideixi!",
 	
@@ -353,6 +367,14 @@
 	// Honestly I'd translate it as Merdcarall, but I guess it's some in-universe brand name
 	"stage.shitfucks.name": "Cafè Shitfucks",
 	"stage.shitfucks.description": "S'especialitza en venda de begudes. Definitivament no hi ha res de dolent aquí.",
+	// Paprika Beachside: Beach themed background. Held in somewhere of a beach resort.
+	// You do not have to transliterate Paprika.
+	"stage.beach.name": "Platja Paprika",
+	"stage.beach.description": "Un popular complex turístic de platja. Conegut per ser una destinació de lluna de mel i les seves discoteques.",
+	// Orchid Labs: Independent laboratory, this time they're testing the Pump Gun.
+	// They are doing... product testing. Certainly, no test subjects were harmed.
+	"stage.lab.name": "Orchid Labs",
+	"stage.lab.description": "Un laboratori independent i obscur. Famós per analitzar productes de clients dubtosos.",
 	// White Void: Literally just a white void with a glass table.
 	"stage.void.name": "Buit blanc",
 	"stage.void.description": "Nom conegut com a lloc per a totes activitats, que apareix en innombrables obres d'art i animacions.",
@@ -425,7 +447,43 @@
 	// Accumulate 10000 Dongs in the Main Menu.
 	"achievement.noLife.name": "Absolutament a l'atur",
 	"achievement.noLife.description": "Malgasta teva vida sense motiu. Has estat empremtat, marcat permanentment.",
-	
+	"achievement.rarePolarizeSuccess.name": "Ruleta russa inversa",
+	"achievement.rarePolarizeSuccess.description": "Saps que aquesta habilitat és arriscada, sobretot quan es tracta d'un lot de bales noves, però miraculosament has aconseguit funcionar.",
+	// Use Polarize when there are 6 bullets in the chamber, and not inflate yourself.
+	"achievement.eliminateByAssault.name": "Sense funda",
+	"achievement.eliminateByAssault.description": "Cal tractar amb rapidesa una persona que està a punt de ser derrotada... utilitzant un mètode més directe.",
+	// Eliminate a player via Assault.
+	"achievement.intentionalLoseByPolarize.name": "Malalt d'amor",
+	"achievement.intentionalLoseByPolarize.description": "Saps que estàs fora de perill; saps que estàs a límit; saps que això et farà perdre; i tot i així et poses en perill? Estàs calent o què?",
+	// Eliminate yourself after using Reveal and Polarize.
+	"achievement.findCameraman.name": "Llums, càmera, acció!",
+	"achievement.findCameraman.description": "Has vist el càmera?",
+	// Meet Cobalt. (1/128 probability)
+	"achievement.noWinners.name": "Bombes de guerra",
+	"achievement.noWinners.description": "D'alguna manera, elimina tothom del joc, inclòs a tu mateix.",
+	// Play a game with no winners
+	"achievement.winAgainstStrategicCPUs.name": "Jocs mentals",
+	"achievement.winAgainstStrategicCPUs.description": "No mentiré, els bots tampoc són gaire inteŀligents, però veure tothom enfadant-se per aquests bitxos, bona feina.",
+	// Win a game with every CPU set to their highest skill level.
+	"achievement.nineTwentyOne.name": "9 morts amb 21 ferits",
+	"achievement.nineTwentyOne.description": "Veus això? Aquest és el tipus d'imatge que empitjora quan veus.",
+	// Play at exactly 9:21 PM, a random stupid image will flash on-screen briefly.
+	"achievement.exportCharacterProject.name": "Usuari",
+	"achievement.exportCharacterProject.description": "Construeix teu propi vaixell utilitzant el programa d'utilitats de la Directive d'Ordre Migratòria.",
+	// Export your first character creator project.
+	"achievement.liveShots.name": "Manca d'aire",
+	"achievement.liveShots.description": "Una bala del calibre .357 Magnum costa uns 15 centaus de fabricar, però els preus de venda públic osciŀlen entre 0,50 i 1,20 €. Ara imagina't disparar-ne 100.",
+	// Get shot 600 times with a blank round.
+	"achievement.twoPlayers.name": "Duel",
+	"achievement.twoPlayers.description": "Dos idiotes, una pistola. Qui sobreviuria? Resposta: El gerent.",
+	// Set player count to 2 and win.
+	"achievement.sixPlayers.name": "'strall amb sis",
+	"achievement.sixPlayers.description": "Això és que nens d'avui en dia en diuen sisos? En aquest punt, tant se val dir-ne sexo.",
+	// Set player count to 6 and win.
+	"achievement.allFillerWins.name": "Una dieta equilibrada",
+	"achievement.allFillerWins.description": "Experimenta tots i cadascun dels mètodes de tortura i mantén-te intacte en tot moment.",
+	// Win as every filler. (Air, Water, Soda, Slime, Berry)
+
 	"achievementsMenu.title": "Teus assoliments",
 	"achievementsMenu.description": "Selecciona un assoliment per veure'n detalls i estat de finalització.",
 	"achievementsMenu.resetProgress": "Restableix progrés",
